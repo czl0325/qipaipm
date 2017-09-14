@@ -35,12 +35,15 @@
     <ion-item style="border-bottom: solid 1px #ececec;">
       <ion-icon item-start name="appname-admin"></ion-icon>
       <ion-label>负责人:</ion-label>
-      <ion-input text-right type="text" [(ngModel)]="tempMilestone.milestoneLeader" required [disabled]="type==2"></ion-input>
+      <ion-input text-right type="text" [(ngModel)]="tempMilestone.milestoneLeader" required [disabled]=""></ion-input>
     </ion-item>
     <ion-item style="border-bottom: solid 1px #ececec;">
       <ion-icon item-start name="appname-time"></ion-icon>
       <ion-label>交付时间:</ion-label>
-      <ion-datetime text-right displayFormat="YYYY-MM-DD" [(ngModel)]="tempMilestone.planTime" max="2030" min="2015" cancelText="取消" doneText="确认" required [disabled]="type==2"></ion-datetime>
+      <ion-datetime text-right displayFormat="YYYY-MM-DD" max="2030" min="2015" cancelText="取消" doneText="确认" required [disabled]=""
+                    ngModel="{{tempMilestone.planTime | stampToDate}}"
+                    (ngModelChange)="tempMilestone.planTime = $event">
+      </ion-datetime>
     </ion-item>
     <ion-item style="border-bottom: solid 1px #ececec">
       <ion-icon item-start name="appname-plan"></ion-icon>
@@ -61,7 +64,7 @@
     <ion-item style="border-bottom: solid 1px #ececec;">
       <ion-icon item-start name="appname-result"></ion-icon>
       <ion-label no-padding no-margin>交付成果:</ion-label>
-      <ion-input text-right type="text" [(ngModel)]="tempMilestone.milestoneDelivery" required [disabled]="type==2"></ion-input>
+      <ion-input text-right type="text" [(ngModel)]="tempMilestone.milestoneDelivery" required [disabled]=""></ion-input>
     </ion-item>
     <ion-item *ngIf="tempMilestone.delay > 0" style="border-bottom: solid 1px #ececec;">
       <ion-label >延迟情况:</ion-label>
@@ -92,7 +95,9 @@
       <ion-item style="border-bottom: solid 1px #ececec;">
         <ion-icon item-start name="appname-time"></ion-icon>
         <ion-label>交付时间</ion-label>
-        <ion-datetime item-end displayFormat="YYYY年MM月DD日" max="2030" min="2015" cancelText="取消" doneText="确认" [(ngModel)]="subtask.planTime"></ion-datetime>
+        <ion-datetime item-end displayFormat="YYYY年MM月DD日" max="2030" min="2015" cancelText="取消" doneText="确认"
+                      ngModel="{{subtask.planTime | stampToDate}}"
+                      (ngModelChange)="subtask.planTime = $event"></ion-datetime>
       </ion-item>
       <ion-item style="border-bottom: solid 10px #ececec;">
         <ion-icon item-start name="appname-result"></ion-icon>

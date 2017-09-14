@@ -34,9 +34,9 @@ import { NavController, NavParams } from 'ionic-angular';
 	private String remark;
  */
 export class SubtaskPage {
-  canEdit ;
   projectname: string;
   callback ;
+  type: number;
 
   subtask = {
     id:'',              //子任务的id
@@ -52,10 +52,10 @@ export class SubtaskPage {
 
 
   constructor(public navCtrl: NavController, public navParams: NavParams) {
-    var data = navParams.get('subtask');
-    this.projectname = navParams.get('projectname');
-    this.callback = navParams.get('callback');
-    this.canEdit = false;
+    var data = this.navParams.get('subtask');
+    this.projectname = this.navParams.get('projectname');
+    this.callback = this.navParams.get('callback');
+    this.type = this.navParams.get("type");
     if (data != null)
       this.subtask = data;
   }

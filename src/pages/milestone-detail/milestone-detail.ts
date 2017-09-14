@@ -2,6 +2,8 @@ import { Component } from '@angular/core';
 import { NavController, NavParams, AlertController } from 'ionic-angular';
 import { SubtaskPage } from "../subtask/subtask";
 import { DatePipe } from "@angular/common";
+import {AppService} from "../../app/app.service";
+import {AppConfig} from "../../app/app.config";
 
 /**
  * Generated class for the MilestoneDetailPage page.
@@ -62,20 +64,18 @@ export class MilestoneDetailPage {
     return originObj ? JSON.parse(JSON.stringify(originObj)) : null;
   }
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, public alertCtrl: AlertController) {
+  constructor(public navCtrl: NavController, public navParams: NavParams, private alertCtrl: AlertController, private appService: AppService) {
     var data = this.navParams.get('milestone');
-    this.pname = this.navParams.get('name');
+    this.pname = this.navParams.get('projectname');
     this.mileNumber = this.navParams.get('number');
     this.callback = this.navParams.get('callback');
     this.type = this.navParams.get('type');
-    if (data) {
       this.milestone = data;
       this.tempMilestone = this.deepCopy(this.milestone);
-      console.log(this.tempMilestone);
-    } else {
-      this.milestone.milestoneName = '里程碑'+this.mileNumber;
-      this.tempMilestone = this.milestone;
+    if (this.type == 1) {
+        this.tempMilestone.milestoneName = '里程碑'+this.mileNumber;
     }
+    console.log(this.tempMilestone);
   }
 
   ionViewDidLoad() {
@@ -85,9 +85,12 @@ export class MilestoneDetailPage {
 
   }
 
+    onPlanTimeChange($event) {
+      console.log(this.milestone.planTime);
+    }
+
   onSaveMilestone() {
-    this.milestone = this.tempMilestone;
-    if (this.milestone.milestoneLeader.length < 1) {
+    if (this.tempMilestone.milestoneLeader.length < 1) {
       let alert = this.alertCtrl.create({
         title: '错误信息',
         subTitle: '里程碑负责人为必填项!',
@@ -96,7 +99,7 @@ export class MilestoneDetailPage {
       alert.present();
       return;
     }
-    if (this.milestone.milestoneDelivery.length < 1) {
+    if (this.tempMilestone.milestoneDelivery.length < 1) {
       let alert = this.alertCtrl.create({
         title: '错误信息',
         subTitle: '里程碑交付成果为必填项!',
@@ -105,10 +108,36 @@ export class MilestoneDetailPage {
       alert.present();
       return;
     }
-    this.callback(this.milestone).then(()=>{ this.navCtrl.pop() });
+    switch (this.type) {
+        case 1:
+          console.log(this.tempMilestone);
+          this.callback(this.tempMilestone).then(()=>{ this.navCtrl.pop() });
+          break;
+        case 2:
+          var param = this.deepCopy(this.tempMilestone);
+          param.itemName = this.pname;
+          this.appService.httpPost("milestone/create",param,this,function (view, res) {
+            if (res.status == 200) {
+              view.milestone = view.tempMilestone;
+              view.navCtrl.pop();
+            } else {
+              let toast = view.toastCtrl.create({
+                  message: '编辑里程碑失败!',
+                  duration: 3000
+              });
+              toast.present();
+            }
+          },true);
+          break;
+        default:
+          break;
+    }
   }
 
   onAddSubtask($event) {
-    this.navCtrl.push(SubtaskPage);
+    this.navCtrl.push(SubtaskPage, {
+      type:2,
+        projectname:this.pname,
+    });
   }
 }

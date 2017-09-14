@@ -258,7 +258,7 @@ export class CalendarComponent {
           var day = startTime.substr(startTime.length-2,2);
           var dot = document.getElementById("dot-"+parseInt(day));
           if (dot != null) {
-            dot.style.display = "";
+            dot.style.display = "block";
             if (startTime == dateString) {
               dot.classList.add("selected-dot");
             } else {

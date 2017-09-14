@@ -25349,9 +25349,12 @@ calendar .calendar-row .calendar-col .dot {
   width: 6px;
   height: 6px;
   background-color: #fc5c53;
-  position: absolute;
   bottom: 0px;
-  left: 48%;
+  display: none;
+  position: absolute;
+  left: 50%;
+  -webkit-transform: translateX(-50%);
+  transform: translateX(-50%);
 }
 
 calendar .calendar-week-day {

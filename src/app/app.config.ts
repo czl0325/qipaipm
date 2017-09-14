@@ -104,4 +104,13 @@ export class AppConfig {
     var m=d.getMonth()+1;
     return d.getFullYear()+'-'+m+'-'+d.getDate();
   }
+
+  //时间戳转yyyy-mm-dd
+  public static timestampToDatestring(timestamp) : string {
+    var date =  new Date(timestamp);
+    var y = date.getFullYear();
+    var m = "0"+(date.getMonth()+1);
+    var d = "0"+date.getDate();
+    return y+"-"+m.substring(m.length-2,m.length)+"-"+d.substring(d.length-2,d.length);
+  }
 }

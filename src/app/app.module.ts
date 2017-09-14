@@ -44,6 +44,12 @@ import { AppService } from "./app.service";
     HttpModule,
     IonicModule.forRoot(MyApp, {
       backButtonText: '',
+      mode: 'ios',
+      tabsHideOnSubPages: true,
+      modalEnter: 'modal-slide-in',
+      modalLeave: 'model-slide-out',
+      tabsPlacement: 'bottom', //tabweizhi
+      pageTransition: 'ios-transition' //使用ios页面动画
     }),
     JsonpModule,
   ],

@@ -1,5 +1,5 @@
 import { Component, ViewChild, ElementRef } from '@angular/core';
-import { NavController, NavParams, PopoverController, ViewController, Events } from 'ionic-angular';
+import { NavController, NavParams, PopoverController, ViewController, Events, ToastController } from 'ionic-angular';
 import { SubtaskPage } from "../subtask/subtask";
 import { MilestoneDetailPage } from "../milestone-detail/milestone-detail";
 import { ProjectCreatePage } from "../project-create/project-create";
@@ -90,7 +90,8 @@ export class ProjectDetailPage {
   timer;
   isExpand: any[];
 
-  constructor(public navCtrl: NavController, private navParams: NavParams, private popoverCtrl: PopoverController, public events: Events, public appService: AppService) {
+  constructor(public navCtrl: NavController, private navParams: NavParams, private popoverCtrl: PopoverController,
+              public events: Events, public appService: AppService, public toastCtrl: ToastController) {
     this.project = this.navParams.get('project');
     this.isExpand = [];
     for (let i=0; i<this.project.milestone.length; i++) {
@@ -161,7 +162,7 @@ export class ProjectDetailPage {
       milestone : mile,
       projectname : this.project.itemName,
       callback : this.projectCallback,
-      type : 1,
+      type : 2,
     });
   }
 

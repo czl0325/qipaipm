@@ -96,7 +96,6 @@ export class ProjectCreatePage {
     this.type = this.navParams.get('type');
     if (data) {
       this.project = data;
-      console.log(this.project.milestone);
       this.viewTitle = this.project.itemName;
     } else {
       this.viewTitle = '新建项目';
@@ -140,9 +139,19 @@ export class ProjectCreatePage {
   }
 
   onAddMilestone() {
+    console.log(this.project.milestone);
     if (this.project.milestone.length > 0) {
       var lastMile = this.project.milestone[this.project.milestone.length-1];
-      if (lastMile.milestoneLeader.length < 1 || lastMile.milestoneDelivery.length < 1 || lastMile.milestoneSchedule.length < 1 || lastMile.planTime.length < 1) {
+      if (lastMile.milestoneLeader == null || lastMile.milestoneDelivery == null || lastMile.milestoneSchedule == null || lastMile.planTime.length  == null) {
+        let alert = this.alertCtrl.create({
+            title: '错误信息',
+            subTitle: '请先完善上一个里程碑内容!',
+            buttons: ['确定']
+        });
+        alert.present();
+        return;
+      }
+      if (!(lastMile.milestoneLeader.length > 0 && lastMile.milestoneDelivery.length > 0 && lastMile.milestoneSchedule.length > 0 && lastMile.planTime.length > 0)) {
         let alert = this.alertCtrl.create({
           title: '错误信息',
           subTitle: '请先完善上一个里程碑内容!',
@@ -159,7 +168,7 @@ export class ProjectCreatePage {
       milestoneDelivery : '',     //里程碑的交付成果
       milestoneSchedule : '',     //里程碑的进度
       planTime : new DatePipe('en-US').transform(new Date(), 'yyyy-MM-dd'),              //里程碑计划完成时间
-      realTime : new DatePipe('en-US').transform(new Date(), 'yyyy-MM-dd'),              //里程碑实际完成时间
+      realTime : "",              //里程碑实际完成时间
       remark : '',                //里程碑备注
       isAccomplish : false,       //里程碑是否完成
       delay : 0,                  //里程碑延迟天数
@@ -169,8 +178,8 @@ export class ProjectCreatePage {
     this.navCtrl.push(MilestoneDetailPage, {
       milestone : milestone,
       number : this.project.milestone.length+1,
-      name : this.project.itemName,
-      type : this.type,
+      projectname : this.project.itemName,
+      type : 1,
       callback : this.milestoneCallback,
     });
   }
@@ -192,7 +201,7 @@ export class ProjectCreatePage {
         if (this.type == 2) {
           var paramToPost = param;
           paramToPost.itemName = this.project.itemName;
-          console.log(paramToPost);
+          paramToPost.pid = this.project.id;
           this.appService.httpPost("milestone/create", paramToPost, this,function (view, res) {
             console.log(res);
             if (res.status == 200) {
