@@ -182,7 +182,9 @@ export class HomePage {
   }
 
   onCreateProject() {
-    this.navCtrl.push(ProjectCreatePage);
+    this.navCtrl.push(ProjectCreatePage, {
+      type:1,
+    });
   }
 
   onClickProject(project) {

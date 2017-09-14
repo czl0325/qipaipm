@@ -14,7 +14,7 @@ export class YearPipe implements PipeTransform {
    * Takes a value and makes it lowercase.
    */
   transform(value: string, ...args) {
-    if (value == null) {
+    if (value == null || value.length < 4) {
       return "未知日期";
     }
     return value.substr(0, 4);

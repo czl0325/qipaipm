@@ -90,8 +90,10 @@ export class ProjectCreatePage {
     isEnd : false,              //是否结束项目
   };
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, private alertCtrl: AlertController, public appService : AppService, public toastCtrl: ToastController) {
+  constructor(public navCtrl: NavController, public navParams: NavParams, private alertCtrl: AlertController,
+              public appService : AppService, public toastCtrl: ToastController) {
     var data = this.navParams.get('project');
+    this.type = this.navParams.get('type');
     if (data) {
       this.project = data;
       console.log(this.project.milestone);
@@ -130,7 +132,7 @@ export class ProjectCreatePage {
     this.appService.httpPost("item/create", this.project, this, function (view ,res){
       let toast = view.toastCtrl.create({
         message: '创建项目成功!',
-        duration: 2000
+        duration: 3000
       });
       toast.present();
       view.navCtrl.pop();
@@ -168,14 +170,14 @@ export class ProjectCreatePage {
       milestone : milestone,
       number : this.project.milestone.length+1,
       name : this.project.itemName,
-      type : 1,
+      type : this.type,
       callback : this.milestoneCallback,
     });
   }
 
   onLookMilestone() {
     this.navCtrl.push(MilestoneDetailPage, {
-      project:this.project
+      project : this.project
     });
   }
 
@@ -187,7 +189,24 @@ export class ProjectCreatePage {
   {
     return new Promise((resolve, reject) => {
       if (typeof (param) != 'undefined') {
-        this.project.milestone.push(param);
+        if (this.type == 2) {
+          var paramToPost = param;
+          paramToPost.itemName = this.project.itemName;
+          console.log(paramToPost);
+          this.appService.httpPost("milestone/create", paramToPost, this,function (view, res) {
+            console.log(res);
+            if (res.status == 200) {
+              view.project.milestone.push(param);
+              let toast = view.toastCtrl.create({
+                  message: '添加里程碑成功!',
+                  duration: 3000
+              });
+              toast.present();
+            }
+          },true);
+        } else {
+          this.project.milestone.push(param);
+        }
       } else {
 
       }

@@ -114,6 +114,7 @@ export class ProjectDetailPage {
     this.events.subscribe('onPushProjectDetail',()=>{
       this.navCtrl.push(ProjectCreatePage, {
         project:this.project,
+        type:2,
       });
     });
   }

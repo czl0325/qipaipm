@@ -68,7 +68,6 @@ export class MilestoneDetailPage {
     this.mileNumber = this.navParams.get('number');
     this.callback = this.navParams.get('callback');
     this.type = this.navParams.get('type');
-    console.log("type="+this.type);
     if (data) {
       this.milestone = data;
       this.tempMilestone = this.deepCopy(this.milestone);
@@ -80,10 +79,10 @@ export class MilestoneDetailPage {
   }
 
   ionViewDidLoad() {
-    console.log('ionViewDidLoad MilestoneDetailPage');
+
   }
   ionViewWillLeave(){
-    console.log(this.milestone);
+
   }
 
   onSaveMilestone() {

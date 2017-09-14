@@ -25439,7 +25439,7 @@ page-home .text_vertical_center {
 
 page-project-detail .pj-item {
   margin-top: 5px;
-  margin-bottom: 10px;
+  margin-bottom: 5px;
 }
 
 page-project-detail .pj-item .mile-top {
@@ -25538,6 +25538,7 @@ page-project-detail .mile-bottom .item2 {
 }
 
 page-project-detail .mile-bottom .item2 .label-radius {
+  position: relative;
   width: 40px;
   height: 40px;
   border-radius: 20px;
@@ -25545,6 +25546,30 @@ page-project-detail .mile-bottom .item2 .label-radius {
   font-size: 12px;
   border: solid 1px #1e82d2;
   margin-bottom: 3px;
+  left: 0;
+}
+
+page-project-detail .mile-bottom .item2 .delay-radius {
+  position: absolute;
+  width: 16px;
+  height: 16px;
+  border-radius: 8px;
+  line-height: 16px;
+  font-size: 10px;
+  background-color: #fc780e;
+  color: white;
+  top: 20px;
+  left: 12px;
+}
+
+page-project-detail .mile-bottom .item2 .item2_text {
+  position: absolute;
+  width: 100%;
+  text-align: center;
+  height: 10px;
+  font-size: 10px;
+  left: 0px;
+  margin-top: 5px;
 }
 
 page-project-detail .mile-bottom .arrow-css1 {
