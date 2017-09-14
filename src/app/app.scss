@@ -1,0 +1,135 @@
+// http://ionicframework.com/docs/theming/
+
+
+// App Global Sass
+// --------------------------------------------------
+// Put style rules here that you want to apply globally. These
+// styles are for the entire app and not just one component.
+// Additionally, this file can be also used as an entry point
+// to import other Sass files to be included in the output CSS.
+//
+// Shared Sass variables, which can be used to adjust Ionic's
+// default Sass variables, belong in "theme/variables.scss".
+//
+// To declare rules for a specific mode, create a child rule
+// for the .md, .ios, or .wp mode classes. The mode class is
+// automatically applied to the <body> element in the app.
+ion-icon {
+  &[class*="appname-"] {
+    // Instead of using the font-based icons
+    // We're applying SVG masks
+    -webkit-mask-size:  contain;
+    -webkit-mask-repeat: no-repeat;
+    // mask-position: 50% 50%;
+    background: currentColor;
+    //width: 1rem;
+    //height: 1rem;
+  }
+
+  &[class*="appname-back"] {
+    -webkit-mask-image: url(../assets/svg/icon_fanhui.svg);
+    background-color: #fc5c53;
+    width: 1rem;
+    height: 1rem;
+  }
+  &[class*="appname-search"] {
+    -webkit-mask-image: url(../assets/svg/icon_chazhao.svg);
+    background-color: #fc5c53;
+    width: 1.5rem;
+    height: 1.5rem;
+  }
+  &[class*="appname-list"] {
+    -webkit-mask-image: url(../assets/svg/icon_liebiaomoshi.svg);
+    background-color: #fc5c53;
+    width: 1.5rem;
+    height: 1.5rem;
+  }
+  &[class*="appname-add"] {
+    -webkit-mask-image: url(../assets/svg/icon_tianjia.svg);
+    background-color: #fc5c53;
+    width: 1.5rem;
+    height: 1.5rem;
+  }
+  &[class*="appname-arrow"] {
+    -webkit-mask-image: url(../assets/svg/icon-arrow.svg);
+  }
+  &[class*="appname-admin"] {
+    -webkit-mask-image: url(../assets/svg/icon_admin.svg);
+    background-color: #c4c4c4;
+  }
+  &[class*="appname-plan"] {
+    -webkit-mask-image: url(../assets/svg/icon_plan.svg);
+    background-color: #c4c4c4;
+  }
+  &[class*="appname-time"] {
+    -webkit-mask-image: url(../assets/svg/icon_time.svg);
+    background-color: #c4c4c4;
+  }
+  &[class*="appname-result"] {
+    -webkit-mask-image: url(../assets/svg/icon_result.svg);
+    background-color: #c4c4c4;
+  }
+  &[class*="appname-more"] {
+    -webkit-mask-image: url(../assets/svg/icon_more.svg);
+    background-color: #fc5c53;
+  }
+  &[class*="appname-pname"] {
+    -webkit-mask-image: url(../assets/svg/icon_pname.svg);
+    background-color: #c4c4c4;
+  }
+  &[class*="appname-edit"] {
+    -webkit-mask-image: url(../assets/svg/icon_edit.svg);
+    background-color: #c4c4c4;
+    width: 0.5rem;
+    height: 0.5rem;
+  }
+  &[class*="appname-share"] {
+    -webkit-mask-image: url(../assets/svg/icon_share.svg);
+    background-color: #c4c4c4;
+  }
+  &[class*="appname-delete"] {
+    -webkit-mask-image: url(../assets/svg/icon_delete.svg);
+    background-color: #c4c4c4;
+  }
+  &[class*="appname-finish"] {
+    -webkit-mask-image: url(../assets/svg/icon_finish.svg);
+    background-color: #c4c4c4;
+  }
+  &[class*="appname-delay"] {
+    -webkit-mask-image: url(../assets/svg/icon_delay.svg);
+    background-color: #c4c4c4;
+  }
+  &[class*="appname-cha"] {
+    -webkit-mask-image: url(../assets/svg/icon_cha.svg);
+    background-color: #c4c4c4;
+  }
+  &[class*="appname-expand"] {
+    -webkit-mask-image: url(../assets/svg/icon_expand.svg);
+    background-color: black;
+  }
+  &[class*="appname-fold"] {
+    -webkit-mask-image: url(../assets/svg/icon_fold.svg);
+    background-color: black;
+  }
+  &[class*="appname-dingding"] {
+    -webkit-mask-image: url(../assets/svg/icon_dingding.svg);
+    background-color: #2198f2;
+    height: 50px;
+    width: 50px;
+  }
+  &[class*="appname-qq"] {
+    -webkit-mask-image: url(../assets/svg/icon_qq.svg);
+    background-color: #4dafea;
+    height: 50px;
+    width: 50px;
+  }
+  &[class*="appname-weixin"] {
+    -webkit-mask-image: url(../assets/svg/icon_weixin.svg);
+    background-color: #3eb135;
+    height: 50px;
+    width: 50px;
+  }
+}
+::-webkit-scrollbar {
+  display: none !important;
+}

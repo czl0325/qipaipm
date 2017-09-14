@@ -1,0 +1,61 @@
+calendar {
+  .calendar-controls ion-col[width-25] button {
+    //margin-top: 20% !important;
+  }
+
+  .selectedDateLabel {
+
+  }
+  .calendar-row {
+    max-height: 50px;
+
+    .calendar-col {
+      padding: 0px;
+      margin: 5px;
+
+      button {
+        //max-height: 32px;
+      }
+      .dot {
+        border-radius: 3px;
+        width: 6px;
+        height: 6px;
+        background-color: #fc5c53;
+        position: absolute;
+        bottom: 0px;
+        left: 48%;
+      }
+    }
+  }
+
+  .calendar-week-day {
+    max-width: 15%;
+  }
+
+  .calendar-day {
+    color: black;
+    font-size: 1.3em;
+    position: relative;
+  }
+
+  .selected {
+    background-color: #fc5c53 !important;
+    color: white;
+  }
+  .selected-dot {
+    background-color: white !important;
+  }
+  .no-selected-dot {
+    background-color: #fc5c53 !important;
+  }
+
+  .hasEvents {
+    border-bottom: 2px solid red;
+  }
+
+  .selectedMonthLabel {
+    text-transform: capitalize;
+    //margin-bottom: 0px;
+    margin-top: 10px;
+  }
+}

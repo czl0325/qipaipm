@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="36" height="36" viewBox="0 0 36 36">
+  <defs>
+    <style>
+      .cls-1 {
+        fill: #f0f1f2;
+        fill-rule: evenodd;
+        filter: url(#filter);
+      }
+    </style>
+    <filter id="filter" x="273" y="381" width="36" height="36" filterUnits="userSpaceOnUse">
+      <feFlood result="flood" flood-color="#fc5c53"/>
+      <feComposite result="composite" operator="in" in2="SourceGraphic"/>
+      <feBlend result="blend" in2="SourceGraphic"/>
+    </filter>
+  </defs>
+  <path id="icon_fanhui" class="cls-1" d="M309,400h-32.25l15.258,15.585L290.621,417l-16.238-16.585h0L273,399l1.386-1.417h0L290.621,381l1.386,1.417L276.749,398H309v2Z" transform="translate(-273 -381)"/>
+</svg>

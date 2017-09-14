@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="34" height="34" viewBox="0 0 34 34">
+  <defs>
+    <style>
+      .cls-1 {
+        fill: #f0f1f2;
+        fill-rule: evenodd;
+        filter: url(#filter);
+      }
+    </style>
+    <filter id="filter" x="2" y="1" width="30" height="32" filterUnits="userSpaceOnUse">
+      <feFlood result="flood" flood-color="#c4c4c4"/>
+      <feComposite result="composite" operator="in" in2="SourceGraphic"/>
+      <feBlend result="blend" in2="SourceGraphic"/>
+    </filter>
+  </defs>
+  <path id="icon_fuzeren" class="cls-1" d="M17,1a7,7,0,1,1-7,7A7,7,0,0,1,17,1Zm0,17c8.284,0,15,6.134,15,10s-6.716,5-15,5S2,31.866,2,28,8.715,18,17,18Z"/>
+</svg>

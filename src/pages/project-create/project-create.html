@@ -1,0 +1,116 @@
+<!--
+  Generated template for the ProjectCreatePage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header >
+  <ion-navbar >
+    <ion-title>{{viewTitle}}</ion-title>
+    <ion-buttons end >
+      <button ion-button (click)="onPublish()" color="danger">
+        {{this.project.itemName.length>0?"完成":"发布"}}
+      </button>
+    </ion-buttons>
+  </ion-navbar>
+</ion-header>
+
+
+<ion-content fullscreen>
+    <ion-list no-margin no-lines no-padding style="border-top: solid 10px #f5f6f7; border-bottom: solid 10px #f5f6f7;">
+      <ion-item>
+        <ion-icon item-start name="appname-pname"></ion-icon>
+        <ion-label>项目名称</ion-label>
+        <ion-input item-end text-right placeholder="请输入项目名称" [(ngModel)]="project.itemName"></ion-input>
+      </ion-item>
+    </ion-list>
+
+    <div style="height: 30px; border-bottom: solid 1px #ececec">
+      <div style="width: 5px; height: 30px; background-color: orange; float: left;"></div>
+      <ion-label no-margin no-padding style="line-height: 30px; margin-left: 10px; float: left;">项目启动</ion-label>
+    </div>
+    <ion-list no-lines no-padding no-margin style="border-bottom: solid 10px #f5f6f7;">
+      <ion-item style="border-bottom: solid 1px #ececec;">
+        <ion-icon item-start name="appname-time"></ion-icon>
+        <ion-label>交付时间</ion-label>
+        <ion-datetime item-end displayFormat="YYYY年MM月DD日" max="2030" min="2015" [(ngModel)]="project.startTime" cancelText="取消" doneText="确认"></ion-datetime>
+      </ion-item>
+      <ion-item>
+        <ion-icon item-start name="appname-result"></ion-icon>
+        <ion-label>交付成果</ion-label>
+        <ion-input item-end text-right placeholder="请输入交付成果" [(ngModel)]="project.startResult" required></ion-input>
+      </ion-item>
+    </ion-list>
+
+    <div style="border-bottom: solid 10px #f5f6f7;" *ngFor="let mile of project.milestone">
+      <div style="height: 30px; border-bottom: solid 1px #ececec; ">
+        <div style="width: 5px; height: 30px; background-color: orange; float: left;"></div>
+        <ion-label no-margin no-padding style="line-height: 30px; margin-left: 10px; float: left;">{{mile.milestoneName}}</ion-label>
+        <div style="float: right; width: 30px; height: 30px;position: relative">
+          <ion-icon name="close" style="position: absolute; top: 50%; right: 0px; -webkit-transform: translateY(-50%); transform: translateY(-50%); margin-right: 10px; " (click)="onClickRemoveMilestone($event, mile)"></ion-icon>
+        </div>
+      </div>
+      <ion-list no-lines no-margin no-padding>
+        <ion-item style="border-bottom: solid 1px #ececec">
+          <ion-icon item-start name="appname-admin"></ion-icon>
+          <ion-label>负责人</ion-label>
+          <ion-input item-end text-right [(ngModel)]="mile.milestoneLeader"></ion-input>
+        </ion-item>
+        <ion-item style="border-bottom: solid 1px #ececec">
+          <ion-icon item-start name="appname-time"></ion-icon>
+          <ion-label>交付时间</ion-label>
+          <ion-datetime item-end displayFormat="YYYY年MM月DD日" [(ngModel)]="mile.planTime" max="2030" min="2015" cancelText="取消" doneText="确认"></ion-datetime>
+        </ion-item>
+        <ion-item style="border-bottom: solid 1px #ececec">
+          <ion-icon item-start name="appname-plan"></ion-icon>
+          <ion-label>项目进度</ion-label>
+          <ion-select interface="action-sheet" [(ngModel)]="mile.milestoneSchedule" cancelText="取消" doneText="确认">
+            <ion-option value="10%">10%</ion-option>
+            <ion-option value="20%">20%</ion-option>
+            <ion-option value="30%">30%</ion-option>
+            <ion-option value="40%">40%</ion-option>
+            <ion-option value="50%">50%</ion-option>
+            <ion-option value="60%">60%</ion-option>
+            <ion-option value="70%">70%</ion-option>
+            <ion-option value="80%">80%</ion-option>
+            <ion-option value="90%">90%</ion-option>
+            <ion-option value="100%">100%</ion-option>
+          </ion-select>
+        </ion-item>
+        <ion-item>
+          <ion-icon item-start name="appname-result"></ion-icon>
+          <ion-label>交付成果</ion-label>
+          <ion-textarea item-end text-right [(ngModel)]="mile.milestoneDelivery"></ion-textarea>
+        </ion-item>
+      </ion-list>
+    </div>
+
+
+    <div style="padding: 10px; border-bottom: solid 10px #f5f6f7">
+      <button ion-button (click)="onAddMilestone()" style="background-color: #fc5c53" block>+ 添加里程碑</button>
+    </div>
+
+    <div style="height: 30px; border-bottom: solid 1px #ececec">
+      <div style="width: 5px; height: 30px; background-color: orange; float: left;"></div>
+      <ion-label no-margin no-padding style="line-height: 30px; margin-left: 10px; float: left;">项目结束</ion-label>
+    </div>
+    <ion-list no-lines no-margin no-padding>
+      <button ion-item style="border-bottom: solid 1px #ececec">
+        <ion-icon item-start name="appname-admin"></ion-icon>
+        <ion-label item-start>负责人</ion-label>
+        <ion-input item-end text-right placeholder="请输入负责人" [(ngModel)]="project.itemLeader"></ion-input>
+      </button>
+      <ion-item  style="border-bottom: solid 1px #ececec">
+        <ion-icon item-start name="appname-time"></ion-icon>
+        <ion-label>交付时间</ion-label>
+        <ion-datetime item-end displayFormat="YYYY年MM月DD日" max="2030" min="2015" cancelText="取消" doneText="确认" [(ngModel)]="project.endTime"></ion-datetime>
+      </ion-item>
+      <ion-item>
+        <ion-icon item-start name="appname-result"></ion-icon>
+        <ion-label>交付成果</ion-label>
+        <ion-textarea item-end text-right placeholder="请输入交付成果" [(ngModel)]="project.endResult"></ion-textarea>
+      </ion-item>
+    </ion-list>
+  </ion-content>
+
+

@@ -1,0 +1,210 @@
+<!--
+  Generated template for the ProjectDetailPage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header>
+  <ion-navbar>
+    <ion-title>
+      {{project.itemName}}
+    </ion-title>
+    <ion-buttons end>
+      <button ion-button icon-only (click)="presentPopover($event)">
+        <ion-icon name="more" style="color: #fc5c53"></ion-icon>
+      </button>
+    </ion-buttons>
+  </ion-navbar>
+</ion-header>
+
+
+<ion-content #popoverContent fullscreen>
+  <div class="pj-item">
+    <div class="mile-bottom">
+      <div class="item1">
+        <ion-label style="margin-bottom: 3px;font-size: 10px">{{project.startTime | MonthPipe}}</ion-label>
+        <section class="line"></section>
+        <ion-label style="margin-top: 3px;font-size: 10px">{{project.startTime | YearPipe}}</ion-label>
+      </div>
+      <div class="item2">
+        <ion-icon name="ios-arrow-dropdown-circle" style="color: #fc5c53;padding-top: 15px"></ion-icon>
+        <ion-label no-padding no-margin style="margin-top: 3px;font-size: 10px;text-align: center">启动</ion-label>
+        <div style="width: 1px; background-color: #ececec; height: 100%; position: absolute; left: 20px" >
+        </div>
+      </div>
+      <ion-icon name="appname-arrow" class="arrow-css1"></ion-icon>
+      <div class="item3-1">
+        <ion-row>
+          <ion-col col-5 style="float: left">
+            负责人：
+          </ion-col>
+          <ion-col col-7 style="float: right">
+            {{project.itemLeader}}
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col col-5 style="float: left">
+            交付成果：
+          </ion-col>
+          <ion-col col-7 style="float: right">
+        <span class="item-right">
+          {{project.startResult}}
+        </span>
+          </ion-col>
+        </ion-row>
+      </div>
+    </div>
+  </div>
+
+  <!-- 里程碑  -->
+  <div class="pj-item" *ngFor="let mile of project.milestone; let i = index">
+    <div class="mile-top" id="{{mile.id}}">
+      <div style="width: 1px; background-color: #ececec; height: 100%; position: absolute; left: 65px; top: 0px" >
+
+      </div >
+      <div class="subtask-title" *ngIf="isExpand[i]==false && mile.subtask.length>0">
+        <ion-label no-margin no-padding text-center class=" horizontal-center" style="line-height: 25px; font-size: 15px">{{mile.subtask.length+"个子任务"}}</ion-label>
+      </div>
+      <div class="subtask-wrap" *ngIf="isExpand[i]==true && mile.subtask.length>0">
+        <div class="subtask-item" *ngFor="let subtask of mile.subtasks" (click)="onClickSubtask($event, subtask)">
+          <div class="subtask-css" >
+            <ion-label class="subtask-left">子任务:</ion-label>
+            <ion-label class="subtask-right" >{{subtask.subtaskName}}</ion-label>
+          </div>
+          <div class="subtask-css" >
+            <ion-label class="subtask-left">完成时间:</ion-label>
+            <ion-label class="subtask-right" >{{subtask.realTime}}</ion-label>
+          </div>
+          <div class="subtask-css" >
+            <ion-label class="subtask-left">负责人:</ion-label>
+            <ion-label class="subtask-right" >{{subtask.subtaskLeader}}</ion-label>
+          </div>
+        </div>
+      </div>
+      <ion-icon *ngIf="mile.subtask.length>0" [name]="isExpand[i]==false?'appname-expand':'appname-fold'"  class="fold" (click)="onClickExpand($event, i)">
+
+      </ion-icon>
+    </div>
+    <div class="mile-bottom">
+      <div class="item1">
+        <ion-label style="margin-bottom: 3px;font-size: 10px">{{mile.planTime | MonthPipe}}</ion-label>
+        <section class="line"></section>
+        <ion-label style="margin-top: 3px;font-size: 10px">{{mile.planTime | YearPipe}}</ion-label>
+      </div>
+      <div class="item2">
+        <div style="width: 1px; background-color: #ececec; height: 10px; position: absolute; left: 20px; top: 0px" ></div>
+        <ion-label no-padding no-margin class="label-radius">{{mile.milestoneSchedule}}</ion-label>
+        <ion-label style="margin-top: 3px;font-size: 10px;text-align: center">{{i+1}}</ion-label>
+      </div>
+      <!--[ngClass]="{'arrow-css1':mile.type==0,'arrow-css2':mile.type==1,'arrow-css3':mile.type==2}"-->
+      <ion-icon name="appname-arrow" class="arrow-css2" ></ion-icon>
+      <div class="item3-2" (click)="onClickMilestone($event, mile)">
+        <ion-row>
+          <ion-col col-5 style="float: left">
+            负责人：
+          </ion-col>
+          <ion-col col-7 style="float: right">
+            {{mile.milestoneLeader}}
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col col-5 style="float: left">
+            交付成果：
+          </ion-col>
+          <ion-col col-7 style="float: right">
+        <span class="item-right">
+          {{mile.milestoneDelivery}}
+        </span>
+          </ion-col>
+        </ion-row>
+      </div>
+    </div>
+  </div>
+
+  <!-- 项目结束 -->
+  <div class="mile-bottom">
+    <div class="item1">
+      <ion-label style="margin-bottom: 3px;font-size: 10px">{{project.endTime | MonthPipe}}</ion-label>
+      <section class="line"></section>
+      <ion-label style="margin-top: 3px;font-size: 10px">{{project.endTime | YearPipe}}</ion-label>
+    </div>
+    <div class="item2">
+      <div style="width: 1px; background-color: #ececec; height: 10px; position: absolute; left: 20px; top: 0px" ></div>
+      <ion-icon name="ios-arrow-dropup-circle" style="color: #fc5c53;padding-top: 15px"></ion-icon>
+      <ion-label no-padding no-margin style="margin-top: 3px;font-size: 10px;text-align: center">结束</ion-label>
+    </div>
+    <ion-icon name="appname-arrow" class="arrow-css1"></ion-icon>
+    <div class="item3-1">
+      <ion-row>
+        <ion-col col-5 style="float: left">
+          负责人：
+        </ion-col>
+        <ion-col col-7 style="float: right">
+          {{project.itemLeader}}
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col col-5 style="float: left">
+          交付成果：
+        </ion-col>
+        <ion-col col-7 style="float: right">
+        <span class="item-right">
+          {{project.endResult}}
+        </span>
+        </ion-col>
+      </ion-row>
+    </div>
+  </div>
+
+  <!-- 项目延期 -->
+  <div *ngIf="project.delayDays>0" class="mile-bottom" style="margin-top: 5px">
+    <div class="item1">
+      <ion-label style="margin-bottom: 3px;font-size: 10px">{{project.delayTime | MonthPipe}}</ion-label>
+      <section class="line"></section>
+      <ion-label style="margin-top: 3px;font-size: 10px">{{project.delayTime | YearPipe}}</ion-label>
+    </div>
+    <div class="item2">
+      <!--<div style="width: 1px; background-color: #ececec; height: 10px; position: absolute; left: 20px; top: 0px" ></div>-->
+      <ion-label no-padding no-margin class="delay-radius">延</ion-label>
+      <ion-label no-padding no-margin class="item2_text">延期</ion-label>
+    </div>
+    <ion-icon name="appname-arrow" class="arrow-css3"></ion-icon>
+    <div class="item3-3">
+      <ion-row>
+        <ion-col col-5 style="float: left">
+          负责人：
+        </ion-col>
+        <ion-col col-7 style="float: right">
+          {{project.itemLeader}}
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col col-5 style="float: left">
+          交付成果：
+        </ion-col>
+        <ion-col col-7 style="float: right">
+        <span class="item-right">
+          {{project.endResult}}
+        </span>
+        </ion-col>
+      </ion-row>
+    </div>
+  </div>
+
+  <!--[ngStyle]="{'bottom':isShowShare==false?'-200px':'0px'}"-->
+  <div id="shareView" class="share-css" >
+    <ion-label text-center>分享到</ion-label>
+    <ion-row style="height: 100px;@extend .vertical-middle;">
+      <ion-col text-center >
+        <ion-icon name="appname-dingding"></ion-icon>
+      </ion-col>
+      <ion-col text-center>
+        <ion-icon name="appname-qq"></ion-icon>
+      </ion-col>
+      <ion-col text-center>
+        <ion-icon name="appname-weixin"></ion-icon>
+      </ion-col>
+    </ion-row>
+    <button ion-button no-padding no-margin style="width: 100%; height: 50px; border-top: solid 1px #ececec; background-color: white; color: black" (click)="onCancelShare($event)">取消</button>
+  </div>
+</ion-content>
