@@ -39,9 +39,9 @@
       <ion-label>交付成果:</ion-label>
       <ion-input text-right type="text" [(ngModel)]=tempSubtask.deliveryResult></ion-input>
     </ion-item>
-    <ion-item *ngIf="tempSubtask.delay>0">
+    <ion-item *ngIf="tempSubtask.delayDays>0">
       <ion-label>延迟情况:</ion-label>
-      <ion-label text-right item-end>{{tempSubtask.delay | delayPipe}}</ion-label>
+      <ion-label text-right item-end>{{tempSubtask.delayDays | delayPipe}}</ion-label>
     </ion-item>
   </ion-list>
 

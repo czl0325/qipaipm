@@ -65,14 +65,14 @@
         <ion-label no-margin no-padding text-center class=" horizontal-center" style="line-height: 25px; font-size: 15px">{{mile.subtask.length+"个子任务"}}</ion-label>
       </div>
       <div class="subtask-wrap" *ngIf="isExpand[i]==true ">
-        <div class="subtask-item" *ngFor="let subtask of mile.subtasks" (click)="onClickSubtask($event, subtask)">
+        <div class="subtask-item" *ngFor="let subtask of mile.subtask" (click)="onClickSubtask($event, subtask)">
           <div class="subtask-css" >
             <ion-label class="subtask-left">子任务:</ion-label>
             <ion-label class="subtask-right" >{{subtask.subtaskName}}</ion-label>
           </div>
           <div class="subtask-css" >
-            <ion-label class="subtask-left">完成时间:</ion-label>
-            <ion-label class="subtask-right" >{{subtask.realTime}}</ion-label>
+            <ion-label class="subtask-left">交付时间:</ion-label>
+            <ion-label class="subtask-right" >{{subtask.planTime | stampToDate}}</ion-label>
           </div>
           <div class="subtask-css" >
             <ion-label class="subtask-left">负责人:</ion-label>

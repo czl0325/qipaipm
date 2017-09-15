@@ -137,6 +137,7 @@ export class MilestoneDetailPage {
           realTime:'',        //子任务实际完成时间
           isAccomplish:false, //子任务是否完成
           remark:'',          //子任务备注
+          delayDays:0,        //子任务延期天数
       };
     this.navCtrl.push(SubtaskPage, {
       subtask:subtask,

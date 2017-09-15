@@ -50,6 +50,7 @@ export class SubtaskPage {
       realTime:'',        //子任务实际完成时间
       isAccomplish:false, //子任务是否完成
       remark:'',          //子任务备注
+      delayDays:0,        //子任务延期天数
   };
   tempSubtask: any;
 
@@ -78,13 +79,14 @@ export class SubtaskPage {
   onSaveSubtask() {
     var param = this.tempSubtask;
     param.mid = this.mid;
+    param.sid = this.tempSubtask.id;
     this.appService.httpPost("subtask/create", param, this, function (view, res) {
-        console.log(res);
         if (res.status == 200) {
-            view.subtask = view.tempSubtask;
-            view.callback(view.tempSubtask).then(()=>{
-                view.navCtrl.pop()
-            });
+            console.log(res.body);
+            // view.subtask = view.tempSubtask;
+            // view.callback(view.tempSubtask).then(()=>{
+            //     view.navCtrl.pop()
+            // });
         } else {
             let toast = view.toastCtrl.create({
                 message: view.type==1?'新建里程碑失败!':'编辑里程碑失败!',
