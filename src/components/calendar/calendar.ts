@@ -251,7 +251,6 @@ export class CalendarComponent {
       var data = res.json();
       if (data.success == true) {
         view.dayHasProject = data.data;
-        console.log("有项目的日期是=====",view.dayHasProject);
         for (let i=0; i<view.dayHasProject.length; i++) {
           var object = view.dayHasProject[i];
           var startTime = object.startTime;

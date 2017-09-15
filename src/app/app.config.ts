@@ -113,4 +113,16 @@ export class AppConfig {
     var d = "0"+date.getDate();
     return y+"-"+m.substring(m.length-2,m.length)+"-"+d.substring(d.length-2,d.length);
   }
+
+  /**
+   * 深拷贝
+   */
+  public static deepCopy(originObj: any): any{
+      return originObj ? JSON.parse(JSON.stringify(originObj)) : null;
+  }
+
+  //把字符串里面的数字都提取出来
+    public static  getNum(text){
+        return text.replace(/[^0-9]/ig,"");
+    }
 }

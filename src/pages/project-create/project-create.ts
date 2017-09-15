@@ -142,7 +142,7 @@ export class ProjectCreatePage {
     console.log(this.project.milestone);
     if (this.project.milestone.length > 0) {
       var lastMile = this.project.milestone[this.project.milestone.length-1];
-      if (lastMile.milestoneLeader == null || lastMile.milestoneDelivery == null || lastMile.milestoneSchedule == null || lastMile.planTime.length  == null) {
+      if (lastMile.milestoneLeader == null || lastMile.milestoneDelivery == null || lastMile.milestoneSchedule == null || lastMile.planTime  == null) {
         let alert = this.alertCtrl.create({
             title: '错误信息',
             subTitle: '请先完善上一个里程碑内容!',
@@ -151,7 +151,7 @@ export class ProjectCreatePage {
         alert.present();
         return;
       }
-      if (!(lastMile.milestoneLeader.length > 0 && lastMile.milestoneDelivery.length > 0 && lastMile.milestoneSchedule.length > 0 && lastMile.planTime.length > 0)) {
+      if (lastMile.milestoneLeader.length < 1 || lastMile.milestoneDelivery.length < 1 || lastMile.milestoneSchedule.length < 1 || lastMile.planTime.length < 1) {
         let alert = this.alertCtrl.create({
           title: '错误信息',
           subTitle: '请先完善上一个里程碑内容!',
@@ -172,13 +172,14 @@ export class ProjectCreatePage {
       remark : '',                //里程碑备注
       isAccomplish : false,       //里程碑是否完成
       delay : 0,                  //里程碑延迟天数
-      subtasks : [],              //里程碑子任务
+      subtask : [],              //里程碑子任务
     };
     // this.project.milestone.push(milestone);
     this.navCtrl.push(MilestoneDetailPage, {
       milestone : milestone,
       number : this.project.milestone.length+1,
       projectname : this.project.itemName,
+      pid : this.project.id,
       type : 1,
       callback : this.milestoneCallback,
     });
@@ -191,30 +192,32 @@ export class ProjectCreatePage {
   }
 
   onClickRemoveMilestone($event, mile) {
-    this.project.milestone.splice(this.project.milestone.indexOf(mile), 1);
+    if (this.type == 1) {
+      this.project.milestone.splice(this.project.milestone.indexOf(mile), 1);
+    } else {
+      this.appService.httpDelete("milestone/delete",{"id":mile.id},this,function (view, res) {
+        if (res.status == 200) {
+          view.project.milestone.splice(view.project.milestone.indexOf(mile), 1);
+        }
+      },true);
+    }
   }
 
-  milestoneCallback = (param) =>
+  milestoneCallback = (milestone) =>
   {
     return new Promise((resolve, reject) => {
-      if (typeof (param) != 'undefined') {
-        if (this.type == 2) {
-          var paramToPost = param;
-          paramToPost.itemName = this.project.itemName;
-          paramToPost.pid = this.project.id;
-          this.appService.httpPost("milestone/create", paramToPost, this,function (view, res) {
-            console.log(res);
-            if (res.status == 200) {
-              view.project.milestone.push(param);
-              let toast = view.toastCtrl.create({
-                  message: '添加里程碑成功!',
-                  duration: 3000
-              });
-              toast.present();
-            }
-          },true);
-        } else {
-          this.project.milestone.push(param);
+      if (typeof (milestone) != 'undefined') {
+        var isIn = false;
+        for (let i=0; i<this.project.milestone.length; i++) {
+          var tempMile = this.project.milestone[i];
+          if (tempMile.id == milestone.id) {
+            isIn = true;
+            this.project.milestone.splice(i, 1, milestone);
+            break;
+          }
+        }
+        if (!isIn) {
+          this.project.milestone.push(milestone);
         }
       } else {
 

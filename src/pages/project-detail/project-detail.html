@@ -61,10 +61,10 @@
       <div style="width: 1px; background-color: #ececec; height: 100%; position: absolute; left: 65px; top: 0px" >
 
       </div >
-      <div class="subtask-title" *ngIf="isExpand[i]==false && mile.subtask.length>0">
+      <div class="subtask-title" *ngIf="isExpand[i]==false ">
         <ion-label no-margin no-padding text-center class=" horizontal-center" style="line-height: 25px; font-size: 15px">{{mile.subtask.length+"个子任务"}}</ion-label>
       </div>
-      <div class="subtask-wrap" *ngIf="isExpand[i]==true && mile.subtask.length>0">
+      <div class="subtask-wrap" *ngIf="isExpand[i]==true ">
         <div class="subtask-item" *ngFor="let subtask of mile.subtasks" (click)="onClickSubtask($event, subtask)">
           <div class="subtask-css" >
             <ion-label class="subtask-left">子任务:</ion-label>
@@ -80,7 +80,7 @@
           </div>
         </div>
       </div>
-      <ion-icon *ngIf="mile.subtask.length>0" [name]="isExpand[i]==false?'appname-expand':'appname-fold'"  class="fold" (click)="onClickExpand($event, i)">
+      <ion-icon [name]="isExpand[i]==false?'appname-expand':'appname-fold'"  class="fold" (click)="onClickExpand($event, i)">
 
       </ion-icon>
     </div>

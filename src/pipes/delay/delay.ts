@@ -13,8 +13,13 @@ export class DelayPipe implements PipeTransform {
   /**
    * Takes a value and makes it lowercase.
    */
-  transform(value: string, ...args) {
-    var j = parseInt(value);
+  transform(value: any, ...args) {
+    var j;
+    if (typeof (value) == "string") {
+      j = parseInt(value);
+    } else {
+      j = value;
+    }
     if (j < 1) {
       return '无延迟';
     } else {

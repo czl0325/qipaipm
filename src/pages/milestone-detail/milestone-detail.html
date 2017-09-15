@@ -84,8 +84,14 @@
     </ion-item>
   </ion-list>
 
-  <div *ngFor="let subtask of tempMilestone.subtasks">
-    <ion-label full>{{subtask.subtaskName}}</ion-label>
+  <div *ngFor="let subtask of tempMilestone.subtasks; let i = index">
+    <div style="height: 30px; border-bottom: solid 1px #ececec; ">
+      <div style="width: 5px; height: 30px; background-color: #555555; float: left;"></div>
+      <ion-label no-margin no-padding style="line-height: 30px; margin-left: 10px; float: left;">{{subtask.subtaskName}}</ion-label>
+      <div style="float: right; width: 30px; height: 30px;position: relative">
+        <ion-icon name="close" style="position: absolute; top: 50%; right: 0px; -webkit-transform: translateY(-50%); transform: translateY(-50%); margin-right: 10px; " (click)="onRemoveSubtask($event, subtask)"></ion-icon>
+      </div>
+    </div>
     <ion-list no-lines no-padding no-margin>
       <ion-item style="border-bottom: solid 1px #ececec;">
         <ion-icon item-start name="appname-admin"></ion-icon>
@@ -107,7 +113,7 @@
     </ion-list>
   </div>
 
-  <div style="padding: 10px;" *ngIf="type != 1">
+  <div style="padding: 10px;" *ngIf="type > 1">
     <button ion-button (click)="onAddSubtask($event)" block style="background-color: #fc5c53">+ 添加子任务</button>
   </div>
 </ion-content>

@@ -161,6 +161,7 @@ export class ProjectDetailPage {
     this.navCtrl.push(MilestoneDetailPage, {
       milestone : mile,
       projectname : this.project.itemName,
+      pid :this.project.id,
       callback : this.projectCallback,
       type : 2,
     });
@@ -175,6 +176,13 @@ export class ProjectDetailPage {
   }
 
   onClickExpand($event, index) {
+    var mile = this.project.milestone[index];
+    if (mile.subtask == null) {
+      return;
+    }
+    if (mile.subtask.length < 1) {
+      return;
+    }
     this.isExpand[index] = !this.isExpand[index];
   }
 
@@ -191,16 +199,27 @@ export class ProjectDetailPage {
     }, 16);
   }
 
-  projectCallback = (param) =>
+  projectCallback = (milestone) =>
   {
-    return new Promise((resolve, reject) => {
-      if (typeof (param) != 'undefined') {
+      return new Promise((resolve, reject) => {
+          if (typeof (milestone) != 'undefined') {
+              var isIn = false;
+              for (let i=0; i<this.project.milestone.length; i++) {
+                  var tempMile = this.project.milestone[i];
+                  if (tempMile.id == milestone.id) {
+                      isIn = true;
+                      this.project.milestone.splice(i, 1, milestone);
+                      break;
+                  }
+              }
+              if (!isIn) {
+                  this.project.milestone.push(milestone);
+              }
+          } else {
 
-      } else {
-
-      }
-      resolve();
-    });
+          }
+          resolve();
+      });
   };
 
 

@@ -87,6 +87,28 @@ export class AppService {
     });
   }
 
+  httpDelete(url, params, view, callback, loader: boolean = false) {
+      let loading = this.loadingCtrl.create();
+      if (loader) {
+          loading.present();
+      }
+      this.http.delete(AppGlobal.domain + url + this.encode(params))
+          .toPromise()
+          .then(res => {
+              //var d = res.json();
+              if (loader) {
+                  loading.dismiss();
+              }
+              //callback(d == null ? "[]" : d);
+              callback(view, res);
+          }).catch(error => {
+          if (loader) {
+              loading.dismiss();
+          }
+          this.handleError(error);
+      });
+  }
+
   private handleError(error: Response | any) {
     let msg = '';
     if (error.status == 400) {

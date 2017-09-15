@@ -14,24 +14,34 @@
 <ion-content fullscreen>
   <ion-list no-padding no-lines style="margin-bottom: 0px; border-bottom: solid 1px #ececec">
     <ion-item >
+      <ion-icon item-start name="appname-pname"></ion-icon>
       <ion-label>项目名称:</ion-label>
-      <ion-label right text-right>大会议内容</ion-label>
+      <ion-label right text-right>{{projectname}}</ion-label>
     </ion-item>
   </ion-list>
-  <ion-label full class="subtask-title-css">里程碑1 -> 子任务1.1</ion-label>
+  <ion-label full class="subtask-title-css">{{tempSubtask.subtaskName}}</ion-label>
 
   <ion-list no-lines style="border: solid 1px #ececec">
-    <ion-item>
+    <ion-item style="border-bottom: solid 1px #ececec;">
+      <ion-icon item-start name="appname-admin"></ion-icon>
+      <ion-label>负责人:</ion-label>
+      <ion-input text-right type="text" [(ngModel)]="tempSubtask.subtaskLeader" required [disabled]=""></ion-input>
+    </ion-item>
+    <ion-item style="border-bottom: solid 1px #ececec;">
+      <ion-icon item-start name="appname-time"></ion-icon>
       <ion-label>交付时间:</ion-label>
-      <ion-datetime text-right displayFormat="YYYY-MM-DD" [(ngModel)]=subtask.realTime max="2030" min="2015"></ion-datetime>
+      <ion-datetime text-right displayFormat="YYYY-MM-DD" max="2030" min="2015"
+                    ngModel="{{tempSubtask.planTime | stampToDate}}"
+                    (ngModelChange)="tempSubtask.planTime = $event"></ion-datetime>
     </ion-item>
     <ion-item>
+      <ion-icon item-start name="appname-result"></ion-icon>
       <ion-label>交付成果:</ion-label>
-      <ion-input text-right type="text" [(ngModel)]=subtask.deliveryResult></ion-input>
+      <ion-input text-right type="text" [(ngModel)]=tempSubtask.deliveryResult></ion-input>
     </ion-item>
-    <ion-item *ngIf="subtask.delay>0">
+    <ion-item *ngIf="tempSubtask.delay>0">
       <ion-label>延迟情况:</ion-label>
-      <ion-label text-right item-end>{{subtask.delay | delayPipe}}</ion-label>
+      <ion-label text-right item-end>{{tempSubtask.delay | delayPipe}}</ion-label>
     </ion-item>
   </ion-list>
 
@@ -39,11 +49,11 @@
     <ion-item style="border-top: solid 1px #ececec;border-bottom: solid 1px #ececec">
       <div item-start>是否完成</div>
       <ion-label>完成</ion-label>
-      <ion-checkbox [(ngModel)]=subtask.isAccomplish></ion-checkbox>
+      <ion-checkbox [(ngModel)]=tempSubtask.isAccomplish></ion-checkbox>
     </ion-item>
     <ion-item style="border-bottom: solid 1px #ececec; height: 100px;">
       <ion-label item-start>备注:</ion-label>
-      <ion-textarea item-end [(ngModel)]=subtask.remark></ion-textarea>
+      <ion-textarea item-end [(ngModel)]=tempSubtask.remark></ion-textarea>
     </ion-item>
   </ion-list>
 </ion-content>

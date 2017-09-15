@@ -36,11 +36,11 @@ import {AppConfig} from "../../app/app.config";
 
 export class MilestoneDetailPage {
   pname : string;
+  pid : string;
   mileNumber : any;
   callback;
-  type;
+  type : number;
 
-  canEdit;
   milestone = {
     id : '',                    //里程碑id
     milestoneName : '',         //里程碑的名称
@@ -52,42 +52,38 @@ export class MilestoneDetailPage {
     remark : '',                //里程碑备注
     isAccomplish : false,       //里程碑是否完成
     delay : 0,                  //里程碑延迟天数
-    subtasks : [],              //里程碑子任务
+    subtask : [],              //里程碑子任务
   };
 
   tempMilestone;
 
-  /**
-   * 深拷贝
-   */
-  deepCopy(originObj: any): any{
-    return originObj ? JSON.parse(JSON.stringify(originObj)) : null;
-  }
+
 
   constructor(public navCtrl: NavController, public navParams: NavParams, private alertCtrl: AlertController, private appService: AppService) {
     var data = this.navParams.get('milestone');
     this.pname = this.navParams.get('projectname');
+    this.pid = this.navParams.get('pid');
     this.mileNumber = this.navParams.get('number');
     this.callback = this.navParams.get('callback');
     this.type = this.navParams.get('type');
-      this.milestone = data;
-      this.tempMilestone = this.deepCopy(this.milestone);
+    this.milestone = data;
+    this.tempMilestone = AppConfig.deepCopy(this.milestone);
     if (this.type == 1) {
-        this.tempMilestone.milestoneName = '里程碑'+this.mileNumber;
+      this.tempMilestone.milestoneName = '里程碑'+this.mileNumber;
     }
-    console.log(this.tempMilestone);
   }
 
   ionViewDidLoad() {
 
   }
+
   ionViewWillLeave(){
 
   }
 
-    onPlanTimeChange($event) {
-      console.log(this.milestone.planTime);
-    }
+  onPlanTimeChange($event) {
+    console.log(this.milestone.planTime);
+  }
 
   onSaveMilestone() {
     if (this.tempMilestone.milestoneLeader.length < 1) {
@@ -108,36 +104,77 @@ export class MilestoneDetailPage {
       alert.present();
       return;
     }
-    switch (this.type) {
-        case 1:
-          console.log(this.tempMilestone);
-          this.callback(this.tempMilestone).then(()=>{ this.navCtrl.pop() });
-          break;
-        case 2:
-          var param = this.deepCopy(this.tempMilestone);
-          param.itemName = this.pname;
-          this.appService.httpPost("milestone/create",param,this,function (view, res) {
-            if (res.status == 200) {
-              view.milestone = view.tempMilestone;
-              view.navCtrl.pop();
-            } else {
-              let toast = view.toastCtrl.create({
-                  message: '编辑里程碑失败!',
-                  duration: 3000
-              });
-              toast.present();
-            }
-          },true);
-          break;
-        default:
-          break;
-    }
+
+    var param = AppConfig.deepCopy(this.tempMilestone);
+    param.itemName = this.pname;
+    param.pid = this.pid;
+    param.mid = param.id;
+    this.appService.httpPost("milestone/create",param,this,function (view, res) {
+      console.log(res);
+        if (res.status == 200) {
+            view.milestone = view.tempMilestone;
+            view.callback(view.milestone).then(()=>{
+              view.navCtrl.pop()
+            });
+        } else {
+            let toast = view.toastCtrl.create({
+                message: view.type==1?'新建里程碑失败!':'编辑里程碑失败!',
+                duration: 3000
+            });
+            toast.present();
+        }
+    },true);
   }
 
   onAddSubtask($event) {
+      var subtask = {
+          id:'',              //子任务的id
+          subtaskName:'子任务'+AppConfig.getNum(this.milestone.milestoneName)+'.'+(this.milestone.subtask.length+1),     //子任务的名称
+          subtaskLeader:'',   //子任务的负责人
+          deliveryTime:'',    //子任务的交付时间
+          deliveryResult:'',  //子任务交付成果
+          planTime: new DatePipe('en-US').transform(new Date(), 'yyyy-MM-dd'),        //子任务计划完成时间
+          realTime:'',        //子任务实际完成时间
+          isAccomplish:false, //子任务是否完成
+          remark:'',          //子任务备注
+      };
     this.navCtrl.push(SubtaskPage, {
+      subtask:subtask,
       type:2,
-        projectname:this.pname,
+      projectname:this.pname,
+      mid:this.milestone.id,
+      callback : this.subtaskCallback,
     });
   }
+
+    onRemoveSubtask($event, subtask) {
+      this.appService.httpDelete("subtask/delete", {"id":subtask.id}, this, function (view, res) {
+         if (res.status == 200) {
+           view.milestone.subtask.splice(view.milestone.subtask.indexOf(subtask), 1);
+         }
+      },true);
+    }
+
+    subtaskCallback = (subtask) =>
+    {
+        return new Promise((resolve, reject) => {
+            if (typeof (subtask) != 'undefined') {
+                var isIn = false;
+                for (let i=0; i<this.milestone.subtask.length; i++) {
+                    var tempSubtask = this.milestone.subtask[i];
+                    if (tempSubtask.id == subtask.id) {
+                        isIn = true;
+                        this.milestone.subtask.splice(i, 1, subtask);
+                        break;
+                    }
+                }
+                if (!isIn) {
+                    this.milestone.subtask.push(subtask);
+                }
+            } else {
+
+            }
+            resolve();
+        });
+    };
 }
