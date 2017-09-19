@@ -93,6 +93,14 @@ export class ProjectDetailPage {
   constructor(public navCtrl: NavController, private navParams: NavParams, private popoverCtrl: PopoverController,
               public events: Events, public appService: AppService, public toastCtrl: ToastController) {
     this.project = this.navParams.get('project');
+      for (let i=0; i<this.project.milestone.length; i++) {
+          var milestone = this.project.milestone[i];
+          milestone.milestoneName = '里程碑'+(i+1);
+          for (let j=0; j<milestone.subtask.length; j++) {
+            var subtask = milestone.subtask[j];
+            subtask.subtaskName = '子任务'+(j+1);
+          }
+      }
     this.isExpand = [];
     for (let i=0; i<this.project.milestone.length; i++) {
       this.isExpand.push(false);

@@ -65,7 +65,6 @@ export class SubtaskPage {
       this.subtask = data;
     }
     this.tempSubtask = AppConfig.deepCopy(this.subtask);
-    console.log(this.tempSubtask);
   }
 
   ionViewDidLoad() {
@@ -78,22 +77,28 @@ export class SubtaskPage {
 
   onSaveSubtask() {
     var param = this.tempSubtask;
-    param.mid = this.mid;
-    param.sid = this.tempSubtask.id;
-    this.appService.httpPost("subtask/create", param, this, function (view, res) {
-        if (res.status == 200) {
-            console.log(res.body);
-            // view.subtask = view.tempSubtask;
-            // view.callback(view.tempSubtask).then(()=>{
-            //     view.navCtrl.pop()
-            // });
-        } else {
-            let toast = view.toastCtrl.create({
-                message: view.type==1?'新建里程碑失败!':'编辑里程碑失败!',
-                duration: 3000
-            });
-            toast.present();
-        }
-    },true);
+    if (this.type == 1) {
+        this.callback(this.tempSubtask).then(()=>{
+            this.navCtrl.pop()
+        });
+    } else {
+        param.mid = this.mid;
+        param.sid = this.tempSubtask.id;
+        this.appService.httpPost("subtask/create", param, this, function (view, res) {
+            console.log(res.json());
+            if (res.status == 200) {
+                view.subtask = res.json().data;
+                view.callback(view.subtask).then(()=>{
+                    view.navCtrl.pop()
+                });
+            } else {
+                let toast = view.toastCtrl.create({
+                    message: view.type==1?'新建里程碑失败!':'编辑里程碑失败!',
+                    duration: 3000
+                });
+                toast.present();
+            }
+        },true);
+    }
   }
 }

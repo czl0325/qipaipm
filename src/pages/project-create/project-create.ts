@@ -128,6 +128,7 @@ export class ProjectCreatePage {
         return;
       }
     }
+    console.log(this.project);
     this.appService.httpPost("item/create", this.project, this, function (view ,res){
       let toast = view.toastCtrl.create({
         message: '创建项目成功!',
@@ -139,7 +140,6 @@ export class ProjectCreatePage {
   }
 
   onAddMilestone() {
-    console.log(this.project.milestone);
     if (this.project.milestone.length > 0) {
       var lastMile = this.project.milestone[this.project.milestone.length-1];
       if (lastMile.milestoneLeader == null || lastMile.milestoneDelivery == null || lastMile.milestoneSchedule == null || lastMile.planTime  == null) {
@@ -163,7 +163,7 @@ export class ProjectCreatePage {
     }
     var milestone = {
       id : '',                    //里程碑id
-      milestoneName : '',         //里程碑的名称
+      milestoneName : '里程碑'+(this.project.milestone.length+1),         //里程碑的名称
       milestoneLeader : '',       //里程碑的负责人
       milestoneDelivery : '',     //里程碑的交付成果
       milestoneSchedule : '',     //里程碑的进度
@@ -177,10 +177,9 @@ export class ProjectCreatePage {
     // this.project.milestone.push(milestone);
     this.navCtrl.push(MilestoneDetailPage, {
       milestone : milestone,
-      number : this.project.milestone.length+1,
       projectname : this.project.itemName,
       pid : this.project.id,
-      type : 1,
+      type : this.type,
       callback : this.milestoneCallback,
     });
   }
@@ -192,15 +191,51 @@ export class ProjectCreatePage {
   }
 
   onClickRemoveMilestone($event, mile) {
-    if (this.type == 1) {
-      this.project.milestone.splice(this.project.milestone.indexOf(mile), 1);
-    } else {
-      this.appService.httpDelete("milestone/delete",{"id":mile.id},this,function (view, res) {
-        if (res.status == 200) {
-          view.project.milestone.splice(view.project.milestone.indexOf(mile), 1);
-        }
-      },true);
-    }
+    //if (this.type == 1) {
+      this.deleteOneMile(mile)
+    // } else {
+    //   this.appService.httpDelete("milestone/delete",{"id":mile.id},this,function (view, res) {
+    //     if (res.status == 200) {
+    //         var deleteId = mile.id;
+    //         if (res.status == 200) {
+    //             var index = -1;
+    //             for (let i=0; i<view.project.milestone.length; i++) {
+    //                 var milestone = view.project.milestone[i];
+    //                 if (deleteId == milestone.id) {
+    //                     index = i;
+    //                     break;
+    //                 }
+    //             }
+    //             if (index >= 0) {
+    //                 view.project.milestone.splice(index, 1);
+    //                 for (let i=0; i<view.project.milestone.length; i++) {
+    //                     var milestone = view.project.milestone[i];
+    //                     milestone.subtaskName = '里程碑'+(i+1);
+    //                 }
+    //             }
+    //         }
+    //     }
+    //   },true);
+    // }
+  }
+
+  deleteOneMile(mile) {
+      var deleteId = mile.id;
+      var index = -1;
+      for (let i=0; i<this.project.milestone.length; i++) {
+          var milestone = this.project.milestone[i];
+          if (deleteId == milestone.id) {
+              index = i;
+              break;
+          }
+      }
+      if (index >= 0) {
+          this.project.milestone.splice(index, 1);
+          for (let i=0; i<this.project.milestone.length; i++) {
+              var milestone = this.project.milestone[i];
+              milestone.subtaskName = '里程碑'+(i+1);
+          }
+      }
   }
 
   milestoneCallback = (milestone) =>
