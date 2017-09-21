@@ -15,12 +15,12 @@
   </ion-navbar>
 </ion-header>
 
-
 <ion-content fullscreen>
-  <ion-list no-padding no-border>
-    <ion-item>
-      <ion-label no-padding no-margin float-left>5月5日</ion-label>
-      <ion-label no-padding no-margin float-left>大会员数据</ion-label>
-    </ion-item>
-  </ion-list>
+    <div *ngFor="let dic of array">
+      <div style="background-color: #f5f6f7; height: 20px;padding-left: 5px">{{dic.year+"年"}}</div>
+      <div style="height: 44px; border-bottom: solid 1px #f5f6f7; position:relative;" *ngFor="let project of dic.projects" (click)="onClickProject($event,project)">
+        <ion-label no-padding no-margin float-left class="vertical_center" style="left: 5px">{{project.startTime | MonthPipe}}</ion-label>
+        <ion-label no-padding no-margin float-right class="vertical_center" style="right: 5px;">{{project.itemName}}</ion-label>
+      </div>
+    </div>
 </ion-content>

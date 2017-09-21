@@ -1,9 +1,9 @@
-import { Component, ChangeDetectorRef  } from '@angular/core';
-import { NavController, NavParams, AlertController } from 'ionic-angular';
+import { Component, ChangeDetectorRef, ViewChild } from '@angular/core';
+import { NavController, NavParams, AlertController, Events, Content } from 'ionic-angular';
 import { SubtaskPage } from "../subtask/subtask";
 import { DatePipe } from "@angular/common";
-import {AppService} from "../../app/app.service";
-import {AppConfig} from "../../app/app.config";
+import { AppService } from "../../app/app.service";
+import { AppConfig } from "../../app/app.config";
 
 /**
  * Generated class for the MilestoneDetailPage page.
@@ -39,6 +39,7 @@ export class MilestoneDetailPage {
   pid : string;
   callback;
   type : number;
+  @ViewChild(Content) content: Content;
 
   milestone = {
     id : '',                    //里程碑id
@@ -53,12 +54,9 @@ export class MilestoneDetailPage {
     delay : 0,                  //里程碑延迟天数
     subtask : [],              //里程碑子任务
   };
-
   tempMilestone;
 
-
-
-  constructor(public navCtrl: NavController, public navParams: NavParams, private alertCtrl: AlertController, private appService: AppService, private cd: ChangeDetectorRef) {
+  constructor(public navCtrl: NavController, public navParams: NavParams, private alertCtrl: AlertController, private appService: AppService, private cd: ChangeDetectorRef, public events: Events) {
     var data = this.navParams.get('milestone');
     this.pname = this.navParams.get('projectname');
     this.pid = this.navParams.get('pid');
@@ -85,6 +83,7 @@ export class MilestoneDetailPage {
   }
 
   onSaveMilestone() {
+
     if (this.tempMilestone.milestoneLeader.length < 1) {
       let alert = this.alertCtrl.create({
         title: '错误信息',
@@ -116,7 +115,6 @@ export class MilestoneDetailPage {
         param.mid = param.id;
         this.appService.httpPost("milestone/create",param,this,function (view, res) {
             if (res.status == 200) {
-                console.log(view.tempMilestone);
                 view.tempMilestone = res.json();
                 view.milestone = view.tempMilestone;
                 view.callback(view.milestone).then(()=>{
@@ -156,27 +154,11 @@ export class MilestoneDetailPage {
   }
 
     onRemoveSubtask($event, subtask) {
-      this.deleteOneSubtask(subtask);
-      // this.appService.httpDelete("subtask/delete", {"id":subtask.id}, this, function (view, res) {
-      //     var deleteId = subtask.id;
-      //   if (res.status == 200) {
-      //       var index = -1;
-      //       for (let i=0; i<view.tempMilestone.subtask.length; i++) {
-      //           var subtask2 = view.tempMilestone.subtask[i];
-      //           if (deleteId == subtask2.id) {
-      //               index = i;
-      //               break;
-      //           }
-      //       }
-      //       if (index >= 0) {
-      //           view.tempMilestone.subtask.splice(index, 1);
-      //           for (let i=0; i<view.tempMilestone.subtask.length; i++) {
-      //               var subtask2 = view.tempMilestone.subtask[i];
-      //               subtask2.subtaskName = '子任务'+(i+1);
-      //           }
-      //       }
-      //    }
-      // },true);
+      this.appService.httpDelete("subtask/delete", {"id":subtask.id}, this, function (view, res) {
+        if (res.status == 200) {
+          view.deleteOneSubtask(subtask);
+        }
+      },true);
     }
 
     deleteOneSubtask(subtask) {
@@ -195,6 +177,8 @@ export class MilestoneDetailPage {
                 var subtask2 = this.tempMilestone.subtask[i];
                 subtask2.subtaskName = '子任务'+(i+1);
             }
+            this.milestone = this.tempMilestone;
+            this.events.publish('reloadMilestone',this.milestone);
         }
     }
 
@@ -216,6 +200,14 @@ export class MilestoneDetailPage {
                     this.tempMilestone.subtask.push(subtask);
                     this.cd.detectChanges();
                 }
+                this.milestone = this.tempMilestone;
+                this.events.publish('reloadMilestone',this.milestone);
+                //this.content.resize();
+                setTimeout(() => {
+                    if(this.content.scrollToBottom){
+                        this.content.scrollToBottom(0);
+                    }
+                },200);
             } else {
 
             }

@@ -25389,6 +25389,12 @@ calendar .selectedMonthLabel {
   margin-top: 10px;
 }
 
+page-contact .input-search {
+  border-radius: 4px;
+  margin: 5px 10px 5px 10px;
+  background-color: white;
+}
+
 page-home .circle {
   width: 10px;
   height: 10px;

@@ -3,6 +3,7 @@ import {AlertController, NavController, NavParams, ToastController} from 'ionic-
 import { DatePipe } from "@angular/common";
 import { MilestoneDetailPage } from "../milestone-detail/milestone-detail";
 import { AppService } from "../../app/app.service";
+import { ContactPage } from "../contact/contact";
 
 /**
  * Generated class for the ProjectCreatePage page.
@@ -128,7 +129,6 @@ export class ProjectCreatePage {
         return;
       }
     }
-    console.log(this.project);
     this.appService.httpPost("item/create", this.project, this, function (view ,res){
       let toast = view.toastCtrl.create({
         message: '创建项目成功!',
@@ -191,40 +191,23 @@ export class ProjectCreatePage {
   }
 
   onClickRemoveMilestone($event, mile) {
-    //if (this.type == 1) {
+    if (this.type == 1) {
       this.deleteOneMile(mile)
-    // } else {
-    //   this.appService.httpDelete("milestone/delete",{"id":mile.id},this,function (view, res) {
-    //     if (res.status == 200) {
-    //         var deleteId = mile.id;
-    //         if (res.status == 200) {
-    //             var index = -1;
-    //             for (let i=0; i<view.project.milestone.length; i++) {
-    //                 var milestone = view.project.milestone[i];
-    //                 if (deleteId == milestone.id) {
-    //                     index = i;
-    //                     break;
-    //                 }
-    //             }
-    //             if (index >= 0) {
-    //                 view.project.milestone.splice(index, 1);
-    //                 for (let i=0; i<view.project.milestone.length; i++) {
-    //                     var milestone = view.project.milestone[i];
-    //                     milestone.subtaskName = '里程碑'+(i+1);
-    //                 }
-    //             }
-    //         }
-    //     }
-    //   },true);
-    // }
+    } else {
+      this.appService.httpDelete("milestone/delete",{"id":mile.id},this,function (view, res) {
+        if (res.status == 200) {
+            view.deleteOneMile(mile);
+        }
+      },true);
+    }
   }
 
   deleteOneMile(mile) {
       var deleteId = mile.id;
       var index = -1;
       for (let i=0; i<this.project.milestone.length; i++) {
-          var milestone = this.project.milestone[i];
-          if (deleteId == milestone.id) {
+          var milestone1 = this.project.milestone[i];
+          if (deleteId == milestone1.id) {
               index = i;
               break;
           }
@@ -232,10 +215,14 @@ export class ProjectCreatePage {
       if (index >= 0) {
           this.project.milestone.splice(index, 1);
           for (let i=0; i<this.project.milestone.length; i++) {
-              var milestone = this.project.milestone[i];
-              milestone.subtaskName = '里程碑'+(i+1);
+              var milestone2 = this.project.milestone[i];
+              milestone2.milestoneName = '里程碑'+(i+1);
           }
       }
+  }
+
+  onEndDirector($event) {
+    this.navCtrl.push(ContactPage);
   }
 
   milestoneCallback = (milestone) =>

@@ -30,7 +30,6 @@ export class HomePage {
       var dateString = AppConfig.dateToString(date);
       this.appService.httpGet("item/searchByContion", {"startTime":dateString,"endTime":dateString,"page":1,"limit":100}, this, function (view ,res){
         var data = res.json();
-        console.log(data);
         if (data.success == true) {
           view.projects = data.data;
           console.log(view.projects);

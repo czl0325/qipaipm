@@ -3,7 +3,7 @@ import { NavController, NavParams, PopoverController, ViewController, Events, To
 import { SubtaskPage } from "../subtask/subtask";
 import { MilestoneDetailPage } from "../milestone-detail/milestone-detail";
 import { ProjectCreatePage } from "../project-create/project-create";
-import {AppService} from "../../app/app.service";
+import { AppService } from "../../app/app.service";
 
 /**
  * Generated class for the ProjectDetailPage page.
@@ -93,14 +93,14 @@ export class ProjectDetailPage {
   constructor(public navCtrl: NavController, private navParams: NavParams, private popoverCtrl: PopoverController,
               public events: Events, public appService: AppService, public toastCtrl: ToastController) {
     this.project = this.navParams.get('project');
-      for (let i=0; i<this.project.milestone.length; i++) {
-          var milestone = this.project.milestone[i];
-          milestone.milestoneName = '里程碑'+(i+1);
-          for (let j=0; j<milestone.subtask.length; j++) {
-            var subtask = milestone.subtask[j];
-            subtask.subtaskName = '子任务'+(j+1);
-          }
-      }
+    for (let i=0; i<this.project.milestone.length; i++) {
+        var milestone = this.project.milestone[i];
+        milestone.milestoneName = '里程碑'+(i+1);
+        for (let j=0; j<milestone.subtask.length; j++) {
+          var subtask = milestone.subtask[j];
+          subtask.subtaskName = '子任务'+(j+1);
+        }
+    }
     this.isExpand = [];
     for (let i=0; i<this.project.milestone.length; i++) {
       this.isExpand.push(false);
@@ -126,6 +126,20 @@ export class ProjectDetailPage {
         type:2,
       });
     });
+    this.events.subscribe('reloadMilestone',(milestone)=>{
+      var isIn = false;
+      for (let i=0; i<this.project.milestone.length; i++) {
+        var mile = this.project.milestone[i];
+        if (milestone.id == mile.id) {
+          this.project.milestone.splice(i, 1, milestone);
+          isIn = true;
+          break;
+        }
+      }
+      if (isIn == false) {
+        this.project.milestone.push(milestone);
+      }
+    });
   }
 
   ionViewWillEnter(){
@@ -145,6 +159,7 @@ export class ProjectDetailPage {
   ionViewWillUnload(){
     this.events.unsubscribe('showShareView');
     this.events.unsubscribe('onPushProjectDetail');
+    this.events.unsubscribe('reloadMilestone');
   }
 
   ionViewCanEnter(){
@@ -170,7 +185,7 @@ export class ProjectDetailPage {
       milestone : mile,
       projectname : this.project.itemName,
       pid :this.project.id,
-      callback : this.projectCallback,
+      callback : this.milestoneCallback,
       type : 2,
     });
   }
@@ -179,7 +194,7 @@ export class ProjectDetailPage {
     this.navCtrl.push(SubtaskPage, {
       subtask: subtask,
       projectname : this.project.itemName,
-      callback: this.projectCallback
+      callback: this.subtaskCallback
     });
   }
 
@@ -207,7 +222,8 @@ export class ProjectDetailPage {
     }, 16);
   }
 
-  projectCallback = (milestone) =>
+  //点击进入里程碑的回调
+  milestoneCallback = (milestone) =>
   {
       return new Promise((resolve, reject) => {
           if (typeof (milestone) != 'undefined') {
@@ -230,6 +246,29 @@ export class ProjectDetailPage {
       });
   };
 
+    //点击进入子任务的回调
+    subtaskCallback = (subtask) => {
+      return new Promise((resolve, reject) => {
+        if (typeof (subtask) != 'undefined') {
+            for (let i=0; i<this.project.milestone.length; i++) {
+                var milestone = this.project.milestone[i];
+                var isIn = false;
+                for (let j=0; j<milestone.subtask.length; j++) {
+                    var sub = milestone.subtask[j];
+                    if (sub.id == subtask.id) {
+                      milestone.subtask.splice(j,1,subtask);
+                        isIn = true;
+                      break;
+                    }
+                }
+                if (isIn == true) {
+                  break;
+                }
+            }
+        }
+        resolve();
+      });
+    }
 
 
   // setInterval(function(){

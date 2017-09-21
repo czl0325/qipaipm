@@ -77,11 +77,11 @@ export class SubtaskPage {
 
   onSaveSubtask() {
     var param = this.tempSubtask;
-    if (this.type == 1) {
-        this.callback(this.tempSubtask).then(()=>{
-            this.navCtrl.pop()
-        });
-    } else {
+    // if (this.type == 1) {
+    //     this.callback(this.tempSubtask).then(()=>{
+    //         this.navCtrl.pop()
+    //     });
+    // } else {
         param.mid = this.mid;
         param.sid = this.tempSubtask.id;
         this.appService.httpPost("subtask/create", param, this, function (view, res) {
@@ -99,6 +99,6 @@ export class SubtaskPage {
                 toast.present();
             }
         },true);
-    }
+  //   }
   }
 }

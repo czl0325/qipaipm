@@ -97,10 +97,11 @@
       <ion-label no-margin no-padding style="line-height: 30px; margin-left: 10px; float: left;">项目结束</ion-label>
     </div>
     <ion-list no-lines no-margin no-padding>
-      <button ion-item style="border-bottom: solid 1px #ececec">
+      <button ion-item style="border-bottom: solid 1px #ececec" (click)="onEndDirector($event)">
         <ion-icon item-start name="appname-admin"></ion-icon>
         <ion-label item-start>负责人</ion-label>
-        <ion-input item-end text-right placeholder="请输入负责人" [(ngModel)]="project.itemLeader"></ion-input>
+        <!--<ion-input item-end text-right placeholder="请输入负责人" [(ngModel)]="project.itemLeader"></ion-input>-->
+        <ion-label item-end text-right>{{project.itemLeader}}</ion-label>
       </button>
       <ion-item  style="border-bottom: solid 1px #ececec">
         <ion-icon item-start name="appname-time"></ion-icon>

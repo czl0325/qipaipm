@@ -15,6 +15,7 @@ import { MilestoneDetailPage } from "../pages/milestone-detail/milestone-detail"
 import { ProjectDetailPage, PopoverPage } from "../pages/project-detail/project-detail";
 import { SubtaskPage } from "../pages/subtask/subtask";
 import { SearchPage } from "../pages/search/search";
+import { ContactPage } from "../pages/contact/contact";
 
 //组件类
 import { ComponentsModule } from "../components/components.module";
@@ -34,6 +35,7 @@ import { AppService } from "./app.service";
     ProjectDetailPage,
     SubtaskPage,
     SearchPage,
+    ContactPage,
 
     PopoverPage,
   ],
@@ -62,6 +64,7 @@ import { AppService } from "./app.service";
     ProjectDetailPage,
     SubtaskPage,
     SearchPage,
+    ContactPage,
 
     PopoverPage,
   ],
