@@ -78,6 +78,7 @@ export class ProjectCreatePage {
     itemUpdate : new DatePipe('en-US').transform(new Date(), 'yyyy-MM-dd'),     //项目更新时间
     endTime : new DatePipe('en-US').transform(new Date(), 'yyyy-MM-dd'),        //项目结束时间
     itemVersion : '',           //项目版本
+    itemLevel : '',             //项目级别
     startResult : '',           //项目启动的交付成果
     endResult : '',             //项目结束的交付成果
     milestone : [],             //项目里程碑

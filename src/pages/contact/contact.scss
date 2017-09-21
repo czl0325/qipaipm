@@ -1,7 +1,23 @@
 page-contact {
   .input-search {
     border-radius: 4px;
-    margin: 5px 10px 5px 10px;
+    width: 70%;
+    height: 100%;
     background-color: white;
+  }
+  .btn-search {
+    width: 60px;
+    height: 100%;
+  }
+  .organization {
+    height: 50px;
+    position: relative;
+
+    .text {
+      left: 15px;
+      font-size: 16px;
+      font-weight: bold;
+      color: #111111;
+    }
   }
 }

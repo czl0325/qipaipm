@@ -1,3 +1,55 @@
 page-search {
-
+  .head {
+    .icon-rightnew{
+      width: auto;
+      float: right;
+      z-index: 100;
+      position: absolute;
+      right: 10px;
+      top: 10px;
+      a {
+        display: inline-block;
+        width: auto;
+        font-size: 16px;
+      }
+    }
+    .searchcotain{
+      padding-top: 7px;
+    }
+    .searchmain{
+      width: 70%;
+      margin: auto;
+      background: #f4f4f4;
+      height: 36px;
+      border-radius: 4px;
+      .searchicon{
+        float: left;
+        height: 56px;
+        position: relative;
+        width: 10%;
+        color: #c6c7cc;
+        ion-icon{
+          position: absolute;
+          left: 5px;
+          top: 5px;
+        }
+      }
+      .searchinput{
+        height: (56px);
+        float: left;
+        position: relative;
+        width: 90%;
+        input{
+          height: (50px);
+          position: absolute;
+          width: 95%;
+          left: (16px);
+          top: (3px);
+          border: 0;
+          background: #f4f4f4;
+          font-size: (30px);
+        }
+      }
+    }
+  }
 }

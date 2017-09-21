@@ -5,18 +5,32 @@
   Ionic pages and navigation.
 -->
 <ion-header>
-
   <ion-navbar>
-    <ion-title>contact</ion-title>
+    <ion-title>通讯录</ion-title>
   </ion-navbar>
-
 </ion-header>
 
 
 <ion-content fullscreen>
-  <div style="height: 40px;background-color: black">
-    <ion-input no-margin no-padding class="input-search" placeholder="搜索"></ion-input>
+  <form (submit)="onSearchContact($event)">
+    <ion-searchbar
+            placeholder="输入名字搜索" [(ngModel)]=searchValue
+            name="searchValue">
+    </ion-searchbar>
+  </form>
+  <div class="organization">
+    <ion-label no-margin no-padding class="vertical_center text">{{organization}}</ion-label>
   </div>
+  <ion-item tappable *ngFor="let department of arrayDepartment" (click)="goNextDepartment($event, department)">
+    <ion-icon item-start name="appname-tree"></ion-icon>
+    <ion-label no-padding no-margin>{{department.text}}</ion-label>
+    <ion-note item-end>{{department.count+"人"}}</ion-note>
+  </ion-item>
 
+  <ion-item tappable *ngFor="let staff of arrayStaff" (click)="goNextDepartment($event, staff)">
+    <ion-icon item-start name="appname-head"></ion-icon>
+    <ion-label no-padding no-margin>{{staff.name}}</ion-label>
+    <ion-note item-end>{{staff.telphone}}</ion-note>
+  </ion-item>
 
 </ion-content>

@@ -27,34 +27,34 @@ export class SearchPage {
   }
 
   onSearchInput(event) {
-    if (this.searchValue.length < 1) {
-      this.array = [];
-    } else {
-      this.appService.httpGet("item/searchByContion", {itemName:this.searchValue,page:1,limit:100}, this, function (view, res) {
-          var response = res.json();
-          if (response.success == true) {
-              var data = response.data;
-              view.array = [];
-              for (let i=0; i<data.length; i++) {
-                  var one = data[i];
-                  var year = one.startTime.substr(0,4);
-                  var isIn = false;
-                  for (let j=0; j<view.array.length; j++) {
-                      var d = view.array[j];
-                      if (d.year == year) {
-                          isIn = true;
-                          d.projects.push(one);
-                          break;
-                      }
-                  }
-                  if (isIn == false) {
-                      var dd = {year:year,projects:[one]};
-                      view.array.push(dd);
-                  }
-              }
-          }
-      },false);
-    }
+    // if (this.searchValue.length < 1) {
+    //   this.array = [];
+    // } else {
+    //   this.appService.httpGet("item/searchByContion", {itemName:this.searchValue,page:1,limit:100}, this, function (view, res) {
+    //       var response = res.json();
+    //       if (response.success == true) {
+    //           var data = response.data;
+    //           view.array = [];
+    //           for (let i=0; i<data.length; i++) {
+    //               var one = data[i];
+    //               var year = one.startTime.substr(0,4);
+    //               var isIn = false;
+    //               for (let j=0; j<view.array.length; j++) {
+    //                   var d = view.array[j];
+    //                   if (d.year == year) {
+    //                       isIn = true;
+    //                       d.projects.push(one);
+    //                       break;
+    //                   }
+    //               }
+    //               if (isIn == false) {
+    //                   var dd = {year:year,projects:[one]};
+    //                   view.array.push(dd);
+    //               }
+    //           }
+    //       }
+    //   },false);
+    // }
   }
 
   onSearchCancel($event) {
@@ -65,5 +65,36 @@ export class SearchPage {
       this.navCtrl.push(ProjectDetailPage, {
           project:project,
       });
+  }
+
+  onSearch($event) {
+    if (this.searchValue.length < 1) {
+        this.array = [];
+    } else {
+        this.appService.httpGet("item/searchByContion", {itemName:this.searchValue,page:1,limit:100}, this, function (view, res) {
+            var response = res.json();
+            if (response.success == true) {
+                var data = response.data;
+                view.array = [];
+                for (let i=0; i<data.length; i++) {
+                    var one = data[i];
+                    var year = one.startTime.substr(0,4);
+                    var isIn = false;
+                    for (let j=0; j<view.array.length; j++) {
+                        var d = view.array[j];
+                        if (d.year == year) {
+                            isIn = true;
+                            d.projects.push(one);
+                            break;
+                        }
+                    }
+                    if (isIn == false) {
+                        var dd = {year:year,projects:[one]};
+                        view.array.push(dd);
+                    }
+                }
+            }
+        },false);
+    }
   }
 }

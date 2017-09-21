@@ -47,7 +47,8 @@ export class AppService {
     if (loader) {
       loading.present();
     }
-    this.http.get(AppGlobal.domain + url + this.encode(params))
+    console.log("get请求地址======="+(url.substr(0,4)=='http'?"":AppGlobal.domain) + url + this.encode(params));
+    this.http.get((url.substr(0,4)=='http'?"":AppGlobal.domain) + url + this.encode(params))
       .toPromise()
       .then(res => {
         //var d = res.json();
@@ -70,7 +71,7 @@ export class AppService {
     if (loader) {
       loading.present();
     }
-    this.http.post(AppGlobal.domain + url, params)
+    this.http.post((url.substr(0,4)=='http'?"":AppGlobal.domain) + url, params)
       .toPromise()
       .then(res => {
         //var d = res.json();

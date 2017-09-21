@@ -1,0 +1,26 @@
+<svg id="mine_icon_head" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="100" height="100" viewBox="0 0 100 100">
+  <defs>
+    <style>
+      .cls-1 {
+        filter: url(#filter);
+      }
+
+      .cls-2 {
+        fill-rule: evenodd;
+        filter: url(#filter-2);
+      }
+    </style>
+    <filter id="filter" x="0" y="0" width="100" height="100" filterUnits="userSpaceOnUse">
+      <feFlood result="flood" flood-color="#c2c2c2"/>
+      <feComposite result="composite" operator="in" in2="SourceGraphic"/>
+      <feBlend result="blend" in2="SourceGraphic"/>
+    </filter>
+    <filter id="filter-2" x="11" y="15" width="77" height="82" filterUnits="userSpaceOnUse">
+      <feFlood result="flood" flood-color="#fff"/>
+      <feComposite result="composite" operator="in" in2="SourceGraphic"/>
+      <feBlend result="blend" in2="SourceGraphic"/>
+    </filter>
+  </defs>
+  <circle id="mine_icon_head_bg" class="cls-1" cx="50" cy="50" r="50"/>
+  <path id="mine_icon_head_1" class="cls-2" d="M66.1,46c-1.454,5.528-1.028,8.625-4.951,10-3.025,1.06-2.821,9.307.99,12,8.069,5.7,21.263,3.054,25.868,8.713a46.69,46.69,0,0,1-77.016,0C15.6,71.054,28.791,73.7,36.86,68c3.811-2.693,4.015-10.94.99-12-3.923-1.375-3.5-4.472-4.951-10-2.579.265-5.791-10.172-.99-9C27.761,24.75,35.374,15,49.5,15s21.739,9.75,17.591,22C71.892,35.828,68.68,46.264,66.1,46ZM49.5,80a2,2,0,1,0,1.992,2A2,2,0,0,0,49.5,80Zm0,9a2,2,0,1,0,1.992,2A2,2,0,0,0,49.5,89Z"/>
+</svg>

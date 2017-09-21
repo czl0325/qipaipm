@@ -35,10 +35,20 @@
         <ion-label>交付时间</ion-label>
         <ion-datetime item-end displayFormat="YYYY年MM月DD日" max="2030" min="2015" [(ngModel)]="project.startTime" cancelText="取消" doneText="确认"></ion-datetime>
       </ion-item>
-      <ion-item>
+      <ion-item style="border-bottom: solid 1px #ececec;">
         <ion-icon item-start name="appname-result"></ion-icon>
         <ion-label>交付成果</ion-label>
         <ion-input item-end text-right placeholder="请输入交付成果" [(ngModel)]="project.startResult" required></ion-input>
+      </ion-item>
+      <ion-item >
+        <ion-icon item-start name="appname-plan"></ion-icon>
+        <ion-label>项目级别</ion-label>
+        <ion-select interface="action-sheet" [(ngModel)]="project.itemLevel" cancelText="取消" doneText="确认">
+          <ion-option value="1">一级</ion-option>
+          <ion-option value="2">二级</ion-option>
+          <ion-option value="3">三级</ion-option>
+          <ion-option value="4">四级</ion-option>
+        </ion-select>
       </ion-item>
     </ion-list>
 

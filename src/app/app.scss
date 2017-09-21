@@ -15,14 +15,14 @@
 // for the .md, .ios, or .wp mode classes. The mode class is
 // automatically applied to the <body> element in the app.
 
-$baseFontSize: 75px !default; //基于视觉稿横屏尺寸/100得出的基准font-size
-@function pxToRem($px) {
-  @return $px / $baseFontSize * 1rem;
-}
+//$baseFontSize: 75px !default; //基于视觉稿横屏尺寸/100得出的基准font-size
+//@function pxToRem($px) {
+//  @return $px / $baseFontSize * 1rem;
+//}
 
-@mixin radius10{
-  border-radius: pxToRem(10px);
-}
+//@mixin radius10{
+//  border-radius: pxToRem(10px);
+//}
 
 ion-icon {
   &[class*="appname-"] {
@@ -139,7 +139,69 @@ ion-icon {
     height: 50px;
     width: 50px;
   }
+  &[class*="appname-tree"] {
+    -webkit-mask-image: url(../assets/svg/icon_tree.svg);
+    background-color: #c8c8c8;
+    width: 9px;
+    height: 6px;
+  }
+  &[class*="appname-head"] {
+    -webkit-mask-image: url(../assets/svg/icon_head.svg);
+  }
 }
 ::-webkit-scrollbar {
   display: none !important;
+  color: #c8c8c8;
+}
+
+
+//自定义导航栏的css样式
+.head{
+  text-align: center;
+  width: 100%;
+  background: #fff;
+  //height: pxToRem(88px);
+  //line-height: pxToRem(88px);
+  //font-size: pxToRem(34px);
+  height: 44px;
+  line-height: 44px;
+  font-size: 16px;
+  font-weight: bold;
+  border-bottom: 1px solid #cbcbcb;
+  color: #242424;
+}
+.icon-left{
+  z-index: 100;
+  height: 100%;
+  position: absolute;
+  //left: pxToRem(30px);
+  left: 15px;
+  img{
+    //width: pxToRem(36px);
+    //margin-top: pxToRem(26px);
+    width: 18px;
+    height: 35px;
+    margin-top: 13px;
+  }
+}
+.icon-right{
+  z-index: 100;
+  height: 100%;
+  position: absolute;
+  //right: pxToRem(30px);
+  right: 30px;
+  top: 0;
+  &::before{
+    content: "";
+    display: inline-block;
+    vertical-align: middle;
+    height: 100%;
+  }
+  .btn{
+    vertical-align: middle;
+  }
+}
+
+ion-content {
+  background-color: #f5f6f7;
 }
