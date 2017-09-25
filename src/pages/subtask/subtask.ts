@@ -1,7 +1,8 @@
 import { Component } from '@angular/core';
-import { NavController, NavParams } from 'ionic-angular';
-import {AppConfig} from "../../app/app.config";
-import {AppService} from "../../app/app.service";
+import { Events, NavController, NavParams} from 'ionic-angular';
+import { AppConfig } from "../../app/app.config";
+import { AppService } from "../../app/app.service";
+import { ContactPage } from "../contact/contact";
 
 /**
  * Generated class for the SubtaskPage page.
@@ -44,6 +45,7 @@ export class SubtaskPage {
       id:'',              //子任务的id
       subtaskName:'',     //子任务的名称
       subtaskLeader:'',   //子任务的负责人
+      leaderEmpNum : '',  //子任务负责人工号
       deliveryTime:'',    //子任务的交付时间
       deliveryResult:'',  //子任务交付成果
       planTime:'',        //子任务实际完成时间
@@ -55,7 +57,7 @@ export class SubtaskPage {
   tempSubtask: any;
 
 
-  constructor(public navCtrl: NavController, private navParams: NavParams, private appService: AppService) {
+  constructor(public navCtrl: NavController, private navParams: NavParams, private appService: AppService, public events: Events) {
     var data = this.navParams.get('subtask');
     this.projectname = this.navParams.get('projectname');
     this.callback = this.navParams.get('callback');
@@ -67,13 +69,26 @@ export class SubtaskPage {
     this.tempSubtask = AppConfig.deepCopy(this.subtask);
   }
 
-  ionViewDidLoad() {
+    ionViewDidLoad() {
+        this.events.subscribe('onConfirmSubtaskLeader',(leader)=>{
+            this.tempSubtask.subtaskLeader = leader.name;
+            this.tempSubtask.leaderEmpNum = leader.username;
+        });
+    }
 
-  }
+    ionViewWillUnload(){
+        this.events.unsubscribe('onConfirmSubtaskLeader');
+    }
 
   ionViewWillLeave(){
 
   }
+
+    onSubtaskLeader($event) {
+        this.navCtrl.push(ContactPage, {
+            type: 3,
+        });
+    }
 
   onSaveSubtask() {
     var param = this.tempSubtask;
@@ -84,7 +99,7 @@ export class SubtaskPage {
     // } else {
         param.mid = this.mid;
         param.sid = this.tempSubtask.id;
-        this.appService.httpPost("subtask/create", param, this, function (view, res) {
+        this.appService.httpPost("item/create", param, this, function (view, res) {
             console.log(res.json());
             if (res.status == 200) {
                 view.subtask = res.json().data;

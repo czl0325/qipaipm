@@ -3,8 +3,135 @@
   <component name="ChangeListManager">
     <list default="true" id="48bbbb45-5242-4fe3-a01d-9850055ff53e" name="默认的" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+<<<<<<< HEAD
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/pages/contact/contact.ts" afterPath="$PROJECT_DIR$/src/pages/contact/contact.ts" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/pages/project-create/project-create.ts" afterPath="$PROJECT_DIR$/src/pages/project-create/project-create.ts" />
+=======
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/node_modules/.bin/ionic" afterPath="$PROJECT_DIR$/node_modules/.bin/ionic" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/node_modules/ionic/CHANGELOG.md" afterPath="$PROJECT_DIR$/node_modules/ionic/CHANGELOG.md" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/node_modules/ionic/README.md" afterPath="$PROJECT_DIR$/node_modules/ionic/README.md" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/node_modules/ionic/bin/ionic" afterPath="$PROJECT_DIR$/node_modules/ionic/bin/ionic" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/node_modules/ionic/dist/commands/build.d.ts" afterPath="$PROJECT_DIR$/node_modules/ionic/dist/commands/build.d.ts" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/node_modules/ionic/dist/commands/build.js" afterPath="$PROJECT_DIR$/node_modules/ionic/dist/commands/build.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/node_modules/ionic/dist/commands/config/get.d.ts" afterPath="$PROJECT_DIR$/node_modules/ionic/dist/commands/config/get.d.ts" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/node_modules/ionic/dist/commands/config/get.js" afterPath="$PROJECT_DIR$/node_modules/ionic/dist/commands/config/get.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/node_modules/ionic/dist/commands/config/index.d.ts" afterPath="$PROJECT_DIR$/node_modules/ionic/dist/commands/config/index.d.ts" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/node_modules/ionic/dist/commands/config/index.js" afterPath="$PROJECT_DIR$/node_modules/ionic/dist/commands/config/index.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/node_modules/ionic/dist/commands/config/set.d.ts" afterPath="$PROJECT_DIR$/node_modules/ionic/dist/commands/config/set.d.ts" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/node_modules/ionic/dist/commands/config/set.js" afterPath="$PROJECT_DIR$/node_modules/ionic/dist/commands/config/set.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/node_modules/ionic/dist/commands/cordova/base.d.ts" afterPath="$PROJECT_DIR$/node_modules/ionic/dist/commands/cordova/base.d.ts" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/node_modules/ionic/dist/commands/cordova/base.js" afterPath="$PROJECT_DIR$/node_modules/ionic/dist/commands/cordova/base.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/node_modules/ionic/dist/commands/cordova/build.d.ts" afterPath="$PROJECT_DIR$/node_modules/ionic/dist/commands/cordova/build.d.ts" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/node_modules/ionic/dist/commands/cordova/build.js" afterPath="$PROJECT_DIR$/node_modules/ionic/dist/commands/cordova/build.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/node_modules/ionic/dist/commands/cordova/compile.d.ts" afterPath="$PROJECT_DIR$/node_modules/ionic/dist/commands/cordova/compile.d.ts" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/node_modules/ionic/dist/commands/cordova/compile.js" afterPath="$PROJECT_DIR$/node_modules/ionic/dist/commands/cordova/compile.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/node_modules/ionic/dist/commands/cordova/emulate.d.ts" afterPath="$PROJECT_DIR$/node_modules/ionic/dist/commands/cordova/emulate.d.ts" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/node_modules/ionic/dist/commands/cordova/emulate.js" afterPath="$PROJECT_DIR$/node_modules/ionic/dist/commands/cordova/emulate.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/node_modules/ionic/dist/commands/cordova/index.d.ts" afterPath="$PROJECT_DIR$/node_modules/ionic/dist/commands/cordova/index.d.ts" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/node_modules/ionic/dist/commands/cordova/index.js" afterPath="$PROJECT_DIR$/node_modules/ionic/dist/commands/cordova/index.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/node_modules/ionic/dist/commands/cordova/platform.d.ts" afterPath="$PROJECT_DIR$/node_modules/ionic/dist/commands/cordova/platform.d.ts" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/node_modules/ionic/dist/commands/cordova/platform.js" afterPath="$PROJECT_DIR$/node_modules/ionic/dist/commands/cordova/platform.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/node_modules/ionic/dist/commands/cordova/plugin.d.ts" afterPath="$PROJECT_DIR$/node_modules/ionic/dist/commands/cordova/plugin.d.ts" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/node_modules/ionic/dist/commands/cordova/plugin.js" afterPath="$PROJECT_DIR$/node_modules/ionic/dist/commands/cordova/plugin.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/node_modules/ionic/dist/commands/cordova/prepare.d.ts" afterPath="$PROJECT_DIR$/node_modules/ionic/dist/commands/cordova/prepare.d.ts" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/node_modules/ionic/dist/commands/cordova/prepare.js" afterPath="$PROJECT_DIR$/node_modules/ionic/dist/commands/cordova/prepare.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/node_modules/ionic/dist/commands/cordova/requirements.d.ts" afterPath="$PROJECT_DIR$/node_modules/ionic/dist/commands/cordova/requirements.d.ts" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/node_modules/ionic/dist/commands/cordova/requirements.js" afterPath="$PROJECT_DIR$/node_modules/ionic/dist/commands/cordova/requirements.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/node_modules/ionic/dist/commands/cordova/resources.d.ts" afterPath="$PROJECT_DIR$/node_modules/ionic/dist/commands/cordova/resources.d.ts" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/node_modules/ionic/dist/commands/cordova/resources.js" afterPath="$PROJECT_DIR$/node_modules/ionic/dist/commands/cordova/resources.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/node_modules/ionic/dist/commands/cordova/run.d.ts" afterPath="$PROJECT_DIR$/node_modules/ionic/dist/commands/cordova/run.d.ts" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/node_modules/ionic/dist/commands/cordova/run.js" afterPath="$PROJECT_DIR$/node_modules/ionic/dist/commands/cordova/run.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/node_modules/ionic/dist/commands/daemon.d.ts" afterPath="$PROJECT_DIR$/node_modules/ionic/dist/commands/daemon.d.ts" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/node_modules/ionic/dist/commands/daemon.js" afterPath="$PROJECT_DIR$/node_modules/ionic/dist/commands/daemon.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/node_modules/ionic/dist/commands/docs.d.ts" afterPath="$PROJECT_DIR$/node_modules/ionic/dist/commands/docs.d.ts" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/node_modules/ionic/dist/commands/docs.js" afterPath="$PROJECT_DIR$/node_modules/ionic/dist/commands/docs.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/node_modules/ionic/dist/commands/generate.d.ts" afterPath="$PROJECT_DIR$/node_modules/ionic/dist/commands/generate.d.ts" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/node_modules/ionic/dist/commands/generate.js" afterPath="$PROJECT_DIR$/node_modules/ionic/dist/commands/generate.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/node_modules/ionic/dist/commands/git/clone.d.ts" afterPath="$PROJECT_DIR$/node_modules/ionic/dist/commands/git/clone.d.ts" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/node_modules/ionic/dist/commands/git/clone.js" afterPath="$PROJECT_DIR$/node_modules/ionic/dist/commands/git/clone.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/node_modules/ionic/dist/commands/git/index.d.ts" afterPath="$PROJECT_DIR$/node_modules/ionic/dist/commands/git/index.d.ts" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/node_modules/ionic/dist/commands/git/index.js" afterPath="$PROJECT_DIR$/node_modules/ionic/dist/commands/git/index.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/node_modules/ionic/dist/commands/git/remote.d.ts" afterPath="$PROJECT_DIR$/node_modules/ionic/dist/commands/git/remote.d.ts" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/node_modules/ionic/dist/commands/git/remote.js" afterPath="$PROJECT_DIR$/node_modules/ionic/dist/commands/git/remote.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/node_modules/ionic/dist/commands/help.d.ts" afterPath="$PROJECT_DIR$/node_modules/ionic/dist/commands/help.d.ts" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/node_modules/ionic/dist/commands/help.js" afterPath="$PROJECT_DIR$/node_modules/ionic/dist/commands/help.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/node_modules/ionic/dist/commands/index.d.ts" afterPath="$PROJECT_DIR$/node_modules/ionic/dist/commands/index.d.ts" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/node_modules/ionic/dist/commands/index.js" afterPath="$PROJECT_DIR$/node_modules/ionic/dist/commands/index.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/node_modules/ionic/dist/commands/info.d.ts" afterPath="$PROJECT_DIR$/node_modules/ionic/dist/commands/info.d.ts" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/node_modules/ionic/dist/commands/info.js" afterPath="$PROJECT_DIR$/node_modules/ionic/dist/commands/info.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/node_modules/ionic/dist/commands/ionitron.d.ts" afterPath="$PROJECT_DIR$/node_modules/ionic/dist/commands/ionitron.d.ts" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/node_modules/ionic/dist/commands/ionitron.js" afterPath="$PROJECT_DIR$/node_modules/ionic/dist/commands/ionitron.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/node_modules/ionic/dist/commands/link.d.ts" afterPath="$PROJECT_DIR$/node_modules/ionic/dist/commands/link.d.ts" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/node_modules/ionic/dist/commands/link.js" afterPath="$PROJECT_DIR$/node_modules/ionic/dist/commands/link.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/node_modules/ionic/dist/commands/login.d.ts" afterPath="$PROJECT_DIR$/node_modules/ionic/dist/commands/login.d.ts" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/node_modules/ionic/dist/commands/login.js" afterPath="$PROJECT_DIR$/node_modules/ionic/dist/commands/login.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/node_modules/ionic/dist/commands/logout.d.ts" afterPath="$PROJECT_DIR$/node_modules/ionic/dist/commands/logout.d.ts" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/node_modules/ionic/dist/commands/logout.js" afterPath="$PROJECT_DIR$/node_modules/ionic/dist/commands/logout.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/node_modules/ionic/dist/commands/monitoring/index.d.ts" afterPath="$PROJECT_DIR$/node_modules/ionic/dist/commands/monitoring/index.d.ts" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/node_modules/ionic/dist/commands/monitoring/index.js" afterPath="$PROJECT_DIR$/node_modules/ionic/dist/commands/monitoring/index.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/node_modules/ionic/dist/commands/monitoring/syncmaps.d.ts" afterPath="$PROJECT_DIR$/node_modules/ionic/dist/commands/monitoring/syncmaps.d.ts" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/node_modules/ionic/dist/commands/monitoring/syncmaps.js" afterPath="$PROJECT_DIR$/node_modules/ionic/dist/commands/monitoring/syncmaps.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/node_modules/ionic/dist/commands/package/build.d.ts" afterPath="$PROJECT_DIR$/node_modules/ionic/dist/commands/package/build.d.ts" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/node_modules/ionic/dist/commands/package/build.js" afterPath="$PROJECT_DIR$/node_modules/ionic/dist/commands/package/build.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/node_modules/ionic/dist/commands/package/download.d.ts" afterPath="$PROJECT_DIR$/node_modules/ionic/dist/commands/package/download.d.ts" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/node_modules/ionic/dist/commands/package/download.js" afterPath="$PROJECT_DIR$/node_modules/ionic/dist/commands/package/download.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/node_modules/ionic/dist/commands/package/index.d.ts" afterPath="$PROJECT_DIR$/node_modules/ionic/dist/commands/package/index.d.ts" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/node_modules/ionic/dist/commands/package/index.js" afterPath="$PROJECT_DIR$/node_modules/ionic/dist/commands/package/index.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/node_modules/ionic/dist/commands/package/info.d.ts" afterPath="$PROJECT_DIR$/node_modules/ionic/dist/commands/package/info.d.ts" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/node_modules/ionic/dist/commands/package/info.js" afterPath="$PROJECT_DIR$/node_modules/ionic/dist/commands/package/info.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/node_modules/ionic/dist/commands/package/list.d.ts" afterPath="$PROJECT_DIR$/node_modules/ionic/dist/commands/package/list.d.ts" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/node_modules/ionic/dist/commands/package/list.js" afterPath="$PROJECT_DIR$/node_modules/ionic/dist/commands/package/list.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/node_modules/ionic/dist/commands/serve.d.ts" afterPath="$PROJECT_DIR$/node_modules/ionic/dist/commands/serve.d.ts" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/node_modules/ionic/dist/commands/serve.js" afterPath="$PROJECT_DIR$/node_modules/ionic/dist/commands/serve.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/node_modules/ionic/dist/commands/share.d.ts" afterPath="$PROJECT_DIR$/node_modules/ionic/dist/commands/share.d.ts" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/node_modules/ionic/dist/commands/share.js" afterPath="$PROJECT_DIR$/node_modules/ionic/dist/commands/share.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/node_modules/ionic/dist/commands/signup.d.ts" afterPath="$PROJECT_DIR$/node_modules/ionic/dist/commands/signup.d.ts" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/node_modules/ionic/dist/commands/signup.js" afterPath="$PROJECT_DIR$/node_modules/ionic/dist/commands/signup.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/node_modules/ionic/dist/commands/ssh/add.d.ts" afterPath="$PROJECT_DIR$/node_modules/ionic/dist/commands/ssh/add.d.ts" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/node_modules/ionic/dist/commands/ssh/add.js" afterPath="$PROJECT_DIR$/node_modules/ionic/dist/commands/ssh/add.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/node_modules/ionic/dist/commands/ssh/base.d.ts" afterPath="$PROJECT_DIR$/node_modules/ionic/dist/commands/ssh/base.d.ts" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/node_modules/ionic/dist/commands/ssh/base.js" afterPath="$PROJECT_DIR$/node_modules/ionic/dist/commands/ssh/base.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/node_modules/ionic/dist/commands/ssh/delete.d.ts" afterPath="$PROJECT_DIR$/node_modules/ionic/dist/commands/ssh/delete.d.ts" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/node_modules/ionic/dist/commands/ssh/delete.js" afterPath="$PROJECT_DIR$/node_modules/ionic/dist/commands/ssh/delete.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/node_modules/ionic/dist/commands/ssh/generate.d.ts" afterPath="$PROJECT_DIR$/node_modules/ionic/dist/commands/ssh/generate.d.ts" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/node_modules/ionic/dist/commands/ssh/generate.js" afterPath="$PROJECT_DIR$/node_modules/ionic/dist/commands/ssh/generate.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/node_modules/ionic/dist/commands/ssh/index.d.ts" afterPath="$PROJECT_DIR$/node_modules/ionic/dist/commands/ssh/index.d.ts" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/node_modules/ionic/dist/commands/ssh/index.js" afterPath="$PROJECT_DIR$/node_modules/ionic/dist/commands/ssh/index.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/node_modules/ionic/dist/commands/ssh/list.d.ts" afterPath="$PROJECT_DIR$/node_modules/ionic/dist/commands/ssh/list.d.ts" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/node_modules/ionic/dist/commands/ssh/list.js" afterPath="$PROJECT_DIR$/node_modules/ionic/dist/commands/ssh/list.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/node_modules/ionic/dist/commands/ssh/setup.d.ts" afterPath="$PROJECT_DIR$/node_modules/ionic/dist/commands/ssh/setup.d.ts" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/node_modules/ionic/dist/commands/ssh/setup.js" afterPath="$PROJECT_DIR$/node_modules/ionic/dist/commands/ssh/setup.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/node_modules/ionic/dist/commands/ssh/use.d.ts" afterPath="$PROJECT_DIR$/node_modules/ionic/dist/commands/ssh/use.d.ts" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/node_modules/ionic/dist/commands/ssh/use.js" afterPath="$PROJECT_DIR$/node_modules/ionic/dist/commands/ssh/use.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/node_modules/ionic/dist/commands/start.d.ts" afterPath="$PROJECT_DIR$/node_modules/ionic/dist/commands/start.d.ts" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/node_modules/ionic/dist/commands/start.js" afterPath="$PROJECT_DIR$/node_modules/ionic/dist/commands/start.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/node_modules/ionic/dist/commands/state.d.ts" afterPath="$PROJECT_DIR$/node_modules/ionic/dist/commands/state.d.ts" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/node_modules/ionic/dist/commands/state.js" afterPath="$PROJECT_DIR$/node_modules/ionic/dist/commands/state.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/node_modules/ionic/dist/commands/telemetry.d.ts" afterPath="$PROJECT_DIR$/node_modules/ionic/dist/commands/telemetry.d.ts" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/node_modules/ionic/dist/commands/telemetry.js" afterPath="$PROJECT_DIR$/node_modules/ionic/dist/commands/telemetry.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/node_modules/ionic/dist/commands/upload.d.ts" afterPath="$PROJECT_DIR$/node_modules/ionic/dist/commands/upload.d.ts" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/node_modules/ionic/dist/commands/upload.js" afterPath="$PROJECT_DIR$/node_modules/ionic/dist/commands/upload.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/node_modules/ionic/dist/commands/version.d.ts" afterPath="$PROJECT_DIR$/node_modules/ionic/dist/commands/version.d.ts" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/node_modules/ionic/dist/commands/version.js" afterPath="$PROJECT_DIR$/node_modules/ionic/dist/commands/version.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/node_modules/ionic/dist/index.d.ts" afterPath="$PROJECT_DIR$/node_modules/ionic/dist/index.d.ts" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/node_modules/ionic/dist/index.js" afterPath="$PROJECT_DIR$/node_modules/ionic/dist/index.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/node_modules/ionic/node_modules/chalk/index.js" afterPath="$PROJECT_DIR$/node_modules/ionic/node_modules/chalk/index.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/node_modules/ionic/node_modules/chalk/license" afterPath="$PROJECT_DIR$/node_modules/ionic/node_modules/chalk/license" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/node_modules/ionic/node_modules/chalk/package.json" afterPath="$PROJECT_DIR$/node_modules/ionic/node_modules/chalk/package.json" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/node_modules/ionic/node_modules/chalk/readme.md" afterPath="$PROJECT_DIR$/node_modules/ionic/node_modules/chalk/readme.md" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/node_modules/ionic/node_modules/chalk/templates.js" afterPath="$PROJECT_DIR$/node_modules/ionic/node_modules/chalk/templates.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/node_modules/ionic/package.json" afterPath="$PROJECT_DIR$/node_modules/ionic/package.json" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/package.json" afterPath="$PROJECT_DIR$/package.json" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/pages/contact/contact.ts" afterPath="$PROJECT_DIR$/src/pages/contact/contact.ts" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/pages/project-create/project-create.ts" afterPath="$PROJECT_DIR$/src/pages/project-create/project-create.ts" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/pages/project-detail/project-detail.html" afterPath="$PROJECT_DIR$/src/pages/project-detail/project-detail.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/pipes/pipes.module.ts" afterPath="$PROJECT_DIR$/src/pipes/pipes.module.ts" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/www/build/0.js" afterPath="$PROJECT_DIR$/www/build/0.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/www/build/main.js" afterPath="$PROJECT_DIR$/www/build/main.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/www/build/main.js.map" afterPath="$PROJECT_DIR$/www/build/main.js.map" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/www/build/vendor.js" afterPath="$PROJECT_DIR$/www/build/vendor.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/www/build/vendor.js.map" afterPath="$PROJECT_DIR$/www/build/vendor.js.map" />
+>>>>>>> bca1461158f0199d497f815cc6a176f3aa8e8738
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
     <ignored path="$PROJECT_DIR$/temp/" />
@@ -18,6 +145,7 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="375">
+<<<<<<< HEAD
       <file leaf-file-name="app.scss" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/app/app.scss">
           <provider selected="true" editor-type-id="text-editor">
@@ -38,11 +166,21 @@
                 <element signature="n#style#0;n#div#0;n#div#0;n#ion-content#0;n#!!top" expanded="true" />
                 <element signature="n#style#0;n#ion-item#0;n#ion-list#1;n#ion-content#0;n#!!top" expanded="true" />
                 <element signature="n#style#0;n#div#0;n#div#1;n#ion-content#0;n#!!top" expanded="true" />
+=======
+      <file leaf-file-name="contact.ts" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/pages/contact/contact.ts">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="91">
+              <caret line="49" column="37" lean-forward="true" selection-start-line="49" selection-start-column="37" selection-end-line="49" selection-end-column="37" />
+              <folding>
+                <element signature="e#0#42#0" expanded="true" />
+>>>>>>> bca1461158f0199d497f815cc6a176f3aa8e8738
               </folding>
             </state>
           </provider>
         </entry>
       </file>
+<<<<<<< HEAD
       <file leaf-file-name="home.ts" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/pages/home/home.ts">
           <provider selected="true" editor-type-id="text-editor">
@@ -107,11 +245,21 @@
                 <marker date="1505875787000" expanded="true" signature="971:1063" ph="..." />
                 <marker date="1505875787000" expanded="true" signature="1112:1204" ph="..." />
                 <marker date="1505875787000" expanded="true" signature="1252:1343" ph="..." />
+=======
+      <file leaf-file-name="project-create.ts" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/pages/project-create/project-create.ts">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="595">
+              <caret line="262" column="60" lean-forward="false" selection-start-line="262" selection-start-column="60" selection-end-line="262" selection-end-column="60" />
+              <folding>
+                <marker date="1506074588385" expanded="true" signature="7664:7668" ph="{...}" />
+>>>>>>> bca1461158f0199d497f815cc6a176f3aa8e8738
               </folding>
             </state>
           </provider>
         </entry>
       </file>
+<<<<<<< HEAD
       <file leaf-file-name="icon_head.svg" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/assets/svg/icon_head.svg">
           <provider selected="true" editor-type-id="text-editor">
@@ -132,6 +280,8 @@
           </provider>
         </entry>
       </file>
+=======
+>>>>>>> bca1461158f0199d497f815cc6a176f3aa8e8738
     </leaf>
   </component>
   <component name="FindInProjectRecents">
@@ -147,6 +297,7 @@
       <find>splice</find>
       <find>console.log</find>
       <find>ContactNode</find>
+      <find>itemCreate</find>
       <find>alertCtrl</find>
     </findStrings>
   </component>
@@ -167,7 +318,6 @@
         <option value="$PROJECT_DIR$/src/components/calendar/calendar.ts" />
         <option value="$PROJECT_DIR$/src/pipes/delay/delay.ts" />
         <option value="$PROJECT_DIR$/src/app/app.config.ts" />
-        <option value="$PROJECT_DIR$/src/pages/project-detail/project-detail.html" />
         <option value="$PROJECT_DIR$/src/pages/subtask/subtask.html" />
         <option value="$PROJECT_DIR$/src/pages/subtask/subtask.ts" />
         <option value="$PROJECT_DIR$/src/pages/project-detail/project-detail.ts" />
@@ -185,8 +335,15 @@
         <option value="$PROJECT_DIR$/src/pages/contact/contact.html" />
         <option value="$PROJECT_DIR$/src/app/app.scss" />
         <option value="$PROJECT_DIR$/src/pages/project-create/project-create.html" />
+<<<<<<< HEAD
         <option value="$PROJECT_DIR$/src/pages/contact/contact.ts" />
         <option value="$PROJECT_DIR$/src/pages/project-create/project-create.ts" />
+=======
+        <option value="$PROJECT_DIR$/src/pipes/itemlevel/itemlevel.ts" />
+        <option value="$PROJECT_DIR$/src/pages/project-detail/project-detail.html" />
+        <option value="$PROJECT_DIR$/src/pages/project-create/project-create.ts" />
+        <option value="$PROJECT_DIR$/src/pages/contact/contact.ts" />
+>>>>>>> bca1461158f0199d497f815cc6a176f3aa8e8738
       </list>
     </option>
   </component>
@@ -223,7 +380,10 @@
     </navigator>
     <panes>
       <pane id="Scratches" />
+<<<<<<< HEAD
       <pane id="Scope" />
+=======
+>>>>>>> bca1461158f0199d497f815cc6a176f3aa8e8738
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -329,15 +489,39 @@
               <item name="pages" type="462c0819:PsiDirectoryNode" />
               <item name="subtask" type="462c0819:PsiDirectoryNode" />
             </path>
+            <path>
+              <item name="qipaipm-company" type="b2602c69:ProjectViewProjectNode" />
+              <item name="qipaipm-company" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="pipes" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="qipaipm-company" type="b2602c69:ProjectViewProjectNode" />
+              <item name="qipaipm-company" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="pipes" type="462c0819:PsiDirectoryNode" />
+              <item name="itemlevel" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="qipaipm-company" type="b2602c69:ProjectViewProjectNode" />
+              <item name="qipaipm-company" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="pipes" type="462c0819:PsiDirectoryNode" />
+              <item name="month" type="462c0819:PsiDirectoryNode" />
+            </path>
           </expand>
           <select />
         </subPane>
       </pane>
+<<<<<<< HEAD
+=======
+      <pane id="Scope" />
+>>>>>>> bca1461158f0199d497f815cc6a176f3aa8e8738
     </panes>
   </component>
   <component name="PropertiesComponent">
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="last_opened_file_path" value="D:/qipai-ionic3" />
     <property name="nodejs_interpreter_path" value="/usr/local/bin/node" />
     <property name="HbShouldOpenHtmlAsHb" value="" />
     <property name="excluded.www.directory" value="true" />
@@ -390,12 +574,20 @@
       <workItem from="1505873205378" duration="18084000" />
       <workItem from="1505958583292" duration="1567000" />
       <workItem from="1505960171064" duration="18615000" />
+<<<<<<< HEAD
       <workItem from="1506305775955" duration="1417000" />
+=======
+      <workItem from="1506068978955" duration="5648000" />
+>>>>>>> bca1461158f0199d497f815cc6a176f3aa8e8738
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
+<<<<<<< HEAD
     <option name="totallyTimeSpent" value="92029000" />
+=======
+    <option name="totallyTimeSpent" value="96260000" />
+>>>>>>> bca1461158f0199d497f815cc6a176f3aa8e8738
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="23" width="2560" height="1366" extended-state="6" />
@@ -406,19 +598,27 @@
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="调试" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
+<<<<<<< HEAD
+=======
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+>>>>>>> bca1461158f0199d497f815cc6a176f3aa8e8738
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="npm" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
+<<<<<<< HEAD
       <window_info id="运行" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="11" side_tool="false" content_ui="tabs" />
+=======
+>>>>>>> bca1461158f0199d497f815cc6a176f3aa8e8738
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="true" content_ui="tabs" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="找到" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="13" side_tool="false" content_ui="tabs" />
@@ -435,6 +635,7 @@
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
+<<<<<<< HEAD
     <entry file="file://$PROJECT_DIR$/src/pages/project-detail/project-detail.ts">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="2940">
@@ -458,6 +659,8 @@
         </state>
       </provider>
     </entry>
+=======
+>>>>>>> bca1461158f0199d497f815cc6a176f3aa8e8738
     <entry file="file://$PROJECT_DIR$/src/components/calendar/calendar.ts">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="7710">
@@ -491,7 +694,11 @@
         <state relative-caret-position="6060">
           <caret line="202" column="17" lean-forward="true" selection-start-line="202" selection-start-column="17" selection-end-line="202" selection-end-column="17" />
           <folding>
+<<<<<<< HEAD
             <element signature="e#0#42#0" expanded="true" />
+=======
+            <marker date="1506074588385" expanded="true" signature="7664:7668" ph="{...}" />
+>>>>>>> bca1461158f0199d497f815cc6a176f3aa8e8738
           </folding>
         </state>
       </provider>
@@ -610,13 +817,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/pipes/month/month.ts">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="192">
-          <caret line="9" column="1" lean-forward="false" selection-start-line="9" selection-start-column="1" selection-end-line="9" selection-end-column="1" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/pages/subtask/subtask.ts">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="1091">
@@ -628,13 +828,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="16" lean-forward="false" selection-start-line="0" selection-start-column="1" selection-end-line="0" selection-end-column="16" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/pages/project-detail/project-detail.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="984">
-          <caret line="41" column="18" lean-forward="false" selection-start-line="41" selection-start-column="18" selection-end-line="41" selection-end-column="18" />
         </state>
       </provider>
     </entry>
@@ -685,7 +878,7 @@
         <state relative-caret-position="-275">
           <caret line="69" column="2" lean-forward="false" selection-start-line="69" selection-start-column="2" selection-end-line="69" selection-end-column="2" />
           <folding>
-            <element signature="e#0#42#0" expanded="true" />
+            <element signature="e#0#42#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -694,6 +887,15 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="270">
           <caret line="9" column="65" lean-forward="true" selection-start-line="9" selection-start-column="21" selection-end-line="9" selection-end-column="65" />
+<<<<<<< HEAD
+=======
+          <folding>
+            <element signature="n#style#0;n#div#0;n#div#0;n#ion-content#0;n#!!top" expanded="false" />
+            <element signature="n#style#0;n#div#1;n#div#0;n#ion-content#0;n#!!top" expanded="false" />
+            <element signature="n#style#0;n#ion-label#0;n#div#1;n#div#0;n#ion-content#0;n#!!top" expanded="false" />
+            <element signature="n#style#0;n#ion-label#1;n#div#1;n#div#0;n#ion-content#0;n#!!top" expanded="false" />
+          </folding>
+>>>>>>> bca1461158f0199d497f815cc6a176f3aa8e8738
         </state>
       </provider>
     </entry>
@@ -722,6 +924,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/app/app.service.ts">
       <provider selected="true" editor-type-id="text-editor">
+<<<<<<< HEAD
         <state relative-caret-position="1416">
           <caret line="62" column="21" lean-forward="false" selection-start-line="62" selection-start-column="21" selection-end-line="62" selection-end-column="21" />
           <folding>
@@ -767,18 +970,30 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="312">
           <caret line="13" column="53" lean-forward="false" selection-start-line="13" selection-start-column="53" selection-end-line="13" selection-end-column="53" />
+=======
+        <state relative-caret-position="1740">
+          <caret line="61" column="21" lean-forward="false" selection-start-line="61" selection-start-column="21" selection-end-line="61" selection-end-column="21" />
+>>>>>>> bca1461158f0199d497f815cc6a176f3aa8e8738
           <folding />
         </state>
       </provider>
     </entry>
+<<<<<<< HEAD
     <entry file="file://$PROJECT_DIR$/src/app/app.scss">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="4944">
           <caret line="206" column="1" lean-forward="false" selection-start-line="206" selection-start-column="1" selection-end-line="206" selection-end-column="1" />
+=======
+    <entry file="file://$PROJECT_DIR$/src/assets/svg/icon_head.svg">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="390">
+          <caret line="13" column="53" lean-forward="false" selection-start-line="13" selection-start-column="53" selection-end-line="13" selection-end-column="53" />
+>>>>>>> bca1461158f0199d497f815cc6a176f3aa8e8738
           <folding />
         </state>
       </provider>
     </entry>
+<<<<<<< HEAD
     <entry file="file://$PROJECT_DIR$/src/pages/home/home.ts">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="1176">
@@ -804,27 +1019,56 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="864">
           <caret line="36" column="0" lean-forward="false" selection-start-line="36" selection-start-column="0" selection-end-line="36" selection-end-column="0" />
+=======
+    <entry file="file://$PROJECT_DIR$/src/app/app.scss">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="4590">
+          <caret line="153" column="16" lean-forward="false" selection-start-line="153" selection-start-column="16" selection-end-line="153" selection-end-column="16" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/pages/home/home.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="720">
+        <state relative-caret-position="820">
           <caret line="30" column="55" lean-forward="false" selection-start-line="30" selection-start-column="55" selection-end-line="30" selection-end-column="55" />
+>>>>>>> bca1461158f0199d497f815cc6a176f3aa8e8738
           <folding />
         </state>
       </provider>
     </entry>
+<<<<<<< HEAD
+    <entry file="file://$PROJECT_DIR$/src/pages/home/home.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="720">
+          <caret line="30" column="55" lean-forward="false" selection-start-line="30" selection-start-column="55" selection-end-line="30" selection-end-column="55" />
+=======
+    <entry file="file://$PROJECT_DIR$/src/pages/home/home.ts">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="355">
+          <caret line="56" column="13" lean-forward="false" selection-start-line="56" selection-start-column="13" selection-end-line="56" selection-end-column="13" />
+>>>>>>> bca1461158f0199d497f815cc6a176f3aa8e8738
+          <folding />
+        </state>
+      </provider>
+    </entry>
+<<<<<<< HEAD
     <entry file="file://$PROJECT_DIR$/src/pages/contact/contact.ts">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="554">
           <caret line="45" column="0" lean-forward="false" selection-start-line="45" selection-start-column="0" selection-end-line="45" selection-end-column="0" />
+=======
+    <entry file="file://$PROJECT_DIR$/src/pipes/itemlevel/itemlevel.ts">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="250">
+          <caret line="9" column="22" lean-forward="false" selection-start-line="9" selection-start-column="9" selection-end-line="9" selection-end-column="22" />
+>>>>>>> bca1461158f0199d497f815cc6a176f3aa8e8738
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/pages/milestone-detail/milestone-detail.ts">
+<<<<<<< HEAD
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="263">
           <caret line="58" column="194" lean-forward="false" selection-start-line="58" selection-start-column="188" selection-end-line="58" selection-end-column="194" />
@@ -843,15 +1087,110 @@
             <marker date="1505875787000" expanded="true" signature="971:1063" ph="..." />
             <marker date="1505875787000" expanded="true" signature="1112:1204" ph="..." />
             <marker date="1505875787000" expanded="true" signature="1252:1343" ph="..." />
+=======
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="325">
+          <caret line="119" column="0" lean-forward="false" selection-start-line="119" selection-start-column="0" selection-end-line="121" selection-end-column="19" />
+          <folding>
+            <marker date="1505958469592" expanded="false" signature="7:37" ph="..." />
+            <marker date="1505958469592" expanded="true" signature="6906:6920" ph="{...}" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/pages/project-detail/project-detail.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="610">
+          <caret line="66" column="0" lean-forward="true" selection-start-line="66" selection-start-column="0" selection-end-line="66" selection-end-column="0" />
+          <folding>
+            <element signature="n#style#0;n#ion-col#0;n#ion-row#0;n#div#2;n#div#0;n#div#0;n#ion-content#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#ion-col#1;n#ion-row#0;n#div#2;n#div#0;n#div#0;n#ion-content#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#ion-col#0;n#ion-row#1;n#div#2;n#div#0;n#div#0;n#ion-content#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#ion-col#1;n#ion-row#1;n#div#2;n#div#0;n#div#0;n#ion-content#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#ion-col#0;n#ion-row#2;n#div#2;n#div#0;n#div#0;n#ion-content#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#ion-col#1;n#ion-row#2;n#div#2;n#div#0;n#div#0;n#ion-content#0;n#!!top" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/pages/contact/contact.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="340">
+          <caret line="23" column="108" lean-forward="false" selection-start-line="23" selection-start-column="98" selection-end-line="23" selection-end-column="108" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/pages/project-detail/project-detail.ts">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-930">
+          <caret line="82" column="25" lean-forward="false" selection-start-line="82" selection-start-column="25" selection-end-line="82" selection-end-column="25" />
+          <folding>
+            <marker date="1505958469595" expanded="true" signature="646:1359" ph="..." />
+            <marker date="1505958469595" expanded="true" signature="693:783" ph="..." />
+            <marker date="1505958469595" expanded="true" signature="831:922" ph="..." />
+            <marker date="1505958469595" expanded="true" signature="971:1063" ph="..." />
+            <marker date="1505958469595" expanded="true" signature="1112:1204" ph="..." />
+            <marker date="1505958469595" expanded="true" signature="1252:1343" ph="..." />
+>>>>>>> bca1461158f0199d497f815cc6a176f3aa8e8738
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/pages/project-create/project-create.ts">
       <provider selected="true" editor-type-id="text-editor">
+<<<<<<< HEAD
         <state relative-caret-position="755">
           <caret line="108" column="46" lean-forward="true" selection-start-line="108" selection-start-column="46" selection-end-line="108" selection-end-column="46" />
           <folding>
+=======
+        <state relative-caret-position="433">
+          <caret line="121" column="39" lean-forward="false" selection-start-line="121" selection-start-column="39" selection-end-line="121" selection-end-column="39" />
+          <folding>
+            <element signature="n#style#0;n#div#0;n#ion-content#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#div#0;n#div#0;n#ion-content#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#ion-item#0;n#ion-list#1;n#ion-content#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#ion-item#1;n#ion-list#1;n#ion-content#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#div#2;n#ion-content#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#button#0;n#div#2;n#ion-content#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#div#3;n#ion-content#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#div#0;n#div#3;n#ion-content#0;n#!!top" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/pipes/month/month.ts">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="192">
+          <caret line="9" column="1" lean-forward="false" selection-start-line="9" selection-start-column="1" selection-end-line="9" selection-end-column="1" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/node_modules/ionic-angular/navigation/nav-controller.d.ts">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="284">
+          <caret line="522" column="13" lean-forward="false" selection-start-line="522" selection-start-column="13" selection-end-line="522" selection-end-column="13" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/pages/project-create/project-create.ts">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="595">
+          <caret line="262" column="60" lean-forward="false" selection-start-line="262" selection-start-column="60" selection-end-line="262" selection-end-column="60" />
+          <folding>
+            <marker date="1506074588385" expanded="true" signature="7664:7668" ph="{...}" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/pages/contact/contact.ts">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="91">
+          <caret line="49" column="37" lean-forward="true" selection-start-line="49" selection-start-column="37" selection-end-line="49" selection-end-column="37" />
+          <folding>
+>>>>>>> bca1461158f0199d497f815cc6a176f3aa8e8738
             <element signature="e#0#42#0" expanded="true" />
           </folding>
         </state>

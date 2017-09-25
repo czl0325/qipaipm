@@ -93,18 +93,24 @@ export class ProjectDetailPage {
   constructor(public navCtrl: NavController, private navParams: NavParams, private popoverCtrl: PopoverController,
               public events: Events, public appService: AppService, public toastCtrl: ToastController) {
     this.project = this.navParams.get('project');
-    for (let i=0; i<this.project.milestone.length; i++) {
-        var milestone = this.project.milestone[i];
-        milestone.milestoneName = '里程碑'+(i+1);
-        for (let j=0; j<milestone.subtask.length; j++) {
-          var subtask = milestone.subtask[j];
-          subtask.subtaskName = '子任务'+(j+1);
+    if (typeof (this.project.children) != 'undefined') {
+        for (let i=0; i<this.project.children.length; i++) {
+            var milestone = this.project.children[i];
+            milestone.milestoneName = '里程碑'+(i+1);
+            if (typeof (milestone.children) != 'undefined') {
+                for (let j = 0; j < milestone.children.length; j++) {
+                    var subtask = milestone.children[j];
+                    subtask.subtaskName = '子任务' + (j + 1);
+                }
+            }
         }
     }
     this.isExpand = [];
-    for (let i=0; i<this.project.milestone.length; i++) {
-      this.isExpand.push(false);
-    }
+      if (typeof (this.project.children) != 'undefined') {
+          for (let i = 0; i < this.project.children.length; i++) {
+              this.isExpand.push(false);
+          }
+      }
   }
 
   ionViewDidLoad() {
@@ -128,16 +134,16 @@ export class ProjectDetailPage {
     });
     this.events.subscribe('reloadMilestone',(milestone)=>{
       var isIn = false;
-      for (let i=0; i<this.project.milestone.length; i++) {
-        var mile = this.project.milestone[i];
+      for (let i=0; i<this.project.children.length; i++) {
+        var mile = this.project.children[i];
         if (milestone.id == mile.id) {
-          this.project.milestone.splice(i, 1, milestone);
+          this.project.children.splice(i, 1, milestone);
           isIn = true;
           break;
         }
       }
       if (isIn == false) {
-        this.project.milestone.push(milestone);
+        this.project.children.push(milestone);
       }
     });
   }
@@ -199,11 +205,11 @@ export class ProjectDetailPage {
   }
 
   onClickExpand($event, index) {
-    var mile = this.project.milestone[index];
-    if (mile.subtask == null) {
+    var mile = this.project.children[index];
+    if (mile.children == null) {
       return;
     }
-    if (mile.subtask.length < 1) {
+    if (mile.children.length < 1) {
       return;
     }
     this.isExpand[index] = !this.isExpand[index];
@@ -228,16 +234,16 @@ export class ProjectDetailPage {
       return new Promise((resolve, reject) => {
           if (typeof (milestone) != 'undefined') {
               var isIn = false;
-              for (let i=0; i<this.project.milestone.length; i++) {
-                  var tempMile = this.project.milestone[i];
+              for (let i=0; i<this.project.children.length; i++) {
+                  var tempMile = this.project.children[i];
                   if (tempMile.id == milestone.id) {
                       isIn = true;
-                      this.project.milestone.splice(i, 1, milestone);
+                      this.project.children.splice(i, 1, milestone);
                       break;
                   }
               }
               if (!isIn) {
-                  this.project.milestone.push(milestone);
+                  this.project.children.push(milestone);
               }
           } else {
 
@@ -250,13 +256,13 @@ export class ProjectDetailPage {
     subtaskCallback = (subtask) => {
       return new Promise((resolve, reject) => {
         if (typeof (subtask) != 'undefined') {
-            for (let i=0; i<this.project.milestone.length; i++) {
-                var milestone = this.project.milestone[i];
+            for (let i=0; i<this.project.children.length; i++) {
+                var milestone = this.project.children[i];
                 var isIn = false;
-                for (let j=0; j<milestone.subtask.length; j++) {
-                    var sub = milestone.subtask[j];
+                for (let j=0; j<milestone.children.length; j++) {
+                    var sub = milestone.children[j];
                     if (sub.id == subtask.id) {
-                      milestone.subtask.splice(j,1,subtask);
+                      milestone.children.splice(j,1,subtask);
                         isIn = true;
                       break;
                     }

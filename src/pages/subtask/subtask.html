@@ -22,11 +22,16 @@
   <ion-label full class="subtask-title-css">{{tempSubtask.subtaskName}}</ion-label>
 
   <ion-list no-lines style="border: solid 1px #ececec">
-    <ion-item style="border-bottom: solid 1px #ececec;">
+    <button ion-item style="border-bottom: solid 1px #ececec" (click)="onSubtaskLeader($event)">
       <ion-icon item-start name="appname-admin"></ion-icon>
-      <ion-label>负责人:</ion-label>
-      <ion-input text-right type="text" [(ngModel)]="tempSubtask.subtaskLeader" required [disabled]=""></ion-input>
-    </ion-item>
+      <ion-label item-start>负责人:</ion-label>
+      <ion-label item-end text-right>{{tempSubtask.subtaskLeader}}</ion-label>
+    </button>
+    <!--<ion-item style="border-bottom: solid 1px #ececec;">-->
+      <!--<ion-icon item-start name="appname-admin"></ion-icon>-->
+      <!--<ion-label>负责人:</ion-label>-->
+      <!--<ion-input text-right type="text" [(ngModel)]="tempSubtask.subtaskLeader" required [disabled]=""></ion-input>-->
+    <!--</ion-item>-->
     <ion-item style="border-bottom: solid 1px #ececec;">
       <ion-icon item-start name="appname-time"></ion-icon>
       <ion-label>交付时间:</ion-label>

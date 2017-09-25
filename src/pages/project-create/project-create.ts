@@ -70,8 +70,11 @@ export class ProjectCreatePage {
     id : '',                    //项目id
     itemName : '',              //项目的名称
     itemFounder : '陈昭良',      //项目的创建人
+    founderEmpNum : '003169',   //项目创建人工号
     itemLeader : '',            //项目负责人
-    itemCreate : '',            //项目的创建时间
+    itemLeaderEmpNum :'',       //项目负责人工号
+    // empNum: '',
+    itemCreateTime : '',        //项目的创建时间
     startTime : new DatePipe('en-US').transform(new Date(), 'yyyy-MM-dd'),      //项目的启动时间
     delayTime : new DatePipe('en-US').transform(new Date(), 'yyyy-MM-dd'),      //项目的延期时间
     delayDays : '',             //项目延期的天数
@@ -81,7 +84,7 @@ export class ProjectCreatePage {
     itemLevel : '',             //项目级别
     startResult : '',           //项目启动的交付成果
     endResult : '',             //项目结束的交付成果
-    milestone : [],             //项目里程碑
+    children : [],              //项目里程碑
     itemRaise : '',             //项目提出人
     itemRevision : '',          //项目修订人
     itemDept : '',              //项目部门
@@ -107,7 +110,12 @@ export class ProjectCreatePage {
   ionViewDidLoad() {
     this.events.subscribe('onConfirmProjectLeader',(leader)=>{
         this.project.itemLeader = leader.name;
+        this.project.itemLeaderEmpNum = leader.username;
     });
+  }
+
+  ionViewWillUnload(){
+      this.events.unsubscribe('onConfirmProjectLeader');
   }
 
   onPublish() {
@@ -120,8 +128,8 @@ export class ProjectCreatePage {
       alert.present();
       return;
     }
-    if (this.project.milestone.length > 0) {
-      var lastMile = this.project.milestone[this.project.milestone.length-1];
+    if (this.project.children.length > 0) {
+      var lastMile = this.project.children[this.project.children.length-1];
       if (lastMile.milestoneLeader.length < 1 || lastMile.milestoneDelivery.length < 1 || lastMile.milestoneSchedule.length < 1 || lastMile.planTime.length < 1) {
         let alert = this.alertCtrl.create({
           title: '错误信息',
@@ -143,8 +151,8 @@ export class ProjectCreatePage {
   }
 
   onAddMilestone() {
-    if (this.project.milestone.length > 0) {
-      var lastMile = this.project.milestone[this.project.milestone.length-1];
+    if (this.project.children.length > 0) {
+      var lastMile = this.project.children[this.project.children.length-1];
       if (lastMile.milestoneLeader == null || lastMile.milestoneDelivery == null || lastMile.milestoneSchedule == null || lastMile.planTime  == null) {
         let alert = this.alertCtrl.create({
             title: '错误信息',
@@ -166,8 +174,9 @@ export class ProjectCreatePage {
     }
     var milestone = {
       id : '',                    //里程碑id
-      milestoneName : '里程碑'+(this.project.milestone.length+1),         //里程碑的名称
+      milestoneName : '里程碑'+(this.project.children.length+1),         //里程碑的名称
       milestoneLeader : '',       //里程碑的负责人
+      leaderEmpNum : '',          //里程碑负责人工号
       milestoneDelivery : '',     //里程碑的交付成果
       milestoneSchedule : '',     //里程碑的进度
       planTime : new DatePipe('en-US').transform(new Date(), 'yyyy-MM-dd'),              //里程碑计划完成时间
@@ -177,7 +186,7 @@ export class ProjectCreatePage {
       delay : 0,                  //里程碑延迟天数
       subtask : [],              //里程碑子任务
     };
-    // this.project.milestone.push(milestone);
+    // this.project.children.push(milestone);
     this.navCtrl.push(MilestoneDetailPage, {
       milestone : milestone,
       projectname : this.project.itemName,
@@ -197,7 +206,7 @@ export class ProjectCreatePage {
     if (this.type == 1) {
       this.deleteOneMile(mile)
     } else {
-      this.appService.httpDelete("milestone/delete",{"id":mile.id},this,function (view, res) {
+      this.appService.httpDelete("item/delete",{"id":mile.id},this,function (view, res) {
         if (res.status == 200) {
             view.deleteOneMile(mile);
         }
@@ -208,24 +217,26 @@ export class ProjectCreatePage {
   deleteOneMile(mile) {
       var deleteId = mile.id;
       var index = -1;
-      for (let i=0; i<this.project.milestone.length; i++) {
-          var milestone1 = this.project.milestone[i];
+      for (let i=0; i<this.project.children.length; i++) {
+          var milestone1 = this.project.children[i];
           if (deleteId == milestone1.id) {
               index = i;
               break;
           }
       }
       if (index >= 0) {
-          this.project.milestone.splice(index, 1);
-          for (let i=0; i<this.project.milestone.length; i++) {
-              var milestone2 = this.project.milestone[i];
+          this.project.children.splice(index, 1);
+          for (let i=0; i<this.project.children.length; i++) {
+              var milestone2 = this.project.children[i];
               milestone2.milestoneName = '里程碑'+(i+1);
           }
       }
   }
 
   onEndDirector($event) {
-    this.navCtrl.push(ContactPage);
+    this.navCtrl.push(ContactPage, {
+        type: 1,
+    });
   }
 
   milestoneCallback = (milestone) =>
@@ -233,16 +244,16 @@ export class ProjectCreatePage {
     return new Promise((resolve, reject) => {
       if (typeof (milestone) != 'undefined') {
         var isIn = false;
-        for (let i=0; i<this.project.milestone.length; i++) {
-          var tempMile = this.project.milestone[i];
+        for (let i=0; i<this.project.children.length; i++) {
+          var tempMile = this.project.children[i];
           if (tempMile.id == milestone.id) {
             isIn = true;
-            this.project.milestone.splice(i, 1, milestone);
+            this.project.children.splice(i, 1, milestone);
             break;
           }
         }
         if (!isIn) {
-          this.project.milestone.push(milestone);
+          this.project.children.push(milestone);
         }
       } else {
 

@@ -51,21 +51,31 @@
         </span>
           </ion-col>
         </ion-row>
+        <ion-row>
+          <ion-col col-5 style="float: left">
+            紧急程度：
+          </ion-col>
+          <ion-col col-7 style="float: right">
+        <span class="item-right">
+          {{project.itemLeve | itemlevelPipe}}
+        </span>
+          </ion-col>
+        </ion-row>
       </div>
     </div>
   </div>
 
   <!-- 里程碑  -->
-  <div class="pj-item" *ngFor="let mile of project.milestone; let i = index">
+  <div class="pj-item" *ngFor="let mile of project.children; let i = index">
     <div class="mile-top" id="{{mile.id}}">
       <div style="width: 1px; background-color: #ececec; height: 100%; position: absolute; left: 65px; top: 0px" >
 
       </div >
       <div class="subtask-title" *ngIf="isExpand[i]==false ">
-        <ion-label no-margin no-padding text-center class=" horizontal-center" style="line-height: 25px; font-size: 15px">{{mile.subtask.length+"个子任务"}}</ion-label>
+        <ion-label no-margin no-padding text-center class=" horizontal-center" style="line-height: 25px; font-size: 15px">{{mile.children.length+"个子任务"}}</ion-label>
       </div>
       <div class="subtask-wrap" *ngIf="isExpand[i]==true ">
-        <div class="subtask-item" *ngFor="let subtask of mile.subtask" (click)="onClickSubtask($event, subtask)">
+        <div class="subtask-item" *ngFor="let subtask of mile.children" (click)="onClickSubtask($event, subtask)">
           <div class="subtask-css" >
             <ion-label class="subtask-left">子任务:</ion-label>
             <ion-label class="subtask-right" >{{subtask.subtaskName}}</ion-label>
@@ -93,7 +103,7 @@
       <div class="item2">
         <!--<div style="width: 1px; background-color: #ececec; height: 10px; position: absolute; left: 20px; top: 0px" ></div>-->
         <ion-label no-padding no-margin class="label-radius">{{mile.milestoneSchedule}}</ion-label>
-        <ion-label style="margin-top: 3px;font-size: 10px;text-align: center">{{i+1}}</ion-label>
+        <ion-label no-padding no-margin class="mile-number">{{i+1}}</ion-label>
       </div>
       <!--[ngClass]="{'arrow-css1':mile.type==0,'arrow-css2':mile.type==1,'arrow-css3':mile.type==2}"-->
       <ion-icon name="appname-arrow" class="arrow-css2" ></ion-icon>

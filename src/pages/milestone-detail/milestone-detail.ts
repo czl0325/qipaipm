@@ -4,6 +4,7 @@ import { SubtaskPage } from "../subtask/subtask";
 import { DatePipe } from "@angular/common";
 import { AppService } from "../../app/app.service";
 import { AppConfig } from "../../app/app.config";
+import { ContactPage } from "../contact/contact";
 
 /**
  * Generated class for the MilestoneDetailPage page.
@@ -45,6 +46,7 @@ export class MilestoneDetailPage {
     id : '',                    //里程碑id
     milestoneName : '',         //里程碑的名称
     milestoneLeader : '',       //里程碑的负责人
+    leaderEmpNum : '',          //里程碑负责人工号
     milestoneDelivery : '',     //里程碑的交付成果
     milestoneSchedule : '',     //里程碑的进度
     planTime : new DatePipe('en-US').transform(new Date(), 'yyyy-MM-dd'),              //里程碑计划完成时间
@@ -52,7 +54,7 @@ export class MilestoneDetailPage {
     remark : '',                //里程碑备注
     isAccomplish : false,       //里程碑是否完成
     delay : 0,                  //里程碑延迟天数
-    subtask : [],              //里程碑子任务
+    children : [],              //里程碑子任务
   };
   tempMilestone;
 
@@ -63,27 +65,35 @@ export class MilestoneDetailPage {
     this.callback = this.navParams.get('callback');
     this.type = this.navParams.get('type');
     this.milestone = data;
-    for (let i=0; i<this.milestone.subtask.length; i++) {
-        var subtask = this.milestone.subtask[i];
+    for (let i=0; i<this.milestone.children.length; i++) {
+        var subtask = this.milestone.children[i];
         subtask.subtaskName = '子任务'+(i+1);
     }
     this.tempMilestone = AppConfig.deepCopy(this.milestone);
   }
 
-  ionViewDidLoad() {
+    ionViewDidLoad() {
+        this.events.subscribe('onConfirmMilestoneLeader',(leader)=>{
+            this.tempMilestone.itemLeader = leader.name;
+            this.tempMilestone.leaderEmpNum = leader.username;
+        });
+    }
 
-  }
+    ionViewWillUnload(){
+        this.events.unsubscribe('onConfirmMilestoneLeader');
+    }
 
   ionViewWillLeave(){
 
   }
 
-  onPlanTimeChange($event) {
-
+  onMilestoneLeader($event) {
+      this.navCtrl.push(ContactPage, {
+          type: 2,
+      });
   }
 
   onSaveMilestone() {
-
     if (this.tempMilestone.milestoneLeader.length < 1) {
       let alert = this.alertCtrl.create({
         title: '错误信息',
@@ -113,7 +123,7 @@ export class MilestoneDetailPage {
         param.itemName = this.pname;
         param.pid = this.pid;
         param.mid = param.id;
-        this.appService.httpPost("milestone/create",param,this,function (view, res) {
+        this.appService.httpPost("item/create",param,this,function (view, res) {
             if (res.status == 200) {
                 view.tempMilestone = res.json();
                 view.milestone = view.tempMilestone;
@@ -134,8 +144,9 @@ export class MilestoneDetailPage {
   onAddSubtask($event) {
       var subtask = {
           id:'',              //子任务的id
-          subtaskName:'子任务'+(this.tempMilestone.subtask.length+1),     //子任务的名称
+          subtaskName:'子任务'+(this.tempMilestone.children.length+1),     //子任务的名称
           subtaskLeader:'',   //子任务的负责人
+          leaderEmpNum : '',  //子任务负责人工号
           deliveryTime:'',    //子任务的交付时间
           deliveryResult:'',  //子任务交付成果
           planTime: new DatePipe('en-US').transform(new Date(), 'yyyy-MM-dd'),        //子任务计划完成时间
@@ -154,7 +165,7 @@ export class MilestoneDetailPage {
   }
 
     onRemoveSubtask($event, subtask) {
-      this.appService.httpDelete("subtask/delete", {"id":subtask.id}, this, function (view, res) {
+      this.appService.httpDelete("item/delete", {"id":subtask.id}, this, function (view, res) {
         if (res.status == 200) {
           view.deleteOneSubtask(subtask);
         }
@@ -164,17 +175,17 @@ export class MilestoneDetailPage {
     deleteOneSubtask(subtask) {
         var deleteId = subtask.id;
         var index = -1;
-        for (let i=0; i<this.tempMilestone.subtask.length; i++) {
-            var subtask1 = this.tempMilestone.subtask[i];
+        for (let i=0; i<this.tempMilestone.children.length; i++) {
+            var subtask1 = this.tempMilestone.children[i];
             if (deleteId == subtask1.id) {
                 index = i;
                 break;
             }
         }
         if (index >= 0) {
-            this.tempMilestone.subtask.splice(index, 1);
-            for (let i=0; i<this.tempMilestone.subtask.length; i++) {
-                var subtask2 = this.tempMilestone.subtask[i];
+            this.tempMilestone.children.splice(index, 1);
+            for (let i=0; i<this.tempMilestone.children.length; i++) {
+                var subtask2 = this.tempMilestone.children[i];
                 subtask2.subtaskName = '子任务'+(i+1);
             }
             this.milestone = this.tempMilestone;
@@ -187,17 +198,17 @@ export class MilestoneDetailPage {
         return new Promise((resolve, reject) => {
             if (typeof (subtask) != 'undefined') {
                 var isIn = false;
-                for (let i=0; i<this.tempMilestone.subtask.length; i++) {
-                    var tempSubtask = this.tempMilestone.subtask[i];
+                for (let i=0; i<this.tempMilestone.children.length; i++) {
+                    var tempSubtask = this.tempMilestone.children[i];
                     if (tempSubtask.id == subtask.id) {
                         isIn = true;
-                        this.tempMilestone.subtask.splice(i, 1, subtask);
+                        this.tempMilestone.children.splice(i, 1, subtask);
                         this.cd.detectChanges();
                         break;
                     }
                 }
                 if (!isIn) {
-                    this.tempMilestone.subtask.push(subtask);
+                    this.tempMilestone.children.push(subtask);
                     this.cd.detectChanges();
                 }
                 this.milestone = this.tempMilestone;

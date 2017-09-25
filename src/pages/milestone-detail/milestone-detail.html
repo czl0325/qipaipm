@@ -32,11 +32,16 @@
   <ion-label full style="text-align: center">{{tempMilestone.milestoneName}}</ion-label>
 
   <ion-list no-lines style="border: solid 1px #ececec">
-    <ion-item style="border-bottom: solid 1px #ececec;">
+    <button ion-item style="border-bottom: solid 1px #ececec" (click)="onMilestoneLeader($event)" disabled="">
       <ion-icon item-start name="appname-admin"></ion-icon>
-      <ion-label>负责人:</ion-label>
-      <ion-input text-right type="text" [(ngModel)]="tempMilestone.milestoneLeader" required [disabled]=""></ion-input>
-    </ion-item>
+      <ion-label item-start>负责人:</ion-label>
+      <ion-label item-end text-right>{{tempMilestone.milestoneLeader}}</ion-label>
+    </button>
+    <!--<ion-item style="border-bottom: solid 1px #ececec;">-->
+      <!--<ion-icon item-start name="appname-admin"></ion-icon>-->
+      <!--<ion-label>负责人:</ion-label>-->
+      <!--<ion-input text-right type="text" [(ngModel)]="tempMilestone.milestoneLeader" required [disabled]=""></ion-input>-->
+    <!--</ion-item>-->
     <ion-item style="border-bottom: solid 1px #ececec;">
       <ion-icon item-start name="appname-time"></ion-icon>
       <ion-label>交付时间:</ion-label>
@@ -84,7 +89,7 @@
     </ion-item>
   </ion-list>
 
-  <div *ngFor="let subtask of tempMilestone.subtask; let i = index">
+  <div *ngFor="let subtask of tempMilestone.children; let i = index">
     <div style="height: 30px; border-bottom: solid 1px #ececec; ">
       <div style="width: 5px; height: 30px; background-color: #555555; float: left;"></div>
       <ion-label no-margin no-padding style="line-height: 30px; margin-left: 10px; float: left;">{{subtask.subtaskName}}</ion-label>

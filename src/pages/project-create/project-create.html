@@ -52,7 +52,7 @@
       </ion-item>
     </ion-list>
 
-    <div style="border-bottom: solid 10px #f5f6f7;" *ngFor="let mile of project.milestone">
+    <div style="border-bottom: solid 10px #f5f6f7;" *ngFor="let mile of project.children">
       <div style="height: 30px; border-bottom: solid 1px #ececec; ">
         <div style="width: 5px; height: 30px; background-color: orange; float: left;"></div>
         <ion-label no-margin no-padding style="line-height: 30px; margin-left: 10px; float: left;">{{mile.milestoneName}}</ion-label>
