@@ -11,7 +11,7 @@
       {{this.type==1?"新建里程碑":"里程碑详情"}}
     </ion-title>
     <ion-buttons end >
-      <button ion-button (click)="onSaveMilestone()" style="color: #fc5c53">
+      <button ion-button (click)="onSaveMilestone($event)" style="color: #fc5c53">
         保存
       </button>
     </ion-buttons>
@@ -25,7 +25,7 @@
     <ion-item >
       <ion-icon item-start name="appname-pname"></ion-icon>
       <ion-label>项目名称:</ion-label>
-      <ion-label right text-right>{{pname}}</ion-label>
+      <ion-label right text-right>{{this.project.itemName}}</ion-label>
     </ion-item>
   </ion-list>
 
@@ -77,7 +77,7 @@
     </ion-item>
   </ion-list>
 
-  <ion-list no-lines no-padding no-margin *ngIf="type != 1">
+  <ion-list no-lines no-padding no-margin *ngIf="this.tempMilestone.id.length>0">
     <ion-item style="border-top: solid 1px #ececec;border-bottom: solid 1px #ececec">
       <div item-start>是否完成</div>
       <ion-label>完成</ion-label>
@@ -119,7 +119,7 @@
     </ion-list>
   </div>
 
-  <div style="padding: 10px;" *ngIf="type > 1">
+  <div style="padding: 10px;" *ngIf="this.tempMilestone.id.length>0">
     <button ion-button (click)="onAddSubtask($event)" block style="background-color: #fc5c53">+ 添加子任务</button>
   </div>
 </ion-content>

@@ -119,28 +119,30 @@ export class ProjectCreatePage {
   }
 
   onPublish() {
-    if (this.project.itemName.length < 1) {
-      let alert = this.alertCtrl.create({
-        title: '错误信息',
-        subTitle: '请先输入项目名称!',
-        buttons: ['确定']
-      });
-      alert.present();
-      return;
-    }
-    if (this.project.children.length > 0) {
-      var lastMile = this.project.children[this.project.children.length-1];
-      if (lastMile.leader.length < 1 || lastMile.deliveryResult.length < 1 || lastMile.itemProgress.length < 1 || lastMile.planTime.length < 1) {
-        let alert = this.alertCtrl.create({
-          title: '错误信息',
-          subTitle: '请先完善里程碑!',
-          buttons: ['确定']
-        });
-        alert.present();
-        return;
-      }
-    }
+    // if (this.project.itemName.length < 1) {
+    //   let alert = this.alertCtrl.create({
+    //     title: '错误信息',
+    //     subTitle: '请先输入项目名称!',
+    //     buttons: ['确定']
+    //   });
+    //   alert.present();
+    //   return;
+    // }
+    // if (this.project.children.length > 0) {
+    //   var lastMile = this.project.children[this.project.children.length-1];
+    //   if (lastMile.leader.length < 1 || lastMile.deliveryResult.length < 1 || lastMile.itemProgress.length < 1 || lastMile.planTime.length < 1) {
+    //     let alert = this.alertCtrl.create({
+    //       title: '错误信息',
+    //       subTitle: '请先完善里程碑!',
+    //       buttons: ['确定']
+    //     });
+    //     alert.present();
+    //     return;
+    //   }
+    // }
     this.appService.httpPost("item/create", this.project, this, function (view ,res){
+      var data = res.json();
+      view.events.publish('homeCreateProject',data);
       let toast = view.toastCtrl.create({
         message: '创建项目成功!',
         duration: 3000
@@ -151,27 +153,27 @@ export class ProjectCreatePage {
   }
 
   onAddMilestone() {
-    if (this.project.children.length > 0) {
-      var lastMile = this.project.children[this.project.children.length-1];
-      if (lastMile.leader == null || lastMile.deliveryResult == null || lastMile.itemProgress == null || lastMile.planTime  == null) {
-        let alert = this.alertCtrl.create({
-            title: '错误信息',
-            subTitle: '请先完善上一个里程碑内容!',
-            buttons: ['确定']
-        });
-        alert.present();
-        return;
-      }
-      if (lastMile.leader.length < 1 || lastMile.deliveryResult.length < 1 || lastMile.itemProgress.length < 1 || lastMile.planTime.length < 1) {
-        let alert = this.alertCtrl.create({
-          title: '错误信息',
-          subTitle: '请先完善上一个里程碑内容!',
-          buttons: ['确定']
-        });
-        alert.present();
-        return;
-      }
-    }
+    // if (this.project.children.length > 0) {
+    //   var lastMile = this.project.children[this.project.children.length-1];
+    //   if (lastMile.leader == null || lastMile.deliveryResult == null || lastMile.itemProgress == null || lastMile.planTime  == null) {
+    //     let alert = this.alertCtrl.create({
+    //         title: '错误信息',
+    //         subTitle: '请先完善上一个里程碑内容!',
+    //         buttons: ['确定']
+    //     });
+    //     alert.present();
+    //     return;
+    //   }
+    //   if (lastMile.leader.length < 1 || lastMile.deliveryResult.length < 1 || lastMile.itemProgress.length < 1 || lastMile.planTime.length < 1) {
+    //     let alert = this.alertCtrl.create({
+    //       title: '错误信息',
+    //       subTitle: '请先完善上一个里程碑内容!',
+    //       buttons: ['确定']
+    //     });
+    //     alert.present();
+    //     return;
+    //   }
+    // }
     var milestone = {
       id : '',                    //里程碑id
       milestoneName : '里程碑'+(this.project.children.length+1),         //里程碑的名称
@@ -179,19 +181,18 @@ export class ProjectCreatePage {
       leaderEmpNum : '',          //里程碑负责人工号
       // milestoneDelivery : '',
       deliveryResult: '',         //里程碑的交付成果
-      itemProgress : '',     //里程碑的进度
+      itemProgress : '',          //里程碑的进度
       planTime : new DatePipe('en-US').transform(new Date(), 'yyyy-MM-dd'),              //里程碑计划完成时间
       realTime : "",              //里程碑实际完成时间
       remark : '',                //里程碑备注
       isAccomplish : false,       //里程碑是否完成
-      delay : 0,                  //里程碑延迟天数
-      subtask : [],              //里程碑子任务
+      delayDays : 0,              //里程碑延迟天数
+      children : [],              //里程碑子任务
     };
     // this.project.children.push(milestone);
     this.navCtrl.push(MilestoneDetailPage, {
       milestone : milestone,
-      projectname : this.project.itemName,
-      pid : this.project.id,
+      project : this.project,
       type : this.type,
       callback : this.milestoneCallback,
     });
@@ -207,7 +208,7 @@ export class ProjectCreatePage {
     if (this.type == 1) {
       this.deleteOneMile(mile)
     } else {
-      this.appService.httpDelete("item/delete",{"id":mile.id},this,function (view, res) {
+      this.appService.httpDelete("item/delete",{"ids":mile.id},this,function (view, res) {
         if (res.status == 200) {
             view.deleteOneMile(mile);
         }

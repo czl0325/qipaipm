@@ -97,11 +97,10 @@ export class SubtaskPage {
     //         this.navCtrl.pop()
     //     });
     // } else {
-        param.projectinfo = {"id":this.milestone.id};
+        param.projectinfo = this.milestone;
         //param.sid = this.tempSubtask.id;
-      console.log(param);
         this.appService.httpPost("item/create", param, this, function (view, res) {
-            console.log(res);
+            console.log(res.json());
             if (res.status == 200) {
                 if (typeof (res.json()) != 'undefined') {
                     view.subtask = res.json().data;

@@ -65,7 +65,7 @@ export class PopoverPage {
 
   onClickDelete($event) {
     this.viewCtrl.dismiss();
-
+    this.events.publish('onDeleteProject');
   }
 
   onClickFinish($event) {
@@ -146,6 +146,15 @@ export class ProjectDetailPage {
         this.project.children.push(milestone);
       }
     });
+    this.events.subscribe('onDeleteProject',()=> {
+        this.appService.httpDelete("item/delete",{"ids":this.project.id}, this, function (view, res) {
+            console.log(res);
+            if (res.status == 200) {
+                view.events.publish('homeDeleteProject',view.project);
+                view.navCtrl.pop();
+            }
+        },true);
+    });
   }
 
   ionViewWillEnter(){
@@ -189,8 +198,7 @@ export class ProjectDetailPage {
   onClickMilestone($event, mile) {
     this.navCtrl.push(MilestoneDetailPage, {
       milestone : mile,
-      projectname : this.project.itemName,
-      pid :this.project.id,
+      project : this.project,
       callback : this.milestoneCallback,
       type : 2,
     });

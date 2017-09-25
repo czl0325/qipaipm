@@ -36,8 +36,7 @@ import { ContactPage } from "../contact/contact";
  */
 
 export class MilestoneDetailPage {
-  pname : string;
-  pid : string;
+  project : any;
   callback;
   type : number;
   @ViewChild(Content) content: Content;
@@ -54,21 +53,27 @@ export class MilestoneDetailPage {
     realTime : new DatePipe('en-US').transform(new Date(), 'yyyy-MM-dd'),              //里程碑实际完成时间
     remark : '',                //里程碑备注
     isAccomplish : false,       //里程碑是否完成
-    delay : 0,                  //里程碑延迟天数
+    delayDays : 0,                  //里程碑延迟天数
     children : [],              //里程碑子任务
   };
   tempMilestone;
 
   constructor(public navCtrl: NavController, public navParams: NavParams, private alertCtrl: AlertController, private appService: AppService, private cd: ChangeDetectorRef, public events: Events) {
     var data = this.navParams.get('milestone');
-    this.pname = this.navParams.get('projectname');
-    this.pid = this.navParams.get('pid');
+    this.project = this.navParams.get('project');
     this.callback = this.navParams.get('callback');
     this.type = this.navParams.get('type');
     this.milestone = data;
-    for (let i=0; i<this.milestone.children.length; i++) {
-        var subtask = this.milestone.children[i];
-        subtask.subtaskName = '子任务'+(i+1);
+    if (typeof (this.project.children != 'undefined')) {
+        this.milestone.milestoneName = '里程碑'+(this.project.children.length+1);
+    } else {
+        this.milestone.milestoneName = '里程碑1';
+    }
+    if (typeof (this.milestone.children) != 'undefined') {
+        for (let i=0; i<this.milestone.children.length; i++) {
+            var subtask = this.milestone.children[i];
+            subtask.subtaskName = '子任务'+(i+1);
+        }
     }
     this.tempMilestone = AppConfig.deepCopy(this.milestone);
   }
@@ -94,25 +99,25 @@ export class MilestoneDetailPage {
       });
   }
 
-  onSaveMilestone() {
-    if (this.tempMilestone.leader.length < 1) {
-      let alert = this.alertCtrl.create({
-        title: '错误信息',
-        subTitle: '里程碑负责人为必填项!',
-        buttons: ['确定']
-      });
-      alert.present();
-      return;
-    }
-    if (this.tempMilestone.deliveryResult.length < 1) {
-      let alert = this.alertCtrl.create({
-        title: '错误信息',
-        subTitle: '里程碑交付成果为必填项!',
-        buttons: ['确定']
-      });
-      alert.present();
-      return;
-    }
+  onSaveMilestone($event) {
+    // if (this.tempMilestone.leader.length < 1) {
+    //   let alert = this.alertCtrl.create({
+    //     title: '错误信息',
+    //     subTitle: '里程碑负责人为必填项!',
+    //     buttons: ['确定']
+    //   });
+    //   alert.present();
+    //   return;
+    // }
+    // if (this.tempMilestone.deliveryResult.length < 1) {
+    //   let alert = this.alertCtrl.create({
+    //     title: '错误信息',
+    //     subTitle: '里程碑交付成果为必填项!',
+    //     buttons: ['确定']
+    //   });
+    //   alert.present();
+    //   return;
+    // }
 
     var param = AppConfig.deepCopy(this.tempMilestone);
     if (this.type == 1) {
@@ -121,12 +126,19 @@ export class MilestoneDetailPage {
             this.navCtrl.pop()
         });
     } else {
-        param.itemName = this.pname;
-        param.pid = this.pid;
-        param.mid = param.id;
+        // param.itemName = this.pname;
+        // param.pid = this.pid;
+        // param.mid = param.id;
+        param.projectinfo = this.project;
         this.appService.httpPost("item/create",param,this,function (view, res) {
+            console.log(res);
             if (res.status == 200) {
                 view.tempMilestone = res.json();
+                if (typeof (view.project.children != 'undefined')) {
+                    view.tempMilestone.milestoneName = '里程碑'+(view.project.children.length+1);
+                } else {
+                    view.tempMilestone.milestoneName = '里程碑1';
+                }
                 view.milestone = view.tempMilestone;
                 view.callback(view.milestone).then(()=>{
                     view.navCtrl.pop()
@@ -157,16 +169,16 @@ export class MilestoneDetailPage {
           delayDays:0,        //子任务延期天数
       };
     this.navCtrl.push(SubtaskPage, {
-      subtask:subtask,
-      type:1,
-      projectname:this.pname,
+      subtask : subtask,
+      type : 1,
+      projectname : this.project.itemName,
       milestone : this.tempMilestone,
       callback : this.subtaskCallback,
     });
   }
 
     onRemoveSubtask($event, subtask) {
-      this.appService.httpDelete("item/delete", {"id":subtask.id}, this, function (view, res) {
+      this.appService.httpDelete("item/delete", {"ids":subtask.id}, this, function (view, res) {
         if (res.status == 200) {
           view.deleteOneSubtask(subtask);
         }
