@@ -43,7 +43,7 @@ export class ContactPage {
     goNextDepartment($event, department) {
       if (department.children == null) {
           if (this.arrayStaff != null) {
-              console.log(department);
+
           } else {
               this.appService.httpGet("http://192.168.72.101:8888/uc/group/searchUsersByGroup",{"id":department.id},this,function (view, res) {
                   if (res.status == 200) {

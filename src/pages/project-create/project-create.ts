@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import {AlertController, NavController, NavParams, ToastController} from 'ionic-angular';
+import { AlertController, NavController, NavParams, ToastController, Events } from 'ionic-angular';
 import { DatePipe } from "@angular/common";
 import { MilestoneDetailPage } from "../milestone-detail/milestone-detail";
 import { AppService } from "../../app/app.service";
@@ -69,7 +69,7 @@ export class ProjectCreatePage {
   public project = {
     id : '',                    //项目id
     itemName : '',              //项目的名称
-    itemFounder : '陈昭良',           //项目的创建人
+    itemFounder : '陈昭良',      //项目的创建人
     itemLeader : '',            //项目负责人
     itemCreate : '',            //项目的创建时间
     startTime : new DatePipe('en-US').transform(new Date(), 'yyyy-MM-dd'),      //项目的启动时间
@@ -93,7 +93,7 @@ export class ProjectCreatePage {
   };
 
   constructor(public navCtrl: NavController, public navParams: NavParams, private alertCtrl: AlertController,
-              public appService : AppService, public toastCtrl: ToastController) {
+              public appService : AppService, public toastCtrl: ToastController, public events: Events) {
     var data = this.navParams.get('project');
     this.type = this.navParams.get('type');
     if (data) {
@@ -105,7 +105,9 @@ export class ProjectCreatePage {
   }
 
   ionViewDidLoad() {
-
+    this.events.subscribe('onConfirmProjectLeader',(leader)=>{
+        this.project.itemLeader = leader.name;
+    });
   }
 
   onPublish() {
