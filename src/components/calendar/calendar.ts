@@ -139,11 +139,11 @@ export class CalendarComponent {
     var dateString = AppConfig.dateToString(this.currentDate);
     for (let i=0; i<this.dayHasProject.length; i++) {
       var object = this.dayHasProject[i];
-      var startTime = object.startTime;
-      var day = startTime.substr(startTime.length-2,2);
+      var itemStartTime = object.itemStartTime;
+      var day = itemStartTime.substr(itemStartTime.length-2,2);
       var dot = document.getElementById("dot-"+parseInt(day));
       if (dot != null) {
-        if (startTime == dateString) {
+        if (itemStartTime == dateString) {
           dot.classList.add("selected-dot");
         } else {
           dot.classList.add("no-selected-dot");
@@ -253,12 +253,12 @@ export class CalendarComponent {
         view.dayHasProject = data.data;
         for (let i=0; i<view.dayHasProject.length; i++) {
           var object = view.dayHasProject[i];
-          var startTime = object.startTime;
-          var day = startTime.substr(startTime.length-2,2);
+          var itemStartTime = object.itemStartTime;
+          var day = itemStartTime.substr(itemStartTime.length-2,2);
           var dot = document.getElementById("dot-"+parseInt(day));
           if (dot != null) {
             dot.style.display = "block";
-            if (startTime == dateString) {
+            if (itemStartTime == dateString) {
               dot.classList.add("selected-dot");
             } else {
               dot.classList.add("no-selected-dot");

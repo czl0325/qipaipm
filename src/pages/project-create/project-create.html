@@ -38,7 +38,7 @@
       <ion-item style="border-bottom: solid 1px #ececec;">
         <ion-icon item-start name="appname-result"></ion-icon>
         <ion-label>交付成果</ion-label>
-        <ion-input item-end text-right placeholder="请输入交付成果" [(ngModel)]="project.startResult" required></ion-input>
+        <ion-input item-end text-right placeholder="请输入交付成果" [(ngModel)]="project.itemStartResult" required></ion-input>
       </ion-item>
       <ion-item >
         <ion-icon item-start name="appname-plan"></ion-icon>
@@ -64,7 +64,7 @@
         <ion-item style="border-bottom: solid 1px #ececec">
           <ion-icon item-start name="appname-admin"></ion-icon>
           <ion-label>负责人</ion-label>
-          <ion-input item-end text-right [(ngModel)]="mile.milestoneLeader"></ion-input>
+          <ion-input item-end text-right [(ngModel)]="mile.leader"></ion-input>
         </ion-item>
         <ion-item style="border-bottom: solid 1px #ececec">
           <ion-icon item-start name="appname-time"></ion-icon>
@@ -76,7 +76,7 @@
         <ion-item style="border-bottom: solid 1px #ececec">
           <ion-icon item-start name="appname-plan"></ion-icon>
           <ion-label>项目进度</ion-label>
-          <ion-select interface="action-sheet" [(ngModel)]="mile.milestoneSchedule" cancelText="取消" doneText="确认">
+          <ion-select interface="action-sheet" [(ngModel)]="mile.itemProgress" cancelText="取消" doneText="确认">
             <ion-option value="10%">10%</ion-option>
             <ion-option value="20%">20%</ion-option>
             <ion-option value="30%">30%</ion-option>
@@ -92,7 +92,7 @@
         <ion-item>
           <ion-icon item-start name="appname-result"></ion-icon>
           <ion-label>交付成果</ion-label>
-          <ion-textarea item-end text-right [(ngModel)]="mile.milestoneDelivery"></ion-textarea>
+          <ion-textarea item-end text-right [(ngModel)]="mile.deliveryResult"></ion-textarea>
         </ion-item>
       </ion-list>
     </div>
@@ -111,7 +111,7 @@
         <ion-icon item-start name="appname-admin"></ion-icon>
         <ion-label item-start>负责人</ion-label>
         <!--<ion-input item-end text-right placeholder="请输入负责人" [(ngModel)]="project.itemLeader"></ion-input>-->
-        <ion-label item-end text-right>{{project.itemLeader}}</ion-label>
+        <ion-label item-end text-right>{{project.leader}}</ion-label>
       </button>
       <ion-item  style="border-bottom: solid 1px #ececec">
         <ion-icon item-start name="appname-time"></ion-icon>
@@ -121,7 +121,7 @@
       <ion-item>
         <ion-icon item-start name="appname-result"></ion-icon>
         <ion-label>交付成果</ion-label>
-        <ion-textarea item-end text-right placeholder="请输入交付成果" [(ngModel)]="project.endResult"></ion-textarea>
+        <ion-textarea item-end text-right placeholder="请输入交付成果" [(ngModel)]="project.itemEndResult"></ion-textarea>
       </ion-item>
     </ion-list>
   </ion-content>

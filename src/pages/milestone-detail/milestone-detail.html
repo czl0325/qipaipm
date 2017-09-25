@@ -32,10 +32,10 @@
   <ion-label full style="text-align: center">{{tempMilestone.milestoneName}}</ion-label>
 
   <ion-list no-lines style="border: solid 1px #ececec">
-    <button ion-item style="border-bottom: solid 1px #ececec" (click)="onMilestoneLeader($event)" disabled="">
+    <button ion-item style="border-bottom: solid 1px #ececec" (click)="onMilestoneLeader($event)" >
       <ion-icon item-start name="appname-admin"></ion-icon>
       <ion-label item-start>负责人:</ion-label>
-      <ion-label item-end text-right>{{tempMilestone.milestoneLeader}}</ion-label>
+      <ion-label item-end text-right>{{tempMilestone.leader}}</ion-label>
     </button>
     <!--<ion-item style="border-bottom: solid 1px #ececec;">-->
       <!--<ion-icon item-start name="appname-admin"></ion-icon>-->
@@ -53,7 +53,7 @@
     <ion-item style="border-bottom: solid 1px #ececec">
       <ion-icon item-start name="appname-plan"></ion-icon>
       <ion-label>项目进度</ion-label>
-      <ion-select interface="action-sheet" [(ngModel)]="tempMilestone.milestoneSchedule">
+      <ion-select interface="action-sheet" [(ngModel)]="tempMilestone.itemProgress">
         <ion-option value="10%">10%</ion-option>
         <ion-option value="20%">20%</ion-option>
         <ion-option value="30%">30%</ion-option>
@@ -69,7 +69,7 @@
     <ion-item style="border-bottom: solid 1px #ececec;">
       <ion-icon item-start name="appname-result"></ion-icon>
       <ion-label no-padding no-margin>交付成果:</ion-label>
-      <ion-input text-right type="text" [(ngModel)]="tempMilestone.milestoneDelivery" required [disabled]=""></ion-input>
+      <ion-input text-right type="text" [(ngModel)]="tempMilestone.deliveryResult" required [disabled]=""></ion-input>
     </ion-item>
     <ion-item *ngIf="tempMilestone.delay > 0" style="border-bottom: solid 1px #ececec;">
       <ion-label >延迟情况:</ion-label>
@@ -101,7 +101,7 @@
       <ion-item style="border-bottom: solid 1px #ececec;">
         <ion-icon item-start name="appname-admin"></ion-icon>
         <ion-label>负责人:</ion-label>
-        <ion-input text-right type="text" [(ngModel)]="subtask.subtaskLeader" required [disabled]="type==2"></ion-input>
+        <ion-input text-right type="text" [(ngModel)]="subtask.leader" required [disabled]="type==2"></ion-input>
       </ion-item>
       <ion-item style="border-bottom: solid 1px #ececec;">
         <ion-icon item-start name="appname-time"></ion-icon>

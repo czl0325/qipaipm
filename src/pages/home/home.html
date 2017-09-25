@@ -59,8 +59,8 @@
       </div>
     </div>
     <div *ngFor="let project of projects" style="height: 50px">
-      <ion-label float-left no-margin no-padding style="line-height: 50px">{{project.startTime | DayPipe}}</ion-label>
-      <ion-label float-left no-margin no-padding style="line-height: 50px">{{project.startTime | WeekayPipe}}</ion-label>
+      <ion-label float-left no-margin no-padding style="line-height: 50px">{{project.itemStartTime | DayPipe}}</ion-label>
+      <ion-label float-left no-margin no-padding style="line-height: 50px">{{project.itemStartTime | WeekayPipe}}</ion-label>
       <ion-label float-left no-margin no-padding style="line-height: 50px">{{project.itemName}}</ion-label>
     </div>
   </div>

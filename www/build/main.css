@@ -25634,7 +25634,7 @@ page-project-detail .mile-bottom .item2 .label-radius {
   border: solid 1px #1e82d2;
   margin-bottom: 3px;
   left: 0;
-  top: 10px;
+  top: 0px;
 }
 
 page-project-detail .mile-bottom .item2 .mile-number {
@@ -25644,10 +25644,23 @@ page-project-detail .mile-bottom .item2 .mile-number {
   line-height: 10px;
   font-size: 10px;
   left: 0;
-  top: 55px;
+  top: 42px;
 }
 
-page-project-detail .mile-bottom .item2 .delay-radius {
+page-project-detail .mile-bottom .item2 .delay-radius1 {
+  position: absolute;
+  width: 100%;
+  height: 12px;
+  border-radius: 6px;
+  line-height: 12px;
+  font-size: 8px;
+  background-color: #fc780e;
+  color: white;
+  top: 54px;
+  left: 0px;
+}
+
+page-project-detail .mile-bottom .item2 .delay-radius2 {
   position: absolute;
   width: 16px;
   height: 16px;

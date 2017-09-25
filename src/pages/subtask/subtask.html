@@ -25,7 +25,7 @@
     <button ion-item style="border-bottom: solid 1px #ececec" (click)="onSubtaskLeader($event)">
       <ion-icon item-start name="appname-admin"></ion-icon>
       <ion-label item-start>负责人:</ion-label>
-      <ion-label item-end text-right>{{tempSubtask.subtaskLeader}}</ion-label>
+      <ion-label item-end text-right>{{tempSubtask.leader}}</ion-label>
     </button>
     <!--<ion-item style="border-bottom: solid 1px #ececec;">-->
       <!--<ion-icon item-start name="appname-admin"></ion-icon>-->
@@ -35,7 +35,7 @@
     <ion-item style="border-bottom: solid 1px #ececec;">
       <ion-icon item-start name="appname-time"></ion-icon>
       <ion-label>交付时间:</ion-label>
-      <ion-datetime text-right displayFormat="YYYY-MM-DD" max="2030" min="2015"
+      <ion-datetime text-right displayFormat="YYYY-MM-DD" max="2030" min="2015" cancelText="取消" doneText="确认"
                     ngModel="{{tempSubtask.planTime | stampToDate}}"
                     (ngModelChange)="tempSubtask.planTime = $event"></ion-datetime>
     </ion-item>
@@ -50,7 +50,7 @@
     </ion-item>
   </ion-list>
 
-  <ion-list no-lines="">
+  <ion-list no-lines="" [hidden]="this.type==1">
     <ion-item style="border-top: solid 1px #ececec;border-bottom: solid 1px #ececec">
       <div item-start>是否完成</div>
       <ion-label>完成</ion-label>

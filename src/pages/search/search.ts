@@ -78,7 +78,7 @@ export class SearchPage {
                 view.array = [];
                 for (let i=0; i<data.length; i++) {
                     var one = data[i];
-                    var year = one.startTime.substr(0,4);
+                    var year = one.itemStartTime.substr(0,4);
                     var isIn = false;
                     for (let j=0; j<view.array.length; j++) {
                         var d = view.array[j];

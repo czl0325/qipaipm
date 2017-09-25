@@ -22,9 +22,9 @@
   <div class="pj-item">
     <div class="mile-bottom">
       <div class="item1">
-        <ion-label style="margin-bottom: 3px;font-size: 10px">{{project.startTime | MonthPipe}}</ion-label>
+        <ion-label style="margin-bottom: 3px;font-size: 10px">{{project.itemStartTime | MonthPipe}}</ion-label>
         <section class="line"></section>
-        <ion-label style="margin-top: 3px;font-size: 10px">{{project.startTime | YearPipe}}</ion-label>
+        <ion-label style="margin-top: 3px;font-size: 10px">{{project.itemStartTime | YearPipe}}</ion-label>
       </div>
       <div class="item2">
         <ion-icon name="ios-arrow-dropdown-circle" style="color: #fc5c53;padding-top: 15px"></ion-icon>
@@ -38,7 +38,7 @@
             负责人：
           </ion-col>
           <ion-col col-7 style="float: right">
-            {{project.itemLeader}}
+            {{project.leader}}
           </ion-col>
         </ion-row>
         <ion-row>
@@ -47,7 +47,7 @@
           </ion-col>
           <ion-col col-7 style="float: right">
         <span class="item-right">
-          {{project.startResult}}
+          {{project.itemStartResult}}
         </span>
           </ion-col>
         </ion-row>
@@ -57,7 +57,7 @@
           </ion-col>
           <ion-col col-7 style="float: right">
         <span class="item-right">
-          {{project.itemLeve | itemlevelPipe}}
+          {{project.itemLevel | itemlevelPipe}}
         </span>
           </ion-col>
         </ion-row>
@@ -86,7 +86,7 @@
           </div>
           <div class="subtask-css" >
             <ion-label class="subtask-left">负责人:</ion-label>
-            <ion-label class="subtask-right" >{{subtask.subtaskLeader}}</ion-label>
+            <ion-label class="subtask-right" >{{subtask.leader}}</ion-label>
           </div>
         </div>
       </div>
@@ -102,8 +102,9 @@
       </div>
       <div class="item2">
         <!--<div style="width: 1px; background-color: #ececec; height: 10px; position: absolute; left: 20px; top: 0px" ></div>-->
-        <ion-label no-padding no-margin class="label-radius">{{mile.milestoneSchedule}}</ion-label>
-        <ion-label no-padding no-margin class="mile-number">{{i+1}}</ion-label>
+        <ion-label no-padding no-margin class="label-radius">{{mile.itemProgress}}</ion-label>
+        <ion-label no-padding no-margin class="mile-number">{{"里程碑"+(i+1)}}</ion-label>
+        <ion-label no-padding no-margin class="delay-radius1" [hidden]="mile.delayDays==0">{{"延期"+mile.delayDays+"天"}}</ion-label>
       </div>
       <!--[ngClass]="{'arrow-css1':mile.type==0,'arrow-css2':mile.type==1,'arrow-css3':mile.type==2}"-->
       <ion-icon name="appname-arrow" class="arrow-css2" ></ion-icon>
@@ -113,7 +114,7 @@
             负责人：
           </ion-col>
           <ion-col col-7 style="float: right">
-            {{mile.milestoneLeader}}
+            {{mile.leader}}
           </ion-col>
         </ion-row>
         <ion-row>
@@ -122,7 +123,7 @@
           </ion-col>
           <ion-col col-7 style="float: right">
         <span class="item-right">
-          {{mile.milestoneDelivery}}
+          {{mile.deliveryResult}}
         </span>
           </ion-col>
         </ion-row>
@@ -149,7 +150,7 @@
           负责人：
         </ion-col>
         <ion-col col-7 style="float: right">
-          {{project.itemLeader}}
+          {{project.leader}}
         </ion-col>
       </ion-row>
       <ion-row>
@@ -158,7 +159,7 @@
         </ion-col>
         <ion-col col-7 style="float: right">
         <span class="item-right">
-          {{project.endResult}}
+          {{project.itemEndResult}}
         </span>
         </ion-col>
       </ion-row>
@@ -174,7 +175,7 @@
     </div>
     <div class="item2">
       <!--<div style="width: 1px; background-color: #ececec; height: 10px; position: absolute; left: 20px; top: 0px" ></div>-->
-      <ion-label no-padding no-margin class="delay-radius">延</ion-label>
+      <ion-label no-padding no-margin class="delay-radius2">延</ion-label>
       <ion-label no-padding no-margin class="item2_text">延期</ion-label>
     </div>
     <ion-icon name="appname-arrow" class="arrow-css3"></ion-icon>
@@ -184,7 +185,7 @@
           负责人：
         </ion-col>
         <ion-col col-7 style="float: right">
-          {{project.itemLeader}}
+          {{project.leader}}
         </ion-col>
       </ion-row>
       <ion-row>
@@ -193,7 +194,7 @@
         </ion-col>
         <ion-col col-7 style="float: right">
         <span class="item-right">
-          {{project.endResult}}
+          {{project.itemEndResult}}
         </span>
         </ion-col>
       </ion-row>

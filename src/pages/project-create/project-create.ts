@@ -71,19 +71,19 @@ export class ProjectCreatePage {
     itemName : '',              //项目的名称
     itemFounder : '陈昭良',      //项目的创建人
     founderEmpNum : '003169',   //项目创建人工号
-    itemLeader : '',            //项目负责人
+    leader : '',                  //项目负责人
     itemLeaderEmpNum :'',       //项目负责人工号
     // empNum: '',
     itemCreateTime : '',        //项目的创建时间
-    startTime : new DatePipe('en-US').transform(new Date(), 'yyyy-MM-dd'),      //项目的启动时间
+    itemStartTime : new DatePipe('en-US').transform(new Date(), 'yyyy-MM-dd'),  //项目的启动时间
     delayTime : new DatePipe('en-US').transform(new Date(), 'yyyy-MM-dd'),      //项目的延期时间
     delayDays : '',             //项目延期的天数
     itemUpdate : new DatePipe('en-US').transform(new Date(), 'yyyy-MM-dd'),     //项目更新时间
     endTime : new DatePipe('en-US').transform(new Date(), 'yyyy-MM-dd'),        //项目结束时间
     itemVersion : '',           //项目版本
     itemLevel : '',             //项目级别
-    startResult : '',           //项目启动的交付成果
-    endResult : '',             //项目结束的交付成果
+    itemStartResult : '',           //项目启动的交付成果
+    itemEndResult : '',             //项目结束的交付成果
     children : [],              //项目里程碑
     itemRaise : '',             //项目提出人
     itemRevision : '',          //项目修订人
@@ -109,7 +109,7 @@ export class ProjectCreatePage {
 
   ionViewDidLoad() {
     this.events.subscribe('onConfirmProjectLeader',(leader)=>{
-        this.project.itemLeader = leader.name;
+        this.project.leader = leader.name;
         this.project.itemLeaderEmpNum = leader.username;
     });
   }
@@ -130,7 +130,7 @@ export class ProjectCreatePage {
     }
     if (this.project.children.length > 0) {
       var lastMile = this.project.children[this.project.children.length-1];
-      if (lastMile.milestoneLeader.length < 1 || lastMile.milestoneDelivery.length < 1 || lastMile.milestoneSchedule.length < 1 || lastMile.planTime.length < 1) {
+      if (lastMile.leader.length < 1 || lastMile.deliveryResult.length < 1 || lastMile.itemProgress.length < 1 || lastMile.planTime.length < 1) {
         let alert = this.alertCtrl.create({
           title: '错误信息',
           subTitle: '请先完善里程碑!',
@@ -153,7 +153,7 @@ export class ProjectCreatePage {
   onAddMilestone() {
     if (this.project.children.length > 0) {
       var lastMile = this.project.children[this.project.children.length-1];
-      if (lastMile.milestoneLeader == null || lastMile.milestoneDelivery == null || lastMile.milestoneSchedule == null || lastMile.planTime  == null) {
+      if (lastMile.leader == null || lastMile.deliveryResult == null || lastMile.itemProgress == null || lastMile.planTime  == null) {
         let alert = this.alertCtrl.create({
             title: '错误信息',
             subTitle: '请先完善上一个里程碑内容!',
@@ -162,7 +162,7 @@ export class ProjectCreatePage {
         alert.present();
         return;
       }
-      if (lastMile.milestoneLeader.length < 1 || lastMile.milestoneDelivery.length < 1 || lastMile.milestoneSchedule.length < 1 || lastMile.planTime.length < 1) {
+      if (lastMile.leader.length < 1 || lastMile.deliveryResult.length < 1 || lastMile.itemProgress.length < 1 || lastMile.planTime.length < 1) {
         let alert = this.alertCtrl.create({
           title: '错误信息',
           subTitle: '请先完善上一个里程碑内容!',
@@ -175,10 +175,11 @@ export class ProjectCreatePage {
     var milestone = {
       id : '',                    //里程碑id
       milestoneName : '里程碑'+(this.project.children.length+1),         //里程碑的名称
-      milestoneLeader : '',       //里程碑的负责人
+      leader : '',       //里程碑的负责人
       leaderEmpNum : '',          //里程碑负责人工号
-      milestoneDelivery : '',     //里程碑的交付成果
-      milestoneSchedule : '',     //里程碑的进度
+      // milestoneDelivery : '',
+      deliveryResult: '',         //里程碑的交付成果
+      itemProgress : '',     //里程碑的进度
       planTime : new DatePipe('en-US').transform(new Date(), 'yyyy-MM-dd'),              //里程碑计划完成时间
       realTime : "",              //里程碑实际完成时间
       remark : '',                //里程碑备注

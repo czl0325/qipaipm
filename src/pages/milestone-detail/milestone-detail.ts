@@ -45,10 +45,11 @@ export class MilestoneDetailPage {
   milestone = {
     id : '',                    //里程碑id
     milestoneName : '',         //里程碑的名称
-    milestoneLeader : '',       //里程碑的负责人
+    leader : '',                //里程碑的负责人
     leaderEmpNum : '',          //里程碑负责人工号
-    milestoneDelivery : '',     //里程碑的交付成果
-    milestoneSchedule : '',     //里程碑的进度
+    deliveryResult : '',     //里程碑的交付成果
+    // milestoneSchedule : '',     //里程碑的进度
+    itemProgress : '',          //里程碑的进度
     planTime : new DatePipe('en-US').transform(new Date(), 'yyyy-MM-dd'),              //里程碑计划完成时间
     realTime : new DatePipe('en-US').transform(new Date(), 'yyyy-MM-dd'),              //里程碑实际完成时间
     remark : '',                //里程碑备注
@@ -74,7 +75,7 @@ export class MilestoneDetailPage {
 
     ionViewDidLoad() {
         this.events.subscribe('onConfirmMilestoneLeader',(leader)=>{
-            this.tempMilestone.itemLeader = leader.name;
+            this.tempMilestone.leader = leader.name;
             this.tempMilestone.leaderEmpNum = leader.username;
         });
     }
@@ -94,7 +95,7 @@ export class MilestoneDetailPage {
   }
 
   onSaveMilestone() {
-    if (this.tempMilestone.milestoneLeader.length < 1) {
+    if (this.tempMilestone.leader.length < 1) {
       let alert = this.alertCtrl.create({
         title: '错误信息',
         subTitle: '里程碑负责人为必填项!',
@@ -103,7 +104,7 @@ export class MilestoneDetailPage {
       alert.present();
       return;
     }
-    if (this.tempMilestone.milestoneDelivery.length < 1) {
+    if (this.tempMilestone.deliveryResult.length < 1) {
       let alert = this.alertCtrl.create({
         title: '错误信息',
         subTitle: '里程碑交付成果为必填项!',
@@ -145,7 +146,7 @@ export class MilestoneDetailPage {
       var subtask = {
           id:'',              //子任务的id
           subtaskName:'子任务'+(this.tempMilestone.children.length+1),     //子任务的名称
-          subtaskLeader:'',   //子任务的负责人
+          leader:'',            //子任务的负责人
           leaderEmpNum : '',  //子任务负责人工号
           deliveryTime:'',    //子任务的交付时间
           deliveryResult:'',  //子任务交付成果
@@ -159,7 +160,7 @@ export class MilestoneDetailPage {
       subtask:subtask,
       type:1,
       projectname:this.pname,
-      mid:this.tempMilestone.id,
+      milestone : this.tempMilestone,
       callback : this.subtaskCallback,
     });
   }
