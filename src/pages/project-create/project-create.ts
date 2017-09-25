@@ -69,9 +69,12 @@ export class ProjectCreatePage {
   public project = {
     id : '',                    //项目id
     itemName : '',              //项目的名称
-    itemFounder : '陈昭良',           //项目的创建人
+    itemFounder : '陈昭良',     //项目的创建人
+    founderEmpNum : '003169',         //项目创建人工号
     itemLeader : '',            //项目负责人
-    itemCreate : '',            //项目的创建时间
+    itemLeaderEmpNum :'',
+    // empNum: '',
+    itemCreateTime : '',        //项目的创建时间
     startTime : new DatePipe('en-US').transform(new Date(), 'yyyy-MM-dd'),      //项目的启动时间
     delayTime : new DatePipe('en-US').transform(new Date(), 'yyyy-MM-dd'),      //项目的延期时间
     delayDays : '',             //项目延期的天数
@@ -223,7 +226,10 @@ export class ProjectCreatePage {
   }
 
   onEndDirector($event) {
-    this.navCtrl.push(ContactPage);
+    this.navCtrl.push(ContactPage, {
+        callback: this.directorCallback,
+        type: 1,
+    });
   }
 
   milestoneCallback = (milestone) =>
@@ -248,4 +254,17 @@ export class ProjectCreatePage {
       resolve();
     });
   };
+
+  directorCallback = (director) =>
+  {
+    return new Promise((resolve, reject) => {
+        if (typeof (director) != 'undefined') {
+          this.project.itemLeader = director.name;
+          this.project.itemLeaderEmpNum = director.username;
+        } else {
+
+        }
+        resolve();
+    });
+  }
 }

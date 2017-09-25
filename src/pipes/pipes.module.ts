@@ -6,6 +6,7 @@ import { DayPipe } from './day/day';
 import { WeekayPipe } from './weekay/weekay';
 import { YearAndMonthPipe } from './year-and-month/year-and-month';
 import { StampToDatePipe } from './stamp-to-date/stamp-to-date';
+import { ItemlevelPipe } from './itemlevel/itemlevel';
 @NgModule({
 	declarations: [
       DelayPipe,
@@ -14,7 +15,8 @@ import { StampToDatePipe } from './stamp-to-date/stamp-to-date';
     DayPipe,
     WeekayPipe,
     YearAndMonthPipe,
-    StampToDatePipe,],
+    StampToDatePipe,
+    ItemlevelPipe,],
 	imports: [],
 	exports: [
 	  DelayPipe,
@@ -23,6 +25,7 @@ import { StampToDatePipe } from './stamp-to-date/stamp-to-date';
     DayPipe,
     WeekayPipe,
     YearAndMonthPipe,
-    StampToDatePipe,]
+    StampToDatePipe,
+    ItemlevelPipe,]
 })
 export class PipesModule {}
