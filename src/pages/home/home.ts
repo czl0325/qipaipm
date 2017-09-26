@@ -20,29 +20,40 @@ export class HomePage {
     this.type = 1;
     this.namevalue = "appname-list";
   }
-    ionViewDidLoad() {
-      this.events.subscribe('homeCreateProject', (project) => {
-        this.projects.push(project);
-      });
-      this.events.subscribe('homeDeleteProject', (project) => {
-        for (let i=0; i<this.projects.length; i++) {
+  ionViewDidLoad() {
+    this.events.subscribe('homeCreateProject', (project) => {
+      var isIn = false;
+      for (let i=0; i<this.projects.length; i++) {
           var p = this.projects[i];
           if (p.id == project.id) {
-            this.projects.splice(i,1);
-            break;
+              isIn = true;
+              this.projects.splice(i,1,project);
+              break;
           }
+      }
+      if (isIn == false) {
+        this.projects.push(project);
+      }
+    });
+    this.events.subscribe('homeDeleteProject', (project) => {
+      for (let i=0; i<this.projects.length; i++) {
+        var p = this.projects[i];
+        if (p.id == project.id) {
+          this.projects.splice(i,1);
+          break;
         }
-      });
-      this.events.subscribe('homeEditProject', (project) => {
-        for (let i=0; i<this.projects.length; i++) {
-            var p = this.projects[i];
-            if (p.id == project.id) {
-                this.projects.splice(i,1,project);
-                break;
-            }
-        }
-      });
-    }
+      }
+    });
+    this.events.subscribe('homeEditProject', (project) => {
+      for (let i=0; i<this.projects.length; i++) {
+          var p = this.projects[i];
+          if (p.id == project.id) {
+              this.projects.splice(i,1,project);
+              break;
+          }
+      }
+    });
+  }
 
   ionViewWillUnload() {
     this.events.unsubscribe('homeCreateProject');

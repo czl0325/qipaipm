@@ -26,7 +26,10 @@ export class DayPipe implements PipeTransform {
         return "未知日期";
       }
     }
-    if (value == null || value.length < 10) {
+    if (value == null){
+      return "未知日期";
+    }
+    if (value.length < 10) {
       return "未知日期";
     }
     return value.substr(8, 2);

@@ -49,10 +49,10 @@ export class SubtaskPage {
       deliveryTime:'',    //子任务的交付时间
       deliveryResult:'',  //子任务交付成果
       planTime:'',        //子任务实际完成时间
-      realTime:'',        //子任务实际完成时间
-      isAccomplish:false, //子任务是否完成
+      realTime:'',        //子任务实际完成时
       remark:'',          //子任务备注
       delayDays:0,        //子任务延期天数
+      itemIsEnd : false, //子任务是否完成
   };
   tempSubtask: any;
 
@@ -98,9 +98,13 @@ export class SubtaskPage {
     //     });
     // } else {
         param.projectinfo = this.milestone;
+        if (param.itemIsEnd == false) {
+          param.itemState = '进行中';
+        } else {
+          param.itemState = '已结束';
+        }
         //param.sid = this.tempSubtask.id;
         this.appService.httpPost("item/create", param, this, function (view, res) {
-            console.log(res.json());
             if (res.status == 200) {
                 if (typeof (res.json()) != 'undefined') {
                     view.subtask = res.json().data;

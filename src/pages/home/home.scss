@@ -1,18 +1,51 @@
 page-home {
-  .circle {
-    width: 10px;
-    height: 10px;
-    border-radius: 5px;
-    background: #fc5c53;
-    display: inline-block;
-    position: absolute;
+  .circle_nostart {
+    width: 16px;
+    height: 16px;
+    border-radius: 8px;
+    background: #10c619;
+    font-size: 16px;
+    line-height: 16px;
+    color: white;
     left: 10px;
-    top: 45%;
+    position: absolute;
+  }
+  .circle_end {
+    width: 16px;
+    height: 16px;
+    border-radius: 8px;
+    font-size: 16px;
+    line-height: 16px;
+    color: white;
+    background: #c1c8d2;
+    left: 10px;
+    position: absolute;
+  }
+  .circle_ing {
+    width: 16px;
+    height: 16px;
+    border-radius: 8px;
+    font-size: 16px;
+    line-height: 16px;
+    color: white;
+    background: #fc780e;
+    left: 10px;
+    position: absolute;
+  }
+  .circle_other {
+    width: 16px;
+    height: 16px;
+    border-radius: 8px;
+    font-size: 16px;
+    line-height: 16px;
+    color: white;
+    background: #fc780e;
+    left: 10px;
+    position: absolute;
   }
   .pj-name {
-    color: #fc5c53;
-    display: inline-block;
-    margin-left: 10px;
+    color: black;
+    margin-left: 20px;
     font-size: 18px;
   }
   .weektop {
@@ -45,5 +78,67 @@ page-home {
     top: 50%;
     -webkit-transform: translateY(-50%);
     transform: translateY(-50%);
+  }
+
+  .list_day {
+    position: absolute;
+    left: 10px;
+    height: 100%;
+    width: 40px;
+    line-height: 50px;
+    font-size: 25px;
+  }
+  .list_weekday {
+    position: absolute;
+    left: 60px;
+    height: 100%;
+    width: 60px;
+    line-height: 50px;
+    font-size: 16px;
+  }
+  .list_itemname {
+    position: absolute;
+    left: 130px;
+    height: 100%;
+    width: 100%;
+    line-height: 50px;
+    font-size: 16px;
+    color: black;
+  }
+  .list_level_nostart {
+    left: 110px;
+    top: 17px;
+    width: 16px;
+    height: 16px;
+    border-radius: 8px;
+    font-size: 16px;
+    line-height: 16px;
+    color: white;
+    background: #10c619;
+    position: absolute;
+  }
+  .list_level_end {
+    left: 110px;
+    top: 17px;
+    width: 16px;
+    height: 16px;
+    border-radius: 8px;
+    font-size: 16px;
+    line-height: 16px;
+    color: white;
+    background: #c1c8d2;
+    position: absolute;
+  }
+  .list_level_ing {
+    left: 110px;
+    top: 17px;
+    width: 16px;
+    height: 16px;
+    border-radius: 8px;
+    font-size: 16px;
+    line-height: 16px;
+    color: white;
+    background: #fc780e;
+    position: absolute;
   }
 }

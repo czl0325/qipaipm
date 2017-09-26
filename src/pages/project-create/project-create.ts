@@ -82,8 +82,8 @@ export class ProjectCreatePage {
     endTime : new DatePipe('en-US').transform(new Date(), 'yyyy-MM-dd'),        //项目结束时间
     itemVersion : '',           //项目版本
     itemLevel : '',             //项目级别
-    itemStartResult : '',           //项目启动的交付成果
-    itemEndResult : '',             //项目结束的交付成果
+    itemStartResult : '',      //项目启动的交付成果
+    itemEndResult : '',        //项目结束的交付成果
     children : [],              //项目里程碑
     itemRaise : '',             //项目提出人
     itemRevision : '',          //项目修订人
@@ -92,7 +92,7 @@ export class ProjectCreatePage {
     itemCode : '',              //项目编码
     itemWeight : '',            //项目权重
     itemProgress : '',          //项目进度
-    isEnd : false,              //是否结束项目
+    itemIsEnd : false,          //是否结束项目
   };
 
   constructor(public navCtrl: NavController, public navParams: NavParams, private alertCtrl: AlertController,

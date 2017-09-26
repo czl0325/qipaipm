@@ -52,9 +52,9 @@ export class MilestoneDetailPage {
     planTime : new DatePipe('en-US').transform(new Date(), 'yyyy-MM-dd'),              //里程碑计划完成时间
     realTime : new DatePipe('en-US').transform(new Date(), 'yyyy-MM-dd'),              //里程碑实际完成时间
     remark : '',                //里程碑备注
-    isAccomplish : false,       //里程碑是否完成
-    delayDays : 0,                  //里程碑延迟天数
+    delayDays : 0,              //里程碑延迟天数
     children : [],              //里程碑子任务
+    itemIsEnd : false,          //里程碑是否完成
   };
   tempMilestone;
 
@@ -64,10 +64,12 @@ export class MilestoneDetailPage {
     this.callback = this.navParams.get('callback');
     this.type = this.navParams.get('type');
     this.milestone = data;
-    if (typeof (this.project.children != 'undefined')) {
-        this.milestone.milestoneName = '里程碑'+(this.project.children.length+1);
-    } else {
-        this.milestone.milestoneName = '里程碑1';
+    if (this.milestone.id.length < 1) {
+        if (typeof (this.project.children != 'undefined')) {
+            this.milestone.milestoneName = '里程碑'+(this.project.children.length+1);
+        } else {
+            this.milestone.milestoneName = '里程碑1';
+        }
     }
     if (typeof (this.milestone.children) != 'undefined') {
         for (let i=0; i<this.milestone.children.length; i++) {
@@ -130,6 +132,11 @@ export class MilestoneDetailPage {
         // param.pid = this.pid;
         // param.mid = param.id;
         param.projectinfo = this.project;
+        if (param.itemIsEnd == false) {
+            param.itemState = '进行中';
+        } else {
+            param.itemState = '已结束';
+        }
         this.appService.httpPost("item/create",param,this,function (view, res) {
             console.log(res);
             if (res.status == 200) {
@@ -223,6 +230,10 @@ export class MilestoneDetailPage {
                 if (!isIn) {
                     this.tempMilestone.children.push(subtask);
                     this.cd.detectChanges();
+                }
+                for (let i=0; i<this.tempMilestone.children.length; i++) {
+                    var ss = this.tempMilestone.children[i];
+                    ss.subtaskName = '子任务'+(i+1);
                 }
                 this.milestone = this.tempMilestone;
                 this.events.publish('reloadMilestone',this.milestone);

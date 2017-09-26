@@ -34,7 +34,7 @@ export class ContactPage {
 
   ionViewDidLoad() {
     if ( typeof (this.arrayDepartment) == 'undefined') {
-      this.appService.httpGet("http://192.168.72.101:8888/uc/group/searchAll",{},this, function (view, res) {
+      this.appService.httpGet("http://192.168.10.118:8888/uc/group/searchAll",{},this, function (view, res) {
         if (res.status == 200) {
           var data = res.json();
           if (data.id == null && data.children.length > 0) {

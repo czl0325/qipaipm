@@ -70,7 +70,7 @@ export class PopoverPage {
 
   onClickFinish($event) {
     this.viewCtrl.dismiss();
-
+    this.events.publish('onEndProject');
   }
 
   onClickDelay($event) {
@@ -155,6 +155,20 @@ export class ProjectDetailPage {
             }
         },true);
     });
+    this.events.subscribe('onEndProject',()=>{
+       this.project.itemIsEnd = true;
+       this.project.itemState = '已结束';
+        this.appService.httpPost("item/create", this.project, this, function (view ,res){
+            var data = res.json();
+            view.events.publish('homeCreateProject',data);
+            let toast = view.toastCtrl.create({
+                message: '项目已结束!',
+                duration: 3000
+            });
+            toast.present();
+            view.navCtrl.pop();
+        } ,true);
+    });
   }
 
   ionViewWillEnter(){
@@ -175,6 +189,7 @@ export class ProjectDetailPage {
     this.events.unsubscribe('showShareView');
     this.events.unsubscribe('onPushProjectDetail');
     this.events.unsubscribe('reloadMilestone');
+    this.events.unsubscribe('onEndProject');
   }
 
   ionViewCanEnter(){
@@ -196,6 +211,7 @@ export class ProjectDetailPage {
   }
 
   onClickMilestone($event, mile) {
+      console.log(mile);
     this.navCtrl.push(MilestoneDetailPage, {
       milestone : mile,
       project : this.project,
