@@ -1,5 +1,4 @@
 import { Pipe, PipeTransform } from '@angular/core';
-import { AppConfig } from "../../app/app.config";
 
 /**
  * Generated class for the WeekayPipe pipe.

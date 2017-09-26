@@ -25482,6 +25482,9 @@ page-home .circle_nostart {
   line-height: 16px;
   color: white;
   left: 10px;
+  top: 50%;
+  -webkit-transform: translateY(-50%);
+  transform: translateY(-50%);
   position: absolute;
 }
 
@@ -25494,6 +25497,9 @@ page-home .circle_end {
   color: white;
   background: #c1c8d2;
   left: 10px;
+  top: 50%;
+  -webkit-transform: translateY(-50%);
+  transform: translateY(-50%);
   position: absolute;
 }
 
@@ -25506,6 +25512,9 @@ page-home .circle_ing {
   color: white;
   background: #fc780e;
   left: 10px;
+  top: 50%;
+  -webkit-transform: translateY(-50%);
+  transform: translateY(-50%);
   position: absolute;
 }
 
@@ -25518,6 +25527,9 @@ page-home .circle_other {
   color: white;
   background: #fc780e;
   left: 10px;
+  top: 50%;
+  -webkit-transform: translateY(-50%);
+  transform: translateY(-50%);
   position: absolute;
 }
 
@@ -25590,7 +25602,6 @@ page-home .list_itemname {
 
 page-home .list_level_nostart {
   left: 110px;
-  top: 17px;
   width: 16px;
   height: 16px;
   border-radius: 8px;
@@ -25599,11 +25610,13 @@ page-home .list_level_nostart {
   color: white;
   background: #10c619;
   position: absolute;
+  top: 50%;
+  -webkit-transform: translateY(-50%);
+  transform: translateY(-50%);
 }
 
 page-home .list_level_end {
   left: 110px;
-  top: 17px;
   width: 16px;
   height: 16px;
   border-radius: 8px;
@@ -25612,11 +25625,13 @@ page-home .list_level_end {
   color: white;
   background: #c1c8d2;
   position: absolute;
+  top: 50%;
+  -webkit-transform: translateY(-50%);
+  transform: translateY(-50%);
 }
 
 page-home .list_level_ing {
   left: 110px;
-  top: 17px;
   width: 16px;
   height: 16px;
   border-radius: 8px;
@@ -25625,6 +25640,9 @@ page-home .list_level_ing {
   color: white;
   background: #fc780e;
   position: absolute;
+  top: 50%;
+  -webkit-transform: translateY(-50%);
+  transform: translateY(-50%);
 }
 
 page-project-detail .pj-item {

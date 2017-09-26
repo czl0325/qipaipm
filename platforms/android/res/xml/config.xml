@@ -19,8 +19,8 @@
         <param name="android-package" value="org.apache.cordova.whitelist.WhitelistPlugin" />
         <param name="onload" value="true" />
     </feature>
-    <name>MyApp</name>
-    <description>An awesome Ionic/Cordova app.</description>
+    <name>项目管理</name>
+    <description>柒牌项目管理</description>
     <author email="hi@ionicframework" href="http://ionicframework.com/">Ionic Framework Team</author>
     <content src="index.html" />
     <access origin="*" />

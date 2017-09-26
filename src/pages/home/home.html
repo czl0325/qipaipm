@@ -26,6 +26,7 @@
 
     </calendar>
 
+    <div style="margin-top: 10px; height: 1px; background-color: #c5c6c7; width: 100%"></div>
     <ion-item (click)="onClickProject(project)" *ngFor="let project of projects">
       <ion-label no-padding no-margin text-center float-left [ngClass]="{'circle_nostart':project.itemState=='未启动','circle_ing':project.itemState=='进行中','circle_end':project.itemState=='已结束','circle_other':project.itemState==''}">{{project.itemLevel}}</ion-label>
       <!--<div [ngClass]="{'circle_nostart':project.itemState=='未启动','circle_ing':project.itemState=='进行中','circle_end':project.itemState=='已结束'}"></div>-->
@@ -62,7 +63,7 @@
     <div *ngFor="let project of projects" style="position: relative; height: 50px; border-bottom: solid 1px #ececec" (click)="onClickProject(project)">
       <ion-label float-left no-margin no-padding class="list_day">{{project.itemStartTime | DayPipe}}</ion-label>
       <ion-label float-left no-margin no-padding class="list_weekday">{{project.itemStartTime | WeekayPipe}}</ion-label>
-      <ion-label float-left no-margin no-padding text-center [ngClass]="{'list_level_nostart':project.itemState=='未启动','list_level_ing':project.itemState=='进行中','list_level_end':project.itemState=='已结束','list_level_ing':project.itemState==''}">{{project.itemLevel}}</ion-label>
+      <ion-label float-left no-margin no-padding text-center [ngClass]="{'list_level_nostart':project.itemState=='未启动','list_level_ing':project.itemState=='进行中','list_level_end':project.itemState=='已结束','list_level_nostart':project.itemState==''}">{{project.itemLevel}}</ion-label>
       <ion-label float-left no-margin no-padding class="list_itemname">{{project.itemName}}</ion-label>
     </div>
   </div>

@@ -1,9 +1,6 @@
 import { Component } from '@angular/core';
 import {AlertController, Events, IonicPage, NavController, NavParams} from 'ionic-angular';
 import { AppService } from "../../app/app.service";
-import {ProjectCreatePage} from "../project-create/project-create";
-import {MilestoneDetailPage} from "../milestone-detail/milestone-detail";
-import {SubtaskPage} from "../subtask/subtask";
 
 /**
  * Generated class for the ContactPage page.
@@ -50,47 +47,47 @@ export class ContactPage {
       if (value.children == null) {
           if (this.arrayStaff != null) {
               if (this.type == 1) {
-                  var index = -1;
+                  var index1 = -1;
                   for (let i=0; i<this.navCtrl.length(); i++) {
-                      var view = this.navCtrl.getByIndex(i);
-                      if (view.name == 'ProjectCreatePage') {
-                          index = i;
+                      var view1 = this.navCtrl.getByIndex(i);
+                      if (view1.name == 'ProjectCreatePage') {
+                          index1 = i;
                           break;
                       }
                   }
-                  if (index >= 0) {
+                  if (index1 >= 0) {
                       this.events.publish('onConfirmProjectLeader',value);
-                      this.navCtrl.popTo(this.navCtrl.getByIndex(index)).then(()=>{
+                      this.navCtrl.popTo(this.navCtrl.getByIndex(index1)).then(()=>{
 
                       });
                   }
               } else if (this.type == 2) {
-                  var index = -1;
+                  var index2 = -1;
                   for (let i=0; i<this.navCtrl.length(); i++) {
-                      var view = this.navCtrl.getByIndex(i);
-                      if (view.name == 'MilestoneDetailPage') {
-                          index = i;
+                      var view2 = this.navCtrl.getByIndex(i);
+                      if (view2.name == 'MilestoneDetailPage') {
+                          index2 = i;
                           break;
                       }
                   }
-                  if (index >= 0) {
+                  if (index2 >= 0) {
                       this.events.publish('onConfirmMilestoneLeader',value);
-                      this.navCtrl.popTo(this.navCtrl.getByIndex(index)).then(()=>{
+                      this.navCtrl.popTo(this.navCtrl.getByIndex(index2)).then(()=>{
 
                       });
                   }
               } else if (this.type == 3) {
-                  var index = -1;
+                  var index3 = -1;
                   for (let i=0; i<this.navCtrl.length(); i++) {
-                      var view = this.navCtrl.getByIndex(i);
-                      if (view.name == 'SubtaskPage') {
-                          index = i;
+                      var view3 = this.navCtrl.getByIndex(i);
+                      if (view3.name == 'SubtaskPage') {
+                          index3 = i;
                           break;
                       }
                   }
-                  if (index >= 0) {
+                  if (index3 >= 0) {
                       this.events.publish('onConfirmSubtaskLeader',value);
-                      this.navCtrl.popTo(this.navCtrl.getByIndex(index)).then(()=>{
+                      this.navCtrl.popTo(this.navCtrl.getByIndex(index3)).then(()=>{
 
                       });
                   }

@@ -8,6 +8,9 @@ page-home {
     line-height: 16px;
     color: white;
     left: 10px;
+    top: 50%;
+    -webkit-transform: translateY(-50%);
+    transform: translateY(-50%);
     position: absolute;
   }
   .circle_end {
@@ -19,6 +22,9 @@ page-home {
     color: white;
     background: #c1c8d2;
     left: 10px;
+    top: 50%;
+    -webkit-transform: translateY(-50%);
+    transform: translateY(-50%);
     position: absolute;
   }
   .circle_ing {
@@ -30,6 +36,9 @@ page-home {
     color: white;
     background: #fc780e;
     left: 10px;
+    top: 50%;
+    -webkit-transform: translateY(-50%);
+    transform: translateY(-50%);
     position: absolute;
   }
   .circle_other {
@@ -41,6 +50,9 @@ page-home {
     color: white;
     background: #fc780e;
     left: 10px;
+    top: 50%;
+    -webkit-transform: translateY(-50%);
+    transform: translateY(-50%);
     position: absolute;
   }
   .pj-name {
@@ -107,7 +119,6 @@ page-home {
   }
   .list_level_nostart {
     left: 110px;
-    top: 17px;
     width: 16px;
     height: 16px;
     border-radius: 8px;
@@ -116,10 +127,12 @@ page-home {
     color: white;
     background: #10c619;
     position: absolute;
+    top: 50%;
+    -webkit-transform: translateY(-50%);
+    transform: translateY(-50%);
   }
   .list_level_end {
     left: 110px;
-    top: 17px;
     width: 16px;
     height: 16px;
     border-radius: 8px;
@@ -128,10 +141,12 @@ page-home {
     color: white;
     background: #c1c8d2;
     position: absolute;
+    top: 50%;
+    -webkit-transform: translateY(-50%);
+    transform: translateY(-50%);
   }
   .list_level_ing {
     left: 110px;
-    top: 17px;
     width: 16px;
     height: 16px;
     border-radius: 8px;
@@ -140,5 +155,8 @@ page-home {
     color: white;
     background: #fc780e;
     position: absolute;
+    top: 50%;
+    -webkit-transform: translateY(-50%);
+    transform: translateY(-50%);
   }
 }
