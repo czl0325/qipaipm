@@ -140,7 +140,10 @@ export class CalendarComponent {
     for (let i=0; i<this.dayHasProject.length; i++) {
       var object = this.dayHasProject[i];
       var itemStartTime = object.itemStartTime;
-      var day = itemStartTime.substr(itemStartTime.length-2,2);
+      var day = "1970-01-01";
+      if (itemStartTime != null) {
+          day = itemStartTime.substr(itemStartTime.length-2,2);
+      }
       var dot = document.getElementById("dot-"+parseInt(day));
       if (dot != null) {
         if (itemStartTime == dateString) {
@@ -247,14 +250,17 @@ export class CalendarComponent {
       }
     }
 
-    this.appService.httpGet("item/searchMonthItem", {"startTime":firstDateString,"endTime":lastDateString}, this,function (view, res){
+    this.appService.httpGet("item/searchByContion", {"startTime":firstDateString,"endTime":lastDateString,"page":"1","limit":"100"}, this,function (view, res){
       var data = res.json();
       if (data.success == true) {
         view.dayHasProject = data.data;
         for (let i=0; i<view.dayHasProject.length; i++) {
           var object = view.dayHasProject[i];
           var itemStartTime = object.itemStartTime;
-          var day = itemStartTime.substr(itemStartTime.length-2,2);
+          var day = "1970-01-01";
+          if (itemStartTime != null) {
+              day = itemStartTime.substr(itemStartTime.length-2,2);
+          }
           var dot = document.getElementById("dot-"+parseInt(day));
           if (dot != null) {
             dot.style.display = "block";
