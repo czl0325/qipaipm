@@ -78,6 +78,17 @@ export class HomePage {
     }
   }
 
+  sortPorjects(oldArray) {
+    for (let i=0; i<oldArray.length(); i++) {
+      var pp = oldArray[i];
+      if (pp.itemIsEnd == true) {
+          pp.itemState = "07010040";
+      } else {
+
+      }
+    }
+  }
+
   onChangeType($event) {
     if (this.type == 1) {
       this.type = 2;

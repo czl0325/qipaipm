@@ -1,47 +1,26 @@
 page-home {
-  .circle_nostart {
+  .circle {
     width: 16px;
     height: 16px;
     border-radius: 8px;
+    font-size: 16px;
+    background-color: black;
+    line-height: 16px;
+    color: white;
+    left: 10px;
+    top: 50%;
+    -webkit-transform: translateY(-50%);
+    transform: translateY(-50%);
+    position: absolute;
+  }
+  .nostart {
     background: #10c619;
-    font-size: 16px;
-    line-height: 16px;
-    color: white;
-    left: 10px;
-    position: absolute;
   }
-  .circle_end {
-    width: 16px;
-    height: 16px;
-    border-radius: 8px;
-    font-size: 16px;
-    line-height: 16px;
-    color: white;
+  .ing {
+    background: #fc780e;
+  }
+  .end {
     background: #c1c8d2;
-    left: 10px;
-    position: absolute;
-  }
-  .circle_ing {
-    width: 16px;
-    height: 16px;
-    border-radius: 8px;
-    font-size: 16px;
-    line-height: 16px;
-    color: white;
-    background: #fc780e;
-    left: 10px;
-    position: absolute;
-  }
-  .circle_other {
-    width: 16px;
-    height: 16px;
-    border-radius: 8px;
-    font-size: 16px;
-    line-height: 16px;
-    color: white;
-    background: #fc780e;
-    left: 10px;
-    position: absolute;
   }
   .pj-name {
     color: black;
@@ -105,40 +84,17 @@ page-home {
     font-size: 16px;
     color: black;
   }
-  .list_level_nostart {
+  .list_circle {
     left: 110px;
-    top: 17px;
     width: 16px;
     height: 16px;
     border-radius: 8px;
     font-size: 16px;
     line-height: 16px;
     color: white;
-    background: #10c619;
     position: absolute;
-  }
-  .list_level_end {
-    left: 110px;
-    top: 17px;
-    width: 16px;
-    height: 16px;
-    border-radius: 8px;
-    font-size: 16px;
-    line-height: 16px;
-    color: white;
-    background: #c1c8d2;
-    position: absolute;
-  }
-  .list_level_ing {
-    left: 110px;
-    top: 17px;
-    width: 16px;
-    height: 16px;
-    border-radius: 8px;
-    font-size: 16px;
-    line-height: 16px;
-    color: white;
-    background: #fc780e;
-    position: absolute;
+    top: 50%;
+    -webkit-transform: translateY(-50%);
+    transform: translateY(-50%);
   }
 }

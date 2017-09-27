@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { AlertController, NavController, NavParams, ToastController, Events } from 'ionic-angular';
+import { NavController, NavParams, ToastController, Events } from 'ionic-angular';
 import { DatePipe } from "@angular/common";
 import { MilestoneDetailPage } from "../milestone-detail/milestone-detail";
 import { AppService } from "../../app/app.service";
@@ -63,6 +63,8 @@ import { ContactPage } from "../contact/contact";
 	private String isEnd;
  */
 
+//未开始(07010010)    进行中(07010020)      延期(07010030)     已结束(07010040)
+
 export class ProjectCreatePage {
   viewTitle: string;
   type: number;
@@ -95,7 +97,7 @@ export class ProjectCreatePage {
     itemIsEnd : false,          //是否结束项目
   };
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, private alertCtrl: AlertController,
+  constructor(public navCtrl: NavController, public navParams: NavParams,
               public appService : AppService, public toastCtrl: ToastController, public events: Events) {
     var data = this.navParams.get('project');
     this.type = this.navParams.get('type');

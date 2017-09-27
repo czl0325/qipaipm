@@ -1,5 +1,5 @@
 import { Component, ChangeDetectorRef, ViewChild } from '@angular/core';
-import { NavController, NavParams, AlertController, Events, Content } from 'ionic-angular';
+import { NavController, NavParams, Events, Content } from 'ionic-angular';
 import { SubtaskPage } from "../subtask/subtask";
 import { DatePipe } from "@angular/common";
 import { AppService } from "../../app/app.service";
@@ -44,9 +44,9 @@ export class MilestoneDetailPage {
   milestone = {
     id : '',                    //里程碑id
     milestoneName : '',         //里程碑的名称
-    leader : '',                //里程碑的负责人
+    leader : '',                 //里程碑的负责人
     leaderEmpNum : '',          //里程碑负责人工号
-    deliveryResult : '',     //里程碑的交付成果
+    deliveryResult : '',        //里程碑的交付成果
     // milestoneSchedule : '',     //里程碑的进度
     itemProgress : '',          //里程碑的进度
     planTime : new DatePipe('en-US').transform(new Date(), 'yyyy-MM-dd'),              //里程碑计划完成时间
@@ -58,7 +58,7 @@ export class MilestoneDetailPage {
   };
   tempMilestone;
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, private alertCtrl: AlertController, private appService: AppService, private cd: ChangeDetectorRef, public events: Events) {
+  constructor(public navCtrl: NavController, public navParams: NavParams, private appService: AppService, private cd: ChangeDetectorRef, public events: Events) {
     var data = this.navParams.get('milestone');
     this.project = this.navParams.get('project');
     this.callback = this.navParams.get('callback');

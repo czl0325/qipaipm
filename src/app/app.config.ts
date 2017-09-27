@@ -125,4 +125,19 @@ export class AppConfig {
     public static  getNum(text){
         return text.replace(/[^0-9]/ig,"");
     }
+
+    getNowFormatDate() {
+        var date = new Date();
+        var seperator1 = "-";
+        var seperator2 = ":";
+        var month = date.getMonth() + 1;
+        var strDate = date.getDate();
+        var currentdate = date.getFullYear() + seperator1
+        + (month >= 1 && month <= 9)?"0":""
+        + month + seperator1
+        + (strDate >= 1 && strDate <= 9)?"0":"" + strDate
+        + " " + date.getHours() + seperator2 + date.getMinutes()
+        + seperator2 + date.getSeconds();
+        return currentdate;
+    }
 }

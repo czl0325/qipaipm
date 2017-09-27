@@ -4,6 +4,7 @@ import { SubtaskPage } from "../subtask/subtask";
 import { MilestoneDetailPage } from "../milestone-detail/milestone-detail";
 import { ProjectCreatePage } from "../project-create/project-create";
 import { AppService } from "../../app/app.service";
+import {AppConfig} from "../../app/app.config";
 
 /**
  * Generated class for the ProjectDetailPage page.
@@ -211,7 +212,6 @@ export class ProjectDetailPage {
   }
 
   onClickMilestone($event, mile) {
-      console.log(mile);
     this.navCtrl.push(MilestoneDetailPage, {
       milestone : mile,
       project : this.project,
@@ -268,6 +268,19 @@ export class ProjectDetailPage {
               }
               if (!isIn) {
                   this.project.children.push(milestone);
+                  var compare = function (obj1, obj2) {//比较函数
+                      console.log(AppConfig.stringToDate(obj1.planTime));
+                      var date1 = AppConfig.stringToDate(obj1.planTime);
+                      var date2 = AppConfig.stringToDate(obj2.planTime);
+                      if (date1 < date2) {
+                          return -1;
+                      } else if (date1 > date2) {
+                          return 1;
+                      } else {
+                          return 0;
+                      }
+                  }
+                  this.project.children.sort(compare);
               }
           } else {
 

@@ -25409,7 +25409,7 @@ calendar .calendar-row .calendar-col .dot {
   width: 6px;
   height: 6px;
   background-color: #fc5c53;
-  bottom: 0px;
+  bottom: 3px;
   display: none;
   position: absolute;
   left: 50%;
@@ -25473,52 +25473,31 @@ page-contact .organization .text {
   color: #111111;
 }
 
-page-home .circle_nostart {
+page-home .circle {
   width: 16px;
   height: 16px;
   border-radius: 8px;
+  font-size: 16px;
+  background-color: black;
+  line-height: 16px;
+  color: white;
+  left: 10px;
+  top: 50%;
+  -webkit-transform: translateY(-50%);
+  transform: translateY(-50%);
+  position: absolute;
+}
+
+page-home .nostart {
   background: #10c619;
-  font-size: 16px;
-  line-height: 16px;
-  color: white;
-  left: 10px;
-  position: absolute;
 }
 
-page-home .circle_end {
-  width: 16px;
-  height: 16px;
-  border-radius: 8px;
-  font-size: 16px;
-  line-height: 16px;
-  color: white;
+page-home .ing {
+  background: #fc780e;
+}
+
+page-home .end {
   background: #c1c8d2;
-  left: 10px;
-  position: absolute;
-}
-
-page-home .circle_ing {
-  width: 16px;
-  height: 16px;
-  border-radius: 8px;
-  font-size: 16px;
-  line-height: 16px;
-  color: white;
-  background: #fc780e;
-  left: 10px;
-  position: absolute;
-}
-
-page-home .circle_other {
-  width: 16px;
-  height: 16px;
-  border-radius: 8px;
-  font-size: 16px;
-  line-height: 16px;
-  color: white;
-  background: #fc780e;
-  left: 10px;
-  position: absolute;
 }
 
 page-home .pj-name {
@@ -25588,43 +25567,18 @@ page-home .list_itemname {
   color: black;
 }
 
-page-home .list_level_nostart {
+page-home .list_circle {
   left: 110px;
-  top: 17px;
   width: 16px;
   height: 16px;
   border-radius: 8px;
   font-size: 16px;
   line-height: 16px;
   color: white;
-  background: #10c619;
   position: absolute;
-}
-
-page-home .list_level_end {
-  left: 110px;
-  top: 17px;
-  width: 16px;
-  height: 16px;
-  border-radius: 8px;
-  font-size: 16px;
-  line-height: 16px;
-  color: white;
-  background: #c1c8d2;
-  position: absolute;
-}
-
-page-home .list_level_ing {
-  left: 110px;
-  top: 17px;
-  width: 16px;
-  height: 16px;
-  border-radius: 8px;
-  font-size: 16px;
-  line-height: 16px;
-  color: white;
-  background: #fc780e;
-  position: absolute;
+  top: 50%;
+  -webkit-transform: translateY(-50%);
+  transform: translateY(-50%);
 }
 
 page-project-detail .pj-item {

@@ -25331,16 +25331,212 @@ ion-icon[class*="appname-weixin"] {
   width: 50px;
 }
 
-::-webkit-scrollbar {
-  display: none !important;
+ion-icon[class*="appname-tree"] {
+  -webkit-mask-image: url(../assets/svg/icon_tree.svg);
+  background-color: #c8c8c8;
+  width: 9px;
+  height: 6px;
 }
 
-page-home .circle {
-  width: 20px;
-  height: 20px;
-  border-radius: 10px;
-  background: #fc5c53;
+ion-icon[class*="appname-head"] {
+  -webkit-mask-image: url(../assets/svg/icon_head.svg);
+}
+
+::-webkit-scrollbar {
+  display: none !important;
+  color: #c8c8c8;
+}
+
+.head {
+  text-align: center;
+  width: 100%;
+  background: #fff;
+  height: 44px;
+  line-height: 44px;
+  font-size: 16px;
+  font-weight: bold;
+  border-bottom: 1px solid #cbcbcb;
+  color: #242424;
+}
+
+.icon-left {
+  z-index: 100;
+  height: 100%;
+  position: absolute;
+  left: 15px;
+}
+
+.icon-left img {
+  width: 18px;
+  height: 35px;
+  margin-top: 13px;
+}
+
+.icon-right {
+  z-index: 100;
+  height: 100%;
+  position: absolute;
+  right: 30px;
+  top: 0;
+}
+
+.icon-right::before {
+  content: "";
   display: inline-block;
+  vertical-align: middle;
+  height: 100%;
+}
+
+.icon-right .btn {
+  vertical-align: middle;
+}
+
+ion-content {
+  background-color: #f5f6f7;
+}
+
+calendar .calendar-row {
+  max-height: 50px;
+}
+
+calendar .calendar-row .calendar-col {
+  padding: 0px;
+  margin: 5px;
+}
+
+calendar .calendar-row .calendar-col .dot {
+  border-radius: 3px;
+  width: 6px;
+  height: 6px;
+  background-color: #fc5c53;
+  bottom: 0px;
+  display: none;
+  position: absolute;
+  left: 50%;
+  -webkit-transform: translateX(-50%);
+  transform: translateX(-50%);
+}
+
+calendar .calendar-week-day {
+  max-width: 15%;
+}
+
+calendar .calendar-day {
+  color: black;
+  font-size: 1.3em;
+  position: relative;
+}
+
+calendar .selected {
+  background-color: #fc5c53 !important;
+  color: white;
+}
+
+calendar .selected-dot {
+  background-color: white !important;
+}
+
+calendar .no-selected-dot {
+  background-color: #fc5c53 !important;
+}
+
+calendar .hasEvents {
+  border-bottom: 2px solid red;
+}
+
+calendar .selectedMonthLabel {
+  text-transform: capitalize;
+  margin-top: 10px;
+}
+
+page-contact .input-search {
+  border-radius: 4px;
+  width: 70%;
+  height: 100%;
+  background-color: white;
+}
+
+page-contact .btn-search {
+  width: 60px;
+  height: 100%;
+}
+
+page-contact .organization {
+  height: 50px;
+  position: relative;
+}
+
+page-contact .organization .text {
+  left: 15px;
+  font-size: 16px;
+  font-weight: bold;
+  color: #111111;
+}
+
+page-home .circle_nostart {
+  width: 16px;
+  height: 16px;
+  border-radius: 8px;
+  background: #10c619;
+  font-size: 16px;
+  line-height: 16px;
+  color: white;
+  left: 10px;
+  top: 50%;
+  -webkit-transform: translateY(-50%);
+  transform: translateY(-50%);
+  position: absolute;
+}
+
+page-home .circle_end {
+  width: 16px;
+  height: 16px;
+  border-radius: 8px;
+  font-size: 16px;
+  line-height: 16px;
+  color: white;
+  background: #c1c8d2;
+  left: 10px;
+  top: 50%;
+  -webkit-transform: translateY(-50%);
+  transform: translateY(-50%);
+  position: absolute;
+}
+
+page-home .circle_ing {
+  width: 16px;
+  height: 16px;
+  border-radius: 8px;
+  font-size: 16px;
+  line-height: 16px;
+  color: white;
+  background: #fc780e;
+  left: 10px;
+  top: 50%;
+  -webkit-transform: translateY(-50%);
+  transform: translateY(-50%);
+  position: absolute;
+}
+
+page-home .circle_other {
+  width: 16px;
+  height: 16px;
+  border-radius: 8px;
+  font-size: 16px;
+  line-height: 16px;
+  color: white;
+  background: #fc780e;
+  left: 10px;
+  top: 50%;
+  -webkit-transform: translateY(-50%);
+  transform: translateY(-50%);
+  position: absolute;
+}
+
+page-home .pj-name {
+  color: black;
+  margin-left: 20px;
+  font-size: 18px;
 }
 
 page-home .weektop {
@@ -25376,9 +25572,82 @@ page-home .text_vertical_center {
   transform: translateY(-50%);
 }
 
+page-home .list_day {
+  position: absolute;
+  left: 10px;
+  height: 100%;
+  width: 40px;
+  line-height: 50px;
+  font-size: 25px;
+}
+
+page-home .list_weekday {
+  position: absolute;
+  left: 60px;
+  height: 100%;
+  width: 60px;
+  line-height: 50px;
+  font-size: 16px;
+}
+
+page-home .list_itemname {
+  position: absolute;
+  left: 130px;
+  height: 100%;
+  width: 100%;
+  line-height: 50px;
+  font-size: 16px;
+  color: black;
+}
+
+page-home .list_level_nostart {
+  left: 110px;
+  width: 16px;
+  height: 16px;
+  border-radius: 8px;
+  font-size: 16px;
+  line-height: 16px;
+  color: white;
+  background: #10c619;
+  position: absolute;
+  top: 50%;
+  -webkit-transform: translateY(-50%);
+  transform: translateY(-50%);
+}
+
+page-home .list_level_end {
+  left: 110px;
+  width: 16px;
+  height: 16px;
+  border-radius: 8px;
+  font-size: 16px;
+  line-height: 16px;
+  color: white;
+  background: #c1c8d2;
+  position: absolute;
+  top: 50%;
+  -webkit-transform: translateY(-50%);
+  transform: translateY(-50%);
+}
+
+page-home .list_level_ing {
+  left: 110px;
+  width: 16px;
+  height: 16px;
+  border-radius: 8px;
+  font-size: 16px;
+  line-height: 16px;
+  color: white;
+  background: #fc780e;
+  position: absolute;
+  top: 50%;
+  -webkit-transform: translateY(-50%);
+  transform: translateY(-50%);
+}
+
 page-project-detail .pj-item {
   margin-top: 5px;
-  margin-bottom: 10px;
+  margin-bottom: 5px;
 }
 
 page-project-detail .pj-item .mile-top {
@@ -25477,6 +25746,7 @@ page-project-detail .mile-bottom .item2 {
 }
 
 page-project-detail .mile-bottom .item2 .label-radius {
+  position: absolute;
   width: 40px;
   height: 40px;
   border-radius: 20px;
@@ -25484,6 +25754,55 @@ page-project-detail .mile-bottom .item2 .label-radius {
   font-size: 12px;
   border: solid 1px #1e82d2;
   margin-bottom: 3px;
+  left: 0;
+  top: 0px;
+}
+
+page-project-detail .mile-bottom .item2 .mile-number {
+  position: absolute;
+  width: 100%;
+  height: 10px;
+  line-height: 10px;
+  font-size: 10px;
+  left: 0;
+  top: 42px;
+}
+
+page-project-detail .mile-bottom .item2 .delay-radius1 {
+  position: absolute;
+  width: 100%;
+  height: 12px;
+  border-radius: 6px;
+  line-height: 12px;
+  font-size: 8px;
+  background-color: #fc780e;
+  color: white;
+  top: 54px;
+  left: 0px;
+}
+
+page-project-detail .mile-bottom .item2 .delay-radius2 {
+  position: absolute;
+  width: 16px;
+  height: 16px;
+  border-radius: 8px;
+  line-height: 16px;
+  font-size: 10px;
+  background-color: #fc780e;
+  color: white;
+  top: 20px;
+  left: 12px;
+}
+
+page-project-detail .mile-bottom .item2 .item2_text {
+  position: absolute;
+  width: 100%;
+  text-align: center;
+  height: 10px;
+  font-size: 10px;
+  line-height: 10px;
+  left: 0px;
+  top: 42px;
 }
 
 page-project-detail .mile-bottom .arrow-css1 {
@@ -25554,6 +25873,65 @@ page-project-detail .share-css {
   width: 100%;
   height: 200px;
   background-color: white;
+}
+
+page-search .head .icon-rightnew {
+  width: auto;
+  float: right;
+  z-index: 100;
+  position: absolute;
+  right: 10px;
+  top: 10px;
+}
+
+page-search .head .icon-rightnew a {
+  display: inline-block;
+  width: auto;
+  font-size: 16px;
+}
+
+page-search .head .searchcotain {
+  padding-top: 7px;
+}
+
+page-search .head .searchmain {
+  width: 70%;
+  margin: auto;
+  background: #f4f4f4;
+  height: 36px;
+  border-radius: 4px;
+}
+
+page-search .head .searchmain .searchicon {
+  float: left;
+  height: 56px;
+  position: relative;
+  width: 10%;
+  color: #c6c7cc;
+}
+
+page-search .head .searchmain .searchicon ion-icon {
+  position: absolute;
+  left: 5px;
+  top: 5px;
+}
+
+page-search .head .searchmain .searchinput {
+  height: 56px;
+  float: left;
+  position: relative;
+  width: 90%;
+}
+
+page-search .head .searchmain .searchinput input {
+  height: 50px;
+  position: absolute;
+  width: 95%;
+  left: 16px;
+  top: 3px;
+  border: 0;
+  background: #f4f4f4;
+  font-size: 30px;
 }
 
 page-subtask .subtask-title-css {
