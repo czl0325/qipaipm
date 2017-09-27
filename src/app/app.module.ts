@@ -19,10 +19,13 @@ import { ContactPage } from "../pages/contact/contact";
 
 //组件类
 import { ComponentsModule } from "../components/components.module";
+import { CalendarModule }  from "ion2-calendar";
+import { MultiPickerModule } from 'ion-multi-picker';
 
 //pipe类
 import { PipesModule } from "../pipes/pipes.module";
 import { AppService } from "./app.service";
+import {LoginPage} from "../pages/login/login";
 
 //第三方库
 
@@ -36,6 +39,7 @@ import { AppService } from "./app.service";
     SubtaskPage,
     SearchPage,
     ContactPage,
+    LoginPage,
 
     PopoverPage,
   ],
@@ -46,7 +50,8 @@ import { AppService } from "./app.service";
     HttpModule,
     IonicModule.forRoot(MyApp, {
       backButtonText: '',
-      mode: 'ios',
+      backButtonIcon: 'md-arrow-back',
+      //mode: 'ios',
       tabsHideOnSubPages: true,
       modalEnter: 'modal-slide-in',
       modalLeave: 'model-slide-out',
@@ -54,6 +59,8 @@ import { AppService } from "./app.service";
       pageTransition: 'ios-transition' //使用ios页面动画
     }),
     JsonpModule,
+    CalendarModule,
+    MultiPickerModule,
   ],
   bootstrap: [IonicApp],
   entryComponents: [
@@ -65,8 +72,9 @@ import { AppService } from "./app.service";
     SubtaskPage,
     SearchPage,
     ContactPage,
+      LoginPage,
 
-    PopoverPage,
+      PopoverPage,
   ],
   providers: [
     StatusBar,

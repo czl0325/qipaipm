@@ -3,6 +3,7 @@ import { Events, NavController, NavParams} from 'ionic-angular';
 import { AppConfig } from "../../app/app.config";
 import { AppService } from "../../app/app.service";
 import { ContactPage } from "../contact/contact";
+import { DatePipe } from "@angular/common";
 
 /**
  * Generated class for the SubtaskPage page.
@@ -46,10 +47,10 @@ export class SubtaskPage {
       subtaskName:'',     //子任务的名称
       leader:'',   //子任务的负责人
       leaderEmpNum : '',  //子任务负责人工号
-      deliveryTime:'',    //子任务的交付时间
+      deliveryTime:new DatePipe('en-US').transform(new Date(), 'yyyy-MM-dd'),    //子任务的交付时间
       deliveryResult:'',  //子任务交付成果
-      planTime:'',        //子任务实际完成时间
-      realTime:'',        //子任务实际完成时
+      planTime:new DatePipe('en-US').transform(new Date(), 'yyyy-MM-dd'),        //子任务实际完成时间
+      realTime:new DatePipe('en-US').transform(new Date(), 'yyyy-MM-dd'),        //子任务实际完成时
       remark:'',          //子任务备注
       delayDays:0,        //子任务延期天数
       itemIsEnd : false, //子任务是否完成
@@ -98,13 +99,9 @@ export class SubtaskPage {
     //     });
     // } else {
         param.projectinfo = this.milestone;
-        if (param.itemIsEnd == false) {
-          param.itemState = '进行中';
-        } else {
-          param.itemState = '已结束';
-        }
+        console.log(param);
         //param.sid = this.tempSubtask.id;
-        this.appService.httpPost("item/create", param, this, function (view, res) {
+        this.appService.httpPost("item/createSubtask", param, this, function (view, res) {
             if (res.status == 200) {
                 if (typeof (res.json()) != 'undefined') {
                     view.subtask = res.json().data;

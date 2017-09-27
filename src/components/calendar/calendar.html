@@ -7,8 +7,9 @@
           <ion-icon name="arrow-back"></ion-icon>
         </button>
       </ion-col>
-      <ion-col no-margin no-padding text-center class="selectedDateLabel">
+      <ion-col no-margin no-padding text-center class="selectedDateLabel" (click)="openCalendar($event)">
         <h5 class="selectedMonthLabel">{{ currentDate | date:'yyyy-MM' }}</h5>
+        <!--<ion-multi-picker item-content [multiPickerColumns]="simpleColumns"></ion-multi-picker>>-->
         <!--<button *ngIf="showTodayButton" (click)="setToday()" ion-button small outline>{{ todayText }}</button>-->
       </ion-col>
       <ion-col no-padding no-margin text-left class="titleCol">

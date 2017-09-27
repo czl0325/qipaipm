@@ -1,7 +1,9 @@
 import { Component, Input, Output, EventEmitter, SimpleChanges } from '@angular/core';
 import { DatePipe } from "@angular/common";
-import {AppService} from "../../app/app.service";
-import {AppConfig} from "../../app/app.config";
+import { AppService } from "../../app/app.service";
+import { AppConfig } from "../../app/app.config";
+import { ModalController } from "ionic-angular";
+import { CalendarModal, CalendarModalOptions } from "ion2-calendar";
 
 /**
  * Generated class for the CalendarComponent component.
@@ -35,9 +37,43 @@ export class CalendarComponent {
   dayHasProject = [];
   stop = false;
   todayEvents = [];
+  simpleColumns = [];
 
-  constructor(private datePipe: DatePipe, public appService: AppService) {
+  constructor(private datePipe: DatePipe, public appService: AppService, public modalCtrl: ModalController) {
     //this.setUpWeekDaysLabels();
+    this.simpleColumns = [
+        {
+            name: 'col1',
+            options: [
+                { text: '1', value: '1' },
+                { text: '2', value: '2' },
+                { text: '3', value: '3' }
+            ]
+        },{
+            name: 'col2',
+            options: [
+                { text: '1-1', value: '1-1' },
+                { text: '1-2', value: '1-2' },
+                { text: '2-1', value: '2-1' },
+                { text: '2-2', value: '2-2' },
+                { text: '3-1', value: '3-1' }
+            ]
+        },{
+            name: 'col3',
+            options: [
+                { text: '1-1-1', value: '1-1-1' },
+                { text: '1-1-2', value: '1-1-2' },
+                { text: '1-2-1', value: '1-2-1' },
+                { text: '1-2-2', value: '1-2-2' },
+                { text: '2-1-1', value: '2-1-1' },
+                { text: '2-1-2', value: '2-1-2' },
+                { text: '2-2-1', value: '2-2-1' },
+                { text: '2-2-2', value: '2-2-2' },
+                { text: '3-1-1', value: '3-1-1' },
+                { text: '3-1-2', value: '3-1-2' }
+            ]
+        }
+    ];
   }
   setUpWeekDaysLabels() {
     let date = new Date(2017, 0, 1); /* This date has to be a Sunday */
@@ -250,7 +286,7 @@ export class CalendarComponent {
       }
     }
 
-    this.appService.httpGet("item/searchByContion", {"startTime":firstDateString,"endTime":lastDateString,"page":"1","limit":"100"}, this,function (view, res){
+    this.appService.httpGet("item/searchByCondition", {"itemStartTime":firstDateString,"endTime":lastDateString,"itemIsEnd":"0","page":"1","limit":"100"}, this,function (view, res){
       var data = res.json();
       if (data.success == true) {
         view.dayHasProject = data.data;
@@ -358,5 +394,9 @@ export class CalendarComponent {
 
   eventClicked(event) {
     this.onEventClicked.emit(event);
+  }
+
+  openCalendar($event) {
+
   }
 }

@@ -49,6 +49,7 @@ export class MilestoneDetailPage {
     deliveryResult : '',        //里程碑的交付成果
     // milestoneSchedule : '',     //里程碑的进度
     itemProgress : '',          //里程碑的进度
+    deliveryTime : new DatePipe('en-US').transform(new Date(), 'yyyy-MM-dd'),              //里程碑交付时间
     planTime : new DatePipe('en-US').transform(new Date(), 'yyyy-MM-dd'),              //里程碑计划完成时间
     realTime : new DatePipe('en-US').transform(new Date(), 'yyyy-MM-dd'),              //里程碑实际完成时间
     remark : '',                //里程碑备注
@@ -132,15 +133,9 @@ export class MilestoneDetailPage {
         // param.pid = this.pid;
         // param.mid = param.id;
         param.projectinfo = this.project;
-        if (param.itemIsEnd == false) {
-            param.itemState = '进行中';
-        } else {
-            param.itemState = '已结束';
-        }
-        this.appService.httpPost("item/create",param,this,function (view, res) {
-            console.log(res);
+        this.appService.httpPost("item/createMilestone",param,this,function (view, res) {
             if (res.status == 200) {
-                view.tempMilestone = res.json();
+                view.tempMilestone = res.json().data;
                 if (typeof (view.project.children != 'undefined')) {
                     view.tempMilestone.milestoneName = '里程碑'+(view.project.children.length+1);
                 } else {
@@ -167,11 +162,11 @@ export class MilestoneDetailPage {
           subtaskName:'子任务'+(this.tempMilestone.children.length+1),     //子任务的名称
           leader:'',            //子任务的负责人
           leaderEmpNum : '',  //子任务负责人工号
-          deliveryTime:'',    //子任务的交付时间
+          deliveryTime:new DatePipe('en-US').transform(new Date(), 'yyyy-MM-dd'),    //子任务的交付时间
           deliveryResult:'',  //子任务交付成果
           planTime: new DatePipe('en-US').transform(new Date(), 'yyyy-MM-dd'),        //子任务计划完成时间
-          realTime:'',        //子任务实际完成时间
-          isAccomplish:false, //子任务是否完成
+          realTime: new DatePipe('en-US').transform(new Date(), 'yyyy-MM-dd'),        //子任务实际完成时间
+          itemIsEnd :false,
           remark:'',          //子任务备注
           delayDays:0,        //子任务延期天数
       };

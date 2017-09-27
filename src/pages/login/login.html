@@ -1,0 +1,66 @@
+<!--
+  Generated template for the LoginPage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+
+
+<ion-content fullscreen>
+  <!--<img class="login_icon" src="../../assets/png/login_logo.png">-->
+  <!--<form [formGroup]="loginForm" (ngSubmit)="login(loginForm.value)">-->
+    <!--<div style="margin: 0 auto;">-->
+      <!--<input class="login_input" type="text" formControlName="mobile" placeholder="请输入手机号"/>-->
+      <!--<input class="login_input" type="password" formControlName="password" placeholder="请输入密码"/>-->
+      <!--<div style="width: 80%;height: 30px;margin: 30px auto">-->
+        <!--<p style="float: left; margin-left: 10px; color: red">{{errorText}}</p>-->
+        <!--<button ion-button no-padding no-margin clear style="margin-right: 10px; float: right">忘记密码?</button>-->
+      <!--</div>-->
+      <!--<button ion-button block class="login_btn" type="submit">登录</button>-->
+    <!--</div>-->
+  <!--</form>-->
+  <div id="authenticated" style="display: none;">
+    <div>
+      <button onclick="keycloak.logout()">Log out</button>
+      <button onclick="keycloak.updateToken()">Refresh token</button>
+      <button onclick="keycloak.updateToken(9999)">Force Refresh token</button>
+      <button onclick="keycloak.accountManagement()">Manage account</button>
+    </div>
+    <div>
+      <table>
+        <tr>
+          <td>Subject</td>
+          <td id="subject"></td>
+        </tr>
+        <tr class="odd">
+          <td>Username</td>
+          <td id="username"></td>
+        </tr>
+        <tr>
+          <td>Token expires</td>
+          <td id="tokenExpires"></td>
+        </tr>
+        <tr class="odd">
+          <td>Refresh token expires</td>
+          <td id="tokenRefreshExpires"></td>
+        </tr>
+        <tr>
+          <td>Token</td>
+          <td><pre id="token"></pre></td>
+        </tr>
+        <tr class="odd">
+          <td>ID Token</td>
+          <td><pre id="idToken"></pre></td>
+        </tr>
+      </table>
+    </div>
+  </div>
+  <div id="not-authenticated" style="display: none;">
+    <div>
+      <button onclick="keycloak.login()">Log in</button>
+    </div>
+    <div>
+      <p id="error">Not authenticated</p>
+    </div>
+  </div>
+</ion-content>

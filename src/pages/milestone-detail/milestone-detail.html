@@ -46,8 +46,8 @@
       <ion-icon item-start name="appname-time"></ion-icon>
       <ion-label>交付时间:</ion-label>
       <ion-datetime text-right displayFormat="YYYY-MM-DD" max="2030" min="2015" cancelText="取消" doneText="确认" required [disabled]=""
-                    ngModel="{{tempMilestone.planTime | stampToDate}}"
-                    (ngModelChange)="tempMilestone.planTime = $event">
+                    ngModel="{{tempMilestone.deliveryTime | stampToDate}}"
+                    (ngModelChange)="tempMilestone.deliveryTime = $event">
       </ion-datetime>
     </ion-item>
     <ion-item style="border-bottom: solid 1px #ececec">
@@ -107,8 +107,8 @@
         <ion-icon item-start name="appname-time"></ion-icon>
         <ion-label>交付时间</ion-label>
         <ion-datetime item-end displayFormat="YYYY年MM月DD日" max="2030" min="2015" cancelText="取消" doneText="确认"
-                      ngModel="{{subtask.planTime | stampToDate}}"
-                      (ngModelChange)="subtask.planTime = $event"
+                      ngModel="{{subtask.deliveryTime | stampToDate}}"
+                      (ngModelChange)="subtask.deliveryTime = $event"
                       [disabled]="type==2"></ion-datetime>
       </ion-item>
       <ion-item style="border-bottom: solid 10px #ececec;">

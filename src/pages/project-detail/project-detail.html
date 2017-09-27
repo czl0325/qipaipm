@@ -75,14 +75,14 @@
         <ion-label no-margin no-padding text-center class=" horizontal-center" style="line-height: 25px; font-size: 15px">{{mile.children.length+"个子任务"}}</ion-label>
       </div>
       <div class="subtask-wrap" *ngIf="isExpand[i]==true ">
-        <div class="subtask-item" *ngFor="let subtask of mile.children" (click)="onClickSubtask($event, subtask)">
+        <div class="subtask-item" *ngFor="let subtask of mile.children" (click)="onClickSubtask($event, subtask, mile)">
           <div class="subtask-css" >
             <ion-label class="subtask-left">子任务:</ion-label>
             <ion-label class="subtask-right" >{{subtask.subtaskName}}</ion-label>
           </div>
           <div class="subtask-css" >
             <ion-label class="subtask-left">交付时间:</ion-label>
-            <ion-label class="subtask-right" >{{subtask.planTime | stampToDate}}</ion-label>
+            <ion-label class="subtask-right" >{{subtask.deliveryTime | stampToDate}}</ion-label>
           </div>
           <div class="subtask-css" >
             <ion-label class="subtask-left">负责人:</ion-label>
@@ -96,9 +96,9 @@
     </div>
     <div class="mile-bottom">
       <div class="item1">
-        <ion-label style="margin-bottom: 3px;font-size: 10px">{{mile.planTime | MonthPipe}}</ion-label>
+        <ion-label style="margin-bottom: 3px;font-size: 10px">{{mile.deliveryTime | MonthPipe}}</ion-label>
         <section class="line"></section>
-        <ion-label style="margin-top: 3px;font-size: 10px">{{mile.planTime | YearPipe}}</ion-label>
+        <ion-label style="margin-top: 3px;font-size: 10px">{{mile.deliveryTime | YearPipe}}</ion-label>
       </div>
       <div class="item2">
         <!--<div style="width: 1px; background-color: #ececec; height: 10px; position: absolute; left: 20px; top: 0px" ></div>-->

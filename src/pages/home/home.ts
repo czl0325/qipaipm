@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import {Events, NavController} from 'ionic-angular';
+import { Events, NavController } from 'ionic-angular';
 import { ProjectCreatePage } from "../project-create/project-create";
 import { ProjectDetailPage } from "../project-detail/project-detail";
 import { SearchPage } from "../search/search";
@@ -14,51 +14,21 @@ export class HomePage {
   type:number ;
   namevalue:string;
   projects = [];
-
+  currentDate:string;
 
   constructor(public navCtrl: NavController, public appService: AppService, public events: Events) {
     this.type = 1;
     this.namevalue = "appname-list";
+    this.currentDate = "";
   }
   ionViewDidLoad() {
-    this.events.subscribe('homeCreateProject', (project) => {
-      var isIn = false;
-      for (let i=0; i<this.projects.length; i++) {
-          var p = this.projects[i];
-          if (p.id == project.id) {
-              isIn = true;
-              this.projects.splice(i,1,project);
-              break;
-          }
-      }
-      if (isIn == false) {
-        this.projects.push(project);
-      }
-    });
-    this.events.subscribe('homeDeleteProject', (project) => {
-      for (let i=0; i<this.projects.length; i++) {
-        var p = this.projects[i];
-        if (p.id == project.id) {
-          this.projects.splice(i,1);
-          break;
-        }
-      }
-    });
-    this.events.subscribe('homeEditProject', (project) => {
-      for (let i=0; i<this.projects.length; i++) {
-          var p = this.projects[i];
-          if (p.id == project.id) {
-              this.projects.splice(i,1,project);
-              break;
-          }
-      }
+    this.events.subscribe('homeProjectReload', ()=> {
+      this.reloadProjectList(this.currentDate);
     });
   }
 
   ionViewWillUnload() {
-    this.events.unsubscribe('homeCreateProject');
-    this.events.unsubscribe('homeDeleteProject');
-    this.events.unsubscribe('homeEditProject');
+    this.events.unsubscribe('homeProjectReload');
   }
 
   onChangeDate() {
@@ -68,14 +38,20 @@ export class HomePage {
   onSelectDate(date) {
     if (date instanceof Date) {
       var dateString = AppConfig.dateToString(date);
-      this.appService.httpGet("item/searchByContion", {"startTime":dateString,"endTime":dateString,"page":1,"limit":100}, this, function (view ,res){
+      this.currentDate = dateString;
+      this.reloadProjectList(dateString);
+    }
+  }
+
+  reloadProjectList(dateString:string) {
+    this.projects = [];
+    this.appService.httpGet("item/searchByCondition", {"itemStartTime":dateString,"endTime":dateString,"itemIsEnd":"0","page":1,"limit":100}, this, function (view ,res){
         var data = res.json();
         if (data.success == true) {
-          view.projects = data.data;
-          console.log(view.projects);
+            view.projects = data.data;
+            console.log(view.projects);
         }
-      } ,true);
-    }
+    } ,true);
   }
 
   sortPorjects(oldArray) {

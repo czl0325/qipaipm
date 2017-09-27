@@ -94,24 +94,7 @@ export class ProjectDetailPage {
   constructor(public navCtrl: NavController, private navParams: NavParams, private popoverCtrl: PopoverController,
               public events: Events, public appService: AppService, public toastCtrl: ToastController) {
     this.project = this.navParams.get('project');
-    if (typeof (this.project.children) != 'undefined') {
-        for (let i=0; i<this.project.children.length; i++) {
-            var milestone = this.project.children[i];
-            milestone.milestoneName = '里程碑'+(i+1);
-            if (typeof (milestone.children) != 'undefined') {
-                for (let j = 0; j < milestone.children.length; j++) {
-                    var subtask = milestone.children[j];
-                    subtask.subtaskName = '子任务' + (j + 1);
-                }
-            }
-        }
-    }
-    this.isExpand = [];
-      if (typeof (this.project.children) != 'undefined') {
-          for (let i = 0; i < this.project.children.length; i++) {
-              this.isExpand.push(false);
-          }
-      }
+    this.reloadArray();
   }
 
   ionViewDidLoad() {
@@ -149,25 +132,23 @@ export class ProjectDetailPage {
     });
     this.events.subscribe('onDeleteProject',()=> {
         this.appService.httpDelete("item/delete",{"ids":this.project.id}, this, function (view, res) {
-            console.log(res);
             if (res.status == 200) {
-                view.events.publish('homeDeleteProject',view.project);
+                view.events.publish('homeProjectReload');
                 view.navCtrl.pop();
             }
         },true);
     });
     this.events.subscribe('onEndProject',()=>{
        this.project.itemIsEnd = true;
-       this.project.itemState = '已结束';
-        this.appService.httpPost("item/create", this.project, this, function (view ,res){
-            var data = res.json();
-            view.events.publish('homeCreateProject',data);
+       this.project.itemState = '07010040';
+        this.appService.httpPost("item/createItem", this.project, this, function (view ,res){
+            //var data = res.json();
+            view.events.publish('homeProjectReload');
             let toast = view.toastCtrl.create({
                 message: '项目已结束!',
                 duration: 3000
             });
             toast.present();
-            view.navCtrl.pop();
         } ,true);
     });
   }
@@ -220,11 +201,12 @@ export class ProjectDetailPage {
     });
   }
 
-  onClickSubtask($event, subtask) {
+  onClickSubtask($event, subtask, mile) {
     this.navCtrl.push(SubtaskPage, {
       subtask: subtask,
       projectname : this.project.itemName,
-      callback: this.subtaskCallback
+      callback: this.subtaskCallback,
+      milestone: mile,
     });
   }
 
@@ -250,6 +232,27 @@ export class ProjectDetailPage {
         shareView.style.bottom = '-200px';
       }
     }, 16);
+  }
+
+  reloadArray() {
+      if (typeof (this.project.children) != 'undefined') {
+          for (let i=0; i<this.project.children.length; i++) {
+              var milestone = this.project.children[i];
+              milestone.milestoneName = '里程碑'+(i+1);
+              if (typeof (milestone.children) != 'undefined') {
+                  for (let j = 0; j < milestone.children.length; j++) {
+                      var subtask = milestone.children[j];
+                      subtask.subtaskName = '子任务' + (j + 1);
+                  }
+              }
+          }
+      }
+      this.isExpand = [];
+      if (typeof (this.project.children) != 'undefined') {
+          for (let i = 0; i < this.project.children.length; i++) {
+              this.isExpand.push(false);
+          }
+      }
   }
 
   //点击进入里程碑的回调
@@ -282,6 +285,7 @@ export class ProjectDetailPage {
                   }
                   this.project.children.sort(compare);
               }
+              this.reloadArray();
           } else {
 
           }
@@ -300,14 +304,15 @@ export class ProjectDetailPage {
                     var sub = milestone.children[j];
                     if (sub.id == subtask.id) {
                       milestone.children.splice(j,1,subtask);
-                        isIn = true;
+                      isIn = true;
                       break;
                     }
                 }
-                if (isIn == true) {
+                if (isIn == false) {
                   break;
                 }
             }
+            this.reloadArray();
         }
         resolve();
       });

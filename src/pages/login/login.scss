@@ -1,0 +1,21 @@
+page-login {
+  .login_icon {
+    display: block;
+    margin: 30px auto 50px;
+  }
+  .login_input {
+    margin: 30px auto;
+    display: block;
+    width: 80%;
+    height: 30px;
+    font-size: 16px;
+    border-radius: 15px;
+    border: solid 1px #c5c6c7;
+    text-indent: 15px;
+  }
+  .login_btn {
+    width: 50%;
+    height: 30px;
+    margin: 30px auto;
+  }
+}

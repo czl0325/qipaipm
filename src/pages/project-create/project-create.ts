@@ -142,9 +142,9 @@ export class ProjectCreatePage {
     //     return;
     //   }
     // }
-    this.appService.httpPost("item/create", this.project, this, function (view ,res){
-      var data = res.json();
-      view.events.publish('homeCreateProject',data);
+    this.appService.httpPost("item/createItem", this.project, this, function (view ,res){
+      // var data = res.json().data;
+      view.events.publish('homeProjectReload');
       let toast = view.toastCtrl.create({
         message: '创建项目成功!',
         duration: 3000
@@ -184,8 +184,9 @@ export class ProjectCreatePage {
       // milestoneDelivery : '',
       deliveryResult: '',         //里程碑的交付成果
       itemProgress : '',          //里程碑的进度
+      deliveryTime : new DatePipe('en-US').transform(new Date(), 'yyyy-MM-dd'),         //里程碑交付时间
       planTime : new DatePipe('en-US').transform(new Date(), 'yyyy-MM-dd'),              //里程碑计划完成时间
-      realTime : "",              //里程碑实际完成时间
+      realTime : new DatePipe('en-US').transform(new Date(), 'yyyy-MM-dd'),              //里程碑实际完成时间
       remark : '',                //里程碑备注
       isAccomplish : false,       //里程碑是否完成
       delayDays : 0,              //里程碑延迟天数
