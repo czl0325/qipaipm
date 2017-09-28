@@ -28,6 +28,7 @@ import { MultiPickerModule } from 'ion-multi-picker';
 import { PipesModule } from "../pipes/pipes.module";
 import { AppService } from "./app.service";
 import {LoginPage} from "../pages/login/login";
+import { KeycloakServiceProvider } from '../providers/keycloak-service/keycloak-service';
 
 //第三方库
 
@@ -87,7 +88,8 @@ import {LoginPage} from "../pages/login/login";
     SplashScreen,
     Keyboard,
     AppService,
-    {provide: ErrorHandler, useClass: IonicErrorHandler}
+    {provide: ErrorHandler, useClass: IonicErrorHandler},
+    KeycloakServiceProvider
   ]
 })
 export class AppModule {}
