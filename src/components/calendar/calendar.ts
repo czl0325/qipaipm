@@ -28,6 +28,7 @@ export class CalendarComponent {
   @Input() todayText: string = "转到今天";
 
   @Output() onChange: EventEmitter<Date> = new EventEmitter<Date>();
+  @Output() onChangeMonth: EventEmitter<any> = new EventEmitter<any>();
   @Output() onEventClicked: EventEmitter<any> = new EventEmitter<any>();
 
   weekDays: string[] = ["周日","周一","周二","周三","周四","周五","周六"];
@@ -37,43 +38,9 @@ export class CalendarComponent {
   dayHasProject = [];
   stop = false;
   todayEvents = [];
-  simpleColumns = [];
 
   constructor(private datePipe: DatePipe, public appService: AppService, public modalCtrl: ModalController) {
     //this.setUpWeekDaysLabels();
-    this.simpleColumns = [
-        {
-            name: 'col1',
-            options: [
-                { text: '1', value: '1' },
-                { text: '2', value: '2' },
-                { text: '3', value: '3' }
-            ]
-        },{
-            name: 'col2',
-            options: [
-                { text: '1-1', value: '1-1' },
-                { text: '1-2', value: '1-2' },
-                { text: '2-1', value: '2-1' },
-                { text: '2-2', value: '2-2' },
-                { text: '3-1', value: '3-1' }
-            ]
-        },{
-            name: 'col3',
-            options: [
-                { text: '1-1-1', value: '1-1-1' },
-                { text: '1-1-2', value: '1-1-2' },
-                { text: '1-2-1', value: '1-2-1' },
-                { text: '1-2-2', value: '1-2-2' },
-                { text: '2-1-1', value: '2-1-1' },
-                { text: '2-1-2', value: '2-1-2' },
-                { text: '2-2-1', value: '2-2-1' },
-                { text: '2-2-2', value: '2-2-2' },
-                { text: '3-1-1', value: '3-1-1' },
-                { text: '3-1-2', value: '3-1-2' }
-            ]
-        }
-    ];
   }
   setUpWeekDaysLabels() {
     let date = new Date(2017, 0, 1); /* This date has to be a Sunday */
@@ -290,6 +257,7 @@ export class CalendarComponent {
       var data = res.json();
       if (data.success == true) {
         view.dayHasProject = data.data;
+        view.onChangeMonth.emit(view.dayHasProject);
         for (let i=0; i<view.dayHasProject.length; i++) {
           var object = view.dayHasProject[i];
           var itemStartTime = object.itemStartTime;

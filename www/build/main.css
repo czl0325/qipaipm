@@ -27197,11 +27197,53 @@ page-contact .organization .text {
   color: #111111;
 }
 
+page-forget .wrap {
+  margin: 30px 30px;
+}
+
+page-forget .wrap .row {
+  width: 100%;
+  background-color: #ddd;
+  height: 50px;
+  border-radius: 25px;
+  margin: 30px auto;
+}
+
+page-forget .wrap .row input[type="text"] {
+  letter-spacing: 1px;
+  height: 50px;
+  color: #111;
+  padding-left: 15px;
+}
+
+page-forget .wrap .row .sendcode {
+  color: #868686;
+  line-height: 50px;
+  font-size: 10px;
+  padding-right: 10px;
+}
+
+page-forget .wrap .row .sendcode.active {
+  color: #fc5c53;
+}
+
+page-forget .wrap .row button[type="submit"] {
+  width: 100%;
+  height: 100%;
+  font-size: 16px;
+  color: #fff;
+}
+
+page-forget .wrap .row:last-child {
+  background-color: #fc5c53;
+}
+
 page-home .circle_home {
   width: 16px;
   height: 16px;
   border-radius: 8px;
   font-size: 16px;
+  background-color: black;
   line-height: 16px;
   color: white;
   left: 10px;
@@ -27212,15 +27254,15 @@ page-home .circle_home {
 }
 
 page-home .nostart {
-  background: #10c619;
+  background: #10c619 !important;
 }
 
 page-home .ing {
-  background: #fc780e;
+  background: #fc780e !important;
 }
 
 page-home .end {
-  background: #c1c8d2;
+  background: #c1c8d2 !important;
 }
 
 page-home .pj-name {
@@ -27297,6 +27339,7 @@ page-home .list_circle {
   border-radius: 8px;
   font-size: 16px;
   line-height: 16px;
+  background-color: black;
   color: white;
   position: absolute;
   top: 50%;
@@ -27321,9 +27364,70 @@ page-login .login_input {
 }
 
 page-login .login_btn {
-  width: 50%;
-  height: 30px;
+  width: 100%;
+  height: 50px;
+  border-radius: 25px;
+  background-color: #ffb4b0;
+  color: white;
   margin: 30px auto;
+}
+
+page-login .row {
+  width: 100%;
+  border-bottom: 1px solid #c1c1c1;
+  height: 50px;
+}
+
+page-login .row input[type="text"], page-login .row input[type="password"] {
+  letter-spacing: 1px;
+  height: 50px;
+  margin-left: 10px;
+}
+
+page-login .row .area {
+  margin-top: 10px;
+  padding-right: 20px;
+  border-right: 2px solid #c1c1c1;
+  display: inline-block;
+  height: 30px;
+}
+
+page-login .forget {
+  display: block;
+  margin: 0 auto;
+  font-size: 16px !important;
+  color: #848484;
+  background-color: white;
+}
+
+page-newpw .wrap {
+  margin: 30px 30px;
+}
+
+page-newpw .wrap .row {
+  width: 100%;
+  background-color: #ddd;
+  height: 50px;
+  border-radius: 25px;
+  margin: 30px auto;
+}
+
+page-newpw .wrap .row input[type="password"] {
+  letter-spacing: 1px;
+  height: 50px;
+  color: #111;
+  padding-left: 15px;
+}
+
+page-newpw .wrap .row button[type="submit"] {
+  width: 100%;
+  height: 100%;
+  font-size: 16px;
+  color: #fff;
+}
+
+page-newpw .wrap .row:last-child {
+  background-color: #fc5c53;
 }
 
 page-project-detail .pj-item {

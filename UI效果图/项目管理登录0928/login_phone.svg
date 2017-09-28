@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="32" height="48" viewBox="0 0 32 48">
+  <defs>
+    <style>
+      .cls-1 {
+        fill: #f8f9fe;
+        fill-rule: evenodd;
+        filter: url(#filter);
+      }
+    </style>
+    <filter id="filter" x="0" y="0" width="32" height="48" filterUnits="userSpaceOnUse">
+      <feFlood result="flood" flood-color="#939393"/>
+      <feComposite result="composite" operator="in" in2="SourceGraphic"/>
+      <feBlend result="blend" in2="SourceGraphic"/>
+    </filter>
+  </defs>
+  <path id="圆角矩形_3" data-name="圆角矩形 3" class="cls-1" d="M28,48H4a4,4,0,0,1-4-4V4A4,4,0,0,1,4,0H28a4,4,0,0,1,4,4V44A4,4,0,0,1,28,48ZM30,4a2,2,0,0,0-2-2H4A2,2,0,0,0,2,4V7H30V4Zm0,4H2V36H30V8Zm0,29H2v7a2,2,0,0,0,2,2H28a2,2,0,0,0,2-2V37ZM17,43a2,2,0,1,1,2-2A2,2,0,0,1,17,43ZM15.634,15.788A1,1,0,0,1,17,15.425a0.986,0.986,0,0,1,.366,1.354l-4.5,7.725a1,1,0,0,1-1.366.363,0.986,0.986,0,0,1-.366-1.354Zm-2,14.867A1,1,0,0,1,15,30.292a0.986,0.986,0,0,1,.366,1.354l-0.5.858a1,1,0,0,1-1.366.363,0.986,0.986,0,0,1-.366-1.354Zm6.5-11.159a1,1,0,0,1,1.366-.363,0.986,0.986,0,0,1,.366,1.354l-4.5,7.725A1,1,0,0,1,16,28.575a0.986,0.986,0,0,1-.366-1.354Zm-0.768-6.15A1,1,0,0,1,18,13.708a0.986,0.986,0,0,1-.366-1.354l0.5-.858a1,1,0,0,1,1.366-.363,0.986,0.986,0,0,1,.366,1.354ZM13.5,4h5a0.5,0.5,0,0,1,0,1h-5A0.5,0.5,0,0,1,13.5,4Z"/>
+</svg>

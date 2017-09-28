@@ -13,15 +13,46 @@
   <meta name="theme-color" content="#4e8ef7">
   <!-- cordova.js required for cordova apps -->
   <script src="cordova.js"></script>
-
-  <!-- un-comment this code to enable service worker
-  <script>
-    if ('serviceWorker' in navigator) {
-      navigator.serviceWorker.register('service-worker.js')
-        .then(() => console.log('service worker installed'))
-        .catch(err => console.error('Error', err));
+  <!--<script type="text/javascript" charset="utf-8" src="http://192.168.72.101:8080/auth/js/keycloak.js"></script>-->
+  <!--<script type="text/javascript" charset="utf-8" src="keycloak.js"></script>-->
+  <script src="http://192.168.72.101:8080/auth/js/keycloak.js"></script>
+  <script type="text/javascript" charset="utf-8">
+      var keycloak = new Keycloak();
+      keycloak.onAuthSuccess = updateState;
+      keycloak.onAuthRefreshSuccess = updateState;
+      keycloak.onAuthLogout = updateState;
+      function updateState() {
+          if (keycloak.authenticated) {
+              document.getElementById('authenticated').style.display = 'block';
+              document.getElementById('not-authenticated').style.display = 'none';
+              document.getElementById('subject').innerText = keycloak.subject;
+              document.getElementById('username').innerText = keycloak.idTokenParsed.preferred_username;
+              document.getElementById('tokenExpires').innerText = new Date(keycloak.tokenParsed.exp * 1000).toLocaleString();
+              document.getElementById('tokenRefreshExpires').innerText = new Date(keycloak.refreshTokenParsed.exp * 1000).toLocaleString();
+              document.getElementById('token').innerText = JSON.stringify(keycloak.tokenParsed, null, '  ');
+              document.getElementById('idToken').innerText = JSON.stringify(keycloak.idTokenParsed, null, '  ');
+          } else {
+              document.getElementById('authenticated').style.display = 'none';
+              document.getElementById('not-authenticated').style.display = 'block';
+          }
+      }
+      function error() {
+          document.getElementById('authenticated').style.display = 'none';
+          document.getElementById('not-authenticated').style.display = 'block';
+          document.getElementById('error').innerText = 'Failed to initialize Keycloak adapter';
+      }
+      document.addEventListener("deviceready", function() {
+          keycloak.init({ onLoad: "check-sso" }).success(updateState).error(error);
+      }, false);
+  </script>
+  <style>
+    td {
+      vertical-align: top;
     }
-  </script>-->
+    tr.odd td {
+      background-color: #eee;
+    }
+  </style>
 
   <link href="build/main.css" rel="stylesheet">
   <link href="assets/css/common.css" rel="stylesheet">

@@ -16,6 +16,8 @@ import { ProjectDetailPage, PopoverPage } from "../pages/project-detail/project-
 import { SubtaskPage } from "../pages/subtask/subtask";
 import { SearchPage } from "../pages/search/search";
 import { ContactPage } from "../pages/contact/contact";
+import { ForgetPage } from "../pages/forget/forget";
+import { NewpwPage } from "../pages/newpw/newpw";
 
 //组件类
 import { ComponentsModule } from "../components/components.module";
@@ -40,6 +42,8 @@ import {LoginPage} from "../pages/login/login";
     SearchPage,
     ContactPage,
     LoginPage,
+    ForgetPage,
+    NewpwPage,
 
     PopoverPage,
   ],
@@ -72,9 +76,11 @@ import {LoginPage} from "../pages/login/login";
     SubtaskPage,
     SearchPage,
     ContactPage,
-      LoginPage,
+    LoginPage,
+    ForgetPage,
+    NewpwPage,
 
-      PopoverPage,
+    PopoverPage,
   ],
   providers: [
     StatusBar,

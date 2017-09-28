@@ -13,12 +13,15 @@ import { AppConfig} from "../../app/app.config";
 export class HomePage {
   type:number ;
   namevalue:string;
-  projects = [];
+  projects;
+  projectsOnMonth;
   currentDate:string;
 
   constructor(public navCtrl: NavController, public appService: AppService, public events: Events) {
     this.type = 1;
     this.namevalue = "appname-list";
+    this.projects = [];
+    this.projectsOnMonth = [];
     this.currentDate = "";
   }
   ionViewDidLoad() {
@@ -41,6 +44,10 @@ export class HomePage {
       this.currentDate = dateString;
       this.reloadProjectList(dateString);
     }
+  }
+
+  onChangeMonthProject(dayHasProjects) {
+    this.projectsOnMonth = dayHasProjects;
   }
 
   reloadProjectList(dateString:string) {

@@ -1,7 +1,9 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { FormBuilder, Validators, FormGroup } from '@angular/forms';
-import {AppService} from "../../app/app.service";
+import { AppService } from "../../app/app.service";
+import { ForgetPage } from "../forget/forget";
+import { KeycloakService } from '../../app/keycloak/keycloak.service';
 
 /**
  * Generated class for the LoginPage page.
@@ -34,6 +36,26 @@ export class LoginPage {
 
   login (value) {
     // this.appService.httpPost("http://192.168.10.118:8000/qipai/index.html",)
-    console.log(value.mobile+"====="+value.password);
+
+    // var keycloak = new Keycloak();
+    // var options = {};
+    //   // options.prompt = 'none';
+    //   keycloak.login(options).success(function () {
+    //       console.log("成功");
+    //   }).error(function () {
+    //       console.log("失败");
+    //   });
+      KeycloakService.init()
+          .then(() => {
+        console.log("成功");
+              //this.navCtrl.setRoot('ProfilePage');
+          })
+          .catch(() => {
+              //window.location.reload();
+          });
+  }
+
+  onForgetPassword($event) {
+    this.navCtrl.push(ForgetPage);
   }
 }

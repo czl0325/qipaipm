@@ -4,7 +4,7 @@ page-home {
     height: 16px;
     border-radius: 8px;
     font-size: 16px;
-    //background-color: black;
+    background-color: black;
     line-height: 16px;
     color: white;
     left: 10px;
@@ -14,13 +14,13 @@ page-home {
     position: absolute;
   }
   .nostart {
-    background: #10c619;
+    background: #10c619 !important;
   }
   .ing {
-    background: #fc780e;
+    background: #fc780e !important;
   }
   .end {
-    background: #c1c8d2;
+    background: #c1c8d2 !important;
   }
   .pj-name {
     color: black;
@@ -91,6 +91,7 @@ page-home {
     border-radius: 8px;
     font-size: 16px;
     line-height: 16px;
+    background-color: black;
     color: white;
     position: absolute;
     top: 50%;

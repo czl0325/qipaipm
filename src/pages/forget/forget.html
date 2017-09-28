@@ -1,0 +1,29 @@
+<!--
+  Generated template for the ForgetPage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header>
+  <ion-navbar>
+    <ion-title>验证手机号</ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content fullscreen>
+  <form [formGroup]="forgetForm" (ngSubmit)="goNext(forgetForm.value);">
+    <div class="wrap">
+      <div class="row">
+        <ion-input no-padding no-margin type="text" placeholder="输入手机号" formControlName="mobile" maxlength="11"></ion-input>
+      </div>
+      <div class="row">
+        <ion-input no-padding no-margin type="text" placeholder="输入验证码" formControlName="code" maxlength="8"></ion-input>
+        <a id="btn_code" (click)="sendCodeBtnEvent($event)" class="sendcode" [class.active]="isCountDowning" >{{countDownText}}</a>
+      </div>
+      <div class="row">
+        <button ion-button clear no-margin no-padding type="submit" [disabled]="!forgetForm.valid">确认</button>
+      </div>
+    </div>
+  </form>
+
+</ion-content>

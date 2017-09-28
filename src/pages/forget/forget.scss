@@ -1,0 +1,40 @@
+page-forget {
+  .wrap {
+    margin: 30px 30px;
+
+    .row {
+      width: 100%;
+      background-color: #ddd;
+      height: 50px;
+      border-radius: 25px;
+      margin: 30px auto;
+
+      input[type="text"] {
+        letter-spacing: 1px;
+        height: 50px;
+        color: #111;
+        padding-left: 15px;
+      }
+      .sendcode {
+        color: #868686;
+        line-height: 50px;
+        font-size: 10px;
+        padding-right: 10px;
+        &.active {
+          color: #fc5c53;
+        }
+      }
+      button[type="submit"] {
+        width: 100%;
+        height: 100%;
+        //border-radius: 25px;
+        font-size: 16px;
+        color: #fff;
+        //font-weight: 100;
+      }
+    }
+    .row:last-child {
+      background-color: #fc5c53;
+    }
+  }
+}
