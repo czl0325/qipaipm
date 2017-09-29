@@ -1,16 +1,17 @@
 webpackJsonp([4],{
 
-/***/ 134:
+/***/ 135:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return ProjectCreatePage; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(1);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(12);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__angular_common__ = __webpack_require__(34);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__milestone_detail_milestone_detail__ = __webpack_require__(135);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__app_app_service__ = __webpack_require__(29);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__contact_contact__ = __webpack_require__(58);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__angular_common__ = __webpack_require__(33);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__milestone_detail_milestone_detail__ = __webpack_require__(136);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__app_app_service__ = __webpack_require__(36);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__contact_contact__ = __webpack_require__(59);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__app_app_config__ = __webpack_require__(27);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -20,6 +21,7 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
+
 
 
 
@@ -81,7 +83,7 @@ var ProjectCreatePage = (function () {
                         }
                     }
                     if (!isIn) {
-                        _this.project.children.push(milestone);
+                        _this.addOneMilestone(milestone);
                     }
                 }
                 else {
@@ -91,6 +93,7 @@ var ProjectCreatePage = (function () {
         };
         var data = this.navParams.get('project');
         this.type = this.navParams.get('type');
+        this.isExpand = this.navParams.get('isExpand');
         if (data) {
             this.project = data;
             this.viewTitle = this.project.itemName;
@@ -228,6 +231,75 @@ var ProjectCreatePage = (function () {
             type: 1,
         });
     };
+    ProjectCreatePage.prototype.addOneMilestone = function (milestone) {
+        if (this.project.children.length == 0) {
+            this.project.children.push(milestone);
+            if (this.isExpand != null) {
+                this.isExpand.push(false);
+            }
+        }
+        else if (this.project.children.length == 1) {
+            var p1 = this.project.children[0];
+            var d1 = __WEBPACK_IMPORTED_MODULE_6__app_app_config__["a" /* AppConfig */].timestampToDate(p1.deliveryTime);
+            var d2 = __WEBPACK_IMPORTED_MODULE_6__app_app_config__["a" /* AppConfig */].timestampToDate(milestone.deliveryTime);
+            if (d1 <= d2) {
+                this.project.children.push(milestone);
+                if (this.isExpand != null) {
+                    this.isExpand.push(false);
+                }
+            }
+            else {
+                this.project.children.splice(0, 0, milestone);
+                if (this.isExpand != null) {
+                    this.isExpand.splice(0, 0, false);
+                }
+            }
+        }
+        else {
+            var isInsert = false;
+            for (var i = 0; i < this.project.children.length - 1; i++) {
+                var pp1 = this.project.children[i];
+                var pp2 = this.project.children[i + 1];
+                var dd1 = __WEBPACK_IMPORTED_MODULE_6__app_app_config__["a" /* AppConfig */].timestampToDate(pp1.deliveryTime);
+                var dd2 = __WEBPACK_IMPORTED_MODULE_6__app_app_config__["a" /* AppConfig */].timestampToDate(pp2.deliveryTime);
+                var dd3 = __WEBPACK_IMPORTED_MODULE_6__app_app_config__["a" /* AppConfig */].timestampToDate(milestone.deliveryTime);
+                if (i == 0 && dd3 < dd1) {
+                    isInsert = true;
+                    this.project.children.splice(0, 0, milestone);
+                    if (this.isExpand != null) {
+                        this.isExpand.splice(0, 0, false);
+                    }
+                    break;
+                }
+                if (dd3 > dd1 && dd3 < dd2) {
+                    isInsert = true;
+                    this.project.children.splice(i + 1, 0, milestone);
+                    if (this.isExpand != null) {
+                        this.isExpand.splice(i + 1, 0, false);
+                    }
+                    break;
+                }
+                if (i == this.project.children.length - 2 && dd3 > dd2) {
+                    isInsert = true;
+                    this.project.children.push(milestone);
+                    if (this.isExpand != null) {
+                        this.isExpand.push(false);
+                    }
+                    break;
+                }
+            }
+            if (isInsert == false) {
+                this.project.children.push(milestone);
+                if (this.isExpand != null) {
+                    this.isExpand.push(false);
+                }
+            }
+            for (var i = 0; i < this.project.children.length; i++) {
+                var mm = this.project.children[i];
+                mm.milestoneName = '里程碑' + (i + 1);
+            }
+        }
+    };
     return ProjectCreatePage;
 }());
 ProjectCreatePage = __decorate([
@@ -289,18 +361,18 @@ ProjectCreatePage = __decorate([
 
 /***/ }),
 
-/***/ 135:
+/***/ 136:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return MilestoneDetailPage; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(1);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(12);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__subtask_subtask__ = __webpack_require__(136);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__angular_common__ = __webpack_require__(34);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__app_app_service__ = __webpack_require__(29);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__app_app_config__ = __webpack_require__(30);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__contact_contact__ = __webpack_require__(58);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__subtask_subtask__ = __webpack_require__(137);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__angular_common__ = __webpack_require__(33);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__app_app_service__ = __webpack_require__(36);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__app_app_config__ = __webpack_require__(27);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__contact_contact__ = __webpack_require__(59);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -455,6 +527,7 @@ var MilestoneDetailPage = (function () {
             this.appService.httpPost("item/createMilestone", param, this, function (view, res) {
                 if (res.status == 200) {
                     view.tempMilestone = res.json().data;
+                    console.log(view.tempMilestone);
                     if (typeof (view.project.children != 'undefined')) {
                         view.tempMilestone.milestoneName = '里程碑' + (view.project.children.length + 1);
                     }
@@ -559,17 +632,17 @@ MilestoneDetailPage = __decorate([
 
 /***/ }),
 
-/***/ 136:
+/***/ 137:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return SubtaskPage; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(1);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(12);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__app_app_config__ = __webpack_require__(30);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__app_app_service__ = __webpack_require__(29);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__contact_contact__ = __webpack_require__(58);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__angular_common__ = __webpack_require__(34);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__app_app_config__ = __webpack_require__(27);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__app_app_service__ = __webpack_require__(36);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__contact_contact__ = __webpack_require__(59);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__angular_common__ = __webpack_require__(33);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -700,7 +773,7 @@ SubtaskPage = __decorate([
 
 /***/ }),
 
-/***/ 137:
+/***/ 138:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -708,11 +781,11 @@ SubtaskPage = __decorate([
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "b", function() { return ProjectDetailPage; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(1);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(12);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__subtask_subtask__ = __webpack_require__(136);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__milestone_detail_milestone_detail__ = __webpack_require__(135);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__project_create_project_create__ = __webpack_require__(134);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__app_app_service__ = __webpack_require__(29);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__app_app_config__ = __webpack_require__(30);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__subtask_subtask__ = __webpack_require__(137);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__milestone_detail_milestone_detail__ = __webpack_require__(136);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__project_create_project_create__ = __webpack_require__(135);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__app_app_service__ = __webpack_require__(36);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__app_app_config__ = __webpack_require__(27);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -797,55 +870,7 @@ var ProjectDetailPage = (function () {
                         }
                     }
                     if (!isIn) {
-                        if (_this.project.children.length == 0) {
-                            _this.project.children.push(milestone);
-                            _this.isExpand.push(false);
-                        }
-                        else if (_this.project.children.length == 1) {
-                            var p1 = _this.project.children[0];
-                            var d1 = __WEBPACK_IMPORTED_MODULE_6__app_app_config__["a" /* AppConfig */].stringToDate(p1.deliveryTime);
-                            var d2 = __WEBPACK_IMPORTED_MODULE_6__app_app_config__["a" /* AppConfig */].stringToDate(milestone.deliveryTime);
-                            if (d1 <= d2) {
-                                _this.project.children.push(milestone);
-                                _this.isExpand.push(false);
-                            }
-                            else {
-                                _this.project.children.insert(0, milestone);
-                                _this.isExpand.insert(0, false);
-                            }
-                        }
-                        else {
-                            var isInsert = false;
-                            for (var i = 0; i < _this.project.children.length - 1; i++) {
-                                var pp1 = _this.project.children[i];
-                                var pp2 = _this.project.children[i + 1];
-                                var dd1 = __WEBPACK_IMPORTED_MODULE_6__app_app_config__["a" /* AppConfig */].stringToDate(pp1.deliveryTime);
-                                var dd2 = __WEBPACK_IMPORTED_MODULE_6__app_app_config__["a" /* AppConfig */].stringToDate(pp2.deliveryTime);
-                                var dd3 = __WEBPACK_IMPORTED_MODULE_6__app_app_config__["a" /* AppConfig */].stringToDate(milestone.deliveryTime);
-                                if (i == 0 && dd3 < dd1) {
-                                    isInsert = true;
-                                    _this.project.children.insert(0, milestone);
-                                    _this.isExpand.insert(0, false);
-                                    break;
-                                }
-                                if (dd3 > dd1 && dd3 < dd2) {
-                                    isInsert = true;
-                                    _this.project.children.insert(i + 1, milestone);
-                                    _this.isExpand.insert(i + 1, false);
-                                    break;
-                                }
-                                if (i == _this.project.children.length - 2 && dd3 > dd2) {
-                                    isInsert = true;
-                                    _this.project.children.push(milestone);
-                                    _this.isExpand.push(false);
-                                    break;
-                                }
-                            }
-                            if (isInsert == false) {
-                                _this.project.children.push(milestone);
-                                _this.isExpand.push(false);
-                            }
-                        }
+                        _this.addOneMilestone(milestone);
                         // var compare = function (obj1, obj2) {//比较函数
                         //     console.log(AppConfig.stringToDate(obj1.planTime));
                         //     var date1 = AppConfig.stringToDate(obj1.planTime);
@@ -912,6 +937,7 @@ var ProjectDetailPage = (function () {
         this.events.subscribe('onPushProjectDetail', function () {
             _this.navCtrl.push(__WEBPACK_IMPORTED_MODULE_4__project_create_project_create__["a" /* ProjectCreatePage */], {
                 project: _this.project,
+                isExpand: _this.isExpand,
                 type: 2,
             });
         });
@@ -980,6 +1006,7 @@ var ProjectDetailPage = (function () {
     ProjectDetailPage.prototype.onClickMilestone = function ($event, mile) {
         this.navCtrl.push(__WEBPACK_IMPORTED_MODULE_3__milestone_detail_milestone_detail__["a" /* MilestoneDetailPage */], {
             milestone: mile,
+            isExpand: this.isExpand,
             project: this.project,
             callback: this.milestoneCallback,
             type: 2,
@@ -1036,6 +1063,57 @@ var ProjectDetailPage = (function () {
             }
         }
     };
+    ProjectDetailPage.prototype.addOneMilestone = function (milestone) {
+        if (this.project.children.length == 0) {
+            this.project.children.push(milestone);
+            this.isExpand.push(false);
+        }
+        else if (this.project.children.length == 1) {
+            var p1 = this.project.children[0];
+            var d1 = __WEBPACK_IMPORTED_MODULE_6__app_app_config__["a" /* AppConfig */].timestampToDate(p1.deliveryTime);
+            var d2 = __WEBPACK_IMPORTED_MODULE_6__app_app_config__["a" /* AppConfig */].timestampToDate(milestone.deliveryTime);
+            if (d1 <= d2) {
+                this.project.children.push(milestone);
+                this.isExpand.push(false);
+            }
+            else {
+                this.project.children.splice(0, 0, milestone);
+                this.isExpand.splice(0, 0, false);
+            }
+        }
+        else {
+            var isInsert = false;
+            for (var i = 0; i < this.project.children.length - 1; i++) {
+                var pp1 = this.project.children[i];
+                var pp2 = this.project.children[i + 1];
+                var dd1 = __WEBPACK_IMPORTED_MODULE_6__app_app_config__["a" /* AppConfig */].timestampToDate(pp1.deliveryTime);
+                var dd2 = __WEBPACK_IMPORTED_MODULE_6__app_app_config__["a" /* AppConfig */].timestampToDate(pp2.deliveryTime);
+                var dd3 = __WEBPACK_IMPORTED_MODULE_6__app_app_config__["a" /* AppConfig */].timestampToDate(milestone.deliveryTime);
+                if (i == 0 && dd3 < dd1) {
+                    isInsert = true;
+                    this.project.children.splice(0, 0, milestone);
+                    this.isExpand.splice(0, 0, false);
+                    break;
+                }
+                if (dd3 > dd1 && dd3 < dd2) {
+                    isInsert = true;
+                    this.project.children.splice(i + 1, 0, milestone);
+                    this.isExpand.splice(i + 1, 0, false);
+                    break;
+                }
+                if (i == this.project.children.length - 2 && dd3 > dd2) {
+                    isInsert = true;
+                    this.project.children.push(milestone);
+                    this.isExpand.push(false);
+                    break;
+                }
+            }
+            if (isInsert == false) {
+                this.project.children.push(milestone);
+                this.isExpand.push(false);
+            }
+        }
+    };
     return ProjectDetailPage;
 }());
 __decorate([
@@ -1054,7 +1132,7 @@ ProjectDetailPage = __decorate([
 
 /***/ }),
 
-/***/ 139:
+/***/ 140:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -1110,7 +1188,7 @@ NewpwPage = __decorate([
 
 /***/ }),
 
-/***/ 140:
+/***/ 141:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -1118,9 +1196,9 @@ NewpwPage = __decorate([
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(1);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(12);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__angular_forms__ = __webpack_require__(21);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_rxjs_Rx__ = __webpack_require__(412);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_rxjs_Rx__ = __webpack_require__(416);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_rxjs_Rx___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3_rxjs_Rx__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__newpw_newpw__ = __webpack_require__(139);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__newpw_newpw__ = __webpack_require__(140);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -1197,89 +1275,6 @@ ForgetPage = __decorate([
 
 /***/ }),
 
-/***/ 141:
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return LoginPage; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(1);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(12);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__angular_forms__ = __webpack_require__(21);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__app_app_service__ = __webpack_require__(29);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__forget_forget__ = __webpack_require__(140);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__app_keycloak_keycloak_service__ = __webpack_require__(679);
-var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
-    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
-    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
-    return c > 3 && r && Object.defineProperty(target, key, r), r;
-};
-var __metadata = (this && this.__metadata) || function (k, v) {
-    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
-};
-
-
-
-
-
-
-/**
- * Generated class for the LoginPage page.
- *
- * See http://ionicframework.com/docs/components/#navigation for more info
- * on Ionic pages and navigation.
- */
-var LoginPage = (function () {
-    function LoginPage(navCtrl, navParams, formBuilder, appService) {
-        this.navCtrl = navCtrl;
-        this.navParams = navParams;
-        this.formBuilder = formBuilder;
-        this.appService = appService;
-        this.errorText = '手机号码错误';
-        this.loginForm = this.formBuilder.group({
-            mobile: ['', __WEBPACK_IMPORTED_MODULE_2__angular_forms__["Validators"].compose([__WEBPACK_IMPORTED_MODULE_2__angular_forms__["Validators"].minLength(11), __WEBPACK_IMPORTED_MODULE_2__angular_forms__["Validators"].maxLength(11), __WEBPACK_IMPORTED_MODULE_2__angular_forms__["Validators"].required, __WEBPACK_IMPORTED_MODULE_2__angular_forms__["Validators"].pattern("^(13[0-9]|15[012356789]|17[03678]|18[0-9]|14[57])[0-9]{8}$")])],
-            password: ['', __WEBPACK_IMPORTED_MODULE_2__angular_forms__["Validators"].compose([__WEBPACK_IMPORTED_MODULE_2__angular_forms__["Validators"].required, __WEBPACK_IMPORTED_MODULE_2__angular_forms__["Validators"].minLength(6), __WEBPACK_IMPORTED_MODULE_2__angular_forms__["Validators"].maxLength(12)])]
-        });
-    }
-    LoginPage.prototype.ionViewDidLoad = function () {
-    };
-    LoginPage.prototype.login = function (value) {
-        // this.appService.httpPost("http://192.168.10.118:8000/qipai/index.html",)
-        // var keycloak = new Keycloak();
-        // var options = {};
-        //   // options.prompt = 'none';
-        //   keycloak.login(options).success(function () {
-        //       console.log("成功");
-        //   }).error(function () {
-        //       console.log("失败");
-        //   });
-        __WEBPACK_IMPORTED_MODULE_5__app_keycloak_keycloak_service__["a" /* KeycloakService */].init()
-            .then(function () {
-            console.log("成功");
-            //this.navCtrl.setRoot('ProfilePage');
-        })
-            .catch(function () {
-            //window.location.reload();
-        });
-    };
-    LoginPage.prototype.onForgetPassword = function ($event) {
-        this.navCtrl.push(__WEBPACK_IMPORTED_MODULE_4__forget_forget__["a" /* ForgetPage */]);
-    };
-    return LoginPage;
-}());
-LoginPage = __decorate([
-    Object(__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["IonicPage"])(),
-    Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Component"])({
-        selector: 'page-login',template:/*ion-inline-start:"D:\qipaipm-company\src\pages\login\login.html"*/'<!--\n\n  Generated template for the LoginPage page.\n\n\n\n  See http://ionicframework.com/docs/components/#navigation for more info on\n\n  Ionic pages and navigation.\n\n-->\n\n\n\n<ion-content fullscreen>\n\n  <img class="login_icon" src="../../assets/png/login_logo.png">\n\n  <form [formGroup]="loginForm" (ngSubmit)="login(loginForm.value)">\n\n    <div style="margin: 0 30px;">\n\n      <div class="row">\n\n        <img class="area" src="../../assets/png/icon_tel.png">\n\n        <ion-input no-padding no-margin type="text" placeholder="输入手机号" formControlName="mobile" maxlength="11"></ion-input>\n\n      </div>\n\n      <div class="row">\n\n        <img class="area" src="../../assets/png/icon_pw.png">\n\n        <ion-input no-padding no-margin type="password" placeholder="输入密码" formControlName="password" maxlength="12"></ion-input>\n\n      </div>\n\n      <!--<input class="login_input" type="text" formControlName="mobile" placeholder="请输入手机号"/>-->\n\n      <!--<input class="login_input" type="password" formControlName="password" placeholder="请输入密码"/>-->\n\n      <!--<div style="width: 80%;height: 30px;margin: 30px auto">-->\n\n        <!--<p style="float: left; margin-left: 10px; color: red">{{errorText}}</p>-->\n\n        <!--<button ion-button no-padding no-margin clear style="margin-right: 10px; float: right">忘记密码?</button>-->\n\n      <!--</div>-->\n\n      <button ion-button block class="login_btn" type="submit">登录</button>\n\n    </div>\n\n  </form>\n\n  <div style="position: fixed;bottom: 20px;width: 100%">\n\n    <button ion-button no-border no-padding clear class="forget" (click)="onForgetPassword($event)">忘记密码?</button>\n\n  </div>\n\n\n\n</ion-content>\n\n'/*ion-inline-end:"D:\qipaipm-company\src\pages\login\login.html"*/,
-    }),
-    __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["NavController"], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["NavParams"],
-        __WEBPACK_IMPORTED_MODULE_2__angular_forms__["FormBuilder"], __WEBPACK_IMPORTED_MODULE_3__app_app_service__["a" /* AppService */]])
-], LoginPage);
-
-//# sourceMappingURL=login.js.map
-
-/***/ }),
-
 /***/ 152:
 /***/ (function(module, exports) {
 
@@ -1302,19 +1297,19 @@ webpackEmptyAsyncContext.id = 152;
 
 var map = {
 	"../pages/contact/contact.module": [
-		723,
+		725,
 		3
 	],
 	"../pages/forget/forget.module": [
-		725,
+		727,
 		2
 	],
 	"../pages/login/login.module": [
-		726,
+		728,
 		1
 	],
 	"../pages/newpw/newpw.module": [
-		724,
+		726,
 		0
 	]
 };
@@ -1334,15 +1329,371 @@ module.exports = webpackAsyncContext;
 
 /***/ }),
 
-/***/ 264:
+/***/ 221:
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return KeycloakServiceProvider; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(1);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_http__ = __webpack_require__(54);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_rxjs_add_operator_map__ = __webpack_require__(110);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_rxjs_add_operator_map___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_rxjs_add_operator_map__);
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+
+
+
+var keycloakConfig = __webpack_require__(682);
+/*
+  Generated class for the KeycloakServiceProvider provider.
+
+  See https://angular.io/docs/ts/latest/guide/dependency-injection.html
+  for more info on providers and Angular DI.
+*/
+var KeycloakServiceProvider = KeycloakServiceProvider_1 = (function () {
+    function KeycloakServiceProvider(http) {
+        this.http = http;
+    }
+    /**
+     * Initialise the Keycloak Client Adapter
+     */
+    KeycloakServiceProvider.init = function () {
+        // Create a new Keycloak Client Instance
+        var keycloakAuth = new Keycloak(keycloakConfig);
+        return new Promise(function (resolve, reject) {
+            keycloakAuth.init({ onLoad: 'login-required', flow: 'implicit' }).success(function () {
+                KeycloakServiceProvider_1.auth.authz = keycloakAuth;
+                KeycloakServiceProvider_1.auth.logoutUrl = keycloakAuth.authServerUrl + "/realms/keypress/protocol/openid-connect/logout?redirect_uri=/";
+                resolve();
+            }).error(function (err) {
+                reject(err);
+            });
+        });
+    };
+    /**
+     * Redirect to logout
+     */
+    KeycloakServiceProvider.prototype.logout = function () {
+        KeycloakServiceProvider_1.auth.authz.logout();
+    };
+    /**
+     * Redirect to Login
+     */
+    KeycloakServiceProvider.prototype.login = function () {
+        KeycloakServiceProvider_1.auth.authz.login();
+    };
+    /**
+     * Clears Authentication State
+     */
+    KeycloakServiceProvider.prototype.clearToken = function () {
+        KeycloakServiceProvider_1.auth.authz.clearToken();
+    };
+    /**
+     * Return the users realm level roles
+     */
+    KeycloakServiceProvider.prototype.getRealmRoles = function () {
+        return KeycloakServiceProvider_1.auth.authz.realmAccess.roles;
+    };
+    /**
+     * Check if the user has a specified realm role
+     */
+    KeycloakServiceProvider.prototype.hasRealmRole = function (role) {
+        return KeycloakServiceProvider_1.auth.authz.hasRealmRole(role);
+    };
+    /**
+     * Get Server/Open ID Connect specific server info
+     */
+    KeycloakServiceProvider.prototype.getConfiguration = function () {
+        var notAvailable = "N/A";
+        return {
+            "authServerUrl": KeycloakServiceProvider_1.auth.authz.authServerUrl ? KeycloakServiceProvider_1.auth.authz.authServerUrl : notAvailable,
+            "openIdFlow": KeycloakServiceProvider_1.auth.authz.flow ? KeycloakServiceProvider_1.auth.authz.flow : notAvailable,
+            "openIdResponseMode": KeycloakServiceProvider_1.auth.authz.responseMode ? KeycloakServiceProvider_1.auth.authz.responseMode : notAvailable,
+            "openIdResponseType": KeycloakServiceProvider_1.auth.authz.responseType ? KeycloakServiceProvider_1.auth.authz.responseType : notAvailable,
+            "realm": KeycloakServiceProvider_1.auth.authz.realm ? KeycloakServiceProvider_1.auth.authz.realm : notAvailable,
+            "clientId": KeycloakServiceProvider_1.auth.authz.clientId ? KeycloakServiceProvider_1.auth.authz.clientId : notAvailable,
+            "timeSkew": KeycloakServiceProvider_1.auth.authz.timeSkew ? KeycloakServiceProvider_1.auth.authz.timeSkew : notAvailable
+        };
+    };
+    /**
+     * Redirects to the Account Management Console
+     */
+    KeycloakServiceProvider.prototype.accountManagement = function () {
+        KeycloakServiceProvider_1.auth.authz.accountManagement();
+    };
+    /**
+     * Get the users profile
+     */
+    KeycloakServiceProvider.prototype.loadUserProfile = function () {
+        // Retrieve User Profile
+        return new Promise(function (resolve, reject) {
+            KeycloakServiceProvider_1.auth.authz.loadUserProfile().success(function (profile) {
+                resolve(profile);
+            }).error(function () {
+                reject('Failed to retrieve user profile');
+            });
+        });
+    };
+    /**
+     * Check if the user has a given role
+     * @param role The role to check if the user posesses
+     */
+    KeycloakServiceProvider.prototype.viewGuard = function (role) {
+        if (KeycloakServiceProvider_1.auth.authz.hasRealmRole(role)) {
+            return true;
+        }
+        else {
+            //this.alertCtrl.create({title: 'Access Denied', subTitle: "You don't have access to the requested resource."}).present();
+            return false;
+        }
+    };
+    return KeycloakServiceProvider;
+}());
+KeycloakServiceProvider.auth = {};
+KeycloakServiceProvider = KeycloakServiceProvider_1 = __decorate([
+    Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Injectable"])(),
+    __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1__angular_http__["a" /* Http */]])
+], KeycloakServiceProvider);
+
+var KeycloakServiceProvider_1;
+//# sourceMappingURL=keycloak-service.js.map
+
+/***/ }),
+
+/***/ 222:
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return Keycloak2Provider; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(1);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_http__ = __webpack_require__(54);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_rxjs_add_operator_map__ = __webpack_require__(110);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_rxjs_add_operator_map___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_rxjs_add_operator_map__);
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+
+
+
+/*
+  Generated class for the Keycloak2Provider provider.
+
+  See https://angular.io/docs/ts/latest/guide/dependency-injection.html
+  for more info on providers and Angular DI.
+*/
+var Keycloak2Provider = Keycloak2Provider_1 = (function () {
+    function Keycloak2Provider(http) {
+        this.http = http;
+    }
+    Keycloak2Provider.init = function () {
+        var keycloakAuth = Keycloak({
+            "realm": "qipai",
+            "url": "http://52.80.11.196:9090/auth",
+            "clientId": "qipaipm",
+            "enable-cors": true,
+            "ssl-required": "external",
+            "sessionId": "1619f21c-0292-4b9d-9e1c-dcd0fdd1a2a8",
+            "publicClient": true,
+            "use-resource-role-mappings": true,
+            "bearer-only": false,
+        });
+        Keycloak2Provider_1.auth.loggedIn = false;
+        return new Promise(function (resolve, reject) {
+            keycloakAuth.init({ onLoad: 'login-required', checkLoginIframeInterval: 1, checkLoginIframe: true })
+                .success(function () {
+                console.log(keycloakAuth);
+                if (keycloakAuth.authenticated) {
+                    console.log(keycloakAuth.tokenParsed);
+                }
+                else {
+                    console.log("未认证");
+                }
+                Keycloak2Provider_1.auth.loggedIn = true;
+                Keycloak2Provider_1.auth.authz = keycloakAuth;
+                Keycloak2Provider_1.auth.logoutUrl = keycloakAuth.authServerUrl
+                    + '/realms/afiliamedica/protocol/openid-connect/logout?redirect_uri='
+                    + document.baseURI;
+                resolve();
+            })
+                .error(function () {
+                reject();
+            });
+        });
+    };
+    Keycloak2Provider.prototype.logout = function () {
+        Keycloak2Provider_1.auth.authz.logout();
+        Keycloak2Provider_1.auth.loggedIn = false;
+        Keycloak2Provider_1.auth.authz = null;
+        //window.location.href = KeycloakService.auth.logoutUrl;
+    };
+    Keycloak2Provider.prototype.getToken = function () {
+        return new Promise(function (resolve, reject) {
+            if (Keycloak2Provider_1.auth.authz.token) {
+                Keycloak2Provider_1.auth.authz
+                    .updateToken(5)
+                    .success(function () {
+                    resolve(Keycloak2Provider_1.auth.authz.token);
+                })
+                    .error(function () {
+                    reject('Failed to refresh token');
+                });
+            }
+            else {
+                reject('Not loggen in');
+            }
+        });
+    };
+    return Keycloak2Provider;
+}());
+Keycloak2Provider.auth = {};
+Keycloak2Provider = Keycloak2Provider_1 = __decorate([
+    Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Injectable"])(),
+    __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1__angular_http__["a" /* Http */]])
+], Keycloak2Provider);
+
+var Keycloak2Provider_1;
+//# sourceMappingURL=keycloak2.js.map
+
+/***/ }),
+
+/***/ 266:
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return HomePage; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(1);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(12);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__project_create_project_create__ = __webpack_require__(135);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__project_detail_project_detail__ = __webpack_require__(138);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__search_search__ = __webpack_require__(267);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__app_app_service__ = __webpack_require__(36);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__app_app_config__ = __webpack_require__(27);
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+
+
+
+
+
+
+
+var HomePage = (function () {
+    function HomePage(navCtrl, appService, events) {
+        this.navCtrl = navCtrl;
+        this.appService = appService;
+        this.events = events;
+        this.type = 1;
+        this.namevalue = "appname-list";
+        this.projects = [];
+        this.projectsOnMonth = [];
+        this.currentDate = "";
+    }
+    HomePage.prototype.ionViewDidLoad = function () {
+        var _this = this;
+        this.events.subscribe('homeProjectReload', function () {
+            _this.reloadProjectList(_this.currentDate);
+        });
+    };
+    HomePage.prototype.ionViewWillUnload = function () {
+        this.events.unsubscribe('homeProjectReload');
+    };
+    HomePage.prototype.onChangeDate = function () {
+    };
+    HomePage.prototype.onSelectDate = function (date) {
+        if (date instanceof Date) {
+            var dateString = __WEBPACK_IMPORTED_MODULE_6__app_app_config__["a" /* AppConfig */].dateToString(date);
+            this.currentDate = dateString;
+            this.reloadProjectList(dateString);
+        }
+    };
+    HomePage.prototype.onChangeMonthProject = function (dayHasProjects) {
+        this.projectsOnMonth = dayHasProjects;
+    };
+    HomePage.prototype.reloadProjectList = function (dateString) {
+        this.projects = [];
+        this.appService.httpGet("item/searchByCondition", { "itemStartTime": dateString, "endTime": dateString, "itemIsEnd": "0", "page": 1, "limit": 100 }, this, function (view, res) {
+            var data = res.json();
+            if (data.success == true) {
+                view.projects = data.data;
+                console.log(view.projects);
+            }
+        }, true);
+    };
+    HomePage.prototype.sortPorjects = function (oldArray) {
+        for (var i = 0; i < oldArray.length(); i++) {
+            var pp = oldArray[i];
+            if (pp.itemIsEnd == true) {
+                pp.itemState = "07010040";
+            }
+            else {
+            }
+        }
+    };
+    HomePage.prototype.onChangeType = function ($event) {
+        if (this.type == 1) {
+            this.type = 2;
+            this.namevalue = "ios-calendar-outline";
+        }
+        else {
+            this.type = 1;
+            this.namevalue = "appname-list";
+        }
+    };
+    HomePage.prototype.onClickSearch = function () {
+        this.navCtrl.push(__WEBPACK_IMPORTED_MODULE_4__search_search__["a" /* SearchPage */]);
+    };
+    HomePage.prototype.onCreateProject = function () {
+        this.navCtrl.push(__WEBPACK_IMPORTED_MODULE_2__project_create_project_create__["a" /* ProjectCreatePage */], {
+            type: 1,
+        });
+    };
+    HomePage.prototype.onClickProject = function (project) {
+        this.navCtrl.push(__WEBPACK_IMPORTED_MODULE_3__project_detail_project_detail__["b" /* ProjectDetailPage */], {
+            project: project,
+        });
+    };
+    return HomePage;
+}());
+HomePage = __decorate([
+    Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Component"])({
+        selector: 'page-home',template:/*ion-inline-start:"D:\qipaipm-company\src\pages\home\home.html"*/'<ion-header>\n\n  <ion-navbar>\n\n    <ion-title>\n\n\n\n    </ion-title>\n\n    <ion-buttons end >\n\n      <button ion-button (click)="onChangeType($event)" id="btMode">\n\n        <ion-icon style="color: #fc5c53; margin-right: 10px" name={{namevalue}} >\n\n        </ion-icon>\n\n      </button>\n\n      <button ion-button (click)="onClickSearch()">\n\n        <ion-icon style="color: #fc5c53; margin-right: 10px" name="appname-search" >\n\n        </ion-icon>\n\n      </button>\n\n      <button ion-button (click)="onCreateProject()">\n\n        <ion-icon style="color: #fc5c53; margin-right: 5px" name="appname-add" >\n\n        </ion-icon>\n\n      </button>\n\n    </ion-buttons>\n\n  </ion-navbar>\n\n</ion-header>\n\n\n\n<ion-content fullscreen>\n\n  <div *ngIf="type==1" no-padding no-margin>\n\n    <calendar (onChange)="onSelectDate($event)" (onChangeMonth)="onChangeMonthProject($event)">\n\n\n\n    </calendar>\n\n\n\n    <div style="margin-top: 10px; height: 1px; background-color: #c5c6c7; width: 100%"></div>\n\n    <ion-item (click)="onClickProject(project)" *ngFor="let project of projects">\n\n      <ion-label no-padding no-margin text-center float-left\n\n                 [ngClass]="{\'circle_home\':1===1,\'nostart\':project.itemState==\'07010010\',\'ing\':project.itemState==\'07010020\'|| project.itemState==\'07010030\',\'end\':project.itemState==\'07010040\'}">{{project.itemLevel}}</ion-label>\n\n          <!--<div [ngClass]="{\'circle_nostart\':project.itemState==\'未启动\',\'circle_ing\':project.itemState==\'进行中\',\'circle_end\':project.itemState==\'已结束\'}"></div>-->\n\n          <ion-label no-padding no-margin float-left class="pj-name" [ngStyle]="{\'color\':project.itemState==\'07010030\'?\'#fc780e\':\'black\'}">{{project.itemName}}</ion-label>\n\n          </ion-item>\n\n        </div>\n\n        <div *ngIf="type==2" no-padding no-margin>\n\n          <div no-margin no-padding style="background-color: #ececec; height: 50px; position: relative">\n\n            <ion-label no-margin no-padding float-left style="line-height: 50px">开始日期</ion-label>\n\n            <ion-label no-margin no-padding float-left style="margin-left: 10px; line-height: 50px">项目名称</ion-label>\n\n            <div float-end style="position: relative; width: 120px; height: 100%">\n\n              <div no-margin no-padding style="top: 5px; position: absolute; right: 0px">\n\n                <div style="float: left">\n\n                  <div style="width: 10px; height: 10px; background-color: green; float: left"></div>\n\n                  <ion-label float-left no-margin no-padding style="line-height: 12px">进行中</ion-label>\n\n                </div>\n\n                <div style="float: right">\n\n                  <div style="width: 10px; height: 10px; background-color: gray; float: left"></div>\n\n                  <ion-label float-left no-margin no-padding style="line-height: 12px">未开始</ion-label>\n\n                </div>\n\n              </div>\n\n              <div no-margin no-padding style="bottom: 5px; position: absolute; right: 0px">\n\n          <div style="float: left">\n\n            <div style="width: 10px; height: 10px; background-color: #fc780e; float: left"></div>\n\n            <ion-label float-left no-margin no-padding style="line-height: 12px">延期中</ion-label>\n\n          </div>\n\n          <div style="float: right">\n\n            <div style="width: 10px; height: 10px; background-color: gray; float: left"></div>\n\n            <ion-label float-left no-margin no-padding style="line-height: 12px">已完成</ion-label>\n\n          </div>\n\n        </div>\n\n      </div>\n\n    </div>\n\n    <div *ngFor="let project of projectsOnMonth" style="position: relative; height: 50px; border-bottom: solid 1px #ececec" (click)="onClickProject(project)">\n\n      <ion-label float-left no-margin no-padding class="list_day">{{project.itemStartTime | DayPipe}}</ion-label>\n\n      <ion-label float-left no-margin no-padding class="list_weekday">{{project.itemStartTime | WeekayPipe}}</ion-label>\n\n      <ion-label float-left no-margin no-padding text-center\n\n          [ngClass]="{\'list_circle\':1===1,\'nostart\':project.itemState==\'07010010\',\'ing\':project.itemState==\'07010020\',\'ing\':project.itemState==\'07010030\',\'end\':project.itemState==\'07010040\'}">{{project.itemLevel}}</ion-label>\n\n      <ion-label float-left no-margin no-padding class="list_itemname">{{project.itemName}}</ion-label>\n\n    </div>\n\n  </div>\n\n</ion-content>\n\n'/*ion-inline-end:"D:\qipaipm-company\src\pages\home\home.html"*/
+    }),
+    __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["NavController"], __WEBPACK_IMPORTED_MODULE_5__app_app_service__["a" /* AppService */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["Events"]])
+], HomePage);
+
+//# sourceMappingURL=home.js.map
+
+/***/ }),
+
+/***/ 267:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return SearchPage; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(1);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(12);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__app_app_service__ = __webpack_require__(29);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__project_detail_project_detail__ = __webpack_require__(137);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__app_app_service__ = __webpack_require__(36);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__project_detail_project_detail__ = __webpack_require__(138);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -1452,7 +1803,157 @@ SearchPage = __decorate([
 
 /***/ }),
 
-/***/ 29:
+/***/ 27:
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return AppConfig; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_common__ = __webpack_require__(33);
+
+var AppConfig = (function () {
+    function AppConfig() {
+    }
+    //测试环境URL
+    AppConfig.getBaseUrl = function () {
+        return "http://192.168.72.224:8080/pm/";
+    };
+    //获取设备高度
+    AppConfig.getWindowHeight = function () {
+        return window.screen.height;
+    };
+    //获取设备宽度
+    AppConfig.getWindowWidth = function () {
+        return window.screen.width;
+    };
+    /**
+     * 日期对象转为日期字符串
+     * @param date 需要格式化的日期对象
+     * @param sFormat 输出格式,默认为yyyy-MM-dd                        年：y，月：M，日：d，时：h，分：m，秒：s
+     * @example  dateFormat(new Date())                               "2017-02-28"
+     * @example  dateFormat(new Date(),'yyyy-MM-dd')                  "2017-02-28"
+     * @example  dateFormat(new Date(),'yyyy-MM-dd HH:mm:ss')         "2017-02-28 13:24:00"   ps:HH:24小时制
+     * @example  dateFormat(new Date(),'yyyy-MM-dd hh:mm:ss')         "2017-02-28 01:24:00"   ps:hh:12小时制
+     * @example  dateFormat(new Date(),'hh:mm')                       "09:24"
+     * @example  dateFormat(new Date(),'yyyy-MM-ddTHH:mm:ss+08:00')   "2017-02-28T13:24:00+08:00"
+     * @example  dateFormat(new Date('2017-02-28 13:24:00'),'yyyy-MM-ddTHH:mm:ss+08:00')   "2017-02-28T13:24:00+08:00"
+     * @returns {string}
+     */
+    AppConfig.dateFormat = function (date, sFormat) {
+        if (sFormat === void 0) { sFormat = 'yyyy-MM-dd'; }
+        var time = {
+            Year: 0,
+            TYear: '0',
+            Month: 0,
+            TMonth: '0',
+            Day: 0,
+            TDay: '0',
+            Hour: 0,
+            THour: '0',
+            hour: 0,
+            Thour: '0',
+            Minute: 0,
+            TMinute: '0',
+            Second: 0,
+            TSecond: '0',
+            Millisecond: 0
+        };
+        time.Year = date.getFullYear();
+        time.TYear = String(time.Year).substr(2);
+        time.Month = date.getMonth() + 1;
+        time.TMonth = time.Month < 10 ? "0" + time.Month : String(time.Month);
+        time.Day = date.getDate();
+        time.TDay = time.Day < 10 ? "0" + time.Day : String(time.Day);
+        time.Hour = date.getHours();
+        time.THour = time.Hour < 10 ? "0" + time.Hour : String(time.Hour);
+        time.hour = time.Hour < 13 ? time.Hour : time.Hour - 12;
+        time.Thour = time.hour < 10 ? "0" + time.hour : String(time.hour);
+        time.Minute = date.getMinutes();
+        time.TMinute = time.Minute < 10 ? "0" + time.Minute : String(time.Minute);
+        time.Second = date.getSeconds();
+        time.TSecond = time.Second < 10 ? "0" + time.Second : String(time.Second);
+        time.Millisecond = date.getMilliseconds();
+        return sFormat.replace(/yyyy/ig, String(time.Year))
+            .replace(/yyy/ig, String(time.Year))
+            .replace(/yy/ig, time.TYear)
+            .replace(/y/ig, time.TYear)
+            .replace(/MM/g, time.TMonth)
+            .replace(/M/g, String(time.Month))
+            .replace(/dd/ig, time.TDay)
+            .replace(/d/ig, String(time.Day))
+            .replace(/HH/g, time.THour)
+            .replace(/H/g, String(time.Hour))
+            .replace(/hh/g, time.Thour)
+            .replace(/h/g, String(time.hour))
+            .replace(/mm/g, time.TMinute)
+            .replace(/m/g, String(time.Minute))
+            .replace(/ss/ig, time.TSecond)
+            .replace(/s/ig, String(time.Second))
+            .replace(/fff/ig, String(time.Millisecond));
+    };
+    AppConfig.stringToDate = function (strTime) {
+        return new Date(Date.parse(strTime.replace(/-/g, "/")));
+    };
+    AppConfig.dateToString = function (date) {
+        return new __WEBPACK_IMPORTED_MODULE_0__angular_common__["c" /* DatePipe */]('en-US').transform(date, 'yyyy-MM-dd');
+    };
+    AppConfig.getDayCountInMonth = function (date) {
+        var m_days = new Array(31, 28 + AppConfig.is_leap(date.getFullYear()), 31, 30, 31, 30, 31, 31, 30, 31, 30, 31);
+        return m_days[date.getMonth()];
+    };
+    AppConfig.is_leap = function (year) {
+        var res;
+        return (year % 100 == 0 ? res = (year % 400 == 0 ? 1 : 0) : res = (year % 4 == 0 ? 1 : 0));
+    };
+    AppConfig.addDate = function (date, days) {
+        var d = new Date(date);
+        d.setDate(d.getDate() + days);
+        var m = d.getMonth() + 1;
+        return d.getFullYear() + '-' + m + '-' + d.getDate();
+    };
+    //时间戳转yyyy-mm-dd
+    AppConfig.timestampToDatestring = function (timestamp) {
+        var date = new Date(timestamp);
+        var y = date.getFullYear();
+        var m = "0" + (date.getMonth() + 1);
+        var d = "0" + date.getDate();
+        return y + "-" + m.substring(m.length - 2, m.length) + "-" + d.substring(d.length - 2, d.length);
+    };
+    //时间戳转date
+    AppConfig.timestampToDate = function (timestamp) {
+        return new Date(timestamp);
+    };
+    /**
+     * 深拷贝
+     */
+    AppConfig.deepCopy = function (originObj) {
+        return originObj ? JSON.parse(JSON.stringify(originObj)) : null;
+    };
+    //把字符串里面的数字都提取出来
+    AppConfig.getNum = function (text) {
+        return text.replace(/[^0-9]/ig, "");
+    };
+    AppConfig.prototype.getNowFormatDate = function () {
+        var date = new Date();
+        var seperator1 = "-";
+        var seperator2 = ":";
+        var month = date.getMonth() + 1;
+        var strDate = date.getDate();
+        var currentdate = date.getFullYear() + seperator1
+            + (month >= 1 && month <= 9) ? "0" : ""
+            + month + seperator1
+            + (strDate >= 1 && strDate <= 9) ? "0" : "" + strDate
+            + " " + date.getHours() + seperator2 + date.getMinutes()
+            + seperator2 + date.getSeconds();
+        return currentdate;
+    };
+    return AppConfig;
+}());
+
+//# sourceMappingURL=app.config.js.map
+
+/***/ }),
+
+/***/ 36:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -1460,7 +1961,7 @@ SearchPage = __decorate([
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return AppService; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_ionic_angular__ = __webpack_require__(12);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_core__ = __webpack_require__(1);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__angular_http__ = __webpack_require__(105);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__angular_http__ = __webpack_require__(54);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_rxjs_add_operator_toPromise__ = __webpack_require__(196);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_rxjs_add_operator_toPromise___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3_rxjs_add_operator_toPromise__);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
@@ -1676,159 +2177,91 @@ AppService = __decorate([
 
 /***/ }),
 
-/***/ 30:
+/***/ 389:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return AppConfig; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_common__ = __webpack_require__(34);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return LoginPage; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(1);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(12);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__angular_forms__ = __webpack_require__(21);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__forget_forget__ = __webpack_require__(141);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__providers_keycloak_service_keycloak_service__ = __webpack_require__(221);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__providers_keycloak2_keycloak2__ = __webpack_require__(222);
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
 
-var AppConfig = (function () {
-    function AppConfig() {
+
+
+
+
+// import { KeycloakService } from "../../app/keycloak/keycloak.service";
+
+/**
+ * Generated class for the LoginPage page.
+ *
+ * See http://ionicframework.com/docs/components/#navigation for more info
+ * on Ionic pages and navigation.
+ */
+var LoginPage = (function () {
+    function LoginPage(navCtrl, navParams, formBuilder, keycloak, keycloak2) {
+        this.navCtrl = navCtrl;
+        this.navParams = navParams;
+        this.formBuilder = formBuilder;
+        this.keycloak = keycloak;
+        this.keycloak2 = keycloak2;
+        this.errorText = '手机号码错误';
+        this.loginForm = this.formBuilder.group({
+            mobile: ['', __WEBPACK_IMPORTED_MODULE_2__angular_forms__["Validators"].compose([__WEBPACK_IMPORTED_MODULE_2__angular_forms__["Validators"].minLength(11), __WEBPACK_IMPORTED_MODULE_2__angular_forms__["Validators"].maxLength(11), __WEBPACK_IMPORTED_MODULE_2__angular_forms__["Validators"].required, __WEBPACK_IMPORTED_MODULE_2__angular_forms__["Validators"].pattern("^(13[0-9]|15[012356789]|17[03678]|18[0-9]|14[57])[0-9]{8}$")])],
+            password: ['', __WEBPACK_IMPORTED_MODULE_2__angular_forms__["Validators"].compose([__WEBPACK_IMPORTED_MODULE_2__angular_forms__["Validators"].required, __WEBPACK_IMPORTED_MODULE_2__angular_forms__["Validators"].minLength(6), __WEBPACK_IMPORTED_MODULE_2__angular_forms__["Validators"].maxLength(12)])]
+        });
     }
-    //测试环境URL
-    AppConfig.getBaseUrl = function () {
-        return "http://192.168.72.224:8080/pm/";
+    LoginPage.prototype.ionViewDidLoad = function () {
+        // KeycloakServiceProvider.init();
+        __WEBPACK_IMPORTED_MODULE_5__providers_keycloak2_keycloak2__["a" /* Keycloak2Provider */].init()
+            .then(function () {
+            console.log("成功");
+        })
+            .catch(function () {
+            console.log("失败");
+        });
     };
-    //获取设备高度
-    AppConfig.getWindowHeight = function () {
-        return window.screen.height;
+    LoginPage.prototype.login = function (value) {
+        //this.keycloak.login();
     };
-    //获取设备宽度
-    AppConfig.getWindowWidth = function () {
-        return window.screen.width;
+    LoginPage.prototype.onForgetPassword = function ($event) {
+        this.navCtrl.push(__WEBPACK_IMPORTED_MODULE_3__forget_forget__["a" /* ForgetPage */]);
     };
-    /**
-     * 日期对象转为日期字符串
-     * @param date 需要格式化的日期对象
-     * @param sFormat 输出格式,默认为yyyy-MM-dd                        年：y，月：M，日：d，时：h，分：m，秒：s
-     * @example  dateFormat(new Date())                               "2017-02-28"
-     * @example  dateFormat(new Date(),'yyyy-MM-dd')                  "2017-02-28"
-     * @example  dateFormat(new Date(),'yyyy-MM-dd HH:mm:ss')         "2017-02-28 13:24:00"   ps:HH:24小时制
-     * @example  dateFormat(new Date(),'yyyy-MM-dd hh:mm:ss')         "2017-02-28 01:24:00"   ps:hh:12小时制
-     * @example  dateFormat(new Date(),'hh:mm')                       "09:24"
-     * @example  dateFormat(new Date(),'yyyy-MM-ddTHH:mm:ss+08:00')   "2017-02-28T13:24:00+08:00"
-     * @example  dateFormat(new Date('2017-02-28 13:24:00'),'yyyy-MM-ddTHH:mm:ss+08:00')   "2017-02-28T13:24:00+08:00"
-     * @returns {string}
-     */
-    AppConfig.dateFormat = function (date, sFormat) {
-        if (sFormat === void 0) { sFormat = 'yyyy-MM-dd'; }
-        var time = {
-            Year: 0,
-            TYear: '0',
-            Month: 0,
-            TMonth: '0',
-            Day: 0,
-            TDay: '0',
-            Hour: 0,
-            THour: '0',
-            hour: 0,
-            Thour: '0',
-            Minute: 0,
-            TMinute: '0',
-            Second: 0,
-            TSecond: '0',
-            Millisecond: 0
-        };
-        time.Year = date.getFullYear();
-        time.TYear = String(time.Year).substr(2);
-        time.Month = date.getMonth() + 1;
-        time.TMonth = time.Month < 10 ? "0" + time.Month : String(time.Month);
-        time.Day = date.getDate();
-        time.TDay = time.Day < 10 ? "0" + time.Day : String(time.Day);
-        time.Hour = date.getHours();
-        time.THour = time.Hour < 10 ? "0" + time.Hour : String(time.Hour);
-        time.hour = time.Hour < 13 ? time.Hour : time.Hour - 12;
-        time.Thour = time.hour < 10 ? "0" + time.hour : String(time.hour);
-        time.Minute = date.getMinutes();
-        time.TMinute = time.Minute < 10 ? "0" + time.Minute : String(time.Minute);
-        time.Second = date.getSeconds();
-        time.TSecond = time.Second < 10 ? "0" + time.Second : String(time.Second);
-        time.Millisecond = date.getMilliseconds();
-        return sFormat.replace(/yyyy/ig, String(time.Year))
-            .replace(/yyy/ig, String(time.Year))
-            .replace(/yy/ig, time.TYear)
-            .replace(/y/ig, time.TYear)
-            .replace(/MM/g, time.TMonth)
-            .replace(/M/g, String(time.Month))
-            .replace(/dd/ig, time.TDay)
-            .replace(/d/ig, String(time.Day))
-            .replace(/HH/g, time.THour)
-            .replace(/H/g, String(time.Hour))
-            .replace(/hh/g, time.Thour)
-            .replace(/h/g, String(time.hour))
-            .replace(/mm/g, time.TMinute)
-            .replace(/m/g, String(time.Minute))
-            .replace(/ss/ig, time.TSecond)
-            .replace(/s/ig, String(time.Second))
-            .replace(/fff/ig, String(time.Millisecond));
-    };
-    AppConfig.stringToDate = function (strTime) {
-        return new Date(Date.parse(strTime.replace(/-/g, "/")));
-    };
-    AppConfig.dateToString = function (date) {
-        return new __WEBPACK_IMPORTED_MODULE_0__angular_common__["c" /* DatePipe */]('en-US').transform(date, 'yyyy-MM-dd');
-    };
-    AppConfig.getDayCountInMonth = function (date) {
-        var m_days = new Array(31, 28 + AppConfig.is_leap(date.getFullYear()), 31, 30, 31, 30, 31, 31, 30, 31, 30, 31);
-        return m_days[date.getMonth()];
-    };
-    AppConfig.is_leap = function (year) {
-        var res;
-        return (year % 100 == 0 ? res = (year % 400 == 0 ? 1 : 0) : res = (year % 4 == 0 ? 1 : 0));
-    };
-    AppConfig.addDate = function (date, days) {
-        var d = new Date(date);
-        d.setDate(d.getDate() + days);
-        var m = d.getMonth() + 1;
-        return d.getFullYear() + '-' + m + '-' + d.getDate();
-    };
-    //时间戳转yyyy-mm-dd
-    AppConfig.timestampToDatestring = function (timestamp) {
-        var date = new Date(timestamp);
-        var y = date.getFullYear();
-        var m = "0" + (date.getMonth() + 1);
-        var d = "0" + date.getDate();
-        return y + "-" + m.substring(m.length - 2, m.length) + "-" + d.substring(d.length - 2, d.length);
-    };
-    /**
-     * 深拷贝
-     */
-    AppConfig.deepCopy = function (originObj) {
-        return originObj ? JSON.parse(JSON.stringify(originObj)) : null;
-    };
-    //把字符串里面的数字都提取出来
-    AppConfig.getNum = function (text) {
-        return text.replace(/[^0-9]/ig, "");
-    };
-    AppConfig.prototype.getNowFormatDate = function () {
-        var date = new Date();
-        var seperator1 = "-";
-        var seperator2 = ":";
-        var month = date.getMonth() + 1;
-        var strDate = date.getDate();
-        var currentdate = date.getFullYear() + seperator1
-            + (month >= 1 && month <= 9) ? "0" : ""
-            + month + seperator1
-            + (strDate >= 1 && strDate <= 9) ? "0" : "" + strDate
-            + " " + date.getHours() + seperator2 + date.getMinutes()
-            + seperator2 + date.getSeconds();
-        return currentdate;
-    };
-    return AppConfig;
+    return LoginPage;
 }());
+LoginPage = __decorate([
+    Object(__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["IonicPage"])(),
+    Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Component"])({
+        selector: 'page-login',template:/*ion-inline-start:"D:\qipaipm-company\src\pages\login\login.html"*/'<!--\n\n  Generated template for the LoginPage page.\n\n\n\n  See http://ionicframework.com/docs/components/#navigation for more info on\n\n  Ionic pages and navigation.\n\n-->\n\n\n\n<ion-content fullscreen>\n\n  <img class="login_icon" src="../../assets/png/login_logo.png">\n\n  <form [formGroup]="loginForm" (ngSubmit)="login(loginForm.value)">\n\n    <div style="margin: 0 30px;">\n\n      <div class="row">\n\n        <img class="area" src="../../assets/png/icon_tel.png">\n\n        <ion-input no-padding no-margin type="text" placeholder="输入手机号" formControlName="mobile" maxlength="11"></ion-input>\n\n      </div>\n\n      <div class="row">\n\n        <img class="area" src="../../assets/png/icon_pw.png">\n\n        <ion-input no-padding no-margin type="password" placeholder="输入密码" formControlName="password" maxlength="12"></ion-input>\n\n      </div>\n\n      <!--<input class="login_input" type="text" formControlName="mobile" placeholder="请输入手机号"/>-->\n\n      <!--<input class="login_input" type="password" formControlName="password" placeholder="请输入密码"/>-->\n\n      <!--<div style="width: 80%;height: 30px;margin: 30px auto">-->\n\n        <!--<p style="float: left; margin-left: 10px; color: red">{{errorText}}</p>-->\n\n        <!--<button ion-button no-padding no-margin clear style="margin-right: 10px; float: right">忘记密码?</button>-->\n\n      <!--</div>-->\n\n      <button ion-button block class="login_btn" type="submit">登录</button>\n\n    </div>\n\n  </form>\n\n  <div style="position: fixed;bottom: 20px;width: 100%">\n\n    <button ion-button no-border no-padding clear class="forget" (click)="onForgetPassword($event)">忘记密码?</button>\n\n  </div>\n\n\n\n</ion-content>\n\n'/*ion-inline-end:"D:\qipaipm-company\src\pages\login\login.html"*/,
+    }),
+    __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["NavController"], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["NavParams"],
+        __WEBPACK_IMPORTED_MODULE_2__angular_forms__["FormBuilder"], __WEBPACK_IMPORTED_MODULE_4__providers_keycloak_service_keycloak_service__["a" /* KeycloakServiceProvider */],
+        __WEBPACK_IMPORTED_MODULE_5__providers_keycloak2_keycloak2__["a" /* Keycloak2Provider */]])
+], LoginPage);
 
-//# sourceMappingURL=app.config.js.map
+//# sourceMappingURL=login.js.map
 
 /***/ }),
 
-/***/ 386:
+/***/ 390:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_platform_browser_dynamic__ = __webpack_require__(387);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__app_module__ = __webpack_require__(391);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_platform_browser_dynamic__ = __webpack_require__(391);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__app_module__ = __webpack_require__(395);
 
 
 Object(__WEBPACK_IMPORTED_MODULE_0__angular_platform_browser_dynamic__["a" /* platformBrowserDynamic */])().bootstrapModule(__WEBPACK_IMPORTED_MODULE_1__app_module__["a" /* AppModule */]);
@@ -1836,7 +2269,7 @@ Object(__WEBPACK_IMPORTED_MODULE_0__angular_platform_browser_dynamic__["a" /* pl
 
 /***/ }),
 
-/***/ 391:
+/***/ 395:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -1844,27 +2277,29 @@ Object(__WEBPACK_IMPORTED_MODULE_0__angular_platform_browser_dynamic__["a" /* pl
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_platform_browser__ = __webpack_require__(43);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_core__ = __webpack_require__(1);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_ionic_angular__ = __webpack_require__(12);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__ionic_native_splash_screen__ = __webpack_require__(260);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__ionic_native_status_bar__ = __webpack_require__(262);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__angular_http__ = __webpack_require__(105);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__ionic_native_keyboard__ = __webpack_require__(263);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__app_component__ = __webpack_require__(700);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__pages_home_home__ = __webpack_require__(701);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__pages_project_create_project_create__ = __webpack_require__(134);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__pages_milestone_detail_milestone_detail__ = __webpack_require__(135);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_11__pages_project_detail_project_detail__ = __webpack_require__(137);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_12__pages_subtask_subtask__ = __webpack_require__(136);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_13__pages_search_search__ = __webpack_require__(264);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_14__pages_contact_contact__ = __webpack_require__(58);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_15__pages_forget_forget__ = __webpack_require__(140);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_16__pages_newpw_newpw__ = __webpack_require__(139);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_17__components_components_module__ = __webpack_require__(702);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_18_ion2_calendar__ = __webpack_require__(705);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_19_ion_multi_picker__ = __webpack_require__(711);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__ionic_native_splash_screen__ = __webpack_require__(262);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__ionic_native_status_bar__ = __webpack_require__(264);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__angular_http__ = __webpack_require__(54);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__ionic_native_keyboard__ = __webpack_require__(265);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__app_component__ = __webpack_require__(703);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__pages_home_home__ = __webpack_require__(266);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__pages_project_create_project_create__ = __webpack_require__(135);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__pages_milestone_detail_milestone_detail__ = __webpack_require__(136);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_11__pages_project_detail_project_detail__ = __webpack_require__(138);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_12__pages_subtask_subtask__ = __webpack_require__(137);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_13__pages_search_search__ = __webpack_require__(267);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_14__pages_contact_contact__ = __webpack_require__(59);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_15__pages_forget_forget__ = __webpack_require__(141);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_16__pages_newpw_newpw__ = __webpack_require__(140);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_17__components_components_module__ = __webpack_require__(704);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_18_ion2_calendar__ = __webpack_require__(707);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_19_ion_multi_picker__ = __webpack_require__(713);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_19_ion_multi_picker___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_19_ion_multi_picker__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_20__pipes_pipes_module__ = __webpack_require__(714);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_21__app_service__ = __webpack_require__(29);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_22__pages_login_login__ = __webpack_require__(141);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_20__pipes_pipes_module__ = __webpack_require__(716);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_21__app_service__ = __webpack_require__(36);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_22__pages_login_login__ = __webpack_require__(389);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_23__providers_keycloak_service_keycloak_service__ = __webpack_require__(221);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_24__providers_keycloak2_keycloak2__ = __webpack_require__(222);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -1895,6 +2330,8 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 
 
 //pipe类
+
+
 
 
 
@@ -1966,7 +2403,9 @@ AppModule = __decorate([
             __WEBPACK_IMPORTED_MODULE_3__ionic_native_splash_screen__["a" /* SplashScreen */],
             __WEBPACK_IMPORTED_MODULE_6__ionic_native_keyboard__["a" /* Keyboard */],
             __WEBPACK_IMPORTED_MODULE_21__app_service__["a" /* AppService */],
-            { provide: __WEBPACK_IMPORTED_MODULE_1__angular_core__["ErrorHandler"], useClass: __WEBPACK_IMPORTED_MODULE_2_ionic_angular__["IonicErrorHandler"] }
+            { provide: __WEBPACK_IMPORTED_MODULE_1__angular_core__["ErrorHandler"], useClass: __WEBPACK_IMPORTED_MODULE_2_ionic_angular__["IonicErrorHandler"] },
+            __WEBPACK_IMPORTED_MODULE_23__providers_keycloak_service_keycloak_service__["a" /* KeycloakServiceProvider */],
+            __WEBPACK_IMPORTED_MODULE_24__providers_keycloak2_keycloak2__["a" /* Keycloak2Provider */]
         ]
     })
 ], AppModule);
@@ -1975,14 +2414,14 @@ AppModule = __decorate([
 
 /***/ }),
 
-/***/ 58:
+/***/ 59:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return ContactPage; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(1);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(12);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__app_app_service__ = __webpack_require__(29);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__app_app_service__ = __webpack_require__(36);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -2135,91 +2574,31 @@ var ContactPage_1;
 
 /***/ }),
 
-/***/ 679:
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
+/***/ 682:
+/***/ (function(module, exports) {
 
-"use strict";
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return KeycloakService; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(1);
-var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
-    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
-    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
-    return c > 3 && r && Object.defineProperty(target, key, r), r;
+module.exports = {
+	"realm": "qipai",
+	"url": "http://52.80.11.196:9090/auth",
+	"ssl-required": "external",
+	"clientId": "qipaipm",
+	"public-client": true,
+	"use-resource-role-mappings": true
 };
-
-var KeycloakService = KeycloakService_1 = (function () {
-    function KeycloakService() {
-    }
-    KeycloakService.init = function () {
-        var keycloakAuth = Keycloak({
-            "realm": "afiliamedica",
-            "url": "https://afiliamedicatech1.bitnamiapp.com:8443/auth",
-            "clientId": "afiliamedica"
-        });
-        KeycloakService_1.auth.loggedIn = false;
-        return new Promise(function (resolve, reject) {
-            keycloakAuth.init({ onLoad: 'login-required', checkLoginIframe: false })
-                .success(function () {
-                KeycloakService_1.auth.loggedIn = true;
-                KeycloakService_1.auth.authz = keycloakAuth;
-                KeycloakService_1.auth.logoutUrl = keycloakAuth.authServerUrl
-                    + '/realms/afiliamedica/protocol/openid-connect/logout?redirect_uri='
-                    + document.baseURI;
-                resolve();
-            })
-                .error(function () {
-                reject();
-            });
-        });
-    };
-    KeycloakService.prototype.logout = function () {
-        console.log('*** LOGOUT');
-        KeycloakService_1.auth.authz.logout();
-        KeycloakService_1.auth.loggedIn = false;
-        KeycloakService_1.auth.authz = null;
-        //window.location.href = KeycloakService.auth.logoutUrl;
-    };
-    KeycloakService.prototype.getToken = function () {
-        return new Promise(function (resolve, reject) {
-            if (KeycloakService_1.auth.authz.token) {
-                KeycloakService_1.auth.authz
-                    .updateToken(5)
-                    .success(function () {
-                    resolve(KeycloakService_1.auth.authz.token);
-                })
-                    .error(function () {
-                    reject('Failed to refresh token');
-                });
-            }
-            else {
-                reject('Not loggen in');
-            }
-        });
-    };
-    return KeycloakService;
-}());
-KeycloakService.auth = {};
-KeycloakService = KeycloakService_1 = __decorate([
-    Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Injectable"])()
-], KeycloakService);
-
-var KeycloakService_1;
-//# sourceMappingURL=keycloak.service.js.map
 
 /***/ }),
 
-/***/ 700:
+/***/ 703:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return MyApp; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(1);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(12);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__ionic_native_status_bar__ = __webpack_require__(262);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__ionic_native_splash_screen__ = __webpack_require__(260);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__ionic_native_keyboard__ = __webpack_require__(263);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__pages_home_home__ = __webpack_require__(701);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__ionic_native_status_bar__ = __webpack_require__(264);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__ionic_native_splash_screen__ = __webpack_require__(262);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__ionic_native_keyboard__ = __webpack_require__(265);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__pages_home_home__ = __webpack_require__(266);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -2290,139 +2669,24 @@ var MyApp = (function () {
 MyApp = __decorate([
     Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Component"])({template:/*ion-inline-start:"D:\qipaipm-company\src\app\app.html"*/'<ion-nav [root]="rootPage"></ion-nav>\n\n'/*ion-inline-end:"D:\qipaipm-company\src\app\app.html"*/
     }),
-    __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["Platform"] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["Platform"]) === "function" && _a || Object, typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_2__ionic_native_status_bar__["a" /* StatusBar */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_2__ionic_native_status_bar__["a" /* StatusBar */]) === "function" && _b || Object, typeof (_c = typeof __WEBPACK_IMPORTED_MODULE_3__ionic_native_splash_screen__["a" /* SplashScreen */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_3__ionic_native_splash_screen__["a" /* SplashScreen */]) === "function" && _c || Object, typeof (_d = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["Config"] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["Config"]) === "function" && _d || Object, typeof (_e = typeof __WEBPACK_IMPORTED_MODULE_4__ionic_native_keyboard__["a" /* Keyboard */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_4__ionic_native_keyboard__["a" /* Keyboard */]) === "function" && _e || Object])
+    __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["Platform"], __WEBPACK_IMPORTED_MODULE_2__ionic_native_status_bar__["a" /* StatusBar */], __WEBPACK_IMPORTED_MODULE_3__ionic_native_splash_screen__["a" /* SplashScreen */],
+        __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["Config"],
+        __WEBPACK_IMPORTED_MODULE_4__ionic_native_keyboard__["a" /* Keyboard */]])
 ], MyApp);
 
-var _a, _b, _c, _d, _e;
 //# sourceMappingURL=app.component.js.map
 
 /***/ }),
 
-/***/ 701:
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return HomePage; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(1);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(12);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__project_create_project_create__ = __webpack_require__(134);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__project_detail_project_detail__ = __webpack_require__(137);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__search_search__ = __webpack_require__(264);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__app_app_service__ = __webpack_require__(29);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__app_app_config__ = __webpack_require__(30);
-var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
-    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
-    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
-    return c > 3 && r && Object.defineProperty(target, key, r), r;
-};
-var __metadata = (this && this.__metadata) || function (k, v) {
-    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
-};
-
-
-
-
-
-
-
-var HomePage = (function () {
-    function HomePage(navCtrl, appService, events) {
-        this.navCtrl = navCtrl;
-        this.appService = appService;
-        this.events = events;
-        this.type = 1;
-        this.namevalue = "appname-list";
-        this.projects = [];
-        this.projectsOnMonth = [];
-        this.currentDate = "";
-    }
-    HomePage.prototype.ionViewDidLoad = function () {
-        var _this = this;
-        this.events.subscribe('homeProjectReload', function () {
-            _this.reloadProjectList(_this.currentDate);
-        });
-    };
-    HomePage.prototype.ionViewWillUnload = function () {
-        this.events.unsubscribe('homeProjectReload');
-    };
-    HomePage.prototype.onChangeDate = function () {
-    };
-    HomePage.prototype.onSelectDate = function (date) {
-        if (date instanceof Date) {
-            var dateString = __WEBPACK_IMPORTED_MODULE_6__app_app_config__["a" /* AppConfig */].dateToString(date);
-            this.currentDate = dateString;
-            this.reloadProjectList(dateString);
-        }
-    };
-    HomePage.prototype.onChangeMonthProject = function (dayHasProjects) {
-        this.projectsOnMonth = dayHasProjects;
-    };
-    HomePage.prototype.reloadProjectList = function (dateString) {
-        this.projects = [];
-        this.appService.httpGet("item/searchByCondition", { "itemStartTime": dateString, "endTime": dateString, "itemIsEnd": "0", "page": 1, "limit": 100 }, this, function (view, res) {
-            var data = res.json();
-            if (data.success == true) {
-                view.projects = data.data;
-                console.log(view.projects);
-            }
-        }, true);
-    };
-    HomePage.prototype.sortPorjects = function (oldArray) {
-        for (var i = 0; i < oldArray.length(); i++) {
-            var pp = oldArray[i];
-            if (pp.itemIsEnd == true) {
-                pp.itemState = "07010040";
-            }
-            else {
-            }
-        }
-    };
-    HomePage.prototype.onChangeType = function ($event) {
-        if (this.type == 1) {
-            this.type = 2;
-            this.namevalue = "ios-calendar-outline";
-        }
-        else {
-            this.type = 1;
-            this.namevalue = "appname-list";
-        }
-    };
-    HomePage.prototype.onClickSearch = function () {
-        this.navCtrl.push(__WEBPACK_IMPORTED_MODULE_4__search_search__["a" /* SearchPage */]);
-    };
-    HomePage.prototype.onCreateProject = function () {
-        this.navCtrl.push(__WEBPACK_IMPORTED_MODULE_2__project_create_project_create__["a" /* ProjectCreatePage */], {
-            type: 1,
-        });
-    };
-    HomePage.prototype.onClickProject = function (project) {
-        this.navCtrl.push(__WEBPACK_IMPORTED_MODULE_3__project_detail_project_detail__["b" /* ProjectDetailPage */], {
-            project: project,
-        });
-    };
-    return HomePage;
-}());
-HomePage = __decorate([
-    Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Component"])({
-        selector: 'page-home',template:/*ion-inline-start:"D:\qipaipm-company\src\pages\home\home.html"*/'<ion-header>\n\n  <ion-navbar>\n\n    <ion-title>\n\n\n\n    </ion-title>\n\n    <ion-buttons end >\n\n      <button ion-button (click)="onChangeType($event)" id="btMode">\n\n        <ion-icon style="color: #fc5c53; margin-right: 10px" name={{namevalue}} >\n\n        </ion-icon>\n\n      </button>\n\n      <button ion-button (click)="onClickSearch()">\n\n        <ion-icon style="color: #fc5c53; margin-right: 10px" name="appname-search" >\n\n        </ion-icon>\n\n      </button>\n\n      <button ion-button (click)="onCreateProject()">\n\n        <ion-icon style="color: #fc5c53; margin-right: 5px" name="appname-add" >\n\n        </ion-icon>\n\n      </button>\n\n    </ion-buttons>\n\n  </ion-navbar>\n\n</ion-header>\n\n\n\n<ion-content fullscreen>\n\n  <div *ngIf="type==1" no-padding no-margin>\n\n    <calendar (onChange)="onSelectDate($event)" (onChangeMonth)="onChangeMonthProject($event)">\n\n\n\n    </calendar>\n\n\n\n    <div style="margin-top: 10px; height: 1px; background-color: #c5c6c7; width: 100%"></div>\n\n    <ion-item (click)="onClickProject(project)" *ngFor="let project of projects">\n\n      <ion-label no-padding no-margin text-center float-left\n\n                 [ngClass]="{\'circle_home\':1===1,\'nostart\':project.itemState==\'07010010\',\'ing\':project.itemState==\'07010020\',\'ing\':project.itemState==\'07010030\',\'end\':project.itemState==\'07010040\'}">{{project.itemLevel}}</ion-label>\n\n          <!--<div [ngClass]="{\'circle_nostart\':project.itemState==\'未启动\',\'circle_ing\':project.itemState==\'进行中\',\'circle_end\':project.itemState==\'已结束\'}"></div>-->\n\n          <ion-label no-padding no-margin float-left class="pj-name" [ngStyle]="{\'color\':project.itemState==\'07010030\'?\'#fc780e\':\'black\'}">{{project.itemName}}</ion-label>\n\n          </ion-item>\n\n        </div>\n\n        <div *ngIf="type==2" no-padding no-margin>\n\n          <div no-margin no-padding style="background-color: #ececec; height: 50px; position: relative">\n\n            <ion-label no-margin no-padding float-left style="line-height: 50px">开始日期</ion-label>\n\n            <ion-label no-margin no-padding float-left style="margin-left: 10px; line-height: 50px">项目名称</ion-label>\n\n            <div float-end style="position: relative; width: 120px; height: 100%">\n\n              <div no-margin no-padding style="top: 5px; position: absolute; right: 0px">\n\n                <div style="float: left">\n\n                  <div style="width: 10px; height: 10px; background-color: green; float: left"></div>\n\n                  <ion-label float-left no-margin no-padding style="line-height: 12px">进行中</ion-label>\n\n                </div>\n\n                <div style="float: right">\n\n                  <div style="width: 10px; height: 10px; background-color: gray; float: left"></div>\n\n                  <ion-label float-left no-margin no-padding style="line-height: 12px">未开始</ion-label>\n\n                </div>\n\n              </div>\n\n              <div no-margin no-padding style="bottom: 5px; position: absolute; right: 0px">\n\n          <div style="float: left">\n\n            <div style="width: 10px; height: 10px; background-color: #fc780e; float: left"></div>\n\n            <ion-label float-left no-margin no-padding style="line-height: 12px">延期中</ion-label>\n\n          </div>\n\n          <div style="float: right">\n\n            <div style="width: 10px; height: 10px; background-color: gray; float: left"></div>\n\n            <ion-label float-left no-margin no-padding style="line-height: 12px">已完成</ion-label>\n\n          </div>\n\n        </div>\n\n      </div>\n\n    </div>\n\n    <div *ngFor="let project of projectsOnMonth" style="position: relative; height: 50px; border-bottom: solid 1px #ececec" (click)="onClickProject(project)">\n\n      <ion-label float-left no-margin no-padding class="list_day">{{project.itemStartTime | DayPipe}}</ion-label>\n\n      <ion-label float-left no-margin no-padding class="list_weekday">{{project.itemStartTime | WeekayPipe}}</ion-label>\n\n      <ion-label float-left no-margin no-padding text-center\n\n          [ngClass]="{\'list_circle\':1===1,\'nostart\':project.itemState==\'07010010\',\'ing\':project.itemState==\'07010020\',\'ing\':project.itemState==\'07010030\',\'end\':project.itemState==\'07010040\'}">{{project.itemLevel}}</ion-label>\n\n      <ion-label float-left no-margin no-padding class="list_itemname">{{project.itemName}}</ion-label>\n\n    </div>\n\n  </div>\n\n</ion-content>\n\n'/*ion-inline-end:"D:\qipaipm-company\src\pages\home\home.html"*/
-    }),
-    __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["NavController"], __WEBPACK_IMPORTED_MODULE_5__app_app_service__["a" /* AppService */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["Events"]])
-], HomePage);
-
-//# sourceMappingURL=home.js.map
-
-/***/ }),
-
-/***/ 702:
+/***/ 704:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return ComponentsModule; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(1);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(12);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__test_test__ = __webpack_require__(703);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__calendar_calendar__ = __webpack_require__(704);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__test_test__ = __webpack_require__(705);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__calendar_calendar__ = __webpack_require__(706);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -2459,7 +2723,7 @@ var ComponentsModule_1;
 
 /***/ }),
 
-/***/ 703:
+/***/ 705:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -2499,15 +2763,15 @@ TestComponent = __decorate([
 
 /***/ }),
 
-/***/ 704:
+/***/ 706:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return CalendarComponent; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(1);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_common__ = __webpack_require__(34);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__app_app_service__ = __webpack_require__(29);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__app_app_config__ = __webpack_require__(30);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_common__ = __webpack_require__(33);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__app_app_service__ = __webpack_require__(36);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__app_app_config__ = __webpack_require__(27);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_ionic_angular__ = __webpack_require__(12);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -2523,6 +2787,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 
 
 
+// import { CalendarModal, CalendarModalOptions } from "ion2-calendar";
 /**
  * Generated class for the CalendarComponent component.
  *
@@ -2883,240 +3148,240 @@ CalendarComponent = __decorate([
 
 /***/ }),
 
-/***/ 708:
+/***/ 710:
 /***/ (function(module, exports, __webpack_require__) {
 
 var map = {
-	"./af": 265,
-	"./af.js": 265,
-	"./ar": 266,
-	"./ar-dz": 267,
-	"./ar-dz.js": 267,
-	"./ar-kw": 268,
-	"./ar-kw.js": 268,
-	"./ar-ly": 269,
-	"./ar-ly.js": 269,
-	"./ar-ma": 270,
-	"./ar-ma.js": 270,
-	"./ar-sa": 271,
-	"./ar-sa.js": 271,
-	"./ar-tn": 272,
-	"./ar-tn.js": 272,
-	"./ar.js": 266,
-	"./az": 273,
-	"./az.js": 273,
-	"./be": 274,
-	"./be.js": 274,
-	"./bg": 275,
-	"./bg.js": 275,
-	"./bn": 276,
-	"./bn.js": 276,
-	"./bo": 277,
-	"./bo.js": 277,
-	"./br": 278,
-	"./br.js": 278,
-	"./bs": 279,
-	"./bs.js": 279,
-	"./ca": 280,
-	"./ca.js": 280,
-	"./cs": 281,
-	"./cs.js": 281,
-	"./cv": 282,
-	"./cv.js": 282,
-	"./cy": 283,
-	"./cy.js": 283,
-	"./da": 284,
-	"./da.js": 284,
-	"./de": 285,
-	"./de-at": 286,
-	"./de-at.js": 286,
-	"./de-ch": 287,
-	"./de-ch.js": 287,
-	"./de.js": 285,
-	"./dv": 288,
-	"./dv.js": 288,
-	"./el": 289,
-	"./el.js": 289,
-	"./en-au": 290,
-	"./en-au.js": 290,
-	"./en-ca": 291,
-	"./en-ca.js": 291,
-	"./en-gb": 292,
-	"./en-gb.js": 292,
-	"./en-ie": 293,
-	"./en-ie.js": 293,
-	"./en-nz": 294,
-	"./en-nz.js": 294,
-	"./eo": 295,
-	"./eo.js": 295,
-	"./es": 296,
-	"./es-do": 297,
-	"./es-do.js": 297,
-	"./es.js": 296,
-	"./et": 298,
-	"./et.js": 298,
-	"./eu": 299,
-	"./eu.js": 299,
-	"./fa": 300,
-	"./fa.js": 300,
-	"./fi": 301,
-	"./fi.js": 301,
-	"./fo": 302,
-	"./fo.js": 302,
-	"./fr": 303,
-	"./fr-ca": 304,
-	"./fr-ca.js": 304,
-	"./fr-ch": 305,
-	"./fr-ch.js": 305,
-	"./fr.js": 303,
-	"./fy": 306,
-	"./fy.js": 306,
-	"./gd": 307,
-	"./gd.js": 307,
-	"./gl": 308,
-	"./gl.js": 308,
-	"./gom-latn": 309,
-	"./gom-latn.js": 309,
-	"./he": 310,
-	"./he.js": 310,
-	"./hi": 311,
-	"./hi.js": 311,
-	"./hr": 312,
-	"./hr.js": 312,
-	"./hu": 313,
-	"./hu.js": 313,
-	"./hy-am": 314,
-	"./hy-am.js": 314,
-	"./id": 315,
-	"./id.js": 315,
-	"./is": 316,
-	"./is.js": 316,
-	"./it": 317,
-	"./it.js": 317,
-	"./ja": 318,
-	"./ja.js": 318,
-	"./jv": 319,
-	"./jv.js": 319,
-	"./ka": 320,
-	"./ka.js": 320,
-	"./kk": 321,
-	"./kk.js": 321,
-	"./km": 322,
-	"./km.js": 322,
-	"./kn": 323,
-	"./kn.js": 323,
-	"./ko": 324,
-	"./ko.js": 324,
-	"./ky": 325,
-	"./ky.js": 325,
-	"./lb": 326,
-	"./lb.js": 326,
-	"./lo": 327,
-	"./lo.js": 327,
-	"./lt": 328,
-	"./lt.js": 328,
-	"./lv": 329,
-	"./lv.js": 329,
-	"./me": 330,
-	"./me.js": 330,
-	"./mi": 331,
-	"./mi.js": 331,
-	"./mk": 332,
-	"./mk.js": 332,
-	"./ml": 333,
-	"./ml.js": 333,
-	"./mr": 334,
-	"./mr.js": 334,
-	"./ms": 335,
-	"./ms-my": 336,
-	"./ms-my.js": 336,
-	"./ms.js": 335,
-	"./my": 337,
-	"./my.js": 337,
-	"./nb": 338,
-	"./nb.js": 338,
-	"./ne": 339,
-	"./ne.js": 339,
-	"./nl": 340,
-	"./nl-be": 341,
-	"./nl-be.js": 341,
-	"./nl.js": 340,
-	"./nn": 342,
-	"./nn.js": 342,
-	"./pa-in": 343,
-	"./pa-in.js": 343,
-	"./pl": 344,
-	"./pl.js": 344,
-	"./pt": 345,
-	"./pt-br": 346,
-	"./pt-br.js": 346,
-	"./pt.js": 345,
-	"./ro": 347,
-	"./ro.js": 347,
-	"./ru": 348,
-	"./ru.js": 348,
-	"./sd": 349,
-	"./sd.js": 349,
-	"./se": 350,
-	"./se.js": 350,
-	"./si": 351,
-	"./si.js": 351,
-	"./sk": 352,
-	"./sk.js": 352,
-	"./sl": 353,
-	"./sl.js": 353,
-	"./sq": 354,
-	"./sq.js": 354,
-	"./sr": 355,
-	"./sr-cyrl": 356,
-	"./sr-cyrl.js": 356,
-	"./sr.js": 355,
-	"./ss": 357,
-	"./ss.js": 357,
-	"./sv": 358,
-	"./sv.js": 358,
-	"./sw": 359,
-	"./sw.js": 359,
-	"./ta": 360,
-	"./ta.js": 360,
-	"./te": 361,
-	"./te.js": 361,
-	"./tet": 362,
-	"./tet.js": 362,
-	"./th": 363,
-	"./th.js": 363,
-	"./tl-ph": 364,
-	"./tl-ph.js": 364,
-	"./tlh": 365,
-	"./tlh.js": 365,
-	"./tr": 366,
-	"./tr.js": 366,
-	"./tzl": 367,
-	"./tzl.js": 367,
-	"./tzm": 368,
-	"./tzm-latn": 369,
-	"./tzm-latn.js": 369,
-	"./tzm.js": 368,
-	"./uk": 370,
-	"./uk.js": 370,
-	"./ur": 371,
-	"./ur.js": 371,
-	"./uz": 372,
-	"./uz-latn": 373,
-	"./uz-latn.js": 373,
-	"./uz.js": 372,
-	"./vi": 374,
-	"./vi.js": 374,
-	"./x-pseudo": 375,
-	"./x-pseudo.js": 375,
-	"./yo": 376,
-	"./yo.js": 376,
-	"./zh-cn": 377,
-	"./zh-cn.js": 377,
-	"./zh-hk": 378,
-	"./zh-hk.js": 378,
-	"./zh-tw": 379,
-	"./zh-tw.js": 379
+	"./af": 268,
+	"./af.js": 268,
+	"./ar": 269,
+	"./ar-dz": 270,
+	"./ar-dz.js": 270,
+	"./ar-kw": 271,
+	"./ar-kw.js": 271,
+	"./ar-ly": 272,
+	"./ar-ly.js": 272,
+	"./ar-ma": 273,
+	"./ar-ma.js": 273,
+	"./ar-sa": 274,
+	"./ar-sa.js": 274,
+	"./ar-tn": 275,
+	"./ar-tn.js": 275,
+	"./ar.js": 269,
+	"./az": 276,
+	"./az.js": 276,
+	"./be": 277,
+	"./be.js": 277,
+	"./bg": 278,
+	"./bg.js": 278,
+	"./bn": 279,
+	"./bn.js": 279,
+	"./bo": 280,
+	"./bo.js": 280,
+	"./br": 281,
+	"./br.js": 281,
+	"./bs": 282,
+	"./bs.js": 282,
+	"./ca": 283,
+	"./ca.js": 283,
+	"./cs": 284,
+	"./cs.js": 284,
+	"./cv": 285,
+	"./cv.js": 285,
+	"./cy": 286,
+	"./cy.js": 286,
+	"./da": 287,
+	"./da.js": 287,
+	"./de": 288,
+	"./de-at": 289,
+	"./de-at.js": 289,
+	"./de-ch": 290,
+	"./de-ch.js": 290,
+	"./de.js": 288,
+	"./dv": 291,
+	"./dv.js": 291,
+	"./el": 292,
+	"./el.js": 292,
+	"./en-au": 293,
+	"./en-au.js": 293,
+	"./en-ca": 294,
+	"./en-ca.js": 294,
+	"./en-gb": 295,
+	"./en-gb.js": 295,
+	"./en-ie": 296,
+	"./en-ie.js": 296,
+	"./en-nz": 297,
+	"./en-nz.js": 297,
+	"./eo": 298,
+	"./eo.js": 298,
+	"./es": 299,
+	"./es-do": 300,
+	"./es-do.js": 300,
+	"./es.js": 299,
+	"./et": 301,
+	"./et.js": 301,
+	"./eu": 302,
+	"./eu.js": 302,
+	"./fa": 303,
+	"./fa.js": 303,
+	"./fi": 304,
+	"./fi.js": 304,
+	"./fo": 305,
+	"./fo.js": 305,
+	"./fr": 306,
+	"./fr-ca": 307,
+	"./fr-ca.js": 307,
+	"./fr-ch": 308,
+	"./fr-ch.js": 308,
+	"./fr.js": 306,
+	"./fy": 309,
+	"./fy.js": 309,
+	"./gd": 310,
+	"./gd.js": 310,
+	"./gl": 311,
+	"./gl.js": 311,
+	"./gom-latn": 312,
+	"./gom-latn.js": 312,
+	"./he": 313,
+	"./he.js": 313,
+	"./hi": 314,
+	"./hi.js": 314,
+	"./hr": 315,
+	"./hr.js": 315,
+	"./hu": 316,
+	"./hu.js": 316,
+	"./hy-am": 317,
+	"./hy-am.js": 317,
+	"./id": 318,
+	"./id.js": 318,
+	"./is": 319,
+	"./is.js": 319,
+	"./it": 320,
+	"./it.js": 320,
+	"./ja": 321,
+	"./ja.js": 321,
+	"./jv": 322,
+	"./jv.js": 322,
+	"./ka": 323,
+	"./ka.js": 323,
+	"./kk": 324,
+	"./kk.js": 324,
+	"./km": 325,
+	"./km.js": 325,
+	"./kn": 326,
+	"./kn.js": 326,
+	"./ko": 327,
+	"./ko.js": 327,
+	"./ky": 328,
+	"./ky.js": 328,
+	"./lb": 329,
+	"./lb.js": 329,
+	"./lo": 330,
+	"./lo.js": 330,
+	"./lt": 331,
+	"./lt.js": 331,
+	"./lv": 332,
+	"./lv.js": 332,
+	"./me": 333,
+	"./me.js": 333,
+	"./mi": 334,
+	"./mi.js": 334,
+	"./mk": 335,
+	"./mk.js": 335,
+	"./ml": 336,
+	"./ml.js": 336,
+	"./mr": 337,
+	"./mr.js": 337,
+	"./ms": 338,
+	"./ms-my": 339,
+	"./ms-my.js": 339,
+	"./ms.js": 338,
+	"./my": 340,
+	"./my.js": 340,
+	"./nb": 341,
+	"./nb.js": 341,
+	"./ne": 342,
+	"./ne.js": 342,
+	"./nl": 343,
+	"./nl-be": 344,
+	"./nl-be.js": 344,
+	"./nl.js": 343,
+	"./nn": 345,
+	"./nn.js": 345,
+	"./pa-in": 346,
+	"./pa-in.js": 346,
+	"./pl": 347,
+	"./pl.js": 347,
+	"./pt": 348,
+	"./pt-br": 349,
+	"./pt-br.js": 349,
+	"./pt.js": 348,
+	"./ro": 350,
+	"./ro.js": 350,
+	"./ru": 351,
+	"./ru.js": 351,
+	"./sd": 352,
+	"./sd.js": 352,
+	"./se": 353,
+	"./se.js": 353,
+	"./si": 354,
+	"./si.js": 354,
+	"./sk": 355,
+	"./sk.js": 355,
+	"./sl": 356,
+	"./sl.js": 356,
+	"./sq": 357,
+	"./sq.js": 357,
+	"./sr": 358,
+	"./sr-cyrl": 359,
+	"./sr-cyrl.js": 359,
+	"./sr.js": 358,
+	"./ss": 360,
+	"./ss.js": 360,
+	"./sv": 361,
+	"./sv.js": 361,
+	"./sw": 362,
+	"./sw.js": 362,
+	"./ta": 363,
+	"./ta.js": 363,
+	"./te": 364,
+	"./te.js": 364,
+	"./tet": 365,
+	"./tet.js": 365,
+	"./th": 366,
+	"./th.js": 366,
+	"./tl-ph": 367,
+	"./tl-ph.js": 367,
+	"./tlh": 368,
+	"./tlh.js": 368,
+	"./tr": 369,
+	"./tr.js": 369,
+	"./tzl": 370,
+	"./tzl.js": 370,
+	"./tzm": 371,
+	"./tzm-latn": 372,
+	"./tzm-latn.js": 372,
+	"./tzm.js": 371,
+	"./uk": 373,
+	"./uk.js": 373,
+	"./ur": 374,
+	"./ur.js": 374,
+	"./uz": 375,
+	"./uz-latn": 376,
+	"./uz-latn.js": 376,
+	"./uz.js": 375,
+	"./vi": 377,
+	"./vi.js": 377,
+	"./x-pseudo": 378,
+	"./x-pseudo.js": 378,
+	"./yo": 379,
+	"./yo.js": 379,
+	"./zh-cn": 380,
+	"./zh-cn.js": 380,
+	"./zh-hk": 381,
+	"./zh-hk.js": 381,
+	"./zh-tw": 382,
+	"./zh-tw.js": 382
 };
 function webpackContext(req) {
 	return __webpack_require__(webpackContextResolve(req));
@@ -3132,24 +3397,24 @@ webpackContext.keys = function webpackContextKeys() {
 };
 webpackContext.resolve = webpackContextResolve;
 module.exports = webpackContext;
-webpackContext.id = 708;
+webpackContext.id = 710;
 
 /***/ }),
 
-/***/ 714:
+/***/ 716:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return PipesModule; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(1);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__pipes_delay_delay__ = __webpack_require__(715);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__pipes_year_year__ = __webpack_require__(716);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__pipes_month_month__ = __webpack_require__(717);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__day_day__ = __webpack_require__(718);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__weekay_weekay__ = __webpack_require__(719);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__year_and_month_year_and_month__ = __webpack_require__(720);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__stamp_to_date_stamp_to_date__ = __webpack_require__(721);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__itemlevel_itemlevel__ = __webpack_require__(722);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__pipes_delay_delay__ = __webpack_require__(717);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__pipes_year_year__ = __webpack_require__(718);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__pipes_month_month__ = __webpack_require__(719);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__day_day__ = __webpack_require__(720);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__weekay_weekay__ = __webpack_require__(721);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__year_and_month_year_and_month__ = __webpack_require__(722);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__stamp_to_date_stamp_to_date__ = __webpack_require__(723);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__itemlevel_itemlevel__ = __webpack_require__(724);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -3200,7 +3465,7 @@ PipesModule = __decorate([
 
 /***/ }),
 
-/***/ 715:
+/***/ 717:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -3256,13 +3521,13 @@ DelayPipe = __decorate([
 
 /***/ }),
 
-/***/ 716:
+/***/ 718:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return YearPipe; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(1);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__app_app_config__ = __webpack_require__(30);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__app_app_config__ = __webpack_require__(27);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -3318,13 +3583,13 @@ YearPipe = __decorate([
 
 /***/ }),
 
-/***/ 717:
+/***/ 719:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return MonthPipe; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(1);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__app_app_config__ = __webpack_require__(30);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__app_app_config__ = __webpack_require__(27);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -3380,13 +3645,13 @@ MonthPipe = __decorate([
 
 /***/ }),
 
-/***/ 718:
+/***/ 720:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return DayPipe; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(1);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__app_app_config__ = __webpack_require__(30);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__app_app_config__ = __webpack_require__(27);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -3445,7 +3710,7 @@ DayPipe = __decorate([
 
 /***/ }),
 
-/***/ 719:
+/***/ 721:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -3512,13 +3777,13 @@ WeekayPipe = __decorate([
 
 /***/ }),
 
-/***/ 720:
+/***/ 722:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return YearAndMonthPipe; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(1);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__app_app_config__ = __webpack_require__(30);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__app_app_config__ = __webpack_require__(27);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -3564,13 +3829,13 @@ YearAndMonthPipe = __decorate([
 
 /***/ }),
 
-/***/ 721:
+/***/ 723:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return StampToDatePipe; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(1);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__app_app_config__ = __webpack_require__(30);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__app_app_config__ = __webpack_require__(27);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -3617,7 +3882,7 @@ StampToDatePipe = __decorate([
 
 /***/ }),
 
-/***/ 722:
+/***/ 724:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -3672,5 +3937,5 @@ ItemlevelPipe = __decorate([
 
 /***/ })
 
-},[386]);
+},[390]);
 //# sourceMappingURL=main.js.map

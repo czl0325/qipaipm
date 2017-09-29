@@ -9,9 +9,9 @@ export class KeycloakService {
   static init(): Promise<any> {
     
     const keycloakAuth: any = Keycloak({
-      "realm": "afiliamedica",
-      "url": "https://afiliamedicatech1.bitnamiapp.com:8443/auth",
-      "clientId": "afiliamedica"
+      "realm": "qipai",
+      "url": "http://192.168.72.101:8080/auth",
+      "clientId": "qipaipm"
     });
     
     KeycloakService.auth.loggedIn = false;
@@ -33,7 +33,6 @@ export class KeycloakService {
   }
 
   logout() {
-    console.log('*** LOGOUT');
     KeycloakService.auth.authz.logout();
     KeycloakService.auth.loggedIn = false;
     KeycloakService.auth.authz = null;

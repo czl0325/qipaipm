@@ -1,9 +1,10 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { FormBuilder, Validators, FormGroup } from '@angular/forms';
-import { AppService } from "../../app/app.service";
 import { ForgetPage } from "../forget/forget";
-import { KeycloakService } from '../../app/keycloak/keycloak.service';
+import { KeycloakServiceProvider } from "../../providers/keycloak-service/keycloak-service";
+// import { KeycloakService } from "../../app/keycloak/keycloak.service";
+import { Keycloak2Provider } from "../../providers/keycloak2/keycloak2";
 
 /**
  * Generated class for the LoginPage page.
@@ -22,7 +23,8 @@ export class LoginPage {
   loginForm: FormGroup;
 
   constructor(public navCtrl: NavController, public navParams: NavParams,
-              private formBuilder: FormBuilder, private appService: AppService) {
+              private formBuilder: FormBuilder, private keycloak: KeycloakServiceProvider,
+              private keycloak2: Keycloak2Provider) {
     this.errorText = '手机号码错误';
     this.loginForm = this.formBuilder.group({
           mobile: ['', Validators.compose([Validators.minLength(11), Validators.maxLength(11), Validators.required, Validators.pattern("^(13[0-9]|15[012356789]|17[03678]|18[0-9]|14[57])[0-9]{8}$")])],
@@ -31,28 +33,18 @@ export class LoginPage {
   }
 
   ionViewDidLoad() {
-
+    // KeycloakServiceProvider.init();
+      Keycloak2Provider.init()
+          .then(() => {
+              console.log("成功");
+          })
+          .catch(() => {
+              console.log("失败");
+          });
   }
 
   login (value) {
-    // this.appService.httpPost("http://192.168.10.118:8000/qipai/index.html",)
-
-    // var keycloak = new Keycloak();
-    // var options = {};
-    //   // options.prompt = 'none';
-    //   keycloak.login(options).success(function () {
-    //       console.log("成功");
-    //   }).error(function () {
-    //       console.log("失败");
-    //   });
-      KeycloakService.init()
-          .then(() => {
-        console.log("成功");
-              //this.navCtrl.setRoot('ProfilePage');
-          })
-          .catch(() => {
-              //window.location.reload();
-          });
+    //this.keycloak.login();
   }
 
   onForgetPassword($event) {

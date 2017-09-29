@@ -15,7 +15,7 @@ export class KeycloakServiceProvider {
     static auth: any = {};
 
   constructor(public http: Http) {
-    console.log('Hello KeycloakServiceProvider Provider');
+
   }
 
     /**

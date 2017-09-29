@@ -1,8 +1,8 @@
 {
-  "realm": "keypress",
-  "url": "http://localhost:8080/auth",
+  "realm": "qipai",
+  "url": "http://52.80.11.196:9090/auth",
   "ssl-required": "external",
-  "clientId": "keyonic-v2",
+  "clientId": "qipaipm",
   "public-client": true,
   "use-resource-role-mappings": true
 }

@@ -3,7 +3,7 @@ import { DatePipe } from "@angular/common";
 import { AppService } from "../../app/app.service";
 import { AppConfig } from "../../app/app.config";
 import { ModalController } from "ionic-angular";
-import { CalendarModal, CalendarModalOptions } from "ion2-calendar";
+// import { CalendarModal, CalendarModalOptions } from "ion2-calendar";
 
 /**
  * Generated class for the CalendarComponent component.

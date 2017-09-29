@@ -5,6 +5,7 @@ import { DatePipe } from "@angular/common";
 import { AppService } from "../../app/app.service";
 import { AppConfig } from "../../app/app.config";
 import { ContactPage } from "../contact/contact";
+import { SimpleChanges } from "@angular/core";
 
 /**
  * Generated class for the MilestoneDetailPage page.
@@ -136,6 +137,7 @@ export class MilestoneDetailPage {
         this.appService.httpPost("item/createMilestone",param,this,function (view, res) {
             if (res.status == 200) {
                 view.tempMilestone = res.json().data;
+                console.log(view.tempMilestone);
                 if (typeof (view.project.children != 'undefined')) {
                     view.tempMilestone.milestoneName = '里程碑'+(view.project.children.length+1);
                 } else {

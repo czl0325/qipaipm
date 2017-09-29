@@ -29,6 +29,7 @@ import { PipesModule } from "../pipes/pipes.module";
 import { AppService } from "./app.service";
 import {LoginPage} from "../pages/login/login";
 import { KeycloakServiceProvider } from '../providers/keycloak-service/keycloak-service';
+import { Keycloak2Provider } from '../providers/keycloak2/keycloak2';
 
 //第三方库
 
@@ -89,7 +90,8 @@ import { KeycloakServiceProvider } from '../providers/keycloak-service/keycloak-
     Keyboard,
     AppService,
     {provide: ErrorHandler, useClass: IonicErrorHandler},
-    KeycloakServiceProvider
+    KeycloakServiceProvider,
+    Keycloak2Provider
   ]
 })
 export class AppModule {}

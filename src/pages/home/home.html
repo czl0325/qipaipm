@@ -29,7 +29,7 @@
     <div style="margin-top: 10px; height: 1px; background-color: #c5c6c7; width: 100%"></div>
     <ion-item (click)="onClickProject(project)" *ngFor="let project of projects">
       <ion-label no-padding no-margin text-center float-left
-                 [ngClass]="{'circle_home':1===1,'nostart':project.itemState=='07010010','ing':project.itemState=='07010020','ing':project.itemState=='07010030','end':project.itemState=='07010040'}">{{project.itemLevel}}</ion-label>
+                 [ngClass]="{'circle_home':1===1,'nostart':project.itemState=='07010010','ing':project.itemState=='07010020'|| project.itemState=='07010030','end':project.itemState=='07010040'}">{{project.itemLevel}}</ion-label>
           <!--<div [ngClass]="{'circle_nostart':project.itemState=='未启动','circle_ing':project.itemState=='进行中','circle_end':project.itemState=='已结束'}"></div>-->
           <ion-label no-padding no-margin float-left class="pj-name" [ngStyle]="{'color':project.itemState=='07010030'?'#fc780e':'black'}">{{project.itemName}}</ion-label>
           </ion-item>

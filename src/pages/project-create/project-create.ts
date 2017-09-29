@@ -4,6 +4,7 @@ import { DatePipe } from "@angular/common";
 import { MilestoneDetailPage } from "../milestone-detail/milestone-detail";
 import { AppService } from "../../app/app.service";
 import { ContactPage } from "../contact/contact";
+import { AppConfig } from "../../app/app.config";
 
 /**
  * Generated class for the ProjectCreatePage page.
@@ -68,6 +69,7 @@ import { ContactPage } from "../contact/contact";
 export class ProjectCreatePage {
   viewTitle: string;
   type: number;
+  isExpand;
   public project = {
     id : '',                    //项目id
     itemName : '',              //项目的名称
@@ -101,6 +103,7 @@ export class ProjectCreatePage {
               public appService : AppService, public toastCtrl: ToastController, public events: Events) {
     var data = this.navParams.get('project');
     this.type = this.navParams.get('type');
+    this.isExpand = this.navParams.get('isExpand');
     if (data) {
       this.project = data;
       this.viewTitle = this.project.itemName;
@@ -244,6 +247,73 @@ export class ProjectCreatePage {
     });
   }
 
+    addOneMilestone(milestone) {
+        if (this.project.children.length == 0) {
+            this.project.children.push(milestone);
+            if (this.isExpand != null) {
+                this.isExpand.push(false);
+            }
+        } else if (this.project.children.length == 1) {
+            var p1 = this.project.children[0];
+            var d1 = AppConfig.timestampToDate(p1.deliveryTime);
+            var d2 = AppConfig.timestampToDate(milestone.deliveryTime);
+            if (d1 <= d2) {
+                this.project.children.push(milestone);
+                if (this.isExpand != null) {
+                    this.isExpand.push(false);
+                }
+            } else {
+                this.project.children.splice(0, 0, milestone);
+                if (this.isExpand != null) {
+                    this.isExpand.splice(0, 0, false);
+                }
+            }
+        } else {
+            var isInsert = false;
+            for (let i=0; i<this.project.children.length-1; i++) {
+                var pp1 = this.project.children[i];
+                var pp2 = this.project.children[i+1];
+                var dd1 = AppConfig.timestampToDate(pp1.deliveryTime);
+                var dd2 = AppConfig.timestampToDate(pp2.deliveryTime);
+                var dd3 = AppConfig.timestampToDate(milestone.deliveryTime);
+                if (i==0 && dd3<dd1) {
+                    isInsert = true;
+                    this.project.children.splice(0, 0, milestone);
+                    if (this.isExpand != null) {
+                        this.isExpand.splice(0, 0, false);
+                    }
+                    break;
+                }
+                if (dd3>dd1 && dd3<dd2) {
+                    isInsert = true;
+                    this.project.children.splice(i+1, 0, milestone);
+                    if (this.isExpand != null) {
+                        this.isExpand.splice(i + 1, 0, false);
+                    }
+                    break;
+                }
+                if (i==this.project.children.length-2 && dd3>dd2) {
+                    isInsert = true;
+                    this.project.children.push(milestone);
+                    if (this.isExpand != null) {
+                        this.isExpand.push(false);
+                    }
+                    break;
+                }
+            }
+            if (isInsert==false) {
+                this.project.children.push(milestone);
+                if (this.isExpand != null) {
+                    this.isExpand.push(false);
+                }
+            }
+            for (let i=0; i<this.project.children.length; i++) {
+              var mm = this.project.children[i];
+              mm.milestoneName = '里程碑'+(i+1);
+            }
+        }
+    }
+
   milestoneCallback = (milestone) =>
   {
     return new Promise((resolve, reject) => {
@@ -258,7 +328,7 @@ export class ProjectCreatePage {
           }
         }
         if (!isIn) {
-          this.project.children.push(milestone);
+          this.addOneMilestone(milestone);
         }
       } else {
 

@@ -114,6 +114,7 @@ export class ProjectDetailPage {
     this.events.subscribe('onPushProjectDetail',()=>{
       this.navCtrl.push(ProjectCreatePage, {
         project:this.project,
+        isExpand:this.isExpand,
         type:2,
       });
     });
@@ -196,6 +197,7 @@ export class ProjectDetailPage {
   onClickMilestone($event, mile) {
     this.navCtrl.push(MilestoneDetailPage, {
       milestone : mile,
+      isExpand : this.isExpand,
       project : this.project,
       callback : this.milestoneCallback,
       type : 2,
@@ -256,6 +258,55 @@ export class ProjectDetailPage {
       }
   }
 
+  addOneMilestone(milestone) {
+      if (this.project.children.length == 0) {
+          this.project.children.push(milestone);
+          this.isExpand.push(false);
+      } else if (this.project.children.length == 1) {
+          var p1 = this.project.children[0];
+          var d1 = AppConfig.timestampToDate(p1.deliveryTime);
+          var d2 = AppConfig.timestampToDate(milestone.deliveryTime);
+          if (d1 <= d2) {
+              this.project.children.push(milestone);
+              this.isExpand.push(false);
+          } else {
+              this.project.children.splice(0, 0, milestone);
+              this.isExpand.splice(0, 0, false);
+          }
+      } else {
+          var isInsert = false;
+          for (let i=0; i<this.project.children.length-1; i++) {
+              var pp1 = this.project.children[i];
+              var pp2 = this.project.children[i+1];
+              var dd1 = AppConfig.timestampToDate(pp1.deliveryTime);
+              var dd2 = AppConfig.timestampToDate(pp2.deliveryTime);
+              var dd3 = AppConfig.timestampToDate(milestone.deliveryTime);
+              if (i==0 && dd3<dd1) {
+                  isInsert = true;
+                  this.project.children.splice(0, 0, milestone);
+                  this.isExpand.splice(0, 0, false);
+                  break;
+              }
+              if (dd3>dd1 && dd3<dd2) {
+                  isInsert = true;
+                  this.project.children.splice(i+1, 0, milestone);
+                  this.isExpand.splice(i+1, 0, false);
+                  break;
+              }
+              if (i==this.project.children.length-2 && dd3>dd2) {
+                  isInsert = true;
+                  this.project.children.push(milestone);
+                  this.isExpand.push(false);
+                  break;
+              }
+          }
+          if (isInsert==false) {
+              this.project.children.push(milestone);
+              this.isExpand.push(false);
+          }
+      }
+  }
+
   //点击进入里程碑的回调
   milestoneCallback = (milestone) =>
   {
@@ -271,52 +322,7 @@ export class ProjectDetailPage {
                   }
               }
               if (!isIn) {
-                  if (this.project.children.length == 0) {
-                      this.project.children.push(milestone);
-                      this.isExpand.push(false);
-                  } else if (this.project.children.length == 1) {
-                      var p1 = this.project.children[0];
-                      var d1 = AppConfig.stringToDate(p1.deliveryTime);
-                      var d2 = AppConfig.stringToDate(milestone.deliveryTime);
-                      if (d1 <= d2) {
-                          this.project.children.push(milestone);
-                          this.isExpand.push(false);
-                      } else {
-                          this.project.children.insert(0, milestone);
-                          this.isExpand.insert(0, false);
-                      }
-                  } else {
-                      var isInsert = false;
-                    for (let i=0; i<this.project.children.length-1; i++) {
-                        var pp1 = this.project.children[i];
-                        var pp2 = this.project.children[i+1];
-                        var dd1 = AppConfig.stringToDate(pp1.deliveryTime);
-                        var dd2 = AppConfig.stringToDate(pp2.deliveryTime);
-                        var dd3 = AppConfig.stringToDate(milestone.deliveryTime);
-                        if (i==0 && dd3<dd1) {
-                            isInsert = true;
-                            this.project.children.insert(0, milestone);
-                            this.isExpand.insert(0, false);
-                            break;
-                        }
-                        if (dd3>dd1 && dd3<dd2) {
-                            isInsert = true;
-                            this.project.children.insert(i+1, milestone);
-                            this.isExpand.insert(i+1, false);
-                            break;
-                        }
-                        if (i==this.project.children.length-2 && dd3>dd2) {
-                            isInsert = true;
-                            this.project.children.push(milestone);
-                            this.isExpand.push(false);
-                            break;
-                        }
-                    }
-                    if (isInsert==false) {
-                        this.project.children.push(milestone);
-                        this.isExpand.push(false);
-                    }
-                  }
+                  this.addOneMilestone(milestone);
                   // var compare = function (obj1, obj2) {//比较函数
                   //     console.log(AppConfig.stringToDate(obj1.planTime));
                   //     var date1 = AppConfig.stringToDate(obj1.planTime);

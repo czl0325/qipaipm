@@ -114,6 +114,11 @@ export class AppConfig {
     return y+"-"+m.substring(m.length-2,m.length)+"-"+d.substring(d.length-2,d.length);
   }
 
+  //时间戳转date
+  public static timestampToDate(timestamp) : Date {
+    return new Date(timestamp);
+  }
+
   /**
    * 深拷贝
    */
