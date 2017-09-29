@@ -2,7 +2,7 @@ import { Component, Input, Output, EventEmitter, SimpleChanges } from '@angular/
 import { DatePipe } from "@angular/common";
 import { AppService } from "../../app/app.service";
 import { AppConfig } from "../../app/app.config";
-import { ModalController } from "ionic-angular";
+import {Events, ModalController} from "ionic-angular";
 // import { CalendarModal, CalendarModalOptions } from "ion2-calendar";
 
 /**
@@ -18,7 +18,7 @@ import { ModalController } from "ionic-angular";
 })
 export class CalendarComponent {
   @Input('inputDate') currentDate: Date = new Date();
-  @Input() events: any = [];
+  @Input() events_calendar: any = [];
   @Input() disablePastDates: boolean = false;
   @Input() weekDaysToDisable: number[] = [];
   @Input() daysToDisable: number[] = [];
@@ -39,9 +39,10 @@ export class CalendarComponent {
   stop = false;
   todayEvents = [];
 
-  constructor(private datePipe: DatePipe, public appService: AppService, public modalCtrl: ModalController) {
+  constructor(private datePipe: DatePipe, public appService: AppService, public modalCtrl: ModalController, public events: Events) {
     //this.setUpWeekDaysLabels();
   }
+
   setUpWeekDaysLabels() {
     let date = new Date(2017, 0, 1); /* This date has to be a Sunday */
     for(let i=0; i < 7; i++, date.setDate(date.getDate() + 1)) {
@@ -60,7 +61,7 @@ export class CalendarComponent {
       }
     }
 
-    if(changes["events"] && !changes["events"].isFirstChange()) {
+    if(changes["events_calendar"] && !changes["events_calendar"].isFirstChange()) {
       let listToRemoveClasses: HTMLCollection = document.getElementsByClassName("hasEvents");
       let n: number = listToRemoveClasses.length;
 
@@ -76,11 +77,17 @@ export class CalendarComponent {
   ngAfterViewInit(){
     /* Calls `this.calc()` after receiving an initial date */
     this.currentDate.setHours(0, 0, 0, 0);
-
+    this.events.subscribe('onGetProjectDate',()=>{
+      this.getProjectDate();
+    });
     setTimeout(() => {
       this.calc();
       this.updateSelectedDate();
     });
+  }
+
+  ngOnDestroy() {
+      this.events.unsubscribe('onGetProjectDate');
   }
 
   setHasEventsClass(){
@@ -96,8 +103,8 @@ export class CalendarComponent {
       0
     );
 
-    if(this.events)
-      this.events.forEach((item, index) => {
+    if(this.events_calendar)
+      this.events_calendar.forEach((item, index) => {
         if(item.starts.getTime() >= firstDayOfTheMonth.getTime() && item.ends.getTime() < lastDayOfTheMonth.getTime()) {
           if(document.getElementById("calendar-day-" + item.starts.getDate()))
             document.getElementById("calendar-day-" + item.starts.getDate()).classList.add('hasEvents');
@@ -349,7 +356,7 @@ export class CalendarComponent {
     let tmp = [];
 
     /* Checks for events on the new selected date */
-    this.events.forEach((item) => {
+    this.events_calendar.forEach((item) => {
       var itemDay = new Date(item.starts);
       itemDay.setHours(0,0,0,0);
 

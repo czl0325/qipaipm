@@ -51,6 +51,7 @@ export class HomePage {
   }
 
   reloadProjectList(dateString:string) {
+    this.events.publish('onGetProjectDate');
     this.projects = [];
     this.appService.httpGet("item/searchByCondition", {"itemStartTime":dateString,"endTime":dateString,"itemIsEnd":"0","page":1,"limit":100}, this, function (view ,res){
         var data = res.json();
