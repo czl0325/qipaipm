@@ -1343,10 +1343,11 @@ LoginPage = __decorate([
     Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Component"])({
         selector: 'page-login',template:/*ion-inline-start:"D:\qipaipm-company\src\pages\login\login.html"*/'<!--\n\n  Generated template for the LoginPage page.\n\n\n\n  See http://ionicframework.com/docs/components/#navigation for more info on\n\n  Ionic pages and navigation.\n\n-->\n\n\n\n<ion-content fullscreen>\n\n  <img class="login_icon" src="../../assets/png/login_logo.png">\n\n  <form [formGroup]="loginForm" (ngSubmit)="login(loginForm.value)">\n\n    <div style="margin: 0 30px;">\n\n      <div class="row">\n\n        <img class="area" src="../../assets/png/icon_tel.png">\n\n        <ion-input no-padding no-margin type="text" placeholder="输入手机号" formControlName="mobile" maxlength="11"></ion-input>\n\n      </div>\n\n      <div class="row">\n\n        <img class="area" src="../../assets/png/icon_pw.png">\n\n        <ion-input no-padding no-margin type="password" placeholder="输入密码" formControlName="password" maxlength="12"></ion-input>\n\n      </div>\n\n      <!--<input class="login_input" type="text" formControlName="mobile" placeholder="请输入手机号"/>-->\n\n      <!--<input class="login_input" type="password" formControlName="password" placeholder="请输入密码"/>-->\n\n      <!--<div style="width: 80%;height: 30px;margin: 30px auto">-->\n\n        <!--<p style="float: left; margin-left: 10px; color: red">{{errorText}}</p>-->\n\n        <!--<button ion-button no-padding no-margin clear style="margin-right: 10px; float: right">忘记密码?</button>-->\n\n      <!--</div>-->\n\n      <button ion-button block class="login_btn" type="submit">登录</button>\n\n    </div>\n\n  </form>\n\n  <div style="position: fixed;bottom: 20px;width: 100%">\n\n    <button ion-button no-border no-padding clear class="forget" (click)="onForgetPassword($event)">忘记密码?</button>\n\n  </div>\n\n\n\n</ion-content>\n\n'/*ion-inline-end:"D:\qipaipm-company\src\pages\login\login.html"*/,
     }),
-    __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["NavController"] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["NavController"]) === "function" && _a || Object, typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["NavParams"] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["NavParams"]) === "function" && _b || Object, typeof (_c = typeof __WEBPACK_IMPORTED_MODULE_2__angular_forms__["FormBuilder"] !== "undefined" && __WEBPACK_IMPORTED_MODULE_2__angular_forms__["FormBuilder"]) === "function" && _c || Object, typeof (_d = typeof __WEBPACK_IMPORTED_MODULE_4__providers_keycloak_service_keycloak_service__["a" /* KeycloakServiceProvider */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_4__providers_keycloak_service_keycloak_service__["a" /* KeycloakServiceProvider */]) === "function" && _d || Object, typeof (_e = typeof __WEBPACK_IMPORTED_MODULE_5__providers_keycloak2_keycloak2__["a" /* Keycloak2Provider */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_5__providers_keycloak2_keycloak2__["a" /* Keycloak2Provider */]) === "function" && _e || Object])
+    __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["NavController"], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["NavParams"],
+        __WEBPACK_IMPORTED_MODULE_2__angular_forms__["FormBuilder"], __WEBPACK_IMPORTED_MODULE_4__providers_keycloak_service_keycloak_service__["a" /* KeycloakServiceProvider */],
+        __WEBPACK_IMPORTED_MODULE_5__providers_keycloak2_keycloak2__["a" /* Keycloak2Provider */]])
 ], LoginPage);
 
-var _a, _b, _c, _d, _e;
 //# sourceMappingURL=login.js.map
 
 /***/ }),
@@ -1658,10 +1659,10 @@ var Keycloak2Provider = Keycloak2Provider_1 = (function () {
 Keycloak2Provider.auth = {};
 Keycloak2Provider = Keycloak2Provider_1 = __decorate([
     Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Injectable"])(),
-    __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_1__angular_http__["a" /* Http */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1__angular_http__["a" /* Http */]) === "function" && _a || Object])
+    __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1__angular_http__["a" /* Http */]])
 ], Keycloak2Provider);
 
-var Keycloak2Provider_1, _a;
+var Keycloak2Provider_1;
 //# sourceMappingURL=keycloak2.js.map
 
 /***/ }),
@@ -3809,6 +3810,7 @@ var MyApp = (function () {
             // Here you can do any higher level native things you might need.
             statusBar.styleDefault();
             splashScreen.hide();
+            //(<any>window).navigator.splashscreen.hide();
         });
         this.keyboard.hideKeyboardAccessoryBar(false);
         this.keyboard.disableScroll(true); //当输入焦点时，防止本机UIScrollView移动。

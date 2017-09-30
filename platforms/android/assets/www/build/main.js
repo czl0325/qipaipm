@@ -1,16 +1,17 @@
-webpackJsonp([1],{
+webpackJsonp([4],{
 
-/***/ 103:
+/***/ 135:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return ProjectCreatePage; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(13);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__angular_common__ = __webpack_require__(22);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__milestone_detail_milestone_detail__ = __webpack_require__(104);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__app_app_service__ = __webpack_require__(21);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__contact_contact__ = __webpack_require__(42);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(1);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(12);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__angular_common__ = __webpack_require__(33);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__milestone_detail_milestone_detail__ = __webpack_require__(136);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__app_app_service__ = __webpack_require__(36);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__contact_contact__ = __webpack_require__(59);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__app_app_config__ = __webpack_require__(27);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -20,6 +21,7 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
+
 
 
 
@@ -81,7 +83,7 @@ var ProjectCreatePage = (function () {
                         }
                     }
                     if (!isIn) {
-                        _this.project.children.push(milestone);
+                        _this.addOneMilestone(milestone);
                     }
                 }
                 else {
@@ -91,6 +93,7 @@ var ProjectCreatePage = (function () {
         };
         var data = this.navParams.get('project');
         this.type = this.navParams.get('type');
+        this.isExpand = this.navParams.get('isExpand');
         if (data) {
             this.project = data;
             this.viewTitle = this.project.itemName;
@@ -131,9 +134,9 @@ var ProjectCreatePage = (function () {
         //     return;
         //   }
         // }
-        this.appService.httpPost("item/create", this.project, this, function (view, res) {
-            var data = res.json();
-            view.events.publish('homeCreateProject', data);
+        this.appService.httpPost("item/createItem", this.project, this, function (view, res) {
+            // var data = res.json().data;
+            view.events.publish('homeProjectReload');
             var toast = view.toastCtrl.create({
                 message: '创建项目成功!',
                 duration: 3000
@@ -172,8 +175,9 @@ var ProjectCreatePage = (function () {
             // milestoneDelivery : '',
             deliveryResult: '',
             itemProgress: '',
+            deliveryTime: new __WEBPACK_IMPORTED_MODULE_2__angular_common__["c" /* DatePipe */]('en-US').transform(new Date(), 'yyyy-MM-dd'),
             planTime: new __WEBPACK_IMPORTED_MODULE_2__angular_common__["c" /* DatePipe */]('en-US').transform(new Date(), 'yyyy-MM-dd'),
-            realTime: "",
+            realTime: new __WEBPACK_IMPORTED_MODULE_2__angular_common__["c" /* DatePipe */]('en-US').transform(new Date(), 'yyyy-MM-dd'),
             remark: '',
             isAccomplish: false,
             delayDays: 0,
@@ -227,11 +231,80 @@ var ProjectCreatePage = (function () {
             type: 1,
         });
     };
+    ProjectCreatePage.prototype.addOneMilestone = function (milestone) {
+        if (this.project.children.length == 0) {
+            this.project.children.push(milestone);
+            if (this.isExpand != null) {
+                this.isExpand.push(false);
+            }
+        }
+        else if (this.project.children.length == 1) {
+            var p1 = this.project.children[0];
+            var d1 = __WEBPACK_IMPORTED_MODULE_6__app_app_config__["a" /* AppConfig */].timestampToDate(p1.deliveryTime);
+            var d2 = __WEBPACK_IMPORTED_MODULE_6__app_app_config__["a" /* AppConfig */].timestampToDate(milestone.deliveryTime);
+            if (d1 <= d2) {
+                this.project.children.push(milestone);
+                if (this.isExpand != null) {
+                    this.isExpand.push(false);
+                }
+            }
+            else {
+                this.project.children.splice(0, 0, milestone);
+                if (this.isExpand != null) {
+                    this.isExpand.splice(0, 0, false);
+                }
+            }
+        }
+        else {
+            var isInsert = false;
+            for (var i = 0; i < this.project.children.length - 1; i++) {
+                var pp1 = this.project.children[i];
+                var pp2 = this.project.children[i + 1];
+                var dd1 = __WEBPACK_IMPORTED_MODULE_6__app_app_config__["a" /* AppConfig */].timestampToDate(pp1.deliveryTime);
+                var dd2 = __WEBPACK_IMPORTED_MODULE_6__app_app_config__["a" /* AppConfig */].timestampToDate(pp2.deliveryTime);
+                var dd3 = __WEBPACK_IMPORTED_MODULE_6__app_app_config__["a" /* AppConfig */].timestampToDate(milestone.deliveryTime);
+                if (i == 0 && dd3 < dd1) {
+                    isInsert = true;
+                    this.project.children.splice(0, 0, milestone);
+                    if (this.isExpand != null) {
+                        this.isExpand.splice(0, 0, false);
+                    }
+                    break;
+                }
+                if (dd3 > dd1 && dd3 < dd2) {
+                    isInsert = true;
+                    this.project.children.splice(i + 1, 0, milestone);
+                    if (this.isExpand != null) {
+                        this.isExpand.splice(i + 1, 0, false);
+                    }
+                    break;
+                }
+                if (i == this.project.children.length - 2 && dd3 > dd2) {
+                    isInsert = true;
+                    this.project.children.push(milestone);
+                    if (this.isExpand != null) {
+                        this.isExpand.push(false);
+                    }
+                    break;
+                }
+            }
+            if (isInsert == false) {
+                this.project.children.push(milestone);
+                if (this.isExpand != null) {
+                    this.isExpand.push(false);
+                }
+            }
+            for (var i = 0; i < this.project.children.length; i++) {
+                var mm = this.project.children[i];
+                mm.milestoneName = '里程碑' + (i + 1);
+            }
+        }
+    };
     return ProjectCreatePage;
 }());
 ProjectCreatePage = __decorate([
-    Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["n" /* Component */])({
-        selector: 'page-project-create',template:/*ion-inline-start:"/Users/zhaoliangchen/Desktop/qipaipm-company/src/pages/project-create/project-create.html"*/'<!--\n  Generated template for the ProjectCreatePage page.\n\n  See http://ionicframework.com/docs/components/#navigation for more info on\n  Ionic pages and navigation.\n-->\n<ion-header >\n  <ion-navbar >\n    <ion-title>{{viewTitle}}</ion-title>\n    <ion-buttons end >\n      <button ion-button (click)="onPublish()" color="danger">\n        {{this.project.itemName.length>0?"完成":"发布"}}\n      </button>\n    </ion-buttons>\n  </ion-navbar>\n</ion-header>\n\n\n<ion-content fullscreen>\n    <ion-list no-margin no-lines no-padding style="border-top: solid 10px #f5f6f7; border-bottom: solid 10px #f5f6f7;">\n      <ion-item>\n        <ion-icon item-start name="appname-pname"></ion-icon>\n        <ion-label>项目名称</ion-label>\n        <ion-input item-end text-right placeholder="请输入项目名称" [(ngModel)]="project.itemName"></ion-input>\n      </ion-item>\n    </ion-list>\n\n    <div style="height: 30px; border-bottom: solid 1px #ececec">\n      <div style="width: 5px; height: 30px; background-color: orange; float: left;"></div>\n      <ion-label no-margin no-padding style="line-height: 30px; margin-left: 10px; float: left;">项目启动</ion-label>\n    </div>\n    <ion-list no-lines no-padding no-margin style="border-bottom: solid 10px #f5f6f7;">\n      <ion-item style="border-bottom: solid 1px #ececec;">\n        <ion-icon item-start name="appname-time"></ion-icon>\n        <ion-label>交付时间</ion-label>\n        <ion-datetime item-end displayFormat="YYYY年MM月DD日" max="2030" min="2015" [(ngModel)]="project.itemStartTime" cancelText="取消" doneText="确认"></ion-datetime>\n      </ion-item>\n      <ion-item style="border-bottom: solid 1px #ececec;">\n        <ion-icon item-start name="appname-result"></ion-icon>\n        <ion-label>交付成果</ion-label>\n        <ion-input item-end text-right placeholder="请输入交付成果" [(ngModel)]="project.itemStartResult" required></ion-input>\n      </ion-item>\n      <ion-item >\n        <ion-icon item-start name="appname-plan"></ion-icon>\n        <ion-label>项目级别</ion-label>\n        <ion-select interface="action-sheet" [(ngModel)]="project.itemLevel" cancelText="取消" doneText="确认">\n          <ion-option value="1">一级</ion-option>\n          <ion-option value="2">二级</ion-option>\n          <ion-option value="3">三级</ion-option>\n          <ion-option value="4">四级</ion-option>\n        </ion-select>\n      </ion-item>\n    </ion-list>\n\n    <div style="border-bottom: solid 10px #f5f6f7;" *ngFor="let mile of project.children">\n      <div style="height: 30px; border-bottom: solid 1px #ececec; ">\n        <div style="width: 5px; height: 30px; background-color: orange; float: left;"></div>\n        <ion-label no-margin no-padding style="line-height: 30px; margin-left: 10px; float: left;">{{mile.milestoneName}}</ion-label>\n        <div style="float: right; width: 30px; height: 30px;position: relative">\n          <ion-icon name="close" style="position: absolute; top: 50%; right: 0px; -webkit-transform: translateY(-50%); transform: translateY(-50%); margin-right: 10px; " (click)="onClickRemoveMilestone($event, mile)"></ion-icon>\n        </div>\n      </div>\n      <ion-list no-lines no-margin no-padding>\n        <ion-item style="border-bottom: solid 1px #ececec">\n          <ion-icon item-start name="appname-admin"></ion-icon>\n          <ion-label>负责人</ion-label>\n          <ion-input item-end text-right [(ngModel)]="mile.leader"></ion-input>\n        </ion-item>\n        <ion-item style="border-bottom: solid 1px #ececec">\n          <ion-icon item-start name="appname-time"></ion-icon>\n          <ion-label>交付时间</ion-label>\n          <ion-datetime item-end displayFormat="YYYY年MM月DD日" max="2030" min="2015" cancelText="取消" doneText="确认"\n                        ngModel="{{mile.planTime | stampToDate}}"\n                        (ngModelChange)="mile.planTime = $event"></ion-datetime>\n        </ion-item>\n        <ion-item style="border-bottom: solid 1px #ececec">\n          <ion-icon item-start name="appname-plan"></ion-icon>\n          <ion-label>项目进度</ion-label>\n          <ion-select interface="action-sheet" [(ngModel)]="mile.itemProgress" cancelText="取消" doneText="确认">\n            <ion-option value="10%">10%</ion-option>\n            <ion-option value="20%">20%</ion-option>\n            <ion-option value="30%">30%</ion-option>\n            <ion-option value="40%">40%</ion-option>\n            <ion-option value="50%">50%</ion-option>\n            <ion-option value="60%">60%</ion-option>\n            <ion-option value="70%">70%</ion-option>\n            <ion-option value="80%">80%</ion-option>\n            <ion-option value="90%">90%</ion-option>\n            <ion-option value="100%">100%</ion-option>\n          </ion-select>\n        </ion-item>\n        <ion-item>\n          <ion-icon item-start name="appname-result"></ion-icon>\n          <ion-label>交付成果</ion-label>\n          <ion-textarea item-end text-right [(ngModel)]="mile.deliveryResult"></ion-textarea>\n        </ion-item>\n      </ion-list>\n    </div>\n\n\n    <div style="padding: 10px; border-bottom: solid 10px #f5f6f7">\n      <button ion-button (click)="onAddMilestone()" style="background-color: #fc5c53" block>+ 添加里程碑</button>\n    </div>\n\n    <div style="height: 30px; border-bottom: solid 1px #ececec">\n      <div style="width: 5px; height: 30px; background-color: orange; float: left;"></div>\n      <ion-label no-margin no-padding style="line-height: 30px; margin-left: 10px; float: left;">项目结束</ion-label>\n    </div>\n    <ion-list no-lines no-margin no-padding>\n      <button ion-item style="border-bottom: solid 1px #ececec" (click)="onEndDirector($event)">\n        <ion-icon item-start name="appname-admin"></ion-icon>\n        <ion-label item-start>负责人</ion-label>\n        <!--<ion-input item-end text-right placeholder="请输入负责人" [(ngModel)]="project.itemLeader"></ion-input>-->\n        <ion-label item-end text-right>{{project.leader}}</ion-label>\n      </button>\n      <ion-item  style="border-bottom: solid 1px #ececec">\n        <ion-icon item-start name="appname-time"></ion-icon>\n        <ion-label>交付时间</ion-label>\n        <ion-datetime item-end displayFormat="YYYY年MM月DD日" max="2030" min="2015" cancelText="取消" doneText="确认" [(ngModel)]="project.endTime"></ion-datetime>\n      </ion-item>\n      <ion-item>\n        <ion-icon item-start name="appname-result"></ion-icon>\n        <ion-label>交付成果</ion-label>\n        <ion-textarea item-end text-right placeholder="请输入交付成果" [(ngModel)]="project.itemEndResult"></ion-textarea>\n      </ion-item>\n    </ion-list>\n  </ion-content>\n\n\n'/*ion-inline-end:"/Users/zhaoliangchen/Desktop/qipaipm-company/src/pages/project-create/project-create.html"*/,
+    Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Component"])({
+        selector: 'page-project-create',template:/*ion-inline-start:"/Users/zhaoliangchen/Desktop/qipaipm-company/src/pages/project-create/project-create.html"*/'<!--\n  Generated template for the ProjectCreatePage page.\n\n  See http://ionicframework.com/docs/components/#navigation for more info on\n  Ionic pages and navigation.\n-->\n<ion-header >\n  <ion-navbar >\n    <ion-title>{{viewTitle}}</ion-title>\n    <ion-buttons end >\n      <button ion-button (click)="onPublish()" color="danger">\n        {{this.project.itemName.length>0?"完成":"发布"}}\n      </button>\n    </ion-buttons>\n  </ion-navbar>\n</ion-header>\n\n\n<ion-content fullscreen>\n    <ion-list no-margin no-lines no-padding style="border-top: solid 10px #f5f6f7; border-bottom: solid 10px #f5f6f7;">\n      <ion-item>\n        <ion-icon item-start name="appname-pname"></ion-icon>\n        <ion-label>项目名称</ion-label>\n        <ion-input item-end text-right placeholder="请输入项目名称" [(ngModel)]="project.itemName"></ion-input>\n      </ion-item>\n    </ion-list>\n\n    <div style="height: 30px; border-bottom: solid 1px #ececec">\n      <div style="width: 5px; height: 30px; background-color: orange; float: left;"></div>\n      <ion-label no-margin no-padding style="line-height: 30px; margin-left: 10px; float: left;">项目启动</ion-label>\n    </div>\n    <ion-list no-lines no-padding no-margin style="border-bottom: solid 10px #f5f6f7;">\n      <ion-item style="border-bottom: solid 1px #ececec;">\n        <ion-icon item-start name="appname-time"></ion-icon>\n        <ion-label>交付时间</ion-label>\n        <ion-datetime item-end displayFormat="YYYY年MM月DD日" max="2030" min="2015" [(ngModel)]="project.itemStartTime" cancelText="取消" doneText="确认"></ion-datetime>\n      </ion-item>\n      <ion-item style="border-bottom: solid 1px #ececec;">\n        <ion-icon item-start name="appname-result"></ion-icon>\n        <ion-label>交付成果</ion-label>\n        <ion-input item-end text-right placeholder="请输入交付成果" [(ngModel)]="project.itemStartResult" required></ion-input>\n      </ion-item>\n      <ion-item >\n        <ion-icon item-start name="appname-plan"></ion-icon>\n        <ion-label>项目级别</ion-label>\n        <ion-select interface="action-sheet" [(ngModel)]="project.itemLevel" cancelText="取消" doneText="确认">\n          <ion-option value="1">一级</ion-option>\n          <ion-option value="2">二级</ion-option>\n          <ion-option value="3">三级</ion-option>\n          <ion-option value="4">四级</ion-option>\n        </ion-select>\n      </ion-item>\n    </ion-list>\n\n    <div style="border-bottom: solid 10px #f5f6f7;" *ngFor="let mile of project.children">\n      <div style="height: 30px; border-bottom: solid 1px #ececec; ">\n        <div style="width: 5px; height: 30px; background-color: orange; float: left;"></div>\n        <ion-label no-margin no-padding style="line-height: 30px; margin-left: 10px; float: left;">{{mile.milestoneName}}</ion-label>\n        <div style="float: right; width: 30px; height: 30px;position: relative">\n          <ion-icon name="close" style="position: absolute; top: 50%; right: 0px; -webkit-transform: translateY(-50%); transform: translateY(-50%); margin-right: 10px; " (click)="onClickRemoveMilestone($event, mile)"></ion-icon>\n        </div>\n      </div>\n      <ion-list no-lines no-margin no-padding>\n        <ion-item style="border-bottom: solid 1px #ececec">\n          <ion-icon item-start name="appname-admin"></ion-icon>\n          <ion-label>负责人</ion-label>\n          <ion-input item-end text-right [(ngModel)]="mile.leader"></ion-input>\n        </ion-item>\n        <ion-item style="border-bottom: solid 1px #ececec">\n          <ion-icon item-start name="appname-time"></ion-icon>\n          <ion-label>交付时间</ion-label>\n          <ion-datetime item-end displayFormat="YYYY年MM月DD日" max="2030" min="2015" cancelText="取消" doneText="确认"\n                        ngModel="{{mile.deliveryTime | stampToDate}}"\n                        (ngModelChange)="mile.deliveryTime = $event"></ion-datetime>\n        </ion-item>\n        <ion-item style="border-bottom: solid 1px #ececec">\n          <ion-icon item-start name="appname-plan"></ion-icon>\n          <ion-label>项目进度</ion-label>\n          <ion-select interface="action-sheet" [(ngModel)]="mile.itemProgress" cancelText="取消" doneText="确认">\n            <ion-option value="10%">10%</ion-option>\n            <ion-option value="20%">20%</ion-option>\n            <ion-option value="30%">30%</ion-option>\n            <ion-option value="40%">40%</ion-option>\n            <ion-option value="50%">50%</ion-option>\n            <ion-option value="60%">60%</ion-option>\n            <ion-option value="70%">70%</ion-option>\n            <ion-option value="80%">80%</ion-option>\n            <ion-option value="90%">90%</ion-option>\n            <ion-option value="100%">100%</ion-option>\n          </ion-select>\n        </ion-item>\n        <ion-item>\n          <ion-icon item-start name="appname-result"></ion-icon>\n          <ion-label>交付成果</ion-label>\n          <ion-textarea item-end text-right [(ngModel)]="mile.deliveryResult"></ion-textarea>\n        </ion-item>\n      </ion-list>\n    </div>\n\n\n    <div style="padding: 10px; border-bottom: solid 10px #f5f6f7">\n      <button ion-button (click)="onAddMilestone()" style="background-color: #fc5c53" block>+ 添加里程碑</button>\n    </div>\n\n    <div style="height: 30px; border-bottom: solid 1px #ececec">\n      <div style="width: 5px; height: 30px; background-color: orange; float: left;"></div>\n      <ion-label no-margin no-padding style="line-height: 30px; margin-left: 10px; float: left;">项目结束</ion-label>\n    </div>\n    <ion-list no-lines no-margin no-padding>\n      <button ion-item style="border-bottom: solid 1px #ececec" (click)="onEndDirector($event)">\n        <ion-icon item-start name="appname-admin"></ion-icon>\n        <ion-label item-start>负责人</ion-label>\n        <!--<ion-input item-end text-right placeholder="请输入负责人" [(ngModel)]="project.itemLeader"></ion-input>-->\n        <ion-label item-end text-right>{{project.leader}}</ion-label>\n      </button>\n      <ion-item  style="border-bottom: solid 1px #ececec">\n        <ion-icon item-start name="appname-time"></ion-icon>\n        <ion-label>交付时间</ion-label>\n        <ion-datetime item-end displayFormat="YYYY年MM月DD日" max="2030" min="2015" cancelText="取消" doneText="确认" [(ngModel)]="project.endTime"></ion-datetime>\n      </ion-item>\n      <ion-item>\n        <ion-icon item-start name="appname-result"></ion-icon>\n        <ion-label>交付成果</ion-label>\n        <ion-textarea item-end text-right placeholder="请输入交付成果" [(ngModel)]="project.itemEndResult"></ion-textarea>\n      </ion-item>\n    </ion-list>\n  </ion-content>\n\n\n'/*ion-inline-end:"/Users/zhaoliangchen/Desktop/qipaipm-company/src/pages/project-create/project-create.html"*/,
     })
     /*
     @ApiModelProperty(value = "项目id")
@@ -278,27 +351,28 @@ ProjectCreatePage = __decorate([
         @ApiModelProperty(value = "是否结束项目")
         private String isEnd;
      */
+    //未开始(07010010)    进行中(07010020)      延期(07010030)     已结束(07010040)
     ,
-    __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["k" /* NavController */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["l" /* NavParams */],
-        __WEBPACK_IMPORTED_MODULE_4__app_app_service__["a" /* AppService */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["o" /* ToastController */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["d" /* Events */]])
+    __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["NavController"], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["NavParams"],
+        __WEBPACK_IMPORTED_MODULE_4__app_app_service__["a" /* AppService */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["ToastController"], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["Events"]])
 ], ProjectCreatePage);
 
 //# sourceMappingURL=project-create.js.map
 
 /***/ }),
 
-/***/ 104:
+/***/ 136:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return MilestoneDetailPage; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(13);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__subtask_subtask__ = __webpack_require__(105);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__angular_common__ = __webpack_require__(22);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__app_app_service__ = __webpack_require__(21);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(1);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(12);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__subtask_subtask__ = __webpack_require__(137);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__angular_common__ = __webpack_require__(33);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__app_app_service__ = __webpack_require__(36);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__app_app_config__ = __webpack_require__(27);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__contact_contact__ = __webpack_require__(42);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__contact_contact__ = __webpack_require__(59);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -337,6 +411,7 @@ var MilestoneDetailPage = (function () {
             deliveryResult: '',
             // milestoneSchedule : '',     //里程碑的进度
             itemProgress: '',
+            deliveryTime: new __WEBPACK_IMPORTED_MODULE_3__angular_common__["c" /* DatePipe */]('en-US').transform(new Date(), 'yyyy-MM-dd'),
             planTime: new __WEBPACK_IMPORTED_MODULE_3__angular_common__["c" /* DatePipe */]('en-US').transform(new Date(), 'yyyy-MM-dd'),
             realTime: new __WEBPACK_IMPORTED_MODULE_3__angular_common__["c" /* DatePipe */]('en-US').transform(new Date(), 'yyyy-MM-dd'),
             remark: '',
@@ -449,16 +524,10 @@ var MilestoneDetailPage = (function () {
             // param.pid = this.pid;
             // param.mid = param.id;
             param.projectinfo = this.project;
-            if (param.itemIsEnd == false) {
-                param.itemState = '进行中';
-            }
-            else {
-                param.itemState = '已结束';
-            }
-            this.appService.httpPost("item/create", param, this, function (view, res) {
-                console.log(res);
+            this.appService.httpPost("item/createMilestone", param, this, function (view, res) {
                 if (res.status == 200) {
-                    view.tempMilestone = res.json();
+                    view.tempMilestone = res.json().data;
+                    console.log(view.tempMilestone);
                     if (typeof (view.project.children != 'undefined')) {
                         view.tempMilestone.milestoneName = '里程碑' + (view.project.children.length + 1);
                     }
@@ -486,11 +555,11 @@ var MilestoneDetailPage = (function () {
             subtaskName: '子任务' + (this.tempMilestone.children.length + 1),
             leader: '',
             leaderEmpNum: '',
-            deliveryTime: '',
+            deliveryTime: new __WEBPACK_IMPORTED_MODULE_3__angular_common__["c" /* DatePipe */]('en-US').transform(new Date(), 'yyyy-MM-dd'),
             deliveryResult: '',
             planTime: new __WEBPACK_IMPORTED_MODULE_3__angular_common__["c" /* DatePipe */]('en-US').transform(new Date(), 'yyyy-MM-dd'),
-            realTime: '',
-            isAccomplish: false,
+            realTime: new __WEBPACK_IMPORTED_MODULE_3__angular_common__["c" /* DatePipe */]('en-US').transform(new Date(), 'yyyy-MM-dd'),
+            itemIsEnd: false,
             remark: '',
             delayDays: 0,
         };
@@ -532,12 +601,12 @@ var MilestoneDetailPage = (function () {
     return MilestoneDetailPage;
 }());
 __decorate([
-    Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["_13" /* ViewChild */])(__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["c" /* Content */]),
-    __metadata("design:type", __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["c" /* Content */])
+    Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["ViewChild"])(__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["Content"]),
+    __metadata("design:type", __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["Content"])
 ], MilestoneDetailPage.prototype, "content", void 0);
 MilestoneDetailPage = __decorate([
-    Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["n" /* Component */])({
-        selector: 'page-milestone-detail',template:/*ion-inline-start:"/Users/zhaoliangchen/Desktop/qipaipm-company/src/pages/milestone-detail/milestone-detail.html"*/'<!--\n  Generated template for the MilestoneDetailPage page.\n\n  See http://ionicframework.com/docs/components/#navigation for more info on\n  Ionic pages and navigation.\n-->\n<ion-header>\n\n  <ion-navbar>\n    <ion-title>\n      {{this.type==1?"新建里程碑":"里程碑详情"}}\n    </ion-title>\n    <ion-buttons end >\n      <button ion-button (click)="onSaveMilestone($event)" style="color: #fc5c53">\n        保存\n      </button>\n    </ion-buttons>\n  </ion-navbar>\n\n</ion-header>\n\n\n<ion-content fullscreen>\n  <ion-list no-padding no-lines style="margin-bottom: 0px; border-bottom: solid 1px #ececec">\n    <ion-item >\n      <ion-icon item-start name="appname-pname"></ion-icon>\n      <ion-label>项目名称:</ion-label>\n      <ion-label right text-right>{{this.project.itemName}}</ion-label>\n    </ion-item>\n  </ion-list>\n\n  <ion-label full style="text-align: center">{{tempMilestone.milestoneName}}</ion-label>\n\n  <ion-list no-lines style="border: solid 1px #ececec">\n    <button ion-item style="border-bottom: solid 1px #ececec" (click)="onMilestoneLeader($event)" >\n      <ion-icon item-start name="appname-admin"></ion-icon>\n      <ion-label item-start>负责人:</ion-label>\n      <ion-label item-end text-right>{{tempMilestone.leader}}</ion-label>\n    </button>\n    <!--<ion-item style="border-bottom: solid 1px #ececec;">-->\n      <!--<ion-icon item-start name="appname-admin"></ion-icon>-->\n      <!--<ion-label>负责人:</ion-label>-->\n      <!--<ion-input text-right type="text" [(ngModel)]="tempMilestone.milestoneLeader" required [disabled]=""></ion-input>-->\n    <!--</ion-item>-->\n    <ion-item style="border-bottom: solid 1px #ececec;">\n      <ion-icon item-start name="appname-time"></ion-icon>\n      <ion-label>交付时间:</ion-label>\n      <ion-datetime text-right displayFormat="YYYY-MM-DD" max="2030" min="2015" cancelText="取消" doneText="确认" required [disabled]=""\n                    ngModel="{{tempMilestone.planTime | stampToDate}}"\n                    (ngModelChange)="tempMilestone.planTime = $event">\n      </ion-datetime>\n    </ion-item>\n    <ion-item style="border-bottom: solid 1px #ececec">\n      <ion-icon item-start name="appname-plan"></ion-icon>\n      <ion-label>项目进度</ion-label>\n      <ion-select interface="action-sheet" [(ngModel)]="tempMilestone.itemProgress">\n        <ion-option value="10%">10%</ion-option>\n        <ion-option value="20%">20%</ion-option>\n        <ion-option value="30%">30%</ion-option>\n        <ion-option value="40%">40%</ion-option>\n        <ion-option value="50%">50%</ion-option>\n        <ion-option value="60%">60%</ion-option>\n        <ion-option value="70%">70%</ion-option>\n        <ion-option value="80%">80%</ion-option>\n        <ion-option value="90%">90%</ion-option>\n        <ion-option value="100%">100%</ion-option>\n      </ion-select>\n    </ion-item>\n    <ion-item style="border-bottom: solid 1px #ececec;">\n      <ion-icon item-start name="appname-result"></ion-icon>\n      <ion-label no-padding no-margin>交付成果:</ion-label>\n      <ion-input text-right type="text" [(ngModel)]="tempMilestone.deliveryResult" required [disabled]=""></ion-input>\n    </ion-item>\n    <ion-item *ngIf="tempMilestone.delay > 0" style="border-bottom: solid 1px #ececec;">\n      <ion-label >延迟情况:</ion-label>\n      <ion-label text-right item-end></ion-label>\n    </ion-item>\n  </ion-list>\n\n  <ion-list no-lines no-padding no-margin *ngIf="this.tempMilestone.id.length>0">\n    <ion-item style="border-top: solid 1px #ececec;border-bottom: solid 1px #ececec">\n      <div item-start>是否完成</div>\n      <ion-label>完成</ion-label>\n      <ion-checkbox [(ngModel)]="tempMilestone.itemIsEnd"></ion-checkbox>\n    </ion-item>\n    <ion-item style="border-bottom: solid 10px #ececec; height: 100px;">\n      <ion-label item-start>备注:</ion-label>\n      <ion-textarea item-end no-padding no-margin [(ngModel)]="tempMilestone.remark"></ion-textarea>\n    </ion-item>\n  </ion-list>\n\n  <div *ngFor="let subtask of tempMilestone.children; let i = index">\n    <div style="height: 30px; border-bottom: solid 1px #ececec; ">\n      <div style="width: 5px; height: 30px; background-color: #555555; float: left;"></div>\n      <ion-label no-margin no-padding style="line-height: 30px; margin-left: 10px; float: left;">{{subtask.subtaskName}}</ion-label>\n      <div style="float: right; width: 30px; height: 30px;position: relative">\n        <ion-icon name="close" style="position: absolute; top: 50%; right: 0px; -webkit-transform: translateY(-50%); transform: translateY(-50%); margin-right: 10px; " (click)="onRemoveSubtask($event, subtask)"></ion-icon>\n      </div>\n    </div>\n    <ion-list no-lines no-padding no-margin>\n      <ion-item style="border-bottom: solid 1px #ececec;">\n        <ion-icon item-start name="appname-admin"></ion-icon>\n        <ion-label>负责人:</ion-label>\n        <ion-input text-right type="text" [(ngModel)]="subtask.leader" required [disabled]="type==2"></ion-input>\n      </ion-item>\n      <ion-item style="border-bottom: solid 1px #ececec;">\n        <ion-icon item-start name="appname-time"></ion-icon>\n        <ion-label>交付时间</ion-label>\n        <ion-datetime item-end displayFormat="YYYY年MM月DD日" max="2030" min="2015" cancelText="取消" doneText="确认"\n                      ngModel="{{subtask.planTime | stampToDate}}"\n                      (ngModelChange)="subtask.planTime = $event"\n                      [disabled]="type==2"></ion-datetime>\n      </ion-item>\n      <ion-item style="border-bottom: solid 10px #ececec;">\n        <ion-icon item-start name="appname-result"></ion-icon>\n        <ion-label no-padding no-margin>交付成果:</ion-label>\n        <ion-input text-right type="text" [(ngModel)]="subtask.deliveryResult" required [disabled]="type==2"></ion-input>\n      </ion-item>\n    </ion-list>\n  </div>\n\n  <div style="padding: 10px;" *ngIf="this.tempMilestone.id.length>0">\n    <button ion-button (click)="onAddSubtask($event)" block style="background-color: #fc5c53">+ 添加子任务</button>\n  </div>\n</ion-content>\n'/*ion-inline-end:"/Users/zhaoliangchen/Desktop/qipaipm-company/src/pages/milestone-detail/milestone-detail.html"*/,
+    Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Component"])({
+        selector: 'page-milestone-detail',template:/*ion-inline-start:"/Users/zhaoliangchen/Desktop/qipaipm-company/src/pages/milestone-detail/milestone-detail.html"*/'<!--\n  Generated template for the MilestoneDetailPage page.\n\n  See http://ionicframework.com/docs/components/#navigation for more info on\n  Ionic pages and navigation.\n-->\n<ion-header>\n\n  <ion-navbar>\n    <ion-title>\n      {{this.type==1?"新建里程碑":"里程碑详情"}}\n    </ion-title>\n    <ion-buttons end >\n      <button ion-button (click)="onSaveMilestone($event)" style="color: #fc5c53">\n        保存\n      </button>\n    </ion-buttons>\n  </ion-navbar>\n\n</ion-header>\n\n\n<ion-content fullscreen>\n  <ion-list no-padding no-lines style="margin-bottom: 0px; border-bottom: solid 1px #ececec">\n    <ion-item >\n      <ion-icon item-start name="appname-pname"></ion-icon>\n      <ion-label>项目名称:</ion-label>\n      <ion-label right text-right>{{this.project.itemName}}</ion-label>\n    </ion-item>\n  </ion-list>\n\n  <ion-label full style="text-align: center">{{tempMilestone.milestoneName}}</ion-label>\n\n  <ion-list no-lines style="border: solid 1px #ececec">\n    <button ion-item style="border-bottom: solid 1px #ececec" (click)="onMilestoneLeader($event)" >\n      <ion-icon item-start name="appname-admin"></ion-icon>\n      <ion-label item-start>负责人:</ion-label>\n      <ion-label item-end text-right>{{tempMilestone.leader}}</ion-label>\n    </button>\n    <!--<ion-item style="border-bottom: solid 1px #ececec;">-->\n      <!--<ion-icon item-start name="appname-admin"></ion-icon>-->\n      <!--<ion-label>负责人:</ion-label>-->\n      <!--<ion-input text-right type="text" [(ngModel)]="tempMilestone.milestoneLeader" required [disabled]=""></ion-input>-->\n    <!--</ion-item>-->\n    <ion-item style="border-bottom: solid 1px #ececec;">\n      <ion-icon item-start name="appname-time"></ion-icon>\n      <ion-label>交付时间:</ion-label>\n      <ion-datetime text-right displayFormat="YYYY-MM-DD" max="2030" min="2015" cancelText="取消" doneText="确认" required [disabled]=""\n                    ngModel="{{tempMilestone.deliveryTime | stampToDate}}"\n                    (ngModelChange)="tempMilestone.deliveryTime = $event">\n      </ion-datetime>\n    </ion-item>\n    <ion-item style="border-bottom: solid 1px #ececec">\n      <ion-icon item-start name="appname-plan"></ion-icon>\n      <ion-label>项目进度</ion-label>\n      <ion-select interface="action-sheet" [(ngModel)]="tempMilestone.itemProgress">\n        <ion-option value="10%">10%</ion-option>\n        <ion-option value="20%">20%</ion-option>\n        <ion-option value="30%">30%</ion-option>\n        <ion-option value="40%">40%</ion-option>\n        <ion-option value="50%">50%</ion-option>\n        <ion-option value="60%">60%</ion-option>\n        <ion-option value="70%">70%</ion-option>\n        <ion-option value="80%">80%</ion-option>\n        <ion-option value="90%">90%</ion-option>\n        <ion-option value="100%">100%</ion-option>\n      </ion-select>\n    </ion-item>\n    <ion-item style="border-bottom: solid 1px #ececec;">\n      <ion-icon item-start name="appname-result"></ion-icon>\n      <ion-label no-padding no-margin>交付成果:</ion-label>\n      <ion-input text-right type="text" [(ngModel)]="tempMilestone.deliveryResult" required [disabled]=""></ion-input>\n    </ion-item>\n    <ion-item *ngIf="tempMilestone.delay > 0" style="border-bottom: solid 1px #ececec;">\n      <ion-label >延迟情况:</ion-label>\n      <ion-label text-right item-end></ion-label>\n    </ion-item>\n  </ion-list>\n\n  <ion-list no-lines no-padding no-margin *ngIf="this.tempMilestone.id.length>0">\n    <ion-item style="border-top: solid 1px #ececec;border-bottom: solid 1px #ececec">\n      <div item-start>是否完成</div>\n      <ion-label>完成</ion-label>\n      <ion-checkbox [(ngModel)]="tempMilestone.itemIsEnd"></ion-checkbox>\n    </ion-item>\n    <ion-item style="border-bottom: solid 10px #ececec; height: 100px;">\n      <ion-label item-start>备注:</ion-label>\n      <ion-textarea item-end no-padding no-margin [(ngModel)]="tempMilestone.remark"></ion-textarea>\n    </ion-item>\n  </ion-list>\n\n  <div *ngFor="let subtask of tempMilestone.children; let i = index">\n    <div style="height: 30px; border-bottom: solid 1px #ececec; ">\n      <div style="width: 5px; height: 30px; background-color: #555555; float: left;"></div>\n      <ion-label no-margin no-padding style="line-height: 30px; margin-left: 10px; float: left;">{{subtask.subtaskName}}</ion-label>\n      <div style="float: right; width: 30px; height: 30px;position: relative">\n        <ion-icon name="close" style="position: absolute; top: 50%; right: 0px; -webkit-transform: translateY(-50%); transform: translateY(-50%); margin-right: 10px; " (click)="onRemoveSubtask($event, subtask)"></ion-icon>\n      </div>\n    </div>\n    <ion-list no-lines no-padding no-margin>\n      <ion-item style="border-bottom: solid 1px #ececec;">\n        <ion-icon item-start name="appname-admin"></ion-icon>\n        <ion-label>负责人:</ion-label>\n        <ion-input text-right type="text" [(ngModel)]="subtask.leader" required [disabled]="type==2"></ion-input>\n      </ion-item>\n      <ion-item style="border-bottom: solid 1px #ececec;">\n        <ion-icon item-start name="appname-time"></ion-icon>\n        <ion-label>交付时间</ion-label>\n        <ion-datetime item-end displayFormat="YYYY年MM月DD日" max="2030" min="2015" cancelText="取消" doneText="确认"\n                      ngModel="{{subtask.deliveryTime | stampToDate}}"\n                      (ngModelChange)="subtask.deliveryTime = $event"\n                      [disabled]="type==2"></ion-datetime>\n      </ion-item>\n      <ion-item style="border-bottom: solid 10px #ececec;">\n        <ion-icon item-start name="appname-result"></ion-icon>\n        <ion-label no-padding no-margin>交付成果:</ion-label>\n        <ion-input text-right type="text" [(ngModel)]="subtask.deliveryResult" required [disabled]="type==2"></ion-input>\n      </ion-item>\n    </ion-list>\n  </div>\n\n  <div style="padding: 10px;" *ngIf="this.tempMilestone.id.length>0">\n    <button ion-button (click)="onAddSubtask($event)" block style="background-color: #fc5c53">+ 添加子任务</button>\n  </div>\n</ion-content>\n'/*ion-inline-end:"/Users/zhaoliangchen/Desktop/qipaipm-company/src/pages/milestone-detail/milestone-detail.html"*/,
     })
     /*
         @ApiModelProperty(value = "里程碑id")
@@ -556,23 +625,24 @@ MilestoneDetailPage = __decorate([
         private Date realTime;
      */
     ,
-    __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["k" /* NavController */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["l" /* NavParams */], __WEBPACK_IMPORTED_MODULE_4__app_app_service__["a" /* AppService */], __WEBPACK_IMPORTED_MODULE_0__angular_core__["k" /* ChangeDetectorRef */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["d" /* Events */]])
+    __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["NavController"], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["NavParams"], __WEBPACK_IMPORTED_MODULE_4__app_app_service__["a" /* AppService */], __WEBPACK_IMPORTED_MODULE_0__angular_core__["ChangeDetectorRef"], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["Events"]])
 ], MilestoneDetailPage);
 
 //# sourceMappingURL=milestone-detail.js.map
 
 /***/ }),
 
-/***/ 105:
+/***/ 137:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return SubtaskPage; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(13);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(1);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(12);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__app_app_config__ = __webpack_require__(27);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__app_app_service__ = __webpack_require__(21);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__contact_contact__ = __webpack_require__(42);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__app_app_service__ = __webpack_require__(36);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__contact_contact__ = __webpack_require__(59);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__angular_common__ = __webpack_require__(33);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -582,6 +652,7 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
+
 
 
 
@@ -604,10 +675,10 @@ var SubtaskPage = (function () {
             subtaskName: '',
             leader: '',
             leaderEmpNum: '',
-            deliveryTime: '',
+            deliveryTime: new __WEBPACK_IMPORTED_MODULE_5__angular_common__["c" /* DatePipe */]('en-US').transform(new Date(), 'yyyy-MM-dd'),
             deliveryResult: '',
-            planTime: '',
-            realTime: '',
+            planTime: new __WEBPACK_IMPORTED_MODULE_5__angular_common__["c" /* DatePipe */]('en-US').transform(new Date(), 'yyyy-MM-dd'),
+            realTime: new __WEBPACK_IMPORTED_MODULE_5__angular_common__["c" /* DatePipe */]('en-US').transform(new Date(), 'yyyy-MM-dd'),
             remark: '',
             delayDays: 0,
             itemIsEnd: false,
@@ -647,14 +718,9 @@ var SubtaskPage = (function () {
         //     });
         // } else {
         param.projectinfo = this.milestone;
-        if (param.itemIsEnd == false) {
-            param.itemState = '进行中';
-        }
-        else {
-            param.itemState = '已结束';
-        }
+        console.log(param);
         //param.sid = this.tempSubtask.id;
-        this.appService.httpPost("item/create", param, this, function (view, res) {
+        this.appService.httpPost("item/createSubtask", param, this, function (view, res) {
             if (res.status == 200) {
                 if (typeof (res.json()) != 'undefined') {
                     view.subtask = res.json().data;
@@ -676,8 +742,8 @@ var SubtaskPage = (function () {
     return SubtaskPage;
 }());
 SubtaskPage = __decorate([
-    Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["n" /* Component */])({
-        selector: 'page-subtask',template:/*ion-inline-start:"/Users/zhaoliangchen/Desktop/qipaipm-company/src/pages/subtask/subtask.html"*/'<ion-header>\n\n  <ion-navbar>\n    <ion-title>子任务</ion-title>\n    <ion-buttons end >\n      <button ion-button (click)="onSaveSubtask()" color="danger">\n        保存\n      </button>\n    </ion-buttons>\n  </ion-navbar>\n</ion-header>\n\n\n<ion-content fullscreen>\n  <ion-list no-padding no-lines style="margin-bottom: 0px; border-bottom: solid 1px #ececec">\n    <ion-item >\n      <ion-icon item-start name="appname-pname"></ion-icon>\n      <ion-label>项目名称:</ion-label>\n      <ion-label right text-right>{{projectname}}</ion-label>\n    </ion-item>\n  </ion-list>\n  <ion-label full class="subtask-title-css">{{tempSubtask.subtaskName}}</ion-label>\n\n  <ion-list no-lines style="border: solid 1px #ececec">\n    <button ion-item style="border-bottom: solid 1px #ececec" (click)="onSubtaskLeader($event)">\n      <ion-icon item-start name="appname-admin"></ion-icon>\n      <ion-label item-start>负责人:</ion-label>\n      <ion-label item-end text-right>{{tempSubtask.leader}}</ion-label>\n    </button>\n    <!--<ion-item style="border-bottom: solid 1px #ececec;">-->\n      <!--<ion-icon item-start name="appname-admin"></ion-icon>-->\n      <!--<ion-label>负责人:</ion-label>-->\n      <!--<ion-input text-right type="text" [(ngModel)]="tempSubtask.subtaskLeader" required [disabled]=""></ion-input>-->\n    <!--</ion-item>-->\n    <ion-item style="border-bottom: solid 1px #ececec;">\n      <ion-icon item-start name="appname-time"></ion-icon>\n      <ion-label>交付时间:</ion-label>\n      <ion-datetime text-right displayFormat="YYYY-MM-DD" max="2030" min="2015" cancelText="取消" doneText="确认"\n                    ngModel="{{tempSubtask.planTime | stampToDate}}"\n                    (ngModelChange)="tempSubtask.planTime = $event"></ion-datetime>\n    </ion-item>\n    <ion-item>\n      <ion-icon item-start name="appname-result"></ion-icon>\n      <ion-label>交付成果:</ion-label>\n      <ion-input text-right type="text" [(ngModel)]=tempSubtask.deliveryResult></ion-input>\n    </ion-item>\n    <ion-item *ngIf="tempSubtask.delayDays>0">\n      <ion-label>延迟情况:</ion-label>\n      <ion-label text-right item-end>{{tempSubtask.delayDays | delayPipe}}</ion-label>\n    </ion-item>\n  </ion-list>\n\n  <ion-list no-lines="" [hidden]="this.type==1">\n    <ion-item style="border-top: solid 1px #ececec;border-bottom: solid 1px #ececec">\n      <div item-start>是否完成</div>\n      <ion-label>完成</ion-label>\n      <ion-checkbox [(ngModel)]=tempSubtask.itemIsEnd></ion-checkbox>\n    </ion-item>\n    <ion-item style="border-bottom: solid 1px #ececec; height: 100px;">\n      <ion-label item-start>备注:</ion-label>\n      <ion-textarea item-end [(ngModel)]=tempSubtask.remark></ion-textarea>\n    </ion-item>\n  </ion-list>\n</ion-content>\n'/*ion-inline-end:"/Users/zhaoliangchen/Desktop/qipaipm-company/src/pages/subtask/subtask.html"*/,
+    Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Component"])({
+        selector: 'page-subtask',template:/*ion-inline-start:"/Users/zhaoliangchen/Desktop/qipaipm-company/src/pages/subtask/subtask.html"*/'<ion-header>\n\n  <ion-navbar>\n    <ion-title>子任务</ion-title>\n    <ion-buttons end >\n      <button ion-button (click)="onSaveSubtask()" color="danger">\n        保存\n      </button>\n    </ion-buttons>\n  </ion-navbar>\n</ion-header>\n\n\n<ion-content fullscreen>\n  <ion-list no-padding no-lines style="margin-bottom: 0px; border-bottom: solid 1px #ececec">\n    <ion-item >\n      <ion-icon item-start name="appname-pname"></ion-icon>\n      <ion-label>项目名称:</ion-label>\n      <ion-label right text-right>{{projectname}}</ion-label>\n    </ion-item>\n  </ion-list>\n  <ion-label full class="subtask-title-css">{{tempSubtask.subtaskName}}</ion-label>\n\n  <ion-list no-lines style="border: solid 1px #ececec">\n    <button ion-item style="border-bottom: solid 1px #ececec" (click)="onSubtaskLeader($event)">\n      <ion-icon item-start name="appname-admin"></ion-icon>\n      <ion-label item-start>负责人:</ion-label>\n      <ion-label item-end text-right>{{tempSubtask.leader}}</ion-label>\n    </button>\n    <!--<ion-item style="border-bottom: solid 1px #ececec;">-->\n      <!--<ion-icon item-start name="appname-admin"></ion-icon>-->\n      <!--<ion-label>负责人:</ion-label>-->\n      <!--<ion-input text-right type="text" [(ngModel)]="tempSubtask.subtaskLeader" required [disabled]=""></ion-input>-->\n    <!--</ion-item>-->\n    <ion-item style="border-bottom: solid 1px #ececec;">\n      <ion-icon item-start name="appname-time"></ion-icon>\n      <ion-label>交付时间:</ion-label>\n      <ion-datetime text-right displayFormat="YYYY-MM-DD" max="2030" min="2015" cancelText="取消" doneText="确认"\n                    ngModel="{{tempSubtask.deliveryTime | stampToDate}}"\n                    (ngModelChange)="tempSubtask.deliveryTime = $event"></ion-datetime>\n    </ion-item>\n    <ion-item>\n      <ion-icon item-start name="appname-result"></ion-icon>\n      <ion-label>交付成果:</ion-label>\n      <ion-input text-right type="text" [(ngModel)]=tempSubtask.deliveryResult></ion-input>\n    </ion-item>\n    <ion-item *ngIf="tempSubtask.delayDays>0">\n      <ion-label>延迟情况:</ion-label>\n      <ion-label text-right item-end>{{tempSubtask.delayDays | delayPipe}}</ion-label>\n    </ion-item>\n  </ion-list>\n\n  <ion-list no-lines="" [hidden]="this.type==1">\n    <ion-item style="border-top: solid 1px #ececec;border-bottom: solid 1px #ececec">\n      <div item-start>是否完成</div>\n      <ion-label>完成</ion-label>\n      <ion-checkbox [(ngModel)]=tempSubtask.itemIsEnd></ion-checkbox>\n    </ion-item>\n    <ion-item style="border-bottom: solid 1px #ececec; height: 100px;">\n      <ion-label item-start>备注:</ion-label>\n      <ion-textarea item-end [(ngModel)]=tempSubtask.remark></ion-textarea>\n    </ion-item>\n  </ion-list>\n</ion-content>\n'/*ion-inline-end:"/Users/zhaoliangchen/Desktop/qipaipm-company/src/pages/subtask/subtask.html"*/,
     })
     /*
         @ApiModelProperty(value = "子任务的id")
@@ -700,25 +766,26 @@ SubtaskPage = __decorate([
         private String remark;
      */
     ,
-    __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["k" /* NavController */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["l" /* NavParams */], __WEBPACK_IMPORTED_MODULE_3__app_app_service__["a" /* AppService */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["d" /* Events */]])
+    __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["NavController"], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["NavParams"], __WEBPACK_IMPORTED_MODULE_3__app_app_service__["a" /* AppService */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["Events"]])
 ], SubtaskPage);
 
 //# sourceMappingURL=subtask.js.map
 
 /***/ }),
 
-/***/ 106:
+/***/ 138:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return PopoverPage; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "b", function() { return ProjectDetailPage; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(13);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__subtask_subtask__ = __webpack_require__(105);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__milestone_detail_milestone_detail__ = __webpack_require__(104);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__project_create_project_create__ = __webpack_require__(103);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__app_app_service__ = __webpack_require__(21);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(1);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(12);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__subtask_subtask__ = __webpack_require__(137);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__milestone_detail_milestone_detail__ = __webpack_require__(136);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__project_create_project_create__ = __webpack_require__(135);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__app_app_service__ = __webpack_require__(36);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__app_app_config__ = __webpack_require__(27);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -728,6 +795,7 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
+
 
 
 
@@ -773,10 +841,10 @@ var PopoverPage = (function () {
     return PopoverPage;
 }());
 PopoverPage = __decorate([
-    Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["n" /* Component */])({
+    Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Component"])({
         template: "\n    <ion-list>\n      <ion-item (click)=\"onClickEdit($event)\">\n        <ion-icon name=\"appname-edit\" item-start></ion-icon>\n        \u7F16\u8F91\n      </ion-item>\n      <ion-item (click)=\"onClickShare($event)\">\n        <ion-icon name=\"appname-share\" item-start></ion-icon>\n        \u5206\u4EAB\n      </ion-item>\n      <ion-item (click)=\"onClickDelete($event)\">\n        <ion-icon name=\"appname-delete\" item-start></ion-icon>\n        \u5220\u9664\n      </ion-item>\n      <ion-item (click)=\"onClickFinish($event)\">\n        <ion-icon name=\"appname-finish\" item-start></ion-icon>\n        \u7ED3\u675F\n      </ion-item>\n      <ion-item (click)=\"onClickDelay($event)\">\n        <ion-icon name=\"appname-delay\" item-start></ion-icon>\n        \u5EF6\u671F\n      </ion-item>\n    </ion-list>\n  "
     }),
-    __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["p" /* ViewController */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["l" /* NavParams */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["d" /* Events */]])
+    __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["ViewController"], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["NavParams"], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["Events"]])
 ], PopoverPage);
 
 var ProjectDetailPage = (function () {
@@ -802,8 +870,22 @@ var ProjectDetailPage = (function () {
                         }
                     }
                     if (!isIn) {
-                        _this.project.children.push(milestone);
+                        _this.addOneMilestone(milestone);
+                        // var compare = function (obj1, obj2) {//比较函数
+                        //     console.log(AppConfig.stringToDate(obj1.planTime));
+                        //     var date1 = AppConfig.stringToDate(obj1.planTime);
+                        //     var date2 = AppConfig.stringToDate(obj2.planTime);
+                        //     if (date1 < date2) {
+                        //         return -1;
+                        //     } else if (date1 > date2) {
+                        //         return 1;
+                        //     } else {
+                        //         return 0;
+                        //     }
+                        // }
+                        // this.project.children.sort(compare);
                     }
+                    _this.reloadArray();
                 }
                 else {
                 }
@@ -825,33 +907,18 @@ var ProjectDetailPage = (function () {
                                 break;
                             }
                         }
-                        if (isIn == true) {
+                        if (isIn == false) {
                             break;
                         }
                     }
+                    _this.reloadArray();
                 }
                 resolve();
             });
         };
         this.project = this.navParams.get('project');
-        if (typeof (this.project.children) != 'undefined') {
-            for (var i = 0; i < this.project.children.length; i++) {
-                var milestone = this.project.children[i];
-                milestone.milestoneName = '里程碑' + (i + 1);
-                if (typeof (milestone.children) != 'undefined') {
-                    for (var j = 0; j < milestone.children.length; j++) {
-                        var subtask = milestone.children[j];
-                        subtask.subtaskName = '子任务' + (j + 1);
-                    }
-                }
-            }
-        }
         this.isExpand = [];
-        if (typeof (this.project.children) != 'undefined') {
-            for (var i = 0; i < this.project.children.length; i++) {
-                this.isExpand.push(false);
-            }
-        }
+        this.reloadArray();
     }
     ProjectDetailPage.prototype.ionViewDidLoad = function () {
         var _this = this;
@@ -870,6 +937,7 @@ var ProjectDetailPage = (function () {
         this.events.subscribe('onPushProjectDetail', function () {
             _this.navCtrl.push(__WEBPACK_IMPORTED_MODULE_4__project_create_project_create__["a" /* ProjectCreatePage */], {
                 project: _this.project,
+                isExpand: _this.isExpand,
                 type: 2,
             });
         });
@@ -889,25 +957,23 @@ var ProjectDetailPage = (function () {
         });
         this.events.subscribe('onDeleteProject', function () {
             _this.appService.httpDelete("item/delete", { "ids": _this.project.id }, _this, function (view, res) {
-                console.log(res);
                 if (res.status == 200) {
-                    view.events.publish('homeDeleteProject', view.project);
+                    view.events.publish('homeProjectReload');
                     view.navCtrl.pop();
                 }
             }, true);
         });
         this.events.subscribe('onEndProject', function () {
             _this.project.itemIsEnd = true;
-            _this.project.itemState = '已结束';
-            _this.appService.httpPost("item/create", _this.project, _this, function (view, res) {
-                var data = res.json();
-                view.events.publish('homeCreateProject', data);
+            _this.project.itemState = '07010040';
+            _this.appService.httpPost("item/createItem", _this.project, _this, function (view, res) {
+                //var data = res.json();
+                view.events.publish('homeProjectReload');
                 var toast = view.toastCtrl.create({
                     message: '项目已结束!',
                     duration: 3000
                 });
                 toast.present();
-                view.navCtrl.pop();
             }, true);
         });
     };
@@ -938,19 +1004,20 @@ var ProjectDetailPage = (function () {
         });
     };
     ProjectDetailPage.prototype.onClickMilestone = function ($event, mile) {
-        console.log(mile);
         this.navCtrl.push(__WEBPACK_IMPORTED_MODULE_3__milestone_detail_milestone_detail__["a" /* MilestoneDetailPage */], {
             milestone: mile,
+            isExpand: this.isExpand,
             project: this.project,
             callback: this.milestoneCallback,
             type: 2,
         });
     };
-    ProjectDetailPage.prototype.onClickSubtask = function ($event, subtask) {
+    ProjectDetailPage.prototype.onClickSubtask = function ($event, subtask, mile) {
         this.navCtrl.push(__WEBPACK_IMPORTED_MODULE_2__subtask_subtask__["a" /* SubtaskPage */], {
             subtask: subtask,
             projectname: this.project.itemName,
-            callback: this.subtaskCallback
+            callback: this.subtaskCallback,
+            milestone: mile,
         });
     };
     ProjectDetailPage.prototype.onClickExpand = function ($event, index) {
@@ -976,25 +1043,239 @@ var ProjectDetailPage = (function () {
             }
         }, 16);
     };
+    ProjectDetailPage.prototype.reloadArray = function () {
+        if (typeof (this.project.children) != 'undefined') {
+            for (var i = 0; i < this.project.children.length; i++) {
+                var milestone = this.project.children[i];
+                milestone.milestoneName = '里程碑' + (i + 1);
+                if (typeof (milestone.children) != 'undefined') {
+                    for (var j = 0; j < milestone.children.length; j++) {
+                        var subtask = milestone.children[j];
+                        subtask.subtaskName = '子任务' + (j + 1);
+                    }
+                }
+            }
+        }
+        this.isExpand = [];
+        if (typeof (this.project.children) != 'undefined') {
+            for (var i = 0; i < this.project.children.length; i++) {
+                this.isExpand.push(false);
+            }
+        }
+    };
+    ProjectDetailPage.prototype.addOneMilestone = function (milestone) {
+        if (this.project.children.length == 0) {
+            this.project.children.push(milestone);
+            this.isExpand.push(false);
+        }
+        else if (this.project.children.length == 1) {
+            var p1 = this.project.children[0];
+            var d1 = __WEBPACK_IMPORTED_MODULE_6__app_app_config__["a" /* AppConfig */].timestampToDate(p1.deliveryTime);
+            var d2 = __WEBPACK_IMPORTED_MODULE_6__app_app_config__["a" /* AppConfig */].timestampToDate(milestone.deliveryTime);
+            if (d1 <= d2) {
+                this.project.children.push(milestone);
+                this.isExpand.push(false);
+            }
+            else {
+                this.project.children.splice(0, 0, milestone);
+                this.isExpand.splice(0, 0, false);
+            }
+        }
+        else {
+            var isInsert = false;
+            for (var i = 0; i < this.project.children.length - 1; i++) {
+                var pp1 = this.project.children[i];
+                var pp2 = this.project.children[i + 1];
+                var dd1 = __WEBPACK_IMPORTED_MODULE_6__app_app_config__["a" /* AppConfig */].timestampToDate(pp1.deliveryTime);
+                var dd2 = __WEBPACK_IMPORTED_MODULE_6__app_app_config__["a" /* AppConfig */].timestampToDate(pp2.deliveryTime);
+                var dd3 = __WEBPACK_IMPORTED_MODULE_6__app_app_config__["a" /* AppConfig */].timestampToDate(milestone.deliveryTime);
+                if (i == 0 && dd3 < dd1) {
+                    isInsert = true;
+                    this.project.children.splice(0, 0, milestone);
+                    this.isExpand.splice(0, 0, false);
+                    break;
+                }
+                if (dd3 > dd1 && dd3 < dd2) {
+                    isInsert = true;
+                    this.project.children.splice(i + 1, 0, milestone);
+                    this.isExpand.splice(i + 1, 0, false);
+                    break;
+                }
+                if (i == this.project.children.length - 2 && dd3 > dd2) {
+                    isInsert = true;
+                    this.project.children.push(milestone);
+                    this.isExpand.push(false);
+                    break;
+                }
+            }
+            if (isInsert == false) {
+                this.project.children.push(milestone);
+                this.isExpand.push(false);
+            }
+        }
+    };
     return ProjectDetailPage;
 }());
 __decorate([
-    Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["_13" /* ViewChild */])('popoverContent', { read: __WEBPACK_IMPORTED_MODULE_0__angular_core__["u" /* ElementRef */] }),
-    __metadata("design:type", __WEBPACK_IMPORTED_MODULE_0__angular_core__["u" /* ElementRef */])
+    Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["ViewChild"])('popoverContent', { read: __WEBPACK_IMPORTED_MODULE_0__angular_core__["ElementRef"] }),
+    __metadata("design:type", __WEBPACK_IMPORTED_MODULE_0__angular_core__["ElementRef"])
 ], ProjectDetailPage.prototype, "content", void 0);
 ProjectDetailPage = __decorate([
-    Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["n" /* Component */])({
-        selector: 'page-project-detail',template:/*ion-inline-start:"/Users/zhaoliangchen/Desktop/qipaipm-company/src/pages/project-detail/project-detail.html"*/'<!--\n  Generated template for the ProjectDetailPage page.\n\n  See http://ionicframework.com/docs/components/#navigation for more info on\n  Ionic pages and navigation.\n-->\n<ion-header>\n  <ion-navbar>\n    <ion-title>\n      {{project.itemName}}\n    </ion-title>\n    <ion-buttons end>\n      <button ion-button icon-only (click)="presentPopover($event)">\n        <ion-icon name="more" style="color: #fc5c53"></ion-icon>\n      </button>\n    </ion-buttons>\n  </ion-navbar>\n</ion-header>\n\n\n<ion-content #popoverContent fullscreen>\n  <div class="pj-item">\n    <div class="mile-bottom">\n      <div class="item1">\n        <ion-label style="margin-bottom: 3px;font-size: 10px">{{project.itemStartTime | MonthPipe}}</ion-label>\n        <section class="line"></section>\n        <ion-label style="margin-top: 3px;font-size: 10px">{{project.itemStartTime | YearPipe}}</ion-label>\n      </div>\n      <div class="item2">\n        <ion-icon name="ios-arrow-dropdown-circle" style="color: #fc5c53;padding-top: 15px"></ion-icon>\n        <ion-label no-padding no-margin style="margin-top: 3px;font-size: 10px;text-align: center">启动</ion-label>\n        <!--<div style="width: 1px; background-color: #ececec; height: 100%; position: absolute; left: 20px" ></div>-->\n      </div>\n      <ion-icon name="appname-arrow" class="arrow-css1"></ion-icon>\n      <div class="item3-1">\n        <ion-row>\n          <ion-col col-5 style="float: left">\n            负责人：\n          </ion-col>\n          <ion-col col-7 style="float: right">\n            {{project.leader}}\n          </ion-col>\n        </ion-row>\n        <ion-row>\n          <ion-col col-5 style="float: left">\n            交付成果：\n          </ion-col>\n          <ion-col col-7 style="float: right">\n        <span class="item-right">\n          {{project.itemStartResult}}\n        </span>\n          </ion-col>\n        </ion-row>\n        <ion-row>\n          <ion-col col-5 style="float: left">\n            紧急程度：\n          </ion-col>\n          <ion-col col-7 style="float: right">\n        <span class="item-right">\n          {{project.itemLevel | itemlevelPipe}}\n        </span>\n          </ion-col>\n        </ion-row>\n      </div>\n    </div>\n  </div>\n\n  <!-- 里程碑  -->\n  <div class="pj-item" *ngFor="let mile of project.children; let i = index">\n    <div class="mile-top" id="{{mile.id}}">\n      <div style="width: 1px; background-color: #ececec; height: 100%; position: absolute; left: 65px; top: 0px" >\n\n      </div >\n      <div class="subtask-title" *ngIf="isExpand[i]==false ">\n        <ion-label no-margin no-padding text-center class=" horizontal-center" style="line-height: 25px; font-size: 15px">{{mile.children.length+"个子任务"}}</ion-label>\n      </div>\n      <div class="subtask-wrap" *ngIf="isExpand[i]==true ">\n        <div class="subtask-item" *ngFor="let subtask of mile.children" (click)="onClickSubtask($event, subtask)">\n          <div class="subtask-css" >\n            <ion-label class="subtask-left">子任务:</ion-label>\n            <ion-label class="subtask-right" >{{subtask.subtaskName}}</ion-label>\n          </div>\n          <div class="subtask-css" >\n            <ion-label class="subtask-left">交付时间:</ion-label>\n            <ion-label class="subtask-right" >{{subtask.planTime | stampToDate}}</ion-label>\n          </div>\n          <div class="subtask-css" >\n            <ion-label class="subtask-left">负责人:</ion-label>\n            <ion-label class="subtask-right" >{{subtask.leader}}</ion-label>\n          </div>\n        </div>\n      </div>\n      <ion-icon [name]="isExpand[i]==false?\'appname-expand\':\'appname-fold\'"  class="fold" (click)="onClickExpand($event, i)">\n\n      </ion-icon>\n    </div>\n    <div class="mile-bottom">\n      <div class="item1">\n        <ion-label style="margin-bottom: 3px;font-size: 10px">{{mile.planTime | MonthPipe}}</ion-label>\n        <section class="line"></section>\n        <ion-label style="margin-top: 3px;font-size: 10px">{{mile.planTime | YearPipe}}</ion-label>\n      </div>\n      <div class="item2">\n        <!--<div style="width: 1px; background-color: #ececec; height: 10px; position: absolute; left: 20px; top: 0px" ></div>-->\n        <ion-label no-padding no-margin class="label-radius">{{mile.itemProgress}}</ion-label>\n        <ion-label no-padding no-margin class="mile-number">{{"里程碑"+(i+1)}}</ion-label>\n        <ion-label no-padding no-margin class="delay-radius1" [hidden]="mile.delayDays==0">{{"延期"+mile.delayDays+"天"}}</ion-label>\n      </div>\n      <!--[ngClass]="{\'arrow-css1\':mile.type==0,\'arrow-css2\':mile.type==1,\'arrow-css3\':mile.type==2}"-->\n      <ion-icon name="appname-arrow" class="arrow-css2" ></ion-icon>\n      <div class="item3-2" (click)="onClickMilestone($event, mile)">\n        <ion-row>\n          <ion-col col-5 style="float: left">\n            负责人：\n          </ion-col>\n          <ion-col col-7 style="float: right">\n            {{mile.leader}}\n          </ion-col>\n        </ion-row>\n        <ion-row>\n          <ion-col col-5 style="float: left">\n            交付成果：\n          </ion-col>\n          <ion-col col-7 style="float: right">\n        <span class="item-right">\n          {{mile.deliveryResult}}\n        </span>\n          </ion-col>\n        </ion-row>\n      </div>\n    </div>\n  </div>\n\n  <!-- 项目结束 -->\n  <div class="mile-bottom">\n    <div class="item1">\n      <ion-label style="margin-bottom: 3px;font-size: 10px">{{project.endTime | MonthPipe}}</ion-label>\n      <section class="line"></section>\n      <ion-label style="margin-top: 3px;font-size: 10px">{{project.endTime | YearPipe}}</ion-label>\n    </div>\n    <div class="item2">\n      <!--<div style="width: 1px; background-color: #ececec; height: 10px; position: absolute; left: 20px; top: 0px" ></div>-->\n      <ion-icon name="ios-arrow-dropup-circle" style="color: #fc5c53;padding-top: 15px"></ion-icon>\n      <ion-label no-padding no-margin style="margin-top: 3px;font-size: 10px;text-align: center">结束</ion-label>\n    </div>\n    <ion-icon name="appname-arrow" class="arrow-css1"></ion-icon>\n    <div class="item3-1">\n      <ion-row>\n        <ion-col col-5 style="float: left">\n          负责人：\n        </ion-col>\n        <ion-col col-7 style="float: right">\n          {{project.leader}}\n        </ion-col>\n      </ion-row>\n      <ion-row>\n        <ion-col col-5 style="float: left">\n          交付成果：\n        </ion-col>\n        <ion-col col-7 style="float: right">\n        <span class="item-right">\n          {{project.itemEndResult}}\n        </span>\n        </ion-col>\n      </ion-row>\n    </div>\n  </div>\n\n  <!-- 项目延期 -->\n  <div *ngIf="project.delayDays>0" class="mile-bottom" style="margin-top: 5px">\n    <div class="item1">\n      <ion-label style="margin-bottom: 3px;font-size: 10px">{{project.delayTime | MonthPipe}}</ion-label>\n      <section class="line"></section>\n      <ion-label style="margin-top: 3px;font-size: 10px">{{project.delayTime | YearPipe}}</ion-label>\n    </div>\n    <div class="item2">\n      <!--<div style="width: 1px; background-color: #ececec; height: 10px; position: absolute; left: 20px; top: 0px" ></div>-->\n      <ion-label no-padding no-margin class="delay-radius2">延</ion-label>\n      <ion-label no-padding no-margin class="item2_text">延期</ion-label>\n    </div>\n    <ion-icon name="appname-arrow" class="arrow-css3"></ion-icon>\n    <div class="item3-3">\n      <ion-row>\n        <ion-col col-5 style="float: left">\n          负责人：\n        </ion-col>\n        <ion-col col-7 style="float: right">\n          {{project.leader}}\n        </ion-col>\n      </ion-row>\n      <ion-row>\n        <ion-col col-5 style="float: left">\n          交付成果：\n        </ion-col>\n        <ion-col col-7 style="float: right">\n        <span class="item-right">\n          {{project.itemEndResult}}\n        </span>\n        </ion-col>\n      </ion-row>\n    </div>\n  </div>\n\n  <!--[ngStyle]="{\'bottom\':isShowShare==false?\'-200px\':\'0px\'}"-->\n  <div id="shareView" class="share-css" >\n    <ion-label text-center>分享到</ion-label>\n    <ion-row style="height: 100px;@extend .vertical-middle;">\n      <ion-col text-center >\n        <ion-icon name="appname-dingding"></ion-icon>\n      </ion-col>\n      <ion-col text-center>\n        <ion-icon name="appname-qq"></ion-icon>\n      </ion-col>\n      <ion-col text-center>\n        <ion-icon name="appname-weixin"></ion-icon>\n      </ion-col>\n    </ion-row>\n    <button ion-button no-padding no-margin style="width: 100%; height: 50px; border-top: solid 1px #ececec; background-color: white; color: black" (click)="onCancelShare($event)">取消</button>\n  </div>\n</ion-content>\n'/*ion-inline-end:"/Users/zhaoliangchen/Desktop/qipaipm-company/src/pages/project-detail/project-detail.html"*/,
+    Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Component"])({
+        selector: 'page-project-detail',template:/*ion-inline-start:"/Users/zhaoliangchen/Desktop/qipaipm-company/src/pages/project-detail/project-detail.html"*/'<!--\n  Generated template for the ProjectDetailPage page.\n\n  See http://ionicframework.com/docs/components/#navigation for more info on\n  Ionic pages and navigation.\n-->\n<ion-header>\n  <ion-navbar>\n    <ion-title>\n      {{project.itemName}}\n    </ion-title>\n    <ion-buttons end>\n      <button ion-button icon-only (click)="presentPopover($event)">\n        <ion-icon name="more" style="color: #fc5c53"></ion-icon>\n      </button>\n    </ion-buttons>\n  </ion-navbar>\n</ion-header>\n\n\n<ion-content #popoverContent fullscreen>\n  <div class="pj-item">\n    <div class="mile-bottom">\n      <div class="item1">\n        <ion-label style="margin-bottom: 3px;font-size: 10px">{{project.itemStartTime | MonthPipe}}</ion-label>\n        <section class="line"></section>\n        <ion-label style="margin-top: 3px;font-size: 10px">{{project.itemStartTime | YearPipe}}</ion-label>\n      </div>\n      <div class="item2">\n        <ion-icon name="ios-arrow-dropdown-circle" style="color: #fc5c53;padding-top: 15px"></ion-icon>\n        <ion-label no-padding no-margin style="margin-top: 3px;font-size: 10px;text-align: center">启动</ion-label>\n        <!--<div style="width: 1px; background-color: #ececec; height: 100%; position: absolute; left: 20px" ></div>-->\n      </div>\n      <ion-icon name="appname-arrow" class="arrow-css1"></ion-icon>\n      <div class="item3-1">\n        <ion-row>\n          <ion-col col-5 style="float: left">\n            负责人：\n          </ion-col>\n          <ion-col col-7 style="float: right">\n            {{project.leader}}\n          </ion-col>\n        </ion-row>\n        <ion-row>\n          <ion-col col-5 style="float: left">\n            交付成果：\n          </ion-col>\n          <ion-col col-7 style="float: right">\n        <span class="item-right">\n          {{project.itemStartResult}}\n        </span>\n          </ion-col>\n        </ion-row>\n        <ion-row>\n          <ion-col col-5 style="float: left">\n            紧急程度：\n          </ion-col>\n          <ion-col col-7 style="float: right">\n        <span class="item-right">\n          {{project.itemLevel | itemlevelPipe}}\n        </span>\n          </ion-col>\n        </ion-row>\n      </div>\n    </div>\n  </div>\n\n  <!-- 里程碑  -->\n  <div class="pj-item" *ngFor="let mile of project.children; let i = index">\n    <div class="mile-top" id="{{mile.id}}">\n      <div style="width: 1px; background-color: #ececec; height: 100%; position: absolute; left: 65px; top: 0px" >\n\n      </div >\n      <div class="subtask-title" *ngIf="isExpand[i]==false ">\n        <ion-label no-margin no-padding text-center class=" horizontal-center" style="line-height: 25px; font-size: 15px">{{mile.children.length+"个子任务"}}</ion-label>\n      </div>\n      <div class="subtask-wrap" *ngIf="isExpand[i]==true ">\n        <div class="subtask-item" *ngFor="let subtask of mile.children" (click)="onClickSubtask($event, subtask, mile)">\n          <div class="subtask-css" >\n            <ion-label class="subtask-left">子任务:</ion-label>\n            <ion-label class="subtask-right" >{{subtask.subtaskName}}</ion-label>\n          </div>\n          <div class="subtask-css" >\n            <ion-label class="subtask-left">交付时间:</ion-label>\n            <ion-label class="subtask-right" >{{subtask.deliveryTime | stampToDate}}</ion-label>\n          </div>\n          <div class="subtask-css" >\n            <ion-label class="subtask-left">负责人:</ion-label>\n            <ion-label class="subtask-right" >{{subtask.leader}}</ion-label>\n          </div>\n        </div>\n      </div>\n      <ion-icon [name]="isExpand[i]==false?\'appname-expand\':\'appname-fold\'"  class="fold" (click)="onClickExpand($event, i)">\n\n      </ion-icon>\n    </div>\n    <div class="mile-bottom">\n      <div class="item1">\n        <ion-label style="margin-bottom: 3px;font-size: 10px">{{mile.deliveryTime | MonthPipe}}</ion-label>\n        <section class="line"></section>\n        <ion-label style="margin-top: 3px;font-size: 10px">{{mile.deliveryTime | YearPipe}}</ion-label>\n      </div>\n      <div class="item2">\n        <!--<div style="width: 1px; background-color: #ececec; height: 10px; position: absolute; left: 20px; top: 0px" ></div>-->\n        <ion-label no-padding no-margin class="label-radius">{{mile.itemProgress}}</ion-label>\n        <ion-label no-padding no-margin class="mile-number">{{"里程碑"+(i+1)}}</ion-label>\n        <ion-label no-padding no-margin class="delay-radius1" [hidden]="mile.delayDays==0">{{"延期"+mile.delayDays+"天"}}</ion-label>\n      </div>\n      <!--[ngClass]="{\'arrow-css1\':mile.type==0,\'arrow-css2\':mile.type==1,\'arrow-css3\':mile.type==2}"-->\n      <ion-icon name="appname-arrow" class="arrow-css2" ></ion-icon>\n      <div class="item3-2" (click)="onClickMilestone($event, mile)">\n        <ion-row>\n          <ion-col col-5 style="float: left">\n            负责人：\n          </ion-col>\n          <ion-col col-7 style="float: right">\n            {{mile.leader}}\n          </ion-col>\n        </ion-row>\n        <ion-row>\n          <ion-col col-5 style="float: left">\n            交付成果：\n          </ion-col>\n          <ion-col col-7 style="float: right">\n        <span class="item-right">\n          {{mile.deliveryResult}}\n        </span>\n          </ion-col>\n        </ion-row>\n      </div>\n    </div>\n  </div>\n\n  <!-- 项目结束 -->\n  <div class="mile-bottom">\n    <div class="item1">\n      <ion-label style="margin-bottom: 3px;font-size: 10px">{{project.endTime | MonthPipe}}</ion-label>\n      <section class="line"></section>\n      <ion-label style="margin-top: 3px;font-size: 10px">{{project.endTime | YearPipe}}</ion-label>\n    </div>\n    <div class="item2">\n      <!--<div style="width: 1px; background-color: #ececec; height: 10px; position: absolute; left: 20px; top: 0px" ></div>-->\n      <ion-icon name="ios-arrow-dropup-circle" style="color: #fc5c53;padding-top: 15px"></ion-icon>\n      <ion-label no-padding no-margin style="margin-top: 3px;font-size: 10px;text-align: center">结束</ion-label>\n    </div>\n    <ion-icon name="appname-arrow" class="arrow-css1"></ion-icon>\n    <div class="item3-1">\n      <ion-row>\n        <ion-col col-5 style="float: left">\n          负责人：\n        </ion-col>\n        <ion-col col-7 style="float: right">\n          {{project.leader}}\n        </ion-col>\n      </ion-row>\n      <ion-row>\n        <ion-col col-5 style="float: left">\n          交付成果：\n        </ion-col>\n        <ion-col col-7 style="float: right">\n        <span class="item-right">\n          {{project.itemEndResult}}\n        </span>\n        </ion-col>\n      </ion-row>\n    </div>\n  </div>\n\n  <!-- 项目延期 -->\n  <div *ngIf="project.delayDays>0" class="mile-bottom" style="margin-top: 5px">\n    <div class="item1">\n      <ion-label style="margin-bottom: 3px;font-size: 10px">{{project.delayTime | MonthPipe}}</ion-label>\n      <section class="line"></section>\n      <ion-label style="margin-top: 3px;font-size: 10px">{{project.delayTime | YearPipe}}</ion-label>\n    </div>\n    <div class="item2">\n      <!--<div style="width: 1px; background-color: #ececec; height: 10px; position: absolute; left: 20px; top: 0px" ></div>-->\n      <ion-label no-padding no-margin class="delay-radius2">延</ion-label>\n      <ion-label no-padding no-margin class="item2_text">延期</ion-label>\n    </div>\n    <ion-icon name="appname-arrow" class="arrow-css3"></ion-icon>\n    <div class="item3-3">\n      <ion-row>\n        <ion-col col-5 style="float: left">\n          负责人：\n        </ion-col>\n        <ion-col col-7 style="float: right">\n          {{project.leader}}\n        </ion-col>\n      </ion-row>\n      <ion-row>\n        <ion-col col-5 style="float: left">\n          交付成果：\n        </ion-col>\n        <ion-col col-7 style="float: right">\n        <span class="item-right">\n          {{project.itemEndResult}}\n        </span>\n        </ion-col>\n      </ion-row>\n    </div>\n  </div>\n\n  <!--[ngStyle]="{\'bottom\':isShowShare==false?\'-200px\':\'0px\'}"-->\n  <div id="shareView" class="share-css" >\n    <ion-label text-center>分享到</ion-label>\n    <ion-row style="height: 100px;@extend .vertical-middle;">\n      <ion-col text-center >\n        <ion-icon name="appname-dingding"></ion-icon>\n      </ion-col>\n      <ion-col text-center>\n        <ion-icon name="appname-qq"></ion-icon>\n      </ion-col>\n      <ion-col text-center>\n        <ion-icon name="appname-weixin"></ion-icon>\n      </ion-col>\n    </ion-row>\n    <button ion-button no-padding no-margin style="width: 100%; height: 50px; border-top: solid 1px #ececec; background-color: white; color: black" (click)="onCancelShare($event)">取消</button>\n  </div>\n</ion-content>\n'/*ion-inline-end:"/Users/zhaoliangchen/Desktop/qipaipm-company/src/pages/project-detail/project-detail.html"*/,
     }),
-    __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["k" /* NavController */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["l" /* NavParams */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["n" /* PopoverController */],
-        __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["d" /* Events */], __WEBPACK_IMPORTED_MODULE_5__app_app_service__["a" /* AppService */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["o" /* ToastController */]])
+    __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["NavController"], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["NavParams"], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["PopoverController"],
+        __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["Events"], __WEBPACK_IMPORTED_MODULE_5__app_app_service__["a" /* AppService */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["ToastController"]])
 ], ProjectDetailPage);
 
 //# sourceMappingURL=project-detail.js.map
 
 /***/ }),
 
-/***/ 115:
+/***/ 140:
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return NewpwPage; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(1);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(12);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__angular_forms__ = __webpack_require__(21);
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+
+
+
+/**
+ * Generated class for the NewpwPage page.
+ *
+ * See http://ionicframework.com/docs/components/#navigation for more info
+ * on Ionic pages and navigation.
+ */
+var NewpwPage = (function () {
+    function NewpwPage(navCtrl, navParams, formBuilder) {
+        this.navCtrl = navCtrl;
+        this.navParams = navParams;
+        this.formBuilder = formBuilder;
+        this.newpwForm = this.formBuilder.group({
+            newpw1: ['', __WEBPACK_IMPORTED_MODULE_2__angular_forms__["Validators"].compose([__WEBPACK_IMPORTED_MODULE_2__angular_forms__["Validators"].required, __WEBPACK_IMPORTED_MODULE_2__angular_forms__["Validators"].minLength(6), __WEBPACK_IMPORTED_MODULE_2__angular_forms__["Validators"].maxLength(16)])],
+            newpw2: ['', __WEBPACK_IMPORTED_MODULE_2__angular_forms__["Validators"].compose([__WEBPACK_IMPORTED_MODULE_2__angular_forms__["Validators"].required, __WEBPACK_IMPORTED_MODULE_2__angular_forms__["Validators"].minLength(6), __WEBPACK_IMPORTED_MODULE_2__angular_forms__["Validators"].maxLength(16)])]
+        });
+    }
+    NewpwPage.prototype.ionViewDidLoad = function () {
+    };
+    NewpwPage.prototype.onConfirmNewpw = function (value) {
+        console.log(value.newpw1, value.newpw2);
+        this.navCtrl.popToRoot();
+    };
+    return NewpwPage;
+}());
+NewpwPage = __decorate([
+    Object(__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["IonicPage"])(),
+    Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Component"])({
+        selector: 'page-newpw',template:/*ion-inline-start:"/Users/zhaoliangchen/Desktop/qipaipm-company/src/pages/newpw/newpw.html"*/'<!--\n  Generated template for the NewpwPage page.\n\n  See http://ionicframework.com/docs/components/#navigation for more info on\n  Ionic pages and navigation.\n-->\n<ion-header>\n  <ion-navbar>\n    <ion-title>设置新密码</ion-title>\n  </ion-navbar>\n</ion-header>\n\n\n<ion-content fullscreen>\n  <form [formGroup]="newpwForm" (ngSubmit)="onConfirmNewpw(newpwForm.value);">\n    <div class="wrap">\n      <div class="row">\n        <ion-input no-padding no-margin type="password" placeholder="请输入新密码" formControlName="newpw1" ></ion-input>\n      </div>\n      <div class="row">\n        <ion-input no-padding no-margin type="password" placeholder="请再次输入新密码" formControlName="newpw2" ></ion-input>\n      </div>\n      <div class="row">\n        <button ion-button clear no-margin no-padding type="submit" [disabled]="!newpwForm.valid">确认</button>\n      </div>\n    </div>\n  </form>\n</ion-content>\n'/*ion-inline-end:"/Users/zhaoliangchen/Desktop/qipaipm-company/src/pages/newpw/newpw.html"*/,
+    }),
+    __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["NavController"], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["NavParams"], __WEBPACK_IMPORTED_MODULE_2__angular_forms__["FormBuilder"]])
+], NewpwPage);
+
+//# sourceMappingURL=newpw.js.map
+
+/***/ }),
+
+/***/ 141:
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return ForgetPage; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(1);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(12);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__angular_forms__ = __webpack_require__(21);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_rxjs_Rx__ = __webpack_require__(416);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_rxjs_Rx___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3_rxjs_Rx__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__newpw_newpw__ = __webpack_require__(140);
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+
+
+
+
+
+/**
+ * Generated class for the ForgetPage page.
+ *
+ * See http://ionicframework.com/docs/components/#navigation for more info
+ * on Ionic pages and navigation.
+ */
+var ForgetPage = (function () {
+    function ForgetPage(navCtrl, navParams, formBuilder) {
+        this.navCtrl = navCtrl;
+        this.navParams = navParams;
+        this.formBuilder = formBuilder;
+        this.defCountDownText = "发送验证码";
+        this.defCountDownTime = 60;
+        this.isCountDowning = false;
+        this.countDownText = this.defCountDownText;
+        this.forgetForm = this.formBuilder.group({
+            mobile: ['', __WEBPACK_IMPORTED_MODULE_2__angular_forms__["Validators"].compose([__WEBPACK_IMPORTED_MODULE_2__angular_forms__["Validators"].minLength(11), __WEBPACK_IMPORTED_MODULE_2__angular_forms__["Validators"].maxLength(11), __WEBPACK_IMPORTED_MODULE_2__angular_forms__["Validators"].required, __WEBPACK_IMPORTED_MODULE_2__angular_forms__["Validators"].pattern("^(13[0-9]|15[012356789]|17[03678]|18[0-9]|14[57])[0-9]{8}$")])],
+            code: ['', __WEBPACK_IMPORTED_MODULE_2__angular_forms__["Validators"].compose([__WEBPACK_IMPORTED_MODULE_2__angular_forms__["Validators"].required, __WEBPACK_IMPORTED_MODULE_2__angular_forms__["Validators"].minLength(6)])]
+        });
+        this.timer = __WEBPACK_IMPORTED_MODULE_3_rxjs_Rx__["Observable"].timer(1, 1000);
+    }
+    ForgetPage.prototype.ionViewDidLoad = function () {
+    };
+    ForgetPage.prototype.ionViewWillUnload = function () {
+        if (this.sub != null) {
+            this.sub.unsubscribe();
+        }
+    };
+    ForgetPage.prototype.sendCodeBtnEvent = function ($event) {
+        var _this = this;
+        if (this.isCountDowning == true) {
+            return;
+        }
+        this.countDownTime = this.defCountDownTime;
+        this.isCountDowning = true;
+        this.sub = this.timer.subscribe(function (t) {
+            _this.countDownText = _this.countDownTime.toString() + 's';
+            if (_this.countDownTime < 0) {
+                _this.countDownText = _this.defCountDownText;
+                _this.sub.unsubscribe();
+                _this.isCountDowning = false;
+            }
+            _this.countDownTime--;
+        });
+    };
+    ForgetPage.prototype.goNext = function (value) {
+        this.navCtrl.push(__WEBPACK_IMPORTED_MODULE_4__newpw_newpw__["a" /* NewpwPage */]);
+    };
+    return ForgetPage;
+}());
+ForgetPage = __decorate([
+    Object(__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["IonicPage"])(),
+    Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Component"])({
+        selector: 'page-forget',template:/*ion-inline-start:"/Users/zhaoliangchen/Desktop/qipaipm-company/src/pages/forget/forget.html"*/'<!--\n  Generated template for the ForgetPage page.\n\n  See http://ionicframework.com/docs/components/#navigation for more info on\n  Ionic pages and navigation.\n-->\n<ion-header>\n  <ion-navbar>\n    <ion-title>验证手机号</ion-title>\n  </ion-navbar>\n</ion-header>\n\n<ion-content fullscreen>\n  <form [formGroup]="forgetForm" (ngSubmit)="goNext(forgetForm.value);">\n    <div class="wrap">\n      <div class="row">\n        <ion-input no-padding no-margin type="text" placeholder="输入手机号" formControlName="mobile" maxlength="11"></ion-input>\n      </div>\n      <div class="row">\n        <ion-input no-padding no-margin type="text" placeholder="输入验证码" formControlName="code" maxlength="8"></ion-input>\n        <a id="btn_code" (click)="sendCodeBtnEvent($event)" class="sendcode" [class.active]="isCountDowning" >{{countDownText}}</a>\n      </div>\n      <div class="row">\n        <button ion-button clear no-margin no-padding type="submit" [disabled]="!forgetForm.valid">确认</button>\n      </div>\n    </div>\n  </form>\n\n</ion-content>\n'/*ion-inline-end:"/Users/zhaoliangchen/Desktop/qipaipm-company/src/pages/forget/forget.html"*/,
+    }),
+    __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["NavController"], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["NavParams"], __WEBPACK_IMPORTED_MODULE_2__angular_forms__["FormBuilder"]])
+], ForgetPage);
+
+//# sourceMappingURL=forget.js.map
+
+/***/ }),
+
+/***/ 152:
 /***/ (function(module, exports) {
 
 function webpackEmptyAsyncContext(req) {
@@ -1007,16 +1288,28 @@ function webpackEmptyAsyncContext(req) {
 webpackEmptyAsyncContext.keys = function() { return []; };
 webpackEmptyAsyncContext.resolve = webpackEmptyAsyncContext;
 module.exports = webpackEmptyAsyncContext;
-webpackEmptyAsyncContext.id = 115;
+webpackEmptyAsyncContext.id = 152;
 
 /***/ }),
 
-/***/ 156:
+/***/ 195:
 /***/ (function(module, exports, __webpack_require__) {
 
 var map = {
 	"../pages/contact/contact.module": [
-		285,
+		725,
+		3
+	],
+	"../pages/forget/forget.module": [
+		727,
+		2
+	],
+	"../pages/login/login.module": [
+		728,
+		1
+	],
+	"../pages/newpw/newpw.module": [
+		726,
 		0
 	]
 };
@@ -1031,22 +1324,262 @@ function webpackAsyncContext(req) {
 webpackAsyncContext.keys = function webpackAsyncContextKeys() {
 	return Object.keys(map);
 };
-webpackAsyncContext.id = 156;
+webpackAsyncContext.id = 195;
 module.exports = webpackAsyncContext;
 
 /***/ }),
 
-/***/ 200:
+/***/ 221:
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return KeycloakServiceProvider; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(1);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_http__ = __webpack_require__(54);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_rxjs_add_operator_map__ = __webpack_require__(110);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_rxjs_add_operator_map___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_rxjs_add_operator_map__);
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+
+
+
+var keycloakConfig = __webpack_require__(682);
+/*
+  Generated class for the KeycloakServiceProvider provider.
+
+  See https://angular.io/docs/ts/latest/guide/dependency-injection.html
+  for more info on providers and Angular DI.
+*/
+var KeycloakServiceProvider = KeycloakServiceProvider_1 = (function () {
+    function KeycloakServiceProvider(http) {
+        this.http = http;
+    }
+    /**
+     * Initialise the Keycloak Client Adapter
+     */
+    KeycloakServiceProvider.init = function () {
+        // Create a new Keycloak Client Instance
+        var keycloakAuth = new Keycloak(keycloakConfig);
+        return new Promise(function (resolve, reject) {
+            keycloakAuth.init({ onLoad: 'login-required', flow: 'implicit' }).success(function () {
+                KeycloakServiceProvider_1.auth.authz = keycloakAuth;
+                KeycloakServiceProvider_1.auth.logoutUrl = keycloakAuth.authServerUrl + "/realms/keypress/protocol/openid-connect/logout?redirect_uri=/";
+                resolve();
+            }).error(function (err) {
+                reject(err);
+            });
+        });
+    };
+    /**
+     * Redirect to logout
+     */
+    KeycloakServiceProvider.prototype.logout = function () {
+        KeycloakServiceProvider_1.auth.authz.logout();
+    };
+    /**
+     * Redirect to Login
+     */
+    KeycloakServiceProvider.prototype.login = function () {
+        KeycloakServiceProvider_1.auth.authz.login();
+    };
+    /**
+     * Clears Authentication State
+     */
+    KeycloakServiceProvider.prototype.clearToken = function () {
+        KeycloakServiceProvider_1.auth.authz.clearToken();
+    };
+    /**
+     * Return the users realm level roles
+     */
+    KeycloakServiceProvider.prototype.getRealmRoles = function () {
+        return KeycloakServiceProvider_1.auth.authz.realmAccess.roles;
+    };
+    /**
+     * Check if the user has a specified realm role
+     */
+    KeycloakServiceProvider.prototype.hasRealmRole = function (role) {
+        return KeycloakServiceProvider_1.auth.authz.hasRealmRole(role);
+    };
+    /**
+     * Get Server/Open ID Connect specific server info
+     */
+    KeycloakServiceProvider.prototype.getConfiguration = function () {
+        var notAvailable = "N/A";
+        return {
+            "authServerUrl": KeycloakServiceProvider_1.auth.authz.authServerUrl ? KeycloakServiceProvider_1.auth.authz.authServerUrl : notAvailable,
+            "openIdFlow": KeycloakServiceProvider_1.auth.authz.flow ? KeycloakServiceProvider_1.auth.authz.flow : notAvailable,
+            "openIdResponseMode": KeycloakServiceProvider_1.auth.authz.responseMode ? KeycloakServiceProvider_1.auth.authz.responseMode : notAvailable,
+            "openIdResponseType": KeycloakServiceProvider_1.auth.authz.responseType ? KeycloakServiceProvider_1.auth.authz.responseType : notAvailable,
+            "realm": KeycloakServiceProvider_1.auth.authz.realm ? KeycloakServiceProvider_1.auth.authz.realm : notAvailable,
+            "clientId": KeycloakServiceProvider_1.auth.authz.clientId ? KeycloakServiceProvider_1.auth.authz.clientId : notAvailable,
+            "timeSkew": KeycloakServiceProvider_1.auth.authz.timeSkew ? KeycloakServiceProvider_1.auth.authz.timeSkew : notAvailable
+        };
+    };
+    /**
+     * Redirects to the Account Management Console
+     */
+    KeycloakServiceProvider.prototype.accountManagement = function () {
+        KeycloakServiceProvider_1.auth.authz.accountManagement();
+    };
+    /**
+     * Get the users profile
+     */
+    KeycloakServiceProvider.prototype.loadUserProfile = function () {
+        // Retrieve User Profile
+        return new Promise(function (resolve, reject) {
+            KeycloakServiceProvider_1.auth.authz.loadUserProfile().success(function (profile) {
+                resolve(profile);
+            }).error(function () {
+                reject('Failed to retrieve user profile');
+            });
+        });
+    };
+    /**
+     * Check if the user has a given role
+     * @param role The role to check if the user posesses
+     */
+    KeycloakServiceProvider.prototype.viewGuard = function (role) {
+        if (KeycloakServiceProvider_1.auth.authz.hasRealmRole(role)) {
+            return true;
+        }
+        else {
+            //this.alertCtrl.create({title: 'Access Denied', subTitle: "You don't have access to the requested resource."}).present();
+            return false;
+        }
+    };
+    return KeycloakServiceProvider;
+}());
+KeycloakServiceProvider.auth = {};
+KeycloakServiceProvider = KeycloakServiceProvider_1 = __decorate([
+    Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Injectable"])(),
+    __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1__angular_http__["a" /* Http */]])
+], KeycloakServiceProvider);
+
+var KeycloakServiceProvider_1;
+//# sourceMappingURL=keycloak-service.js.map
+
+/***/ }),
+
+/***/ 222:
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return Keycloak2Provider; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(1);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_http__ = __webpack_require__(54);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_rxjs_add_operator_map__ = __webpack_require__(110);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_rxjs_add_operator_map___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_rxjs_add_operator_map__);
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+
+
+
+/*
+  Generated class for the Keycloak2Provider provider.
+
+  See https://angular.io/docs/ts/latest/guide/dependency-injection.html
+  for more info on providers and Angular DI.
+*/
+var Keycloak2Provider = Keycloak2Provider_1 = (function () {
+    function Keycloak2Provider(http) {
+        this.http = http;
+    }
+    Keycloak2Provider.init = function () {
+        var keycloakAuth = Keycloak({
+            "realm": "qipai",
+            "url": "http://52.80.11.196:9090/auth",
+            "clientId": "qipaipm",
+            "enable-cors": true,
+            "ssl-required": "external",
+            "sessionId": "1619f21c-0292-4b9d-9e1c-dcd0fdd1a2a8",
+            "publicClient": true,
+            "use-resource-role-mappings": true,
+            "bearer-only": false,
+        });
+        Keycloak2Provider_1.auth.loggedIn = false;
+        return new Promise(function (resolve, reject) {
+            keycloakAuth.init({ onLoad: 'login-required', checkLoginIframeInterval: 1, checkLoginIframe: true })
+                .success(function () {
+                console.log(keycloakAuth);
+                if (keycloakAuth.authenticated) {
+                    console.log(keycloakAuth.tokenParsed);
+                }
+                else {
+                    console.log("未认证");
+                }
+                Keycloak2Provider_1.auth.loggedIn = true;
+                Keycloak2Provider_1.auth.authz = keycloakAuth;
+                Keycloak2Provider_1.auth.logoutUrl = keycloakAuth.authServerUrl
+                    + '/realms/afiliamedica/protocol/openid-connect/logout?redirect_uri='
+                    + document.baseURI;
+                resolve();
+            })
+                .error(function () {
+                reject();
+            });
+        });
+    };
+    Keycloak2Provider.prototype.logout = function () {
+        Keycloak2Provider_1.auth.authz.logout();
+        Keycloak2Provider_1.auth.loggedIn = false;
+        Keycloak2Provider_1.auth.authz = null;
+        //window.location.href = KeycloakService.auth.logoutUrl;
+    };
+    Keycloak2Provider.prototype.getToken = function () {
+        return new Promise(function (resolve, reject) {
+            if (Keycloak2Provider_1.auth.authz.token) {
+                Keycloak2Provider_1.auth.authz
+                    .updateToken(5)
+                    .success(function () {
+                    resolve(Keycloak2Provider_1.auth.authz.token);
+                })
+                    .error(function () {
+                    reject('Failed to refresh token');
+                });
+            }
+            else {
+                reject('Not loggen in');
+            }
+        });
+    };
+    return Keycloak2Provider;
+}());
+Keycloak2Provider.auth = {};
+Keycloak2Provider = Keycloak2Provider_1 = __decorate([
+    Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Injectable"])(),
+    __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1__angular_http__["a" /* Http */]])
+], Keycloak2Provider);
+
+var Keycloak2Provider_1;
+//# sourceMappingURL=keycloak2.js.map
+
+/***/ }),
+
+/***/ 266:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return HomePage; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(13);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__project_create_project_create__ = __webpack_require__(103);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__project_detail_project_detail__ = __webpack_require__(106);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__search_search__ = __webpack_require__(201);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__app_app_service__ = __webpack_require__(21);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(1);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(12);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__project_create_project_create__ = __webpack_require__(135);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__project_detail_project_detail__ = __webpack_require__(138);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__search_search__ = __webpack_require__(267);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__app_app_service__ = __webpack_require__(36);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__app_app_config__ = __webpack_require__(27);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -1069,62 +1602,52 @@ var HomePage = (function () {
         this.navCtrl = navCtrl;
         this.appService = appService;
         this.events = events;
-        this.projects = [];
         this.type = 1;
         this.namevalue = "appname-list";
+        this.projects = [];
+        this.projectsOnMonth = [];
+        this.currentDate = "";
     }
     HomePage.prototype.ionViewDidLoad = function () {
         var _this = this;
-        this.events.subscribe('homeCreateProject', function (project) {
-            var isIn = false;
-            for (var i = 0; i < _this.projects.length; i++) {
-                var p = _this.projects[i];
-                if (p.id == project.id) {
-                    isIn = true;
-                    _this.projects.splice(i, 1, project);
-                    break;
-                }
-            }
-            if (isIn == false) {
-                _this.projects.push(project);
-            }
-        });
-        this.events.subscribe('homeDeleteProject', function (project) {
-            for (var i = 0; i < _this.projects.length; i++) {
-                var p = _this.projects[i];
-                if (p.id == project.id) {
-                    _this.projects.splice(i, 1);
-                    break;
-                }
-            }
-        });
-        this.events.subscribe('homeEditProject', function (project) {
-            for (var i = 0; i < _this.projects.length; i++) {
-                var p = _this.projects[i];
-                if (p.id == project.id) {
-                    _this.projects.splice(i, 1, project);
-                    break;
-                }
-            }
+        this.events.subscribe('homeProjectReload', function () {
+            _this.reloadProjectList(_this.currentDate);
         });
     };
     HomePage.prototype.ionViewWillUnload = function () {
-        this.events.unsubscribe('homeCreateProject');
-        this.events.unsubscribe('homeDeleteProject');
-        this.events.unsubscribe('homeEditProject');
+        this.events.unsubscribe('homeProjectReload');
     };
     HomePage.prototype.onChangeDate = function () {
     };
     HomePage.prototype.onSelectDate = function (date) {
         if (date instanceof Date) {
             var dateString = __WEBPACK_IMPORTED_MODULE_6__app_app_config__["a" /* AppConfig */].dateToString(date);
-            this.appService.httpGet("item/searchByContion", { "startTime": dateString, "endTime": dateString, "page": 1, "limit": 100 }, this, function (view, res) {
-                var data = res.json();
-                if (data.success == true) {
-                    view.projects = data.data;
-                    console.log(view.projects);
-                }
-            }, true);
+            this.currentDate = dateString;
+            this.reloadProjectList(dateString);
+        }
+    };
+    HomePage.prototype.onChangeMonthProject = function (dayHasProjects) {
+        this.projectsOnMonth = dayHasProjects;
+    };
+    HomePage.prototype.reloadProjectList = function (dateString) {
+        this.events.publish('onGetProjectDate');
+        this.projects = [];
+        this.appService.httpGet("item/searchByCondition", { "itemStartTime": dateString, "endTime": dateString, "itemIsEnd": "0", "page": 1, "limit": 100 }, this, function (view, res) {
+            var data = res.json();
+            if (data.success == true) {
+                view.projects = data.data;
+                console.log(view.projects);
+            }
+        }, true);
+    };
+    HomePage.prototype.sortPorjects = function (oldArray) {
+        for (var i = 0; i < oldArray.length(); i++) {
+            var pp = oldArray[i];
+            if (pp.itemIsEnd == true) {
+                pp.itemState = "07010040";
+            }
+            else {
+            }
         }
     };
     HomePage.prototype.onChangeType = function ($event) {
@@ -1153,25 +1676,25 @@ var HomePage = (function () {
     return HomePage;
 }());
 HomePage = __decorate([
-    Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["n" /* Component */])({
-        selector: 'page-home',template:/*ion-inline-start:"/Users/zhaoliangchen/Desktop/qipaipm-company/src/pages/home/home.html"*/'<ion-header>\n  <ion-navbar>\n    <ion-title>\n\n    </ion-title>\n    <ion-buttons end >\n      <button ion-button (click)="onChangeType($event)" id="btMode">\n        <ion-icon style="color: #fc5c53; margin-right: 10px" name={{namevalue}} >\n        </ion-icon>\n      </button>\n      <button ion-button (click)="onClickSearch()">\n        <ion-icon style="color: #fc5c53; margin-right: 10px" name="appname-search" >\n        </ion-icon>\n      </button>\n      <button ion-button (click)="onCreateProject()">\n        <ion-icon style="color: #fc5c53; margin-right: 5px" name="appname-add" >\n        </ion-icon>\n      </button>\n    </ion-buttons>\n  </ion-navbar>\n</ion-header>\n\n<ion-content fullscreen>\n  <div *ngIf="type==1" no-padding no-margin>\n    <calendar (onChange)="onSelectDate($event)">\n\n    </calendar>\n\n    <div style="margin-top: 10px; height: 1px; background-color: #c5c6c7; width: 100%"></div>\n    <ion-item (click)="onClickProject(project)" *ngFor="let project of projects">\n      <ion-label no-padding no-margin text-center float-left [ngClass]="{\'circle_nostart\':project.itemState==\'未启动\',\'circle_ing\':project.itemState==\'进行中\',\'circle_end\':project.itemState==\'已结束\',\'circle_other\':project.itemState==\'\'}">{{project.itemLevel}}</ion-label>\n      <!--<div [ngClass]="{\'circle_nostart\':project.itemState==\'未启动\',\'circle_ing\':project.itemState==\'进行中\',\'circle_end\':project.itemState==\'已结束\'}"></div>-->\n      <ion-label no-padding no-margin float-left class="pj-name">{{project.itemName}}</ion-label>\n    </ion-item>\n  </div>\n  <div *ngIf="type==2" no-padding no-margin>\n    <div no-margin no-padding style="background-color: #ececec; height: 50px; position: relative">\n      <ion-label no-margin no-padding float-left style="line-height: 50px">开始日期</ion-label>\n      <ion-label no-margin no-padding float-left style="margin-left: 10px; line-height: 50px">项目名称</ion-label>\n      <div float-end style="position: relative; width: 120px; height: 100%">\n        <div no-margin no-padding style="top: 5px; position: absolute; right: 0px">\n          <div style="float: left">\n            <div style="width: 10px; height: 10px; background-color: green; float: left"></div>\n            <ion-label float-left no-margin no-padding style="line-height: 12px">进行中</ion-label>\n          </div>\n          <div style="float: right">\n            <div style="width: 10px; height: 10px; background-color: gray; float: left"></div>\n            <ion-label float-left no-margin no-padding style="line-height: 12px">未开始</ion-label>\n          </div>\n        </div>\n        <div no-margin no-padding style="bottom: 5px; position: absolute; right: 0px">\n          <div style="float: left">\n            <div style="width: 10px; height: 10px; background-color: #fc780e; float: left"></div>\n            <ion-label float-left no-margin no-padding style="line-height: 12px">延期中</ion-label>\n          </div>\n          <div style="float: right">\n            <div style="width: 10px; height: 10px; background-color: gray; float: left"></div>\n            <ion-label float-left no-margin no-padding style="line-height: 12px">已完成</ion-label>\n          </div>\n        </div>\n      </div>\n    </div>\n    <div *ngFor="let project of projects" style="position: relative; height: 50px; border-bottom: solid 1px #ececec" (click)="onClickProject(project)">\n      <ion-label float-left no-margin no-padding class="list_day">{{project.itemStartTime | DayPipe}}</ion-label>\n      <ion-label float-left no-margin no-padding class="list_weekday">{{project.itemStartTime | WeekayPipe}}</ion-label>\n      <ion-label float-left no-margin no-padding text-center [ngClass]="{\'list_level_nostart\':project.itemState==\'未启动\',\'list_level_ing\':project.itemState==\'进行中\',\'list_level_end\':project.itemState==\'已结束\',\'list_level_nostart\':project.itemState==\'\'}">{{project.itemLevel}}</ion-label>\n      <ion-label float-left no-margin no-padding class="list_itemname">{{project.itemName}}</ion-label>\n    </div>\n  </div>\n</ion-content>\n'/*ion-inline-end:"/Users/zhaoliangchen/Desktop/qipaipm-company/src/pages/home/home.html"*/
+    Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Component"])({
+        selector: 'page-home',template:/*ion-inline-start:"/Users/zhaoliangchen/Desktop/qipaipm-company/src/pages/home/home.html"*/'<ion-header>\n  <ion-navbar>\n    <ion-title>\n\n    </ion-title>\n    <ion-buttons end >\n      <button ion-button (click)="onChangeType($event)" id="btMode">\n        <ion-icon style="color: #fc5c53; margin-right: 10px" name={{namevalue}} >\n        </ion-icon>\n      </button>\n      <button ion-button (click)="onClickSearch()">\n        <ion-icon style="color: #fc5c53; margin-right: 10px" name="appname-search" >\n        </ion-icon>\n      </button>\n      <button ion-button (click)="onCreateProject()">\n        <ion-icon style="color: #fc5c53; margin-right: 5px" name="appname-add" >\n        </ion-icon>\n      </button>\n    </ion-buttons>\n  </ion-navbar>\n</ion-header>\n\n<ion-content fullscreen>\n  <div [hidden]="type==2" no-padding no-margin>\n    <calendar id="calendar" (onChange)="onSelectDate($event)" (onChangeMonth)="onChangeMonthProject($event)">\n\n    </calendar>\n\n    <div style="margin-top: 10px; height: 1px; background-color: #c5c6c7; width: 100%"></div>\n    <ion-item (click)="onClickProject(project)" *ngFor="let project of projects">\n      <ion-label no-padding no-margin text-center float-left\n                 [ngClass]="{\'circle_home\':1===1,\'nostart\':project.itemState==\'07010010\',\'ing\':project.itemState==\'07010020\'|| project.itemState==\'07010030\',\'end\':project.itemState==\'07010040\'}">{{project.itemLevel}}</ion-label>\n          <!--<div [ngClass]="{\'circle_nostart\':project.itemState==\'未启动\',\'circle_ing\':project.itemState==\'进行中\',\'circle_end\':project.itemState==\'已结束\'}"></div>-->\n        <ion-label no-padding no-margin float-left class="pj-name" [ngStyle]="{\'color\':project.itemState==\'07010030\'?\'#fc780e\':\'black\'}">{{project.itemName}}</ion-label>\n        </ion-item>\n      </div>\n    <div [hidden]="type==1" no-padding no-margin>\n      <div no-margin no-padding style="background-color: #ececec; height: 50px">\n        <ion-label no-margin no-padding float-left style="margin-left: 10px; line-height: 50px">开始日期</ion-label>\n        <ion-label no-margin no-padding float-left style="margin-left: 50px; line-height: 50px">项目名称</ion-label>\n        <div float-end style="position: relative; width: 120px; height: 100%">\n          <div no-margin no-padding style="position:absolute; top: 4px; right: 10px; height: 40%; width: 100%">\n            <div style="float: left">\n              <div style="width: 10px; height: 10px; background-color: #fc780e; float: left"></div>\n              <ion-label float-left no-margin no-padding style="line-height: 12px">进行中</ion-label>\n            </div>\n            <div style="float: right">\n              <div style="width: 10px; height: 10px; background-color: #10c619; float: left"></div>\n              <ion-label float-left no-margin no-padding style="line-height: 12px">未开始</ion-label>\n            </div>\n          </div>\n          <div no-margin no-padding style="position:absolute; bottom: 0px; right: 10px; height: 40%; width: 100%">\n            <div style="float: left">\n              <div style="width: 10px; height: 10px; background-color: #fc780e; float: left"></div>\n              <ion-label float-left no-margin no-padding style="line-height: 12px">延期中</ion-label>\n            </div>\n           <div style="float: right">\n            <div style="width: 10px; height: 10px; background-color: #c1c8d2; float: left"></div>\n            <ion-label float-left no-margin no-padding style="line-height: 12px">已完成</ion-label>\n          </div>\n        </div>\n      </div>\n    </div>\n    <div *ngFor="let project of projectsOnMonth" style="position: relative; height: 50px; border-bottom: solid 1px #ececec" (click)="onClickProject(project)">\n      <ion-label float-left no-margin no-padding class="list_day">{{project.itemStartTime | DayPipe}}</ion-label>\n      <ion-label float-left no-margin no-padding class="list_weekday">{{project.itemStartTime | WeekayPipe}}</ion-label>\n      <ion-label float-left no-margin no-padding text-center\n          [ngClass]="{\'list_circle\':1===1,\'nostart\':project.itemState==\'07010010\',\'ing\':project.itemState==\'07010020\'|| project.itemState==\'07010030\',\'end\':project.itemState==\'07010040\'}">{{project.itemLevel}}</ion-label>\n      <ion-label float-left no-margin no-padding class="list_itemname">{{project.itemName}}</ion-label>\n    </div>\n  </div>\n</ion-content>\n'/*ion-inline-end:"/Users/zhaoliangchen/Desktop/qipaipm-company/src/pages/home/home.html"*/
     }),
-    __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["k" /* NavController */], __WEBPACK_IMPORTED_MODULE_5__app_app_service__["a" /* AppService */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["d" /* Events */]])
+    __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["NavController"], __WEBPACK_IMPORTED_MODULE_5__app_app_service__["a" /* AppService */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["Events"]])
 ], HomePage);
 
 //# sourceMappingURL=home.js.map
 
 /***/ }),
 
-/***/ 201:
+/***/ 267:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return SearchPage; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(13);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__app_app_service__ = __webpack_require__(21);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__project_detail_project_detail__ = __webpack_require__(106);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(1);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(12);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__app_app_service__ = __webpack_require__(36);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__project_detail_project_detail__ = __webpack_require__(138);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -1271,40 +1794,176 @@ var SearchPage = (function () {
     return SearchPage;
 }());
 SearchPage = __decorate([
-    Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["n" /* Component */])({
+    Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Component"])({
         selector: 'page-search',template:/*ion-inline-start:"/Users/zhaoliangchen/Desktop/qipaipm-company/src/pages/search/search.html"*/'<!--\n  Generated template for the SearchPage page.\n\n  See http://ionicframework.com/docs/components/#navigation for more info on\n  Ionic pages and navigation.\n-->\n<ion-header>\n  <ion-navbar>\n    <form (submit)="onSearch($event)">\n      <ion-searchbar placeholder="搜索项目名称" [(ngModel)]=searchValue\n                     [showCancelButton]="false"\n                     (ionInput)="onSearchInput($event)"\n                     (ionCancel)="onSearchCancel($event)"\n                      name="itemName">\n      </ion-searchbar>\n    </form>\n  </ion-navbar>\n  <!--<div class="head" >-->\n    <!--<div class="icon-left" (click)="goBack()">-->\n      <!--<ion-icon name="arrow-back" ></ion-icon>-->\n    <!--</div>-->\n    <!--<div class="searchcotain">-->\n      <!--<div class="searchmain">-->\n        <!--<div class="searchicon"><ion-icon name="search"></ion-icon></div>-->\n        <!--<div class="searchinput"><input type="text" placeholder="搜索"></div>-->\n      <!--</div>-->\n    <!--</div>-->\n    <!--<div class="icon-rightnew">-->\n      <!--<a>搜索</a>-->\n    <!--</div>-->\n  <!--</div>-->\n</ion-header>\n\n<ion-content fullscreen>\n    <div *ngFor="let dic of array">\n      <div style="background-color: #f5f6f7; height: 20px;padding-left: 5px">{{dic.year+"年"}}</div>\n      <div style="height: 44px; border-bottom: solid 1px #f5f6f7; position:relative;" *ngFor="let project of dic.projects" (click)="onClickProject($event,project)">\n        <ion-label no-padding no-margin float-left class="vertical_center" style="left: 5px">{{project.itemStartTime | MonthPipe}}</ion-label>\n        <ion-label no-padding no-margin float-right class="vertical_center" style="right: 5px;">{{project.itemName}}</ion-label>\n      </div>\n    </div>\n</ion-content>\n'/*ion-inline-end:"/Users/zhaoliangchen/Desktop/qipaipm-company/src/pages/search/search.html"*/,
     }),
-    __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["k" /* NavController */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["l" /* NavParams */], __WEBPACK_IMPORTED_MODULE_2__app_app_service__["a" /* AppService */]])
+    __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["NavController"], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["NavParams"], __WEBPACK_IMPORTED_MODULE_2__app_app_service__["a" /* AppService */]])
 ], SearchPage);
 
 //# sourceMappingURL=search.js.map
 
 /***/ }),
 
-/***/ 202:
+/***/ 27:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_platform_browser_dynamic__ = __webpack_require__(203);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__app_module__ = __webpack_require__(221);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return AppConfig; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_common__ = __webpack_require__(33);
 
+var AppConfig = (function () {
+    function AppConfig() {
+    }
+    //测试环境URL
+    AppConfig.getBaseUrl = function () {
+        return "http://192.168.72.224:8080/pm/";
+    };
+    //获取设备高度
+    AppConfig.getWindowHeight = function () {
+        return window.screen.height;
+    };
+    //获取设备宽度
+    AppConfig.getWindowWidth = function () {
+        return window.screen.width;
+    };
+    /**
+     * 日期对象转为日期字符串
+     * @param date 需要格式化的日期对象
+     * @param sFormat 输出格式,默认为yyyy-MM-dd                        年：y，月：M，日：d，时：h，分：m，秒：s
+     * @example  dateFormat(new Date())                               "2017-02-28"
+     * @example  dateFormat(new Date(),'yyyy-MM-dd')                  "2017-02-28"
+     * @example  dateFormat(new Date(),'yyyy-MM-dd HH:mm:ss')         "2017-02-28 13:24:00"   ps:HH:24小时制
+     * @example  dateFormat(new Date(),'yyyy-MM-dd hh:mm:ss')         "2017-02-28 01:24:00"   ps:hh:12小时制
+     * @example  dateFormat(new Date(),'hh:mm')                       "09:24"
+     * @example  dateFormat(new Date(),'yyyy-MM-ddTHH:mm:ss+08:00')   "2017-02-28T13:24:00+08:00"
+     * @example  dateFormat(new Date('2017-02-28 13:24:00'),'yyyy-MM-ddTHH:mm:ss+08:00')   "2017-02-28T13:24:00+08:00"
+     * @returns {string}
+     */
+    AppConfig.dateFormat = function (date, sFormat) {
+        if (sFormat === void 0) { sFormat = 'yyyy-MM-dd'; }
+        var time = {
+            Year: 0,
+            TYear: '0',
+            Month: 0,
+            TMonth: '0',
+            Day: 0,
+            TDay: '0',
+            Hour: 0,
+            THour: '0',
+            hour: 0,
+            Thour: '0',
+            Minute: 0,
+            TMinute: '0',
+            Second: 0,
+            TSecond: '0',
+            Millisecond: 0
+        };
+        time.Year = date.getFullYear();
+        time.TYear = String(time.Year).substr(2);
+        time.Month = date.getMonth() + 1;
+        time.TMonth = time.Month < 10 ? "0" + time.Month : String(time.Month);
+        time.Day = date.getDate();
+        time.TDay = time.Day < 10 ? "0" + time.Day : String(time.Day);
+        time.Hour = date.getHours();
+        time.THour = time.Hour < 10 ? "0" + time.Hour : String(time.Hour);
+        time.hour = time.Hour < 13 ? time.Hour : time.Hour - 12;
+        time.Thour = time.hour < 10 ? "0" + time.hour : String(time.hour);
+        time.Minute = date.getMinutes();
+        time.TMinute = time.Minute < 10 ? "0" + time.Minute : String(time.Minute);
+        time.Second = date.getSeconds();
+        time.TSecond = time.Second < 10 ? "0" + time.Second : String(time.Second);
+        time.Millisecond = date.getMilliseconds();
+        return sFormat.replace(/yyyy/ig, String(time.Year))
+            .replace(/yyy/ig, String(time.Year))
+            .replace(/yy/ig, time.TYear)
+            .replace(/y/ig, time.TYear)
+            .replace(/MM/g, time.TMonth)
+            .replace(/M/g, String(time.Month))
+            .replace(/dd/ig, time.TDay)
+            .replace(/d/ig, String(time.Day))
+            .replace(/HH/g, time.THour)
+            .replace(/H/g, String(time.Hour))
+            .replace(/hh/g, time.Thour)
+            .replace(/h/g, String(time.hour))
+            .replace(/mm/g, time.TMinute)
+            .replace(/m/g, String(time.Minute))
+            .replace(/ss/ig, time.TSecond)
+            .replace(/s/ig, String(time.Second))
+            .replace(/fff/ig, String(time.Millisecond));
+    };
+    AppConfig.stringToDate = function (strTime) {
+        return new Date(Date.parse(strTime.replace(/-/g, "/")));
+    };
+    AppConfig.dateToString = function (date) {
+        return new __WEBPACK_IMPORTED_MODULE_0__angular_common__["c" /* DatePipe */]('en-US').transform(date, 'yyyy-MM-dd');
+    };
+    AppConfig.getDayCountInMonth = function (date) {
+        var m_days = new Array(31, 28 + AppConfig.is_leap(date.getFullYear()), 31, 30, 31, 30, 31, 31, 30, 31, 30, 31);
+        return m_days[date.getMonth()];
+    };
+    AppConfig.is_leap = function (year) {
+        var res;
+        return (year % 100 == 0 ? res = (year % 400 == 0 ? 1 : 0) : res = (year % 4 == 0 ? 1 : 0));
+    };
+    AppConfig.addDate = function (date, days) {
+        var d = new Date(date);
+        d.setDate(d.getDate() + days);
+        var m = d.getMonth() + 1;
+        return d.getFullYear() + '-' + m + '-' + d.getDate();
+    };
+    //时间戳转yyyy-mm-dd
+    AppConfig.timestampToDatestring = function (timestamp) {
+        var date = new Date(timestamp);
+        var y = date.getFullYear();
+        var m = "0" + (date.getMonth() + 1);
+        var d = "0" + date.getDate();
+        return y + "-" + m.substring(m.length - 2, m.length) + "-" + d.substring(d.length - 2, d.length);
+    };
+    //时间戳转date
+    AppConfig.timestampToDate = function (timestamp) {
+        return new Date(timestamp);
+    };
+    /**
+     * 深拷贝
+     */
+    AppConfig.deepCopy = function (originObj) {
+        return originObj ? JSON.parse(JSON.stringify(originObj)) : null;
+    };
+    //把字符串里面的数字都提取出来
+    AppConfig.getNum = function (text) {
+        return text.replace(/[^0-9]/ig, "");
+    };
+    AppConfig.prototype.getNowFormatDate = function () {
+        var date = new Date();
+        var seperator1 = "-";
+        var seperator2 = ":";
+        var month = date.getMonth() + 1;
+        var strDate = date.getDate();
+        var currentdate = date.getFullYear() + seperator1
+            + (month >= 1 && month <= 9) ? "0" : ""
+            + month + seperator1
+            + (strDate >= 1 && strDate <= 9) ? "0" : "" + strDate
+            + " " + date.getHours() + seperator2 + date.getMinutes()
+            + seperator2 + date.getSeconds();
+        return currentdate;
+    };
+    return AppConfig;
+}());
 
-Object(__WEBPACK_IMPORTED_MODULE_0__angular_platform_browser_dynamic__["a" /* platformBrowserDynamic */])().bootstrapModule(__WEBPACK_IMPORTED_MODULE_1__app_module__["a" /* AppModule */]);
-//# sourceMappingURL=main.js.map
+//# sourceMappingURL=app.config.js.map
 
 /***/ }),
 
-/***/ 21:
+/***/ 36:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* unused harmony export AppGlobal */
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return AppService; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_ionic_angular__ = __webpack_require__(13);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_core__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__angular_http__ = __webpack_require__(79);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_rxjs_add_operator_toPromise__ = __webpack_require__(245);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_ionic_angular__ = __webpack_require__(12);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_core__ = __webpack_require__(1);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__angular_http__ = __webpack_require__(54);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_rxjs_add_operator_toPromise__ = __webpack_require__(196);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_rxjs_add_operator_toPromise___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3_rxjs_add_operator_toPromise__);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -1339,7 +1998,7 @@ AppGlobal.API = {
     getDetails: '/api/ionic3/details'
 };
 AppGlobal = __decorate([
-    Object(__WEBPACK_IMPORTED_MODULE_1__angular_core__["B" /* Injectable */])()
+    Object(__WEBPACK_IMPORTED_MODULE_1__angular_core__["Injectable"])()
 ], AppGlobal);
 
 var AppService = (function () {
@@ -1511,37 +2170,137 @@ var AppService = (function () {
     return AppService;
 }());
 AppService = __decorate([
-    Object(__WEBPACK_IMPORTED_MODULE_1__angular_core__["B" /* Injectable */])(),
-    __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_2__angular_http__["a" /* Http */], __WEBPACK_IMPORTED_MODULE_0_ionic_angular__["j" /* LoadingController */], __WEBPACK_IMPORTED_MODULE_0_ionic_angular__["a" /* AlertController */], __WEBPACK_IMPORTED_MODULE_0_ionic_angular__["o" /* ToastController */]])
+    Object(__WEBPACK_IMPORTED_MODULE_1__angular_core__["Injectable"])(),
+    __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_2__angular_http__["a" /* Http */], __WEBPACK_IMPORTED_MODULE_0_ionic_angular__["LoadingController"], __WEBPACK_IMPORTED_MODULE_0_ionic_angular__["AlertController"], __WEBPACK_IMPORTED_MODULE_0_ionic_angular__["ToastController"]])
 ], AppService);
 
 //# sourceMappingURL=app.service.js.map
 
 /***/ }),
 
-/***/ 221:
+/***/ 389:
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return LoginPage; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(1);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(12);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__angular_forms__ = __webpack_require__(21);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__forget_forget__ = __webpack_require__(141);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__providers_keycloak_service_keycloak_service__ = __webpack_require__(221);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__providers_keycloak2_keycloak2__ = __webpack_require__(222);
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+
+
+
+
+
+// import { KeycloakService } from "../../app/keycloak/keycloak.service";
+
+/**
+ * Generated class for the LoginPage page.
+ *
+ * See http://ionicframework.com/docs/components/#navigation for more info
+ * on Ionic pages and navigation.
+ */
+var LoginPage = (function () {
+    function LoginPage(navCtrl, navParams, formBuilder, keycloak, keycloak2) {
+        this.navCtrl = navCtrl;
+        this.navParams = navParams;
+        this.formBuilder = formBuilder;
+        this.keycloak = keycloak;
+        this.keycloak2 = keycloak2;
+        this.errorText = '手机号码错误';
+        this.loginForm = this.formBuilder.group({
+            mobile: ['', __WEBPACK_IMPORTED_MODULE_2__angular_forms__["Validators"].compose([__WEBPACK_IMPORTED_MODULE_2__angular_forms__["Validators"].minLength(11), __WEBPACK_IMPORTED_MODULE_2__angular_forms__["Validators"].maxLength(11), __WEBPACK_IMPORTED_MODULE_2__angular_forms__["Validators"].required, __WEBPACK_IMPORTED_MODULE_2__angular_forms__["Validators"].pattern("^(13[0-9]|15[012356789]|17[03678]|18[0-9]|14[57])[0-9]{8}$")])],
+            password: ['', __WEBPACK_IMPORTED_MODULE_2__angular_forms__["Validators"].compose([__WEBPACK_IMPORTED_MODULE_2__angular_forms__["Validators"].required, __WEBPACK_IMPORTED_MODULE_2__angular_forms__["Validators"].minLength(6), __WEBPACK_IMPORTED_MODULE_2__angular_forms__["Validators"].maxLength(12)])]
+        });
+    }
+    LoginPage.prototype.ionViewDidLoad = function () {
+        // KeycloakServiceProvider.init();
+        __WEBPACK_IMPORTED_MODULE_5__providers_keycloak2_keycloak2__["a" /* Keycloak2Provider */].init()
+            .then(function () {
+            console.log("成功");
+        })
+            .catch(function () {
+            console.log("失败");
+        });
+    };
+    LoginPage.prototype.login = function (value) {
+        //this.keycloak.login();
+    };
+    LoginPage.prototype.onForgetPassword = function ($event) {
+        this.navCtrl.push(__WEBPACK_IMPORTED_MODULE_3__forget_forget__["a" /* ForgetPage */]);
+    };
+    return LoginPage;
+}());
+LoginPage = __decorate([
+    Object(__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["IonicPage"])(),
+    Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Component"])({
+        selector: 'page-login',template:/*ion-inline-start:"/Users/zhaoliangchen/Desktop/qipaipm-company/src/pages/login/login.html"*/'<!--\n  Generated template for the LoginPage page.\n\n  See http://ionicframework.com/docs/components/#navigation for more info on\n  Ionic pages and navigation.\n-->\n\n<ion-content fullscreen>\n  <img class="login_icon" src="../../assets/png/login_logo.png">\n  <form [formGroup]="loginForm" (ngSubmit)="login(loginForm.value)">\n    <div style="margin: 0 30px;">\n      <div class="row">\n        <img class="area" src="../../assets/png/icon_tel.png">\n        <ion-input no-padding no-margin type="text" placeholder="输入手机号" formControlName="mobile" maxlength="11"></ion-input>\n      </div>\n      <div class="row">\n        <img class="area" src="../../assets/png/icon_pw.png">\n        <ion-input no-padding no-margin type="password" placeholder="输入密码" formControlName="password" maxlength="12"></ion-input>\n      </div>\n      <!--<input class="login_input" type="text" formControlName="mobile" placeholder="请输入手机号"/>-->\n      <!--<input class="login_input" type="password" formControlName="password" placeholder="请输入密码"/>-->\n      <!--<div style="width: 80%;height: 30px;margin: 30px auto">-->\n        <!--<p style="float: left; margin-left: 10px; color: red">{{errorText}}</p>-->\n        <!--<button ion-button no-padding no-margin clear style="margin-right: 10px; float: right">忘记密码?</button>-->\n      <!--</div>-->\n      <button ion-button block class="login_btn" type="submit">登录</button>\n    </div>\n  </form>\n  <div style="position: fixed;bottom: 20px;width: 100%">\n    <button ion-button no-border no-padding clear class="forget" (click)="onForgetPassword($event)">忘记密码?</button>\n  </div>\n\n</ion-content>\n'/*ion-inline-end:"/Users/zhaoliangchen/Desktop/qipaipm-company/src/pages/login/login.html"*/,
+    }),
+    __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["NavController"], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["NavParams"],
+        __WEBPACK_IMPORTED_MODULE_2__angular_forms__["FormBuilder"], __WEBPACK_IMPORTED_MODULE_4__providers_keycloak_service_keycloak_service__["a" /* KeycloakServiceProvider */],
+        __WEBPACK_IMPORTED_MODULE_5__providers_keycloak2_keycloak2__["a" /* Keycloak2Provider */]])
+], LoginPage);
+
+//# sourceMappingURL=login.js.map
+
+/***/ }),
+
+/***/ 390:
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_platform_browser_dynamic__ = __webpack_require__(391);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__app_module__ = __webpack_require__(395);
+
+
+Object(__WEBPACK_IMPORTED_MODULE_0__angular_platform_browser_dynamic__["a" /* platformBrowserDynamic */])().bootstrapModule(__WEBPACK_IMPORTED_MODULE_1__app_module__["a" /* AppModule */]);
+//# sourceMappingURL=main.js.map
+
+/***/ }),
+
+/***/ 395:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return AppModule; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_platform_browser__ = __webpack_require__(29);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_core__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_ionic_angular__ = __webpack_require__(13);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__ionic_native_splash_screen__ = __webpack_require__(196);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__ionic_native_status_bar__ = __webpack_require__(198);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__angular_http__ = __webpack_require__(79);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__ionic_native_keyboard__ = __webpack_require__(199);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__app_component__ = __webpack_require__(272);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__pages_home_home__ = __webpack_require__(200);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__pages_project_create_project_create__ = __webpack_require__(103);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__pages_milestone_detail_milestone_detail__ = __webpack_require__(104);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_11__pages_project_detail_project_detail__ = __webpack_require__(106);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_12__pages_subtask_subtask__ = __webpack_require__(105);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_13__pages_search_search__ = __webpack_require__(201);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_14__pages_contact_contact__ = __webpack_require__(42);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_15__components_components_module__ = __webpack_require__(273);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_16__pipes_pipes_module__ = __webpack_require__(276);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_17__app_service__ = __webpack_require__(21);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_platform_browser__ = __webpack_require__(43);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_core__ = __webpack_require__(1);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_ionic_angular__ = __webpack_require__(12);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__ionic_native_splash_screen__ = __webpack_require__(262);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__ionic_native_status_bar__ = __webpack_require__(264);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__angular_http__ = __webpack_require__(54);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__ionic_native_keyboard__ = __webpack_require__(265);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__app_component__ = __webpack_require__(703);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__pages_home_home__ = __webpack_require__(266);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__pages_project_create_project_create__ = __webpack_require__(135);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__pages_milestone_detail_milestone_detail__ = __webpack_require__(136);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_11__pages_project_detail_project_detail__ = __webpack_require__(138);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_12__pages_subtask_subtask__ = __webpack_require__(137);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_13__pages_search_search__ = __webpack_require__(267);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_14__pages_contact_contact__ = __webpack_require__(59);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_15__pages_forget_forget__ = __webpack_require__(141);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_16__pages_newpw_newpw__ = __webpack_require__(140);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_17__components_components_module__ = __webpack_require__(704);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_18_ion2_calendar__ = __webpack_require__(707);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_19_ion_multi_picker__ = __webpack_require__(713);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_19_ion_multi_picker___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_19_ion_multi_picker__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_20__pipes_pipes_module__ = __webpack_require__(716);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_21__app_service__ = __webpack_require__(36);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_22__pages_login_login__ = __webpack_require__(389);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_23__providers_keycloak_service_keycloak_service__ = __webpack_require__(221);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_24__providers_keycloak2_keycloak2__ = __webpack_require__(222);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -1565,9 +2324,16 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 
 
 
+
+
 //组件类
 
+
+
 //pipe类
+
+
+
 
 
 //第三方库
@@ -1577,7 +2343,7 @@ var AppModule = (function () {
     return AppModule;
 }());
 AppModule = __decorate([
-    Object(__WEBPACK_IMPORTED_MODULE_1__angular_core__["L" /* NgModule */])({
+    Object(__WEBPACK_IMPORTED_MODULE_1__angular_core__["NgModule"])({
         declarations: [
             __WEBPACK_IMPORTED_MODULE_7__app_component__["a" /* MyApp */],
             __WEBPACK_IMPORTED_MODULE_8__pages_home_home__["a" /* HomePage */],
@@ -1587,16 +2353,20 @@ AppModule = __decorate([
             __WEBPACK_IMPORTED_MODULE_12__pages_subtask_subtask__["a" /* SubtaskPage */],
             __WEBPACK_IMPORTED_MODULE_13__pages_search_search__["a" /* SearchPage */],
             __WEBPACK_IMPORTED_MODULE_14__pages_contact_contact__["a" /* ContactPage */],
+            __WEBPACK_IMPORTED_MODULE_22__pages_login_login__["a" /* LoginPage */],
+            __WEBPACK_IMPORTED_MODULE_15__pages_forget_forget__["a" /* ForgetPage */],
+            __WEBPACK_IMPORTED_MODULE_16__pages_newpw_newpw__["a" /* NewpwPage */],
             __WEBPACK_IMPORTED_MODULE_11__pages_project_detail_project_detail__["a" /* PopoverPage */],
         ],
         imports: [
             __WEBPACK_IMPORTED_MODULE_0__angular_platform_browser__["a" /* BrowserModule */],
-            __WEBPACK_IMPORTED_MODULE_15__components_components_module__["a" /* ComponentsModule */],
-            __WEBPACK_IMPORTED_MODULE_16__pipes_pipes_module__["a" /* PipesModule */],
+            __WEBPACK_IMPORTED_MODULE_17__components_components_module__["a" /* ComponentsModule */],
+            __WEBPACK_IMPORTED_MODULE_20__pipes_pipes_module__["a" /* PipesModule */],
             __WEBPACK_IMPORTED_MODULE_5__angular_http__["b" /* HttpModule */],
-            __WEBPACK_IMPORTED_MODULE_2_ionic_angular__["g" /* IonicModule */].forRoot(__WEBPACK_IMPORTED_MODULE_7__app_component__["a" /* MyApp */], {
+            __WEBPACK_IMPORTED_MODULE_2_ionic_angular__["IonicModule"].forRoot(__WEBPACK_IMPORTED_MODULE_7__app_component__["a" /* MyApp */], {
                 backButtonText: '',
-                mode: 'ios',
+                backButtonIcon: 'md-arrow-back',
+                //mode: 'ios',
                 tabsHideOnSubPages: true,
                 modalEnter: 'modal-slide-in',
                 modalLeave: 'model-slide-out',
@@ -1604,12 +2374,17 @@ AppModule = __decorate([
                 pageTransition: 'ios-transition' //使用ios页面动画
             }, {
                 links: [
-                    { loadChildren: '../pages/contact/contact.module#ContactPageModule', name: 'ContactPage', segment: 'contact', priority: 'low', defaultHistory: [] }
+                    { loadChildren: '../pages/contact/contact.module#ContactPageModule', name: 'ContactPage', segment: 'contact', priority: 'low', defaultHistory: [] },
+                    { loadChildren: '../pages/newpw/newpw.module#NewpwPageModule', name: 'NewpwPage', segment: 'newpw', priority: 'low', defaultHistory: [] },
+                    { loadChildren: '../pages/forget/forget.module#ForgetPageModule', name: 'ForgetPage', segment: 'forget', priority: 'low', defaultHistory: [] },
+                    { loadChildren: '../pages/login/login.module#LoginPageModule', name: 'LoginPage', segment: 'login', priority: 'low', defaultHistory: [] }
                 ]
             }),
             __WEBPACK_IMPORTED_MODULE_5__angular_http__["c" /* JsonpModule */],
+            __WEBPACK_IMPORTED_MODULE_18_ion2_calendar__["a" /* CalendarModule */],
+            __WEBPACK_IMPORTED_MODULE_19_ion_multi_picker__["MultiPickerModule"],
         ],
-        bootstrap: [__WEBPACK_IMPORTED_MODULE_2_ionic_angular__["e" /* IonicApp */]],
+        bootstrap: [__WEBPACK_IMPORTED_MODULE_2_ionic_angular__["IonicApp"]],
         entryComponents: [
             __WEBPACK_IMPORTED_MODULE_7__app_component__["a" /* MyApp */],
             __WEBPACK_IMPORTED_MODULE_8__pages_home_home__["a" /* HomePage */],
@@ -1619,14 +2394,19 @@ AppModule = __decorate([
             __WEBPACK_IMPORTED_MODULE_12__pages_subtask_subtask__["a" /* SubtaskPage */],
             __WEBPACK_IMPORTED_MODULE_13__pages_search_search__["a" /* SearchPage */],
             __WEBPACK_IMPORTED_MODULE_14__pages_contact_contact__["a" /* ContactPage */],
+            __WEBPACK_IMPORTED_MODULE_22__pages_login_login__["a" /* LoginPage */],
+            __WEBPACK_IMPORTED_MODULE_15__pages_forget_forget__["a" /* ForgetPage */],
+            __WEBPACK_IMPORTED_MODULE_16__pages_newpw_newpw__["a" /* NewpwPage */],
             __WEBPACK_IMPORTED_MODULE_11__pages_project_detail_project_detail__["a" /* PopoverPage */],
         ],
         providers: [
             __WEBPACK_IMPORTED_MODULE_4__ionic_native_status_bar__["a" /* StatusBar */],
             __WEBPACK_IMPORTED_MODULE_3__ionic_native_splash_screen__["a" /* SplashScreen */],
             __WEBPACK_IMPORTED_MODULE_6__ionic_native_keyboard__["a" /* Keyboard */],
-            __WEBPACK_IMPORTED_MODULE_17__app_service__["a" /* AppService */],
-            { provide: __WEBPACK_IMPORTED_MODULE_1__angular_core__["v" /* ErrorHandler */], useClass: __WEBPACK_IMPORTED_MODULE_2_ionic_angular__["f" /* IonicErrorHandler */] }
+            __WEBPACK_IMPORTED_MODULE_21__app_service__["a" /* AppService */],
+            { provide: __WEBPACK_IMPORTED_MODULE_1__angular_core__["ErrorHandler"], useClass: __WEBPACK_IMPORTED_MODULE_2_ionic_angular__["IonicErrorHandler"] },
+            __WEBPACK_IMPORTED_MODULE_23__providers_keycloak_service_keycloak_service__["a" /* KeycloakServiceProvider */],
+            __WEBPACK_IMPORTED_MODULE_24__providers_keycloak2_keycloak2__["a" /* Keycloak2Provider */]
         ]
     })
 ], AppModule);
@@ -1635,1219 +2415,14 @@ AppModule = __decorate([
 
 /***/ }),
 
-/***/ 27:
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return AppConfig; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_common__ = __webpack_require__(22);
-
-var AppConfig = (function () {
-    function AppConfig() {
-    }
-    //测试环境URL
-    AppConfig.getBaseUrl = function () {
-        return "http://192.168.72.224:8080/pm/";
-    };
-    //获取设备高度
-    AppConfig.getWindowHeight = function () {
-        return window.screen.height;
-    };
-    //获取设备宽度
-    AppConfig.getWindowWidth = function () {
-        return window.screen.width;
-    };
-    /**
-     * 日期对象转为日期字符串
-     * @param date 需要格式化的日期对象
-     * @param sFormat 输出格式,默认为yyyy-MM-dd                        年：y，月：M，日：d，时：h，分：m，秒：s
-     * @example  dateFormat(new Date())                               "2017-02-28"
-     * @example  dateFormat(new Date(),'yyyy-MM-dd')                  "2017-02-28"
-     * @example  dateFormat(new Date(),'yyyy-MM-dd HH:mm:ss')         "2017-02-28 13:24:00"   ps:HH:24小时制
-     * @example  dateFormat(new Date(),'yyyy-MM-dd hh:mm:ss')         "2017-02-28 01:24:00"   ps:hh:12小时制
-     * @example  dateFormat(new Date(),'hh:mm')                       "09:24"
-     * @example  dateFormat(new Date(),'yyyy-MM-ddTHH:mm:ss+08:00')   "2017-02-28T13:24:00+08:00"
-     * @example  dateFormat(new Date('2017-02-28 13:24:00'),'yyyy-MM-ddTHH:mm:ss+08:00')   "2017-02-28T13:24:00+08:00"
-     * @returns {string}
-     */
-    AppConfig.dateFormat = function (date, sFormat) {
-        if (sFormat === void 0) { sFormat = 'yyyy-MM-dd'; }
-        var time = {
-            Year: 0,
-            TYear: '0',
-            Month: 0,
-            TMonth: '0',
-            Day: 0,
-            TDay: '0',
-            Hour: 0,
-            THour: '0',
-            hour: 0,
-            Thour: '0',
-            Minute: 0,
-            TMinute: '0',
-            Second: 0,
-            TSecond: '0',
-            Millisecond: 0
-        };
-        time.Year = date.getFullYear();
-        time.TYear = String(time.Year).substr(2);
-        time.Month = date.getMonth() + 1;
-        time.TMonth = time.Month < 10 ? "0" + time.Month : String(time.Month);
-        time.Day = date.getDate();
-        time.TDay = time.Day < 10 ? "0" + time.Day : String(time.Day);
-        time.Hour = date.getHours();
-        time.THour = time.Hour < 10 ? "0" + time.Hour : String(time.Hour);
-        time.hour = time.Hour < 13 ? time.Hour : time.Hour - 12;
-        time.Thour = time.hour < 10 ? "0" + time.hour : String(time.hour);
-        time.Minute = date.getMinutes();
-        time.TMinute = time.Minute < 10 ? "0" + time.Minute : String(time.Minute);
-        time.Second = date.getSeconds();
-        time.TSecond = time.Second < 10 ? "0" + time.Second : String(time.Second);
-        time.Millisecond = date.getMilliseconds();
-        return sFormat.replace(/yyyy/ig, String(time.Year))
-            .replace(/yyy/ig, String(time.Year))
-            .replace(/yy/ig, time.TYear)
-            .replace(/y/ig, time.TYear)
-            .replace(/MM/g, time.TMonth)
-            .replace(/M/g, String(time.Month))
-            .replace(/dd/ig, time.TDay)
-            .replace(/d/ig, String(time.Day))
-            .replace(/HH/g, time.THour)
-            .replace(/H/g, String(time.Hour))
-            .replace(/hh/g, time.Thour)
-            .replace(/h/g, String(time.hour))
-            .replace(/mm/g, time.TMinute)
-            .replace(/m/g, String(time.Minute))
-            .replace(/ss/ig, time.TSecond)
-            .replace(/s/ig, String(time.Second))
-            .replace(/fff/ig, String(time.Millisecond));
-    };
-    AppConfig.stringToDate = function (strTime) {
-        return new Date(Date.parse(strTime.replace(/-/g, "/")));
-    };
-    AppConfig.dateToString = function (date) {
-        return new __WEBPACK_IMPORTED_MODULE_0__angular_common__["c" /* DatePipe */]('en-US').transform(date, 'yyyy-MM-dd');
-    };
-    AppConfig.getDayCountInMonth = function (date) {
-        var m_days = new Array(31, 28 + AppConfig.is_leap(date.getFullYear()), 31, 30, 31, 30, 31, 31, 30, 31, 30, 31);
-        return m_days[date.getMonth()];
-    };
-    AppConfig.is_leap = function (year) {
-        var res;
-        return (year % 100 == 0 ? res = (year % 400 == 0 ? 1 : 0) : res = (year % 4 == 0 ? 1 : 0));
-    };
-    AppConfig.addDate = function (date, days) {
-        var d = new Date(date);
-        d.setDate(d.getDate() + days);
-        var m = d.getMonth() + 1;
-        return d.getFullYear() + '-' + m + '-' + d.getDate();
-    };
-    //时间戳转yyyy-mm-dd
-    AppConfig.timestampToDatestring = function (timestamp) {
-        var date = new Date(timestamp);
-        var y = date.getFullYear();
-        var m = "0" + (date.getMonth() + 1);
-        var d = "0" + date.getDate();
-        return y + "-" + m.substring(m.length - 2, m.length) + "-" + d.substring(d.length - 2, d.length);
-    };
-    /**
-     * 深拷贝
-     */
-    AppConfig.deepCopy = function (originObj) {
-        return originObj ? JSON.parse(JSON.stringify(originObj)) : null;
-    };
-    //把字符串里面的数字都提取出来
-    AppConfig.getNum = function (text) {
-        return text.replace(/[^0-9]/ig, "");
-    };
-    return AppConfig;
-}());
-
-//# sourceMappingURL=app.config.js.map
-
-/***/ }),
-
-/***/ 272:
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return MyApp; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(13);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__ionic_native_status_bar__ = __webpack_require__(198);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__ionic_native_splash_screen__ = __webpack_require__(196);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__ionic_native_keyboard__ = __webpack_require__(199);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__pages_home_home__ = __webpack_require__(200);
-var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
-    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
-    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
-    return c > 3 && r && Object.defineProperty(target, key, r), r;
-};
-var __metadata = (this && this.__metadata) || function (k, v) {
-    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
-};
-
-
-
-
-
-
-var MyApp = (function () {
-    function MyApp(platform, statusBar, splashScreen, 
-        // private storage: Storage,
-        // public geolocation: Geolocation,
-        _config, 
-        // public toastCtrl: ToastController,
-        // public app: App,
-        keyboard) {
-        this._config = _config;
-        this.keyboard = keyboard;
-        this.rootPage = __WEBPACK_IMPORTED_MODULE_5__pages_home_home__["a" /* HomePage */];
-        platform.ready().then(function () {
-            // Okay, so the platform is ready and our plugins are available.
-            // Here you can do any higher level native things you might need.
-            statusBar.styleDefault();
-            splashScreen.hide();
-        });
-        this.keyboard.hideKeyboardAccessoryBar(false);
-        this.keyboard.disableScroll(true); //当输入焦点时，防止本机UIScrollView移动。
-        // if (platform.is('ios')) {
-        //   this.config = {
-        //     'backButtonIcon': 'arrow-back',
-        //     'iconMode': 'ios',
-        //     'tabsPlacement': 'bottom',
-        //     'backButtonText': '',
-        //     'tabsHideOnSubPages': 'true'
-        //   };
-        // } else if (platform.is('windows')) {
-        //   this.config = {
-        //     'backButtonIcon': 'arrow-back',
-        //     'iconMode': 'ios',
-        //     'tabsPlacement': 'top',
-        //     'backButtonText': '',
-        //     'tabsHideOnSubPages': 'true'
-        //   };
-        // } else {
-        //   this.config = {
-        //     'backButtonIcon': 'arrow-back',
-        //     'iconMode': 'md',
-        //     'tabsPlacement': 'bottom',
-        //     'backButtonText': '',
-        //     'tabsHideOnSubPages': 'true'
-        //   };
-        // }
-        // this._config.set('tabsPlacement', this.config.tabsPlacement);
-        // this._config.set('iconMode', this.config.iconMode);
-        // this._config.set('backButtonIcon', this.config.backButtonIcon);
-        // this._config.set('backButtonText', this.config.backButtonText);
-        // this._config.set('tabsHideOnSubPages', this.config.tabsHideOnSubPages);
-    }
-    return MyApp;
-}());
-MyApp = __decorate([
-    Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["n" /* Component */])({template:/*ion-inline-start:"/Users/zhaoliangchen/Desktop/qipaipm-company/src/app/app.html"*/'<ion-nav [root]="rootPage"></ion-nav>\n'/*ion-inline-end:"/Users/zhaoliangchen/Desktop/qipaipm-company/src/app/app.html"*/
-    }),
-    __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["m" /* Platform */], __WEBPACK_IMPORTED_MODULE_2__ionic_native_status_bar__["a" /* StatusBar */], __WEBPACK_IMPORTED_MODULE_3__ionic_native_splash_screen__["a" /* SplashScreen */],
-        __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["b" /* Config */],
-        __WEBPACK_IMPORTED_MODULE_4__ionic_native_keyboard__["a" /* Keyboard */]])
-], MyApp);
-
-//# sourceMappingURL=app.component.js.map
-
-/***/ }),
-
-/***/ 273:
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return ComponentsModule; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(13);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__test_test__ = __webpack_require__(274);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__calendar_calendar__ = __webpack_require__(275);
-var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
-    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
-    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
-    return c > 3 && r && Object.defineProperty(target, key, r), r;
-};
-
-
-
-
-var ComponentsModule = ComponentsModule_1 = (function () {
-    function ComponentsModule() {
-    }
-    return ComponentsModule;
-}());
-ComponentsModule = ComponentsModule_1 = __decorate([
-    Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["L" /* NgModule */])({
-        declarations: [
-            __WEBPACK_IMPORTED_MODULE_2__test_test__["a" /* TestComponent */],
-            __WEBPACK_IMPORTED_MODULE_3__calendar_calendar__["a" /* CalendarComponent */]
-        ],
-        imports: [
-            __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["i" /* IonicPageModule */].forChild(ComponentsModule_1),
-        ],
-        exports: [
-            __WEBPACK_IMPORTED_MODULE_2__test_test__["a" /* TestComponent */],
-            __WEBPACK_IMPORTED_MODULE_3__calendar_calendar__["a" /* CalendarComponent */]
-        ]
-    })
-], ComponentsModule);
-
-var ComponentsModule_1;
-//# sourceMappingURL=components.module.js.map
-
-/***/ }),
-
-/***/ 274:
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return TestComponent; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
-var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
-    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
-    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
-    return c > 3 && r && Object.defineProperty(target, key, r), r;
-};
-var __metadata = (this && this.__metadata) || function (k, v) {
-    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
-};
-
-/**
- * Generated class for the TestComponent component.
- *
- * See https://angular.io/docs/ts/latest/api/core/index/ComponentMetadata-class.html
- * for more info on Angular Components.
- */
-var TestComponent = (function () {
-    function TestComponent() {
-        console.log('Hello TestComponent Component');
-        this.text = 'Hello World';
-    }
-    return TestComponent;
-}());
-TestComponent = __decorate([
-    Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["n" /* Component */])({
-        selector: 'test',template:/*ion-inline-start:"/Users/zhaoliangchen/Desktop/qipaipm-company/src/components/test/test.html"*/'<!-- Generated template for the TestComponent component -->\n<div>\n  {{text}}\n</div>\n'/*ion-inline-end:"/Users/zhaoliangchen/Desktop/qipaipm-company/src/components/test/test.html"*/
-    }),
-    __metadata("design:paramtypes", [])
-], TestComponent);
-
-//# sourceMappingURL=test.js.map
-
-/***/ }),
-
-/***/ 275:
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return CalendarComponent; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_common__ = __webpack_require__(22);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__app_app_service__ = __webpack_require__(21);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__app_app_config__ = __webpack_require__(27);
-var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
-    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
-    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
-    return c > 3 && r && Object.defineProperty(target, key, r), r;
-};
-var __metadata = (this && this.__metadata) || function (k, v) {
-    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
-};
-
-
-
-
-/**
- * Generated class for the CalendarComponent component.
- *
- * See https://angular.io/docs/ts/latest/api/core/index/ComponentMetadata-class.html
- * for more info on Angular Components.
- */
-var CalendarComponent = (function () {
-    function CalendarComponent(datePipe, appService) {
-        this.datePipe = datePipe;
-        this.appService = appService;
-        this.currentDate = new Date();
-        this.events = [];
-        this.disablePastDates = false;
-        this.weekDaysToDisable = [];
-        this.daysToDisable = [];
-        this.useSwipe = false;
-        this.showEventsList = false;
-        this.showTodayButton = false;
-        this.todayText = "转到今天";
-        this.onChange = new __WEBPACK_IMPORTED_MODULE_0__angular_core__["w" /* EventEmitter */]();
-        this.onEventClicked = new __WEBPACK_IMPORTED_MODULE_0__angular_core__["w" /* EventEmitter */]();
-        this.weekDays = ["周日", "周一", "周二", "周三", "周四", "周五", "周六"];
-        this.pastDates = [];
-        this.rows = [];
-        this.dayHasProject = [];
-        this.stop = false;
-        this.todayEvents = [];
-        //this.setUpWeekDaysLabels();
-    }
-    CalendarComponent.prototype.setUpWeekDaysLabels = function () {
-        var date = new Date(2017, 0, 1); /* This date has to be a Sunday */
-        for (var i = 0; i < 7; i++, date.setDate(date.getDate() + 1)) {
-            var str = this.datePipe.transform(date, "EEE");
-            str = str[0].toUpperCase() + str.slice(1);
-            this.weekDays.push(str);
-        }
-    };
-    CalendarComponent.prototype.ngOnChanges = function (changes) {
-        /* If the currentDate was changed outside (in the parent component), we need to call this.calc() */
-        /* But only if the month is changed */
-        if (changes["currentDate"] && !changes["currentDate"].isFirstChange()) {
-            if (changes["currentDate"].currentValue.getMonth() != changes["currentDate"].previousValue.getMonth()) {
-                this.calc();
-            }
-        }
-        if (changes["events"] && !changes["events"].isFirstChange()) {
-            var listToRemoveClasses = document.getElementsByClassName("hasEvents");
-            var n = listToRemoveClasses.length;
-            for (var i = 0; i < n; i++)
-                if (listToRemoveClasses[0])
-                    listToRemoveClasses[0].classList.remove("hasEvents"); /* Using index zero because the object is updated after we remove an item */
-            this.setHasEventsClass();
-            this.showTodayEvents();
-        }
-    };
-    CalendarComponent.prototype.ngAfterViewInit = function () {
-        var _this = this;
-        /* Calls `this.calc()` after receiving an initial date */
-        this.currentDate.setHours(0, 0, 0, 0);
-        setTimeout(function () {
-            _this.calc();
-            _this.updateSelectedDate();
-        });
-    };
-    CalendarComponent.prototype.setHasEventsClass = function () {
-        var firstDayOfTheMonth = new Date(this.currentDate.getFullYear(), this.currentDate.getMonth(), 1);
-        var lastDayOfTheMonth = new Date(this.currentDate.getFullYear(), this.currentDate.getMonth() + 1, 0);
-        if (this.events)
-            this.events.forEach(function (item, index) {
-                if (item.starts.getTime() >= firstDayOfTheMonth.getTime() && item.ends.getTime() < lastDayOfTheMonth.getTime()) {
-                    if (document.getElementById("calendar-day-" + item.starts.getDate()))
-                        document.getElementById("calendar-day-" + item.starts.getDate()).classList.add('hasEvents');
-                }
-            });
-    };
-    CalendarComponent.prototype.setTodayClass = function () {
-        /* Checks if the selected month and year are the current */
-        var tmp = new Date();
-        if (tmp.getFullYear() == this.currentDate.getFullYear() && tmp.getMonth() == this.currentDate.getMonth()) {
-            var element = document.getElementById("calendar-day-" + tmp.getDate());
-            if (element) {
-                element.classList.remove("button-clear", "button-clear-md");
-                element.classList.add("button-outline", "button-outline-md");
-                element.setAttribute("style", "border: solid 1px #ececec");
-            }
-        }
-    };
-    CalendarComponent.prototype.setSelectedClass = function () {
-        /* Removes previous selectedDate class */
-        var listToRemoveClasses1 = document.getElementsByClassName("selected");
-        var n1 = listToRemoveClasses1.length;
-        for (var i = 0; i < n1; i++)
-            listToRemoveClasses1[0].classList.remove("selected"); /* Using index zero because the object is updated after we remove an item */
-        var listToRemoveClasses2 = document.getElementsByClassName("no-selected-dot");
-        var n2 = listToRemoveClasses2.length;
-        for (var i = 0; i < n2; i++)
-            listToRemoveClasses2[0].classList.remove("no-selected-dot");
-        var listToRemoveClasses3 = document.getElementsByClassName("selected-dot");
-        var n3 = listToRemoveClasses3.length;
-        for (var i = 0; i < n3; i++)
-            listToRemoveClasses3[0].classList.remove("selected-dot");
-        var element = document.getElementById("calendar-day-" + this.currentDate.getDate());
-        if (element)
-            element.classList.add("selected");
-        var dateString = __WEBPACK_IMPORTED_MODULE_3__app_app_config__["a" /* AppConfig */].dateToString(this.currentDate);
-        for (var i = 0; i < this.dayHasProject.length; i++) {
-            var object = this.dayHasProject[i];
-            var itemStartTime = object.itemStartTime;
-            var day = itemStartTime.substr(itemStartTime.length - 2, 2);
-            var dot = document.getElementById("dot-" + parseInt(day));
-            if (dot != null) {
-                if (itemStartTime == dateString) {
-                    dot.classList.add("selected-dot");
-                }
-                else {
-                    dot.classList.add("no-selected-dot");
-                }
-            }
-        }
-    };
-    CalendarComponent.prototype.setToday = function () {
-        var tmp = new Date();
-        tmp.setHours(0, 0, 0, 0);
-        var calc = tmp.getMonth() + "" + tmp.getFullYear() != this.currentDate.getMonth() + "" + this.currentDate.getFullYear();
-        this.updateSelectedDate(tmp);
-        calc && this.calc();
-    };
-    /**
-     * Recalculates the rows and columns needed to represent the new month selected
-     */
-    CalendarComponent.prototype.calc = function () {
-        var _this = this;
-        /* Resets the rows */
-        this.rows = [];
-        var tmp = new Date(this.currentDate.getTime());
-        tmp.setDate(1);
-        while (tmp.getMonth() == this.currentDate.getMonth()) {
-            /* Pushes a new empty row */
-            this.rows.push(['', '', '', '', '', '', '']);
-            while (tmp.getDay() < 6 && tmp.getMonth() == this.currentDate.getMonth()) {
-                /* Populates the row only where needed */
-                this.rows[this.rows.length - 1][tmp.getDay()] = tmp.getDate();
-                tmp.setDate(tmp.getDate() + 1);
-            }
-            if (tmp.getMonth() == this.currentDate.getMonth())
-                this.rows[this.rows.length - 1][tmp.getDay()] = tmp.getDate();
-            tmp.setDate(tmp.getDate() + 1);
-        }
-        setTimeout(function () {
-            /* Needs to be executed only after the DOM has been updated */
-            _this.setHasEventsClass();
-            _this.setTodayClass();
-            _this.disableDates();
-            _this.getProjectDate();
-        });
-    };
-    CalendarComponent.prototype.disableDates = function () {
-        // Disabling past dates
-        if (this.disablePastDates) {
-            this.pastDates = [];
-            var today = new Date();
-            // Checks if the current month is being shown
-            if (today.getFullYear() == this.currentDate.getFullYear() && today.getMonth() == this.currentDate.getMonth()) {
-                // If current month is being shown, disable only the past days
-                for (var i = 1; i < today.getDate(); i++) {
-                    this.pastDates.push(i);
-                }
-            }
-            else if (this.currentDate.getTime() < today.getTime()) {
-                // If a previous month is being show (disable all days)
-                for (var i = 1; i <= 31; i++) {
-                    this.pastDates.push(i);
-                }
-            }
-        }
-        // Disable chosen week days
-        if (this.weekDaysToDisable.length) {
-        }
-    };
-    CalendarComponent.prototype.getProjectDate = function () {
-        var dateString = __WEBPACK_IMPORTED_MODULE_3__app_app_config__["a" /* AppConfig */].dateToString(this.currentDate);
-        var dayCount = __WEBPACK_IMPORTED_MODULE_3__app_app_config__["a" /* AppConfig */].getDayCountInMonth(this.currentDate);
-        var firstDate = new Date(this.currentDate.getTime());
-        firstDate.setDate(1);
-        var firstDateString = __WEBPACK_IMPORTED_MODULE_3__app_app_config__["a" /* AppConfig */].dateToString(firstDate);
-        var lastDate = new Date(this.currentDate.getTime());
-        lastDate.setDate(dayCount);
-        var lastDateString = __WEBPACK_IMPORTED_MODULE_3__app_app_config__["a" /* AppConfig */].dateToString(lastDate);
-        var listToRemoveClasses1 = document.getElementsByClassName("no-selected-dot");
-        var n1 = listToRemoveClasses1.length;
-        for (var i = 0; i < n1; i++)
-            listToRemoveClasses1[0].classList.remove("no-selected-dot");
-        var listToRemoveClasses2 = document.getElementsByClassName("selected-dot");
-        var n2 = listToRemoveClasses2.length;
-        for (var i = 0; i < n2; i++)
-            listToRemoveClasses2[0].classList.remove("selected-dot");
-        for (var i = 1; i <= dayCount; i++) {
-            var dot = document.getElementById("dot-" + i);
-            if (dot != null) {
-                dot.style.display = "none";
-            }
-        }
-        this.appService.httpGet("item/searchMonthItem", { "startTime": firstDateString, "endTime": lastDateString }, this, function (view, res) {
-            var data = res.json();
-            if (data.success == true) {
-                view.dayHasProject = data.data;
-                for (var i = 0; i < view.dayHasProject.length; i++) {
-                    var object = view.dayHasProject[i];
-                    var itemStartTime = object.itemStartTime;
-                    var day = itemStartTime.substr(itemStartTime.length - 2, 2);
-                    var dot = document.getElementById("dot-" + parseInt(day));
-                    if (dot != null) {
-                        dot.style.display = "block";
-                        if (itemStartTime == dateString) {
-                            dot.classList.add("selected-dot");
-                        }
-                        else {
-                            dot.classList.add("no-selected-dot");
-                        }
-                    }
-                }
-            }
-        }, false);
-    };
-    /**
-     * Subtracts a month on currentDate
-     */
-    CalendarComponent.prototype.previousMonth = function () {
-        var tmp = new Date(this.currentDate.getFullYear(), this.currentDate.getMonth() - 1, this.currentDate.getDate());
-        /* Prevents skipping a month if the previous month doesn't have the selected day */
-        /* Ex: Mar 31st -> Feb 28th (because Feb doesn't have a 31st) */
-        while (tmp.getMonth() > this.currentDate.getMonth() - 1 && tmp.getFullYear() == this.currentDate.getFullYear()) {
-            tmp.setDate(tmp.getDate() - 1);
-        }
-        this.updateSelectedDate(tmp);
-        this.calc();
-    };
-    /**
-     * Adds a month on currentDate
-     */
-    CalendarComponent.prototype.nextMonth = function () {
-        var tmp = new Date(this.currentDate.getFullYear(), this.currentDate.getMonth() + 1, this.currentDate.getDate());
-        /* Prevents skipping a month if the next month doesn't have the selected day */
-        /* Ex: Jan 31st -> Feb 28th (because Feb doesn't have a 31st) */
-        while (tmp.getMonth() > this.currentDate.getMonth() + 1) {
-            tmp.setDate(tmp.getDate() - 1);
-        }
-        this.updateSelectedDate(tmp);
-        this.calc();
-    };
-    /**
-     * Function fired when a date is clicked
-     * (no need to call this.calc() because the user can't click a date on a different month)
-     * @param day number The day that was clicked
-     */
-    CalendarComponent.prototype.dateClicked = function (day) {
-        var clickedDate = new Date(this.currentDate);
-        clickedDate.setDate(day);
-        this.updateSelectedDate(clickedDate);
-    };
-    CalendarComponent.prototype.updateSelectedDate = function (newDate) {
-        var _this = this;
-        if (newDate === void 0) { newDate = null; }
-        if (newDate) {
-            this.currentDate = newDate;
-        }
-        this.onChange.emit(this.currentDate);
-        setTimeout(function () {
-            _this.showTodayEvents();
-            _this.setSelectedClass();
-        });
-    };
-    CalendarComponent.prototype.showTodayEvents = function () {
-        var _this = this;
-        var tmp = [];
-        /* Checks for events on the new selected date */
-        this.events.forEach(function (item) {
-            var itemDay = new Date(item.starts);
-            itemDay.setHours(0, 0, 0, 0);
-            if (itemDay.getTime() == _this.currentDate.getTime())
-                tmp.push(item);
-        });
-        this.todayEvents = tmp;
-    };
-    CalendarComponent.prototype.eventClicked = function (event) {
-        this.onEventClicked.emit(event);
-    };
-    return CalendarComponent;
-}());
-__decorate([
-    Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["E" /* Input */])('inputDate'),
-    __metadata("design:type", Date)
-], CalendarComponent.prototype, "currentDate", void 0);
-__decorate([
-    Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["E" /* Input */])(),
-    __metadata("design:type", Object)
-], CalendarComponent.prototype, "events", void 0);
-__decorate([
-    Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["E" /* Input */])(),
-    __metadata("design:type", Boolean)
-], CalendarComponent.prototype, "disablePastDates", void 0);
-__decorate([
-    Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["E" /* Input */])(),
-    __metadata("design:type", Array)
-], CalendarComponent.prototype, "weekDaysToDisable", void 0);
-__decorate([
-    Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["E" /* Input */])(),
-    __metadata("design:type", Array)
-], CalendarComponent.prototype, "daysToDisable", void 0);
-__decorate([
-    Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["E" /* Input */])(),
-    __metadata("design:type", Boolean)
-], CalendarComponent.prototype, "useSwipe", void 0);
-__decorate([
-    Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["E" /* Input */])(),
-    __metadata("design:type", Boolean)
-], CalendarComponent.prototype, "showEventsList", void 0);
-__decorate([
-    Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["E" /* Input */])(),
-    __metadata("design:type", Boolean)
-], CalendarComponent.prototype, "showTodayButton", void 0);
-__decorate([
-    Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["E" /* Input */])(),
-    __metadata("design:type", String)
-], CalendarComponent.prototype, "todayText", void 0);
-__decorate([
-    Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["S" /* Output */])(),
-    __metadata("design:type", __WEBPACK_IMPORTED_MODULE_0__angular_core__["w" /* EventEmitter */])
-], CalendarComponent.prototype, "onChange", void 0);
-__decorate([
-    Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["S" /* Output */])(),
-    __metadata("design:type", __WEBPACK_IMPORTED_MODULE_0__angular_core__["w" /* EventEmitter */])
-], CalendarComponent.prototype, "onEventClicked", void 0);
-CalendarComponent = __decorate([
-    Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["n" /* Component */])({
-        selector: 'calendar',template:/*ion-inline-start:"/Users/zhaoliangchen/Desktop/qipaipm-company/src/components/calendar/calendar.html"*/'<!-- Generated template for the CalendarComponent component -->\n<div>\n  <ion-grid no-padding no-margin>\n    <ion-row class="calendar-controls" no-padding no-margin>\n      <ion-col no-padding no-margin text-right class="titleCol">\n        <button ion-button icon-only clear (click)="previousMonth()">\n          <ion-icon name="arrow-back"></ion-icon>\n        </button>\n      </ion-col>\n      <ion-col no-margin no-padding text-center class="selectedDateLabel">\n        <h5 class="selectedMonthLabel">{{ currentDate | date:\'yyyy-MM\' }}</h5>\n        <!--<button *ngIf="showTodayButton" (click)="setToday()" ion-button small outline>{{ todayText }}</button>-->\n      </ion-col>\n      <ion-col no-padding no-margin text-left class="titleCol">\n        <button ion-button icon-only clear (click)="nextMonth()">\n          <ion-icon name="arrow-forward"></ion-icon>\n        </button>\n      </ion-col>\n    </ion-row>\n\n    <ion-row class="calendar-weekDays">\n      <ion-col text-center class="calendar-week-day">\n        {{ weekDays[0] }}\n      </ion-col>\n      <ion-col text-center class="calendar-week-day">\n        {{ weekDays[1] }}\n      </ion-col>\n      <ion-col text-center class="calendar-week-day">\n        {{ weekDays[2] }}\n      </ion-col>\n      <ion-col text-center class="calendar-week-day">\n        {{ weekDays[3] }}\n      </ion-col>\n      <ion-col text-center class="calendar-week-day">\n        {{ weekDays[4] }}\n      </ion-col>\n      <ion-col text-center class="calendar-week-day">\n        {{ weekDays[5] }}\n      </ion-col>\n      <ion-col text-center class="calendar-week-day">\n        {{ weekDays[6] }}\n      </ion-col>\n    </ion-row>\n  </ion-grid>\n\n  <ion-grid (swipeleft)="useSwipe && nextMonth()" (swiperight)="useSwipe && previousMonth()">\n    <ion-row *ngFor="let row of rows" class="calendar-row">\n      <ion-col no-padding *ngFor="let day of row; let i = index" text-center class="calendar-col">\n        <button no-padding block class="calendar-day" *ngIf="day" ion-button clear (click)="dateClicked(day)"\n                id="calendar-day-{{day}}" [disabled]="pastDates.indexOf(day) > -1 || weekDaysToDisable.indexOf(i) > -1 || daysToDisable.indexOf(day) > -1">\n          {{ day }}\n          <div class="dot" id="dot-{{day}}"></div>\n        </button>\n      </ion-col>\n    </ion-row>\n  </ion-grid>\n\n  <!--<ion-list *ngIf="showEventsList">-->\n    <!--<button text-wrap ion-item *ngFor="let event of todayEvents" (click)="eventClicked(event)">-->\n      <!--{{ event.title }}-->\n      <!--<ion-icon name="arrow-forward" hideWhen="ios" item-right></ion-icon>-->\n    <!--</button>-->\n  <!--</ion-list>-->\n</div>\n'/*ion-inline-end:"/Users/zhaoliangchen/Desktop/qipaipm-company/src/components/calendar/calendar.html"*/,
-        providers: [__WEBPACK_IMPORTED_MODULE_1__angular_common__["c" /* DatePipe */]]
-    }),
-    __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1__angular_common__["c" /* DatePipe */], __WEBPACK_IMPORTED_MODULE_2__app_app_service__["a" /* AppService */]])
-], CalendarComponent);
-
-//# sourceMappingURL=calendar.js.map
-
-/***/ }),
-
-/***/ 276:
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return PipesModule; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__pipes_delay_delay__ = __webpack_require__(277);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__pipes_year_year__ = __webpack_require__(278);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__pipes_month_month__ = __webpack_require__(279);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__day_day__ = __webpack_require__(280);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__weekay_weekay__ = __webpack_require__(281);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__year_and_month_year_and_month__ = __webpack_require__(282);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__stamp_to_date_stamp_to_date__ = __webpack_require__(283);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__itemlevel_itemlevel__ = __webpack_require__(284);
-var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
-    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
-    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
-    return c > 3 && r && Object.defineProperty(target, key, r), r;
-};
-
-
-
-
-
-
-
-
-
-var PipesModule = (function () {
-    function PipesModule() {
-    }
-    return PipesModule;
-}());
-PipesModule = __decorate([
-    Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["L" /* NgModule */])({
-        declarations: [
-            __WEBPACK_IMPORTED_MODULE_1__pipes_delay_delay__["a" /* DelayPipe */],
-            __WEBPACK_IMPORTED_MODULE_2__pipes_year_year__["a" /* YearPipe */],
-            __WEBPACK_IMPORTED_MODULE_3__pipes_month_month__["a" /* MonthPipe */],
-            __WEBPACK_IMPORTED_MODULE_4__day_day__["a" /* DayPipe */],
-            __WEBPACK_IMPORTED_MODULE_5__weekay_weekay__["a" /* WeekayPipe */],
-            __WEBPACK_IMPORTED_MODULE_6__year_and_month_year_and_month__["a" /* YearAndMonthPipe */],
-            __WEBPACK_IMPORTED_MODULE_7__stamp_to_date_stamp_to_date__["a" /* StampToDatePipe */],
-            __WEBPACK_IMPORTED_MODULE_8__itemlevel_itemlevel__["a" /* ItemlevelPipe */],
-        ],
-        imports: [],
-        exports: [
-            __WEBPACK_IMPORTED_MODULE_1__pipes_delay_delay__["a" /* DelayPipe */],
-            __WEBPACK_IMPORTED_MODULE_2__pipes_year_year__["a" /* YearPipe */],
-            __WEBPACK_IMPORTED_MODULE_3__pipes_month_month__["a" /* MonthPipe */],
-            __WEBPACK_IMPORTED_MODULE_4__day_day__["a" /* DayPipe */],
-            __WEBPACK_IMPORTED_MODULE_5__weekay_weekay__["a" /* WeekayPipe */],
-            __WEBPACK_IMPORTED_MODULE_6__year_and_month_year_and_month__["a" /* YearAndMonthPipe */],
-            __WEBPACK_IMPORTED_MODULE_7__stamp_to_date_stamp_to_date__["a" /* StampToDatePipe */],
-            __WEBPACK_IMPORTED_MODULE_8__itemlevel_itemlevel__["a" /* ItemlevelPipe */],
-        ]
-    })
-], PipesModule);
-
-//# sourceMappingURL=pipes.module.js.map
-
-/***/ }),
-
-/***/ 277:
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return DelayPipe; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
-var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
-    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
-    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
-    return c > 3 && r && Object.defineProperty(target, key, r), r;
-};
-
-/**
- * Generated class for the DelayPipe pipe.
- *
- * See https://angular.io/docs/ts/latest/guide/pipes.html for more info on
- * Angular Pipes.
- */
-var DelayPipe = (function () {
-    function DelayPipe() {
-    }
-    /**
-     * Takes a value and makes it lowercase.
-     */
-    DelayPipe.prototype.transform = function (value) {
-        var args = [];
-        for (var _i = 1; _i < arguments.length; _i++) {
-            args[_i - 1] = arguments[_i];
-        }
-        var j;
-        if (typeof (value) == "string") {
-            j = parseInt(value);
-        }
-        else {
-            j = value;
-        }
-        if (j < 1) {
-            return '无延迟';
-        }
-        else {
-            return '延迟' + j + '天';
-        }
-    };
-    return DelayPipe;
-}());
-DelayPipe = __decorate([
-    Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["W" /* Pipe */])({
-        name: 'delayPipe',
-    })
-], DelayPipe);
-
-//# sourceMappingURL=delay.js.map
-
-/***/ }),
-
-/***/ 278:
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return YearPipe; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__app_app_config__ = __webpack_require__(27);
-var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
-    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
-    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
-    return c > 3 && r && Object.defineProperty(target, key, r), r;
-};
-
-
-/**
- * Generated class for the YearPipe pipe.
- *
- * See https://angular.io/docs/ts/latest/guide/pipes.html for more info on
- * Angular Pipes.
- */
-var YearPipe = (function () {
-    function YearPipe() {
-    }
-    /**
-     * Takes a value and makes it lowercase.
-     */
-    YearPipe.prototype.transform = function (value) {
-        var args = [];
-        for (var _i = 1; _i < arguments.length; _i++) {
-            args[_i - 1] = arguments[_i];
-        }
-        if (typeof (value) != "string") {
-            if (typeof (value) == "number") {
-                if (__WEBPACK_IMPORTED_MODULE_1__app_app_config__["a" /* AppConfig */].timestampToDatestring(value).length < 10) {
-                    return "未知日期";
-                }
-                else {
-                    return __WEBPACK_IMPORTED_MODULE_1__app_app_config__["a" /* AppConfig */].timestampToDatestring(value).substr(0, 4);
-                }
-            }
-            else {
-                return "未知日期";
-            }
-        }
-        if (value == null || value.length < 4) {
-            return "未知日期";
-        }
-        return value.substr(0, 4);
-    };
-    return YearPipe;
-}());
-YearPipe = __decorate([
-    Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["W" /* Pipe */])({
-        name: 'YearPipe',
-    })
-], YearPipe);
-
-//# sourceMappingURL=year.js.map
-
-/***/ }),
-
-/***/ 279:
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return MonthPipe; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__app_app_config__ = __webpack_require__(27);
-var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
-    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
-    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
-    return c > 3 && r && Object.defineProperty(target, key, r), r;
-};
-
-
-/**
- * Generated class for the MonthPipe pipe.
- *
- * See https://angular.io/docs/ts/latest/guide/pipes.html for more info on
- * Angular Pipes.
- */
-var MonthPipe = (function () {
-    function MonthPipe() {
-    }
-    /**
-     * Takes a value and makes it lowercase.
-     */
-    MonthPipe.prototype.transform = function (value) {
-        var args = [];
-        for (var _i = 1; _i < arguments.length; _i++) {
-            args[_i - 1] = arguments[_i];
-        }
-        if (typeof (value) != "string") {
-            if (typeof (value) == "number") {
-                if (__WEBPACK_IMPORTED_MODULE_1__app_app_config__["a" /* AppConfig */].timestampToDatestring(value).length < 10) {
-                    return "未知日期";
-                }
-                else {
-                    return __WEBPACK_IMPORTED_MODULE_1__app_app_config__["a" /* AppConfig */].timestampToDatestring(value).substr(5, 5);
-                }
-            }
-            else {
-                return "未知日期";
-            }
-        }
-        if (value == null || value.length < 10) {
-            return "未知日期";
-        }
-        return value.substr(5, 5);
-    };
-    return MonthPipe;
-}());
-MonthPipe = __decorate([
-    Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["W" /* Pipe */])({
-        name: 'MonthPipe',
-    })
-], MonthPipe);
-
-//# sourceMappingURL=month.js.map
-
-/***/ }),
-
-/***/ 280:
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return DayPipe; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__app_app_config__ = __webpack_require__(27);
-var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
-    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
-    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
-    return c > 3 && r && Object.defineProperty(target, key, r), r;
-};
-
-
-/**
- * Generated class for the DayPipe pipe.
- *
- * See https://angular.io/docs/ts/latest/guide/pipes.html for more info on
- * Angular Pipes.
- */
-var DayPipe = (function () {
-    function DayPipe() {
-    }
-    /**
-     * Takes a value and makes it lowercase.
-     */
-    DayPipe.prototype.transform = function (value) {
-        var args = [];
-        for (var _i = 1; _i < arguments.length; _i++) {
-            args[_i - 1] = arguments[_i];
-        }
-        if (typeof (value) != "string") {
-            if (typeof (value) == "number") {
-                if (__WEBPACK_IMPORTED_MODULE_1__app_app_config__["a" /* AppConfig */].timestampToDatestring(value).length < 10) {
-                    return "未知日期";
-                }
-                else {
-                    return __WEBPACK_IMPORTED_MODULE_1__app_app_config__["a" /* AppConfig */].timestampToDatestring(value).substr(8, 2);
-                }
-            }
-            else {
-                return "未知日期";
-            }
-        }
-        if (value == null) {
-            return "未知日期";
-        }
-        if (value.length < 10) {
-            return "未知日期";
-        }
-        return value.substr(8, 2);
-    };
-    return DayPipe;
-}());
-DayPipe = __decorate([
-    Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["W" /* Pipe */])({
-        name: 'DayPipe',
-    })
-], DayPipe);
-
-//# sourceMappingURL=day.js.map
-
-/***/ }),
-
-/***/ 281:
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return WeekayPipe; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
-var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
-    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
-    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
-    return c > 3 && r && Object.defineProperty(target, key, r), r;
-};
-
-/**
- * Generated class for the WeekayPipe pipe.
- *
- * See https://angular.io/docs/ts/latest/guide/pipes.html for more info on
- * Angular Pipes.
- */
-var WeekayPipe = (function () {
-    function WeekayPipe() {
-    }
-    /**
-     * Takes a value and makes it lowercase.
-     */
-    WeekayPipe.prototype.transform = function (value) {
-        var args = [];
-        for (var _i = 1; _i < arguments.length; _i++) {
-            args[_i - 1] = arguments[_i];
-        }
-        if (typeof (value) == 'string') {
-            var date = new Date(value.replace(/-/g, "/"));
-            switch (date.getDay()) {
-                case 1:
-                    return '周一';
-                case 2:
-                    return '周二';
-                case 3:
-                    return '周三';
-                case 4:
-                    return '周四';
-                case 5:
-                    return '周五';
-                case 6:
-                    return '周六';
-                case 7:
-                    return '周天';
-                default:
-                    return '未知';
-            }
-        }
-        else {
-            return '未知';
-        }
-    };
-    return WeekayPipe;
-}());
-WeekayPipe = __decorate([
-    Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["W" /* Pipe */])({
-        name: 'WeekayPipe',
-    })
-], WeekayPipe);
-
-//# sourceMappingURL=weekay.js.map
-
-/***/ }),
-
-/***/ 282:
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return YearAndMonthPipe; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
-var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
-    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
-    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
-    return c > 3 && r && Object.defineProperty(target, key, r), r;
-};
-
-/**
- * Generated class for the YearAndMonthPipe pipe.
- *
- * See https://angular.io/docs/ts/latest/guide/pipes.html for more info on
- * Angular Pipes.
- */
-var YearAndMonthPipe = (function () {
-    function YearAndMonthPipe() {
-    }
-    /**
-     * Takes a value and makes it lowercase.
-     */
-    YearAndMonthPipe.prototype.transform = function (value) {
-        var args = [];
-        for (var _i = 1; _i < arguments.length; _i++) {
-            args[_i - 1] = arguments[_i];
-        }
-        if (value == null || value.length < 7) {
-            return "未知日期";
-        }
-        return value.substr(0, 7);
-    };
-    return YearAndMonthPipe;
-}());
-YearAndMonthPipe = __decorate([
-    Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["W" /* Pipe */])({
-        name: 'YearAndMonthPipe',
-    })
-], YearAndMonthPipe);
-
-//# sourceMappingURL=year-and-month.js.map
-
-/***/ }),
-
-/***/ 283:
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return StampToDatePipe; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__app_app_config__ = __webpack_require__(27);
-var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
-    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
-    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
-    return c > 3 && r && Object.defineProperty(target, key, r), r;
-};
-
-
-/**
- * Generated class for the StampToDatePipe pipe.
- *
- * See https://angular.io/docs/ts/latest/guide/pipes.html for more info on
- * Angular Pipes.
- */
-var StampToDatePipe = (function () {
-    function StampToDatePipe() {
-    }
-    /**
-     * Takes a value and makes it lowercase.
-     */
-    StampToDatePipe.prototype.transform = function (value) {
-        var args = [];
-        for (var _i = 1; _i < arguments.length; _i++) {
-            args[_i - 1] = arguments[_i];
-        }
-        var timeStamp = "";
-        if (typeof (value) == "number") {
-            timeStamp = __WEBPACK_IMPORTED_MODULE_1__app_app_config__["a" /* AppConfig */].timestampToDatestring(value);
-        }
-        else {
-            timeStamp = value;
-        }
-        return timeStamp;
-    };
-    return StampToDatePipe;
-}());
-StampToDatePipe = __decorate([
-    Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["W" /* Pipe */])({
-        name: 'stampToDate',
-    })
-], StampToDatePipe);
-
-//# sourceMappingURL=stamp-to-date.js.map
-
-/***/ }),
-
-/***/ 284:
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return ItemlevelPipe; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
-var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
-    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
-    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
-    return c > 3 && r && Object.defineProperty(target, key, r), r;
-};
-
-/**
- * Generated class for the ItemlevelPipe pipe.
- *
- * See https://angular.io/docs/ts/latest/guide/pipes.html for more info on
- * Angular Pipes.
- */
-var ItemlevelPipe = (function () {
-    function ItemlevelPipe() {
-    }
-    /**
-     * Takes a value and makes it lowercase.
-     */
-    ItemlevelPipe.prototype.transform = function (value) {
-        var args = [];
-        for (var _i = 1; _i < arguments.length; _i++) {
-            args[_i - 1] = arguments[_i];
-        }
-        switch (parseInt(value)) {
-            case 1:
-                return "一级";
-            case 2:
-                return "二级";
-            case 3:
-                return "三级";
-            case 4:
-                return "四级";
-            default:
-                return "未知级别";
-        }
-    };
-    return ItemlevelPipe;
-}());
-ItemlevelPipe = __decorate([
-    Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["W" /* Pipe */])({
-        name: 'itemlevelPipe',
-    })
-], ItemlevelPipe);
-
-//# sourceMappingURL=itemlevel.js.map
-
-/***/ }),
-
-/***/ 42:
+/***/ 59:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return ContactPage; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(13);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__app_app_service__ = __webpack_require__(21);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(1);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(12);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__app_app_service__ = __webpack_require__(36);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -2987,18 +2562,1388 @@ var ContactPage = ContactPage_1 = (function () {
     return ContactPage;
 }());
 ContactPage = ContactPage_1 = __decorate([
-    Object(__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["h" /* IonicPage */])(),
-    Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["n" /* Component */])({
+    Object(__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["IonicPage"])(),
+    Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Component"])({
         selector: 'page-contact',template:/*ion-inline-start:"/Users/zhaoliangchen/Desktop/qipaipm-company/src/pages/contact/contact.html"*/'<!--\n  Generated template for the ContactPage page.\n\n  See http://ionicframework.com/docs/components/#navigation for more info on\n  Ionic pages and navigation.\n-->\n<ion-header>\n  <ion-navbar>\n    <ion-title>通讯录</ion-title>\n  </ion-navbar>\n</ion-header>\n\n\n<ion-content fullscreen>\n  <form (submit)="onSearchContact($event)">\n    <ion-searchbar\n            placeholder="输入名字搜索" [(ngModel)]=searchValue\n            name="searchValue">\n    </ion-searchbar>\n  </form>\n  <div class="organization">\n    <ion-label no-margin no-padding class="vertical_center text">{{organization}}</ion-label>\n  </div>\n  <ion-item tappable *ngFor="let department of arrayDepartment" (click)="goNextDepartment($event, department)">\n    <ion-icon item-start name="appname-tree"></ion-icon>\n    <ion-label no-padding no-margin>{{department.text}}</ion-label>\n    <ion-note item-end>{{department.count+"人"}}</ion-note>\n  </ion-item>\n\n  <ion-item tappable *ngFor="let staff of arrayStaff" (click)="goNextDepartment($event, staff)">\n    <ion-icon item-start name="appname-head"></ion-icon>\n    <ion-label no-padding no-margin>{{staff.name}}</ion-label>\n    <ion-note item-end>{{staff.telphone}}</ion-note>\n  </ion-item>\n\n</ion-content>\n'/*ion-inline-end:"/Users/zhaoliangchen/Desktop/qipaipm-company/src/pages/contact/contact.html"*/,
     }),
-    __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["k" /* NavController */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["l" /* NavParams */], __WEBPACK_IMPORTED_MODULE_2__app_app_service__["a" /* AppService */],
-        __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["a" /* AlertController */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["d" /* Events */]])
+    __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["NavController"], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["NavParams"], __WEBPACK_IMPORTED_MODULE_2__app_app_service__["a" /* AppService */],
+        __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["AlertController"], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["Events"]])
 ], ContactPage);
 
 var ContactPage_1;
 //# sourceMappingURL=contact.js.map
 
+/***/ }),
+
+/***/ 682:
+/***/ (function(module, exports) {
+
+module.exports = {
+	"realm": "qipai",
+	"url": "http://52.80.11.196:9090/auth",
+	"ssl-required": "external",
+	"clientId": "qipaipm",
+	"public-client": true,
+	"use-resource-role-mappings": true
+};
+
+/***/ }),
+
+/***/ 703:
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return MyApp; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(1);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(12);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__ionic_native_status_bar__ = __webpack_require__(264);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__ionic_native_splash_screen__ = __webpack_require__(262);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__ionic_native_keyboard__ = __webpack_require__(265);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__pages_home_home__ = __webpack_require__(266);
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+
+
+
+
+
+
+var MyApp = (function () {
+    function MyApp(platform, statusBar, splashScreen, 
+        // private storage: Storage,
+        // public geolocation: Geolocation,
+        _config, 
+        // public toastCtrl: ToastController,
+        // public app: App,
+        keyboard) {
+        this._config = _config;
+        this.keyboard = keyboard;
+        this.rootPage = __WEBPACK_IMPORTED_MODULE_5__pages_home_home__["a" /* HomePage */];
+        platform.ready().then(function () {
+            // Okay, so the platform is ready and our plugins are available.
+            // Here you can do any higher level native things you might need.
+            statusBar.styleDefault();
+            splashScreen.hide();
+        });
+        this.keyboard.hideKeyboardAccessoryBar(false);
+        this.keyboard.disableScroll(true); //当输入焦点时，防止本机UIScrollView移动。
+        // if (platform.is('ios')) {
+        //   this.config = {
+        //     'backButtonIcon': 'arrow-back',
+        //     'iconMode': 'ios',
+        //     'tabsPlacement': 'bottom',
+        //     'backButtonText': '',
+        //     'tabsHideOnSubPages': 'true'
+        //   };
+        // } else if (platform.is('windows')) {
+        //   this.config = {
+        //     'backButtonIcon': 'arrow-back',
+        //     'iconMode': 'ios',
+        //     'tabsPlacement': 'top',
+        //     'backButtonText': '',
+        //     'tabsHideOnSubPages': 'true'
+        //   };
+        // } else {
+        //   this.config = {
+        //     'backButtonIcon': 'arrow-back',
+        //     'iconMode': 'md',
+        //     'tabsPlacement': 'bottom',
+        //     'backButtonText': '',
+        //     'tabsHideOnSubPages': 'true'
+        //   };
+        // }
+        // this._config.set('tabsPlacement', this.config.tabsPlacement);
+        // this._config.set('iconMode', this.config.iconMode);
+        // this._config.set('backButtonIcon', this.config.backButtonIcon);
+        // this._config.set('backButtonText', this.config.backButtonText);
+        // this._config.set('tabsHideOnSubPages', this.config.tabsHideOnSubPages);
+    }
+    return MyApp;
+}());
+MyApp = __decorate([
+    Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Component"])({template:/*ion-inline-start:"/Users/zhaoliangchen/Desktop/qipaipm-company/src/app/app.html"*/'<ion-nav [root]="rootPage"></ion-nav>\n'/*ion-inline-end:"/Users/zhaoliangchen/Desktop/qipaipm-company/src/app/app.html"*/
+    }),
+    __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["Platform"], __WEBPACK_IMPORTED_MODULE_2__ionic_native_status_bar__["a" /* StatusBar */], __WEBPACK_IMPORTED_MODULE_3__ionic_native_splash_screen__["a" /* SplashScreen */],
+        __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["Config"],
+        __WEBPACK_IMPORTED_MODULE_4__ionic_native_keyboard__["a" /* Keyboard */]])
+], MyApp);
+
+//# sourceMappingURL=app.component.js.map
+
+/***/ }),
+
+/***/ 704:
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return ComponentsModule; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(1);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(12);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__test_test__ = __webpack_require__(705);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__calendar_calendar__ = __webpack_require__(706);
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+
+
+
+
+var ComponentsModule = ComponentsModule_1 = (function () {
+    function ComponentsModule() {
+    }
+    return ComponentsModule;
+}());
+ComponentsModule = ComponentsModule_1 = __decorate([
+    Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["NgModule"])({
+        declarations: [
+            __WEBPACK_IMPORTED_MODULE_2__test_test__["a" /* TestComponent */],
+            __WEBPACK_IMPORTED_MODULE_3__calendar_calendar__["a" /* CalendarComponent */]
+        ],
+        imports: [
+            __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["IonicPageModule"].forChild(ComponentsModule_1),
+        ],
+        exports: [
+            __WEBPACK_IMPORTED_MODULE_2__test_test__["a" /* TestComponent */],
+            __WEBPACK_IMPORTED_MODULE_3__calendar_calendar__["a" /* CalendarComponent */]
+        ]
+    })
+], ComponentsModule);
+
+var ComponentsModule_1;
+//# sourceMappingURL=components.module.js.map
+
+/***/ }),
+
+/***/ 705:
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return TestComponent; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(1);
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+
+/**
+ * Generated class for the TestComponent component.
+ *
+ * See https://angular.io/docs/ts/latest/api/core/index/ComponentMetadata-class.html
+ * for more info on Angular Components.
+ */
+var TestComponent = (function () {
+    function TestComponent() {
+        console.log('Hello TestComponent Component');
+        this.text = 'Hello World';
+    }
+    return TestComponent;
+}());
+TestComponent = __decorate([
+    Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Component"])({
+        selector: 'test',template:/*ion-inline-start:"/Users/zhaoliangchen/Desktop/qipaipm-company/src/components/test/test.html"*/'<!-- Generated template for the TestComponent component -->\n<div>\n  {{text}}\n</div>\n'/*ion-inline-end:"/Users/zhaoliangchen/Desktop/qipaipm-company/src/components/test/test.html"*/
+    }),
+    __metadata("design:paramtypes", [])
+], TestComponent);
+
+//# sourceMappingURL=test.js.map
+
+/***/ }),
+
+/***/ 706:
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return CalendarComponent; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(1);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_common__ = __webpack_require__(33);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__app_app_service__ = __webpack_require__(36);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__app_app_config__ = __webpack_require__(27);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_ionic_angular__ = __webpack_require__(12);
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+
+
+
+
+
+// import { CalendarModal, CalendarModalOptions } from "ion2-calendar";
+/**
+ * Generated class for the CalendarComponent component.
+ *
+ * See https://angular.io/docs/ts/latest/api/core/index/ComponentMetadata-class.html
+ * for more info on Angular Components.
+ */
+var CalendarComponent = (function () {
+    function CalendarComponent(datePipe, appService, modalCtrl, events) {
+        this.datePipe = datePipe;
+        this.appService = appService;
+        this.modalCtrl = modalCtrl;
+        this.events = events;
+        this.currentDate = new Date();
+        this.events_calendar = [];
+        this.disablePastDates = false;
+        this.weekDaysToDisable = [];
+        this.daysToDisable = [];
+        this.useSwipe = false;
+        this.showEventsList = false;
+        this.showTodayButton = false;
+        this.todayText = "转到今天";
+        this.onChange = new __WEBPACK_IMPORTED_MODULE_0__angular_core__["EventEmitter"]();
+        this.onChangeMonth = new __WEBPACK_IMPORTED_MODULE_0__angular_core__["EventEmitter"]();
+        this.onEventClicked = new __WEBPACK_IMPORTED_MODULE_0__angular_core__["EventEmitter"]();
+        this.weekDays = ["周日", "周一", "周二", "周三", "周四", "周五", "周六"];
+        this.pastDates = [];
+        this.rows = [];
+        this.dayHasProject = [];
+        this.stop = false;
+        this.todayEvents = [];
+        //this.setUpWeekDaysLabels();
+    }
+    CalendarComponent.prototype.setUpWeekDaysLabels = function () {
+        var date = new Date(2017, 0, 1); /* This date has to be a Sunday */
+        for (var i = 0; i < 7; i++, date.setDate(date.getDate() + 1)) {
+            var str = this.datePipe.transform(date, "EEE");
+            str = str[0].toUpperCase() + str.slice(1);
+            this.weekDays.push(str);
+        }
+    };
+    CalendarComponent.prototype.ngOnChanges = function (changes) {
+        /* If the currentDate was changed outside (in the parent component), we need to call this.calc() */
+        /* But only if the month is changed */
+        if (changes["currentDate"] && !changes["currentDate"].isFirstChange()) {
+            if (changes["currentDate"].currentValue.getMonth() != changes["currentDate"].previousValue.getMonth()) {
+                this.calc();
+            }
+        }
+        if (changes["events_calendar"] && !changes["events_calendar"].isFirstChange()) {
+            var listToRemoveClasses = document.getElementsByClassName("hasEvents");
+            var n = listToRemoveClasses.length;
+            for (var i = 0; i < n; i++)
+                if (listToRemoveClasses[0])
+                    listToRemoveClasses[0].classList.remove("hasEvents"); /* Using index zero because the object is updated after we remove an item */
+            this.setHasEventsClass();
+            this.showTodayEvents();
+        }
+    };
+    CalendarComponent.prototype.ngAfterViewInit = function () {
+        var _this = this;
+        /* Calls `this.calc()` after receiving an initial date */
+        this.currentDate.setHours(0, 0, 0, 0);
+        this.events.subscribe('onGetProjectDate', function () {
+            _this.getProjectDate();
+        });
+        setTimeout(function () {
+            _this.calc();
+            _this.updateSelectedDate();
+        });
+    };
+    CalendarComponent.prototype.ngOnDestroy = function () {
+        this.events.unsubscribe('onGetProjectDate');
+    };
+    CalendarComponent.prototype.setHasEventsClass = function () {
+        var firstDayOfTheMonth = new Date(this.currentDate.getFullYear(), this.currentDate.getMonth(), 1);
+        var lastDayOfTheMonth = new Date(this.currentDate.getFullYear(), this.currentDate.getMonth() + 1, 0);
+        if (this.events_calendar)
+            this.events_calendar.forEach(function (item, index) {
+                if (item.starts.getTime() >= firstDayOfTheMonth.getTime() && item.ends.getTime() < lastDayOfTheMonth.getTime()) {
+                    if (document.getElementById("calendar-day-" + item.starts.getDate()))
+                        document.getElementById("calendar-day-" + item.starts.getDate()).classList.add('hasEvents');
+                }
+            });
+    };
+    CalendarComponent.prototype.setTodayClass = function () {
+        /* Checks if the selected month and year are the current */
+        var tmp = new Date();
+        if (tmp.getFullYear() == this.currentDate.getFullYear() && tmp.getMonth() == this.currentDate.getMonth()) {
+            var element = document.getElementById("calendar-day-" + tmp.getDate());
+            if (element) {
+                element.classList.remove("button-clear", "button-clear-md");
+                element.classList.add("button-outline", "button-outline-md");
+                element.setAttribute("style", "border: solid 1px #ececec");
+            }
+        }
+    };
+    CalendarComponent.prototype.setSelectedClass = function () {
+        /* Removes previous selectedDate class */
+        var listToRemoveClasses1 = document.getElementsByClassName("selected");
+        var n1 = listToRemoveClasses1.length;
+        for (var i = 0; i < n1; i++)
+            listToRemoveClasses1[0].classList.remove("selected"); /* Using index zero because the object is updated after we remove an item */
+        var listToRemoveClasses2 = document.getElementsByClassName("no-selected-dot");
+        var n2 = listToRemoveClasses2.length;
+        for (var i = 0; i < n2; i++)
+            listToRemoveClasses2[0].classList.remove("no-selected-dot");
+        var listToRemoveClasses3 = document.getElementsByClassName("selected-dot");
+        var n3 = listToRemoveClasses3.length;
+        for (var i = 0; i < n3; i++)
+            listToRemoveClasses3[0].classList.remove("selected-dot");
+        var element = document.getElementById("calendar-day-" + this.currentDate.getDate());
+        if (element)
+            element.classList.add("selected");
+        var dateString = __WEBPACK_IMPORTED_MODULE_3__app_app_config__["a" /* AppConfig */].dateToString(this.currentDate);
+        for (var i = 0; i < this.dayHasProject.length; i++) {
+            var object = this.dayHasProject[i];
+            var itemStartTime = object.itemStartTime;
+            var day = "1970-01-01";
+            if (itemStartTime != null) {
+                day = itemStartTime.substr(itemStartTime.length - 2, 2);
+            }
+            var dot = document.getElementById("dot-" + parseInt(day));
+            if (dot != null) {
+                if (itemStartTime == dateString) {
+                    dot.classList.add("selected-dot");
+                }
+                else {
+                    dot.classList.add("no-selected-dot");
+                }
+            }
+        }
+    };
+    CalendarComponent.prototype.setToday = function () {
+        var tmp = new Date();
+        tmp.setHours(0, 0, 0, 0);
+        var calc = tmp.getMonth() + "" + tmp.getFullYear() != this.currentDate.getMonth() + "" + this.currentDate.getFullYear();
+        this.updateSelectedDate(tmp);
+        calc && this.calc();
+    };
+    /**
+     * Recalculates the rows and columns needed to represent the new month selected
+     */
+    CalendarComponent.prototype.calc = function () {
+        var _this = this;
+        /* Resets the rows */
+        this.rows = [];
+        var tmp = new Date(this.currentDate.getTime());
+        tmp.setDate(1);
+        while (tmp.getMonth() == this.currentDate.getMonth()) {
+            /* Pushes a new empty row */
+            this.rows.push(['', '', '', '', '', '', '']);
+            while (tmp.getDay() < 6 && tmp.getMonth() == this.currentDate.getMonth()) {
+                /* Populates the row only where needed */
+                this.rows[this.rows.length - 1][tmp.getDay()] = tmp.getDate();
+                tmp.setDate(tmp.getDate() + 1);
+            }
+            if (tmp.getMonth() == this.currentDate.getMonth())
+                this.rows[this.rows.length - 1][tmp.getDay()] = tmp.getDate();
+            tmp.setDate(tmp.getDate() + 1);
+        }
+        setTimeout(function () {
+            /* Needs to be executed only after the DOM has been updated */
+            _this.setHasEventsClass();
+            _this.setTodayClass();
+            _this.disableDates();
+            _this.getProjectDate();
+        });
+    };
+    CalendarComponent.prototype.disableDates = function () {
+        // Disabling past dates
+        if (this.disablePastDates) {
+            this.pastDates = [];
+            var today = new Date();
+            // Checks if the current month is being shown
+            if (today.getFullYear() == this.currentDate.getFullYear() && today.getMonth() == this.currentDate.getMonth()) {
+                // If current month is being shown, disable only the past days
+                for (var i = 1; i < today.getDate(); i++) {
+                    this.pastDates.push(i);
+                }
+            }
+            else if (this.currentDate.getTime() < today.getTime()) {
+                // If a previous month is being show (disable all days)
+                for (var i = 1; i <= 31; i++) {
+                    this.pastDates.push(i);
+                }
+            }
+        }
+        // Disable chosen week days
+        if (this.weekDaysToDisable.length) {
+        }
+    };
+    CalendarComponent.prototype.getProjectDate = function () {
+        var dateString = __WEBPACK_IMPORTED_MODULE_3__app_app_config__["a" /* AppConfig */].dateToString(this.currentDate);
+        var dayCount = __WEBPACK_IMPORTED_MODULE_3__app_app_config__["a" /* AppConfig */].getDayCountInMonth(this.currentDate);
+        var firstDate = new Date(this.currentDate.getTime());
+        firstDate.setDate(1);
+        var firstDateString = __WEBPACK_IMPORTED_MODULE_3__app_app_config__["a" /* AppConfig */].dateToString(firstDate);
+        var lastDate = new Date(this.currentDate.getTime());
+        lastDate.setDate(dayCount);
+        var lastDateString = __WEBPACK_IMPORTED_MODULE_3__app_app_config__["a" /* AppConfig */].dateToString(lastDate);
+        var listToRemoveClasses1 = document.getElementsByClassName("no-selected-dot");
+        var n1 = listToRemoveClasses1.length;
+        for (var i = 0; i < n1; i++)
+            listToRemoveClasses1[0].classList.remove("no-selected-dot");
+        var listToRemoveClasses2 = document.getElementsByClassName("selected-dot");
+        var n2 = listToRemoveClasses2.length;
+        for (var i = 0; i < n2; i++)
+            listToRemoveClasses2[0].classList.remove("selected-dot");
+        for (var i = 1; i <= dayCount; i++) {
+            var dot = document.getElementById("dot-" + i);
+            if (dot != null) {
+                dot.style.display = "none";
+            }
+        }
+        this.appService.httpGet("item/searchByCondition", { "itemStartTime": firstDateString, "endTime": lastDateString, "itemIsEnd": "0", "page": "1", "limit": "100" }, this, function (view, res) {
+            var data = res.json();
+            if (data.success == true) {
+                view.dayHasProject = data.data;
+                view.onChangeMonth.emit(view.dayHasProject);
+                for (var i = 0; i < view.dayHasProject.length; i++) {
+                    var object = view.dayHasProject[i];
+                    var itemStartTime = object.itemStartTime;
+                    var day = "1970-01-01";
+                    if (itemStartTime != null) {
+                        day = itemStartTime.substr(itemStartTime.length - 2, 2);
+                    }
+                    var dot = document.getElementById("dot-" + parseInt(day));
+                    if (dot != null) {
+                        dot.style.display = "block";
+                        if (itemStartTime == dateString) {
+                            dot.classList.add("selected-dot");
+                        }
+                        else {
+                            dot.classList.add("no-selected-dot");
+                        }
+                    }
+                }
+            }
+        }, false);
+    };
+    /**
+     * Subtracts a month on currentDate
+     */
+    CalendarComponent.prototype.previousMonth = function () {
+        var tmp = new Date(this.currentDate.getFullYear(), this.currentDate.getMonth() - 1, this.currentDate.getDate());
+        /* Prevents skipping a month if the previous month doesn't have the selected day */
+        /* Ex: Mar 31st -> Feb 28th (because Feb doesn't have a 31st) */
+        while (tmp.getMonth() > this.currentDate.getMonth() - 1 && tmp.getFullYear() == this.currentDate.getFullYear()) {
+            tmp.setDate(tmp.getDate() - 1);
+        }
+        this.updateSelectedDate(tmp);
+        this.calc();
+    };
+    /**
+     * Adds a month on currentDate
+     */
+    CalendarComponent.prototype.nextMonth = function () {
+        var tmp = new Date(this.currentDate.getFullYear(), this.currentDate.getMonth() + 1, this.currentDate.getDate());
+        /* Prevents skipping a month if the next month doesn't have the selected day */
+        /* Ex: Jan 31st -> Feb 28th (because Feb doesn't have a 31st) */
+        while (tmp.getMonth() > this.currentDate.getMonth() + 1) {
+            tmp.setDate(tmp.getDate() - 1);
+        }
+        this.updateSelectedDate(tmp);
+        this.calc();
+    };
+    /**
+     * Function fired when a date is clicked
+     * (no need to call this.calc() because the user can't click a date on a different month)
+     * @param day number The day that was clicked
+     */
+    CalendarComponent.prototype.dateClicked = function (day) {
+        var clickedDate = new Date(this.currentDate);
+        clickedDate.setDate(day);
+        this.updateSelectedDate(clickedDate);
+    };
+    CalendarComponent.prototype.updateSelectedDate = function (newDate) {
+        var _this = this;
+        if (newDate === void 0) { newDate = null; }
+        if (newDate) {
+            this.currentDate = newDate;
+        }
+        this.onChange.emit(this.currentDate);
+        setTimeout(function () {
+            _this.showTodayEvents();
+            _this.setSelectedClass();
+        });
+    };
+    CalendarComponent.prototype.showTodayEvents = function () {
+        var _this = this;
+        var tmp = [];
+        /* Checks for events on the new selected date */
+        this.events_calendar.forEach(function (item) {
+            var itemDay = new Date(item.starts);
+            itemDay.setHours(0, 0, 0, 0);
+            if (itemDay.getTime() == _this.currentDate.getTime())
+                tmp.push(item);
+        });
+        this.todayEvents = tmp;
+    };
+    CalendarComponent.prototype.eventClicked = function (event) {
+        this.onEventClicked.emit(event);
+    };
+    CalendarComponent.prototype.openCalendar = function ($event) {
+    };
+    return CalendarComponent;
+}());
+__decorate([
+    Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Input"])('inputDate'),
+    __metadata("design:type", Date)
+], CalendarComponent.prototype, "currentDate", void 0);
+__decorate([
+    Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Input"])(),
+    __metadata("design:type", Object)
+], CalendarComponent.prototype, "events_calendar", void 0);
+__decorate([
+    Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Input"])(),
+    __metadata("design:type", Boolean)
+], CalendarComponent.prototype, "disablePastDates", void 0);
+__decorate([
+    Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Input"])(),
+    __metadata("design:type", Array)
+], CalendarComponent.prototype, "weekDaysToDisable", void 0);
+__decorate([
+    Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Input"])(),
+    __metadata("design:type", Array)
+], CalendarComponent.prototype, "daysToDisable", void 0);
+__decorate([
+    Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Input"])(),
+    __metadata("design:type", Boolean)
+], CalendarComponent.prototype, "useSwipe", void 0);
+__decorate([
+    Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Input"])(),
+    __metadata("design:type", Boolean)
+], CalendarComponent.prototype, "showEventsList", void 0);
+__decorate([
+    Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Input"])(),
+    __metadata("design:type", Boolean)
+], CalendarComponent.prototype, "showTodayButton", void 0);
+__decorate([
+    Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Input"])(),
+    __metadata("design:type", String)
+], CalendarComponent.prototype, "todayText", void 0);
+__decorate([
+    Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Output"])(),
+    __metadata("design:type", __WEBPACK_IMPORTED_MODULE_0__angular_core__["EventEmitter"])
+], CalendarComponent.prototype, "onChange", void 0);
+__decorate([
+    Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Output"])(),
+    __metadata("design:type", __WEBPACK_IMPORTED_MODULE_0__angular_core__["EventEmitter"])
+], CalendarComponent.prototype, "onChangeMonth", void 0);
+__decorate([
+    Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Output"])(),
+    __metadata("design:type", __WEBPACK_IMPORTED_MODULE_0__angular_core__["EventEmitter"])
+], CalendarComponent.prototype, "onEventClicked", void 0);
+CalendarComponent = __decorate([
+    Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Component"])({
+        selector: 'calendar',template:/*ion-inline-start:"/Users/zhaoliangchen/Desktop/qipaipm-company/src/components/calendar/calendar.html"*/'<!-- Generated template for the CalendarComponent component -->\n<div>\n  <ion-grid no-padding no-margin>\n    <ion-row class="calendar-controls" no-padding no-margin>\n      <ion-col no-padding no-margin text-right class="titleCol">\n        <button ion-button icon-only clear (click)="previousMonth()">\n          <ion-icon name="arrow-back"></ion-icon>\n        </button>\n      </ion-col>\n      <ion-col no-margin no-padding text-center class="selectedDateLabel" (click)="openCalendar($event)">\n        <h5 no-padding no-margin class="selectedMonthLabel">{{ currentDate | date:\'yyyy-MM\' }}</h5>\n        <!--<ion-item no-lines style="background-color: #32db64">-->\n          <!--<ion-datetime no-padding no-margin class="selectedMonthLabel" text-center displayFormat="YYYY-MM" max="2030" min="1979" cancelText="取消" doneText="确认"-->\n                        <!--ngModel="{{currentDate | date:\'yyyy-MM\'}}"-->\n                        <!--(ngModelChange)="currentDate = $event"></ion-datetime>-->\n        <!--</ion-item>-->\n        <!--<ion-multi-picker item-content [multiPickerColumns]="simpleColumns"></ion-multi-picker>>-->\n        <!--<button *ngIf="showTodayButton" (click)="setToday()" ion-button small outline>{{ todayText }}</button>-->\n      </ion-col>\n      <ion-col no-padding no-margin text-left class="titleCol">\n        <button ion-button icon-only clear (click)="nextMonth()">\n          <ion-icon name="arrow-forward"></ion-icon>\n        </button>\n      </ion-col>\n    </ion-row>\n\n    <ion-row class="calendar-weekDays">\n      <ion-col text-center class="calendar-week-day">\n        {{ weekDays[0] }}\n      </ion-col>\n      <ion-col text-center class="calendar-week-day">\n        {{ weekDays[1] }}\n      </ion-col>\n      <ion-col text-center class="calendar-week-day">\n        {{ weekDays[2] }}\n      </ion-col>\n      <ion-col text-center class="calendar-week-day">\n        {{ weekDays[3] }}\n      </ion-col>\n      <ion-col text-center class="calendar-week-day">\n        {{ weekDays[4] }}\n      </ion-col>\n      <ion-col text-center class="calendar-week-day">\n        {{ weekDays[5] }}\n      </ion-col>\n      <ion-col text-center class="calendar-week-day">\n        {{ weekDays[6] }}\n      </ion-col>\n    </ion-row>\n  </ion-grid>\n\n  <ion-grid (swipeleft)="useSwipe && nextMonth()" (swiperight)="useSwipe && previousMonth()">\n    <ion-row *ngFor="let row of rows" class="calendar-row">\n      <ion-col no-padding *ngFor="let day of row; let i = index" text-center class="calendar-col">\n        <button no-padding block class="calendar-day" *ngIf="day" ion-button clear (click)="dateClicked(day)"\n                id="calendar-day-{{day}}" [disabled]="pastDates.indexOf(day) > -1 || weekDaysToDisable.indexOf(i) > -1 || daysToDisable.indexOf(day) > -1">\n          {{ day }}\n          <div class="dot" id="dot-{{day}}"></div>\n        </button>\n      </ion-col>\n    </ion-row>\n  </ion-grid>\n\n  <!--<ion-list *ngIf="showEventsList">-->\n    <!--<button text-wrap ion-item *ngFor="let event of todayEvents" (click)="eventClicked(event)">-->\n      <!--{{ event.title }}-->\n      <!--<ion-icon name="arrow-forward" hideWhen="ios" item-right></ion-icon>-->\n    <!--</button>-->\n  <!--</ion-list>-->\n</div>\n'/*ion-inline-end:"/Users/zhaoliangchen/Desktop/qipaipm-company/src/components/calendar/calendar.html"*/,
+        providers: [__WEBPACK_IMPORTED_MODULE_1__angular_common__["c" /* DatePipe */]]
+    }),
+    __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1__angular_common__["c" /* DatePipe */], __WEBPACK_IMPORTED_MODULE_2__app_app_service__["a" /* AppService */], __WEBPACK_IMPORTED_MODULE_4_ionic_angular__["ModalController"], __WEBPACK_IMPORTED_MODULE_4_ionic_angular__["Events"]])
+], CalendarComponent);
+
+//# sourceMappingURL=calendar.js.map
+
+/***/ }),
+
+/***/ 710:
+/***/ (function(module, exports, __webpack_require__) {
+
+var map = {
+	"./af": 268,
+	"./af.js": 268,
+	"./ar": 269,
+	"./ar-dz": 270,
+	"./ar-dz.js": 270,
+	"./ar-kw": 271,
+	"./ar-kw.js": 271,
+	"./ar-ly": 272,
+	"./ar-ly.js": 272,
+	"./ar-ma": 273,
+	"./ar-ma.js": 273,
+	"./ar-sa": 274,
+	"./ar-sa.js": 274,
+	"./ar-tn": 275,
+	"./ar-tn.js": 275,
+	"./ar.js": 269,
+	"./az": 276,
+	"./az.js": 276,
+	"./be": 277,
+	"./be.js": 277,
+	"./bg": 278,
+	"./bg.js": 278,
+	"./bn": 279,
+	"./bn.js": 279,
+	"./bo": 280,
+	"./bo.js": 280,
+	"./br": 281,
+	"./br.js": 281,
+	"./bs": 282,
+	"./bs.js": 282,
+	"./ca": 283,
+	"./ca.js": 283,
+	"./cs": 284,
+	"./cs.js": 284,
+	"./cv": 285,
+	"./cv.js": 285,
+	"./cy": 286,
+	"./cy.js": 286,
+	"./da": 287,
+	"./da.js": 287,
+	"./de": 288,
+	"./de-at": 289,
+	"./de-at.js": 289,
+	"./de-ch": 290,
+	"./de-ch.js": 290,
+	"./de.js": 288,
+	"./dv": 291,
+	"./dv.js": 291,
+	"./el": 292,
+	"./el.js": 292,
+	"./en-au": 293,
+	"./en-au.js": 293,
+	"./en-ca": 294,
+	"./en-ca.js": 294,
+	"./en-gb": 295,
+	"./en-gb.js": 295,
+	"./en-ie": 296,
+	"./en-ie.js": 296,
+	"./en-nz": 297,
+	"./en-nz.js": 297,
+	"./eo": 298,
+	"./eo.js": 298,
+	"./es": 299,
+	"./es-do": 300,
+	"./es-do.js": 300,
+	"./es.js": 299,
+	"./et": 301,
+	"./et.js": 301,
+	"./eu": 302,
+	"./eu.js": 302,
+	"./fa": 303,
+	"./fa.js": 303,
+	"./fi": 304,
+	"./fi.js": 304,
+	"./fo": 305,
+	"./fo.js": 305,
+	"./fr": 306,
+	"./fr-ca": 307,
+	"./fr-ca.js": 307,
+	"./fr-ch": 308,
+	"./fr-ch.js": 308,
+	"./fr.js": 306,
+	"./fy": 309,
+	"./fy.js": 309,
+	"./gd": 310,
+	"./gd.js": 310,
+	"./gl": 311,
+	"./gl.js": 311,
+	"./gom-latn": 312,
+	"./gom-latn.js": 312,
+	"./he": 313,
+	"./he.js": 313,
+	"./hi": 314,
+	"./hi.js": 314,
+	"./hr": 315,
+	"./hr.js": 315,
+	"./hu": 316,
+	"./hu.js": 316,
+	"./hy-am": 317,
+	"./hy-am.js": 317,
+	"./id": 318,
+	"./id.js": 318,
+	"./is": 319,
+	"./is.js": 319,
+	"./it": 320,
+	"./it.js": 320,
+	"./ja": 321,
+	"./ja.js": 321,
+	"./jv": 322,
+	"./jv.js": 322,
+	"./ka": 323,
+	"./ka.js": 323,
+	"./kk": 324,
+	"./kk.js": 324,
+	"./km": 325,
+	"./km.js": 325,
+	"./kn": 326,
+	"./kn.js": 326,
+	"./ko": 327,
+	"./ko.js": 327,
+	"./ky": 328,
+	"./ky.js": 328,
+	"./lb": 329,
+	"./lb.js": 329,
+	"./lo": 330,
+	"./lo.js": 330,
+	"./lt": 331,
+	"./lt.js": 331,
+	"./lv": 332,
+	"./lv.js": 332,
+	"./me": 333,
+	"./me.js": 333,
+	"./mi": 334,
+	"./mi.js": 334,
+	"./mk": 335,
+	"./mk.js": 335,
+	"./ml": 336,
+	"./ml.js": 336,
+	"./mr": 337,
+	"./mr.js": 337,
+	"./ms": 338,
+	"./ms-my": 339,
+	"./ms-my.js": 339,
+	"./ms.js": 338,
+	"./my": 340,
+	"./my.js": 340,
+	"./nb": 341,
+	"./nb.js": 341,
+	"./ne": 342,
+	"./ne.js": 342,
+	"./nl": 343,
+	"./nl-be": 344,
+	"./nl-be.js": 344,
+	"./nl.js": 343,
+	"./nn": 345,
+	"./nn.js": 345,
+	"./pa-in": 346,
+	"./pa-in.js": 346,
+	"./pl": 347,
+	"./pl.js": 347,
+	"./pt": 348,
+	"./pt-br": 349,
+	"./pt-br.js": 349,
+	"./pt.js": 348,
+	"./ro": 350,
+	"./ro.js": 350,
+	"./ru": 351,
+	"./ru.js": 351,
+	"./sd": 352,
+	"./sd.js": 352,
+	"./se": 353,
+	"./se.js": 353,
+	"./si": 354,
+	"./si.js": 354,
+	"./sk": 355,
+	"./sk.js": 355,
+	"./sl": 356,
+	"./sl.js": 356,
+	"./sq": 357,
+	"./sq.js": 357,
+	"./sr": 358,
+	"./sr-cyrl": 359,
+	"./sr-cyrl.js": 359,
+	"./sr.js": 358,
+	"./ss": 360,
+	"./ss.js": 360,
+	"./sv": 361,
+	"./sv.js": 361,
+	"./sw": 362,
+	"./sw.js": 362,
+	"./ta": 363,
+	"./ta.js": 363,
+	"./te": 364,
+	"./te.js": 364,
+	"./tet": 365,
+	"./tet.js": 365,
+	"./th": 366,
+	"./th.js": 366,
+	"./tl-ph": 367,
+	"./tl-ph.js": 367,
+	"./tlh": 368,
+	"./tlh.js": 368,
+	"./tr": 369,
+	"./tr.js": 369,
+	"./tzl": 370,
+	"./tzl.js": 370,
+	"./tzm": 371,
+	"./tzm-latn": 372,
+	"./tzm-latn.js": 372,
+	"./tzm.js": 371,
+	"./uk": 373,
+	"./uk.js": 373,
+	"./ur": 374,
+	"./ur.js": 374,
+	"./uz": 375,
+	"./uz-latn": 376,
+	"./uz-latn.js": 376,
+	"./uz.js": 375,
+	"./vi": 377,
+	"./vi.js": 377,
+	"./x-pseudo": 378,
+	"./x-pseudo.js": 378,
+	"./yo": 379,
+	"./yo.js": 379,
+	"./zh-cn": 380,
+	"./zh-cn.js": 380,
+	"./zh-hk": 381,
+	"./zh-hk.js": 381,
+	"./zh-tw": 382,
+	"./zh-tw.js": 382
+};
+function webpackContext(req) {
+	return __webpack_require__(webpackContextResolve(req));
+};
+function webpackContextResolve(req) {
+	var id = map[req];
+	if(!(id + 1)) // check for number or string
+		throw new Error("Cannot find module '" + req + "'.");
+	return id;
+};
+webpackContext.keys = function webpackContextKeys() {
+	return Object.keys(map);
+};
+webpackContext.resolve = webpackContextResolve;
+module.exports = webpackContext;
+webpackContext.id = 710;
+
+/***/ }),
+
+/***/ 716:
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return PipesModule; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(1);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__pipes_delay_delay__ = __webpack_require__(717);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__pipes_year_year__ = __webpack_require__(718);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__pipes_month_month__ = __webpack_require__(719);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__day_day__ = __webpack_require__(720);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__weekay_weekay__ = __webpack_require__(721);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__year_and_month_year_and_month__ = __webpack_require__(722);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__stamp_to_date_stamp_to_date__ = __webpack_require__(723);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__itemlevel_itemlevel__ = __webpack_require__(724);
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+
+
+
+
+
+
+
+
+
+var PipesModule = (function () {
+    function PipesModule() {
+    }
+    return PipesModule;
+}());
+PipesModule = __decorate([
+    Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["NgModule"])({
+        declarations: [
+            __WEBPACK_IMPORTED_MODULE_1__pipes_delay_delay__["a" /* DelayPipe */],
+            __WEBPACK_IMPORTED_MODULE_2__pipes_year_year__["a" /* YearPipe */],
+            __WEBPACK_IMPORTED_MODULE_3__pipes_month_month__["a" /* MonthPipe */],
+            __WEBPACK_IMPORTED_MODULE_4__day_day__["a" /* DayPipe */],
+            __WEBPACK_IMPORTED_MODULE_5__weekay_weekay__["a" /* WeekayPipe */],
+            __WEBPACK_IMPORTED_MODULE_6__year_and_month_year_and_month__["a" /* YearAndMonthPipe */],
+            __WEBPACK_IMPORTED_MODULE_7__stamp_to_date_stamp_to_date__["a" /* StampToDatePipe */],
+            __WEBPACK_IMPORTED_MODULE_8__itemlevel_itemlevel__["a" /* ItemlevelPipe */],
+        ],
+        imports: [],
+        exports: [
+            __WEBPACK_IMPORTED_MODULE_1__pipes_delay_delay__["a" /* DelayPipe */],
+            __WEBPACK_IMPORTED_MODULE_2__pipes_year_year__["a" /* YearPipe */],
+            __WEBPACK_IMPORTED_MODULE_3__pipes_month_month__["a" /* MonthPipe */],
+            __WEBPACK_IMPORTED_MODULE_4__day_day__["a" /* DayPipe */],
+            __WEBPACK_IMPORTED_MODULE_5__weekay_weekay__["a" /* WeekayPipe */],
+            __WEBPACK_IMPORTED_MODULE_6__year_and_month_year_and_month__["a" /* YearAndMonthPipe */],
+            __WEBPACK_IMPORTED_MODULE_7__stamp_to_date_stamp_to_date__["a" /* StampToDatePipe */],
+            __WEBPACK_IMPORTED_MODULE_8__itemlevel_itemlevel__["a" /* ItemlevelPipe */],
+        ]
+    })
+], PipesModule);
+
+//# sourceMappingURL=pipes.module.js.map
+
+/***/ }),
+
+/***/ 717:
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return DelayPipe; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(1);
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+
+/**
+ * Generated class for the DelayPipe pipe.
+ *
+ * See https://angular.io/docs/ts/latest/guide/pipes.html for more info on
+ * Angular Pipes.
+ */
+var DelayPipe = (function () {
+    function DelayPipe() {
+    }
+    /**
+     * Takes a value and makes it lowercase.
+     */
+    DelayPipe.prototype.transform = function (value) {
+        var args = [];
+        for (var _i = 1; _i < arguments.length; _i++) {
+            args[_i - 1] = arguments[_i];
+        }
+        var j;
+        if (typeof (value) == "string") {
+            j = parseInt(value);
+        }
+        else {
+            j = value;
+        }
+        if (j < 1) {
+            return '无延迟';
+        }
+        else {
+            return '延迟' + j + '天';
+        }
+    };
+    return DelayPipe;
+}());
+DelayPipe = __decorate([
+    Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Pipe"])({
+        name: 'delayPipe',
+    })
+], DelayPipe);
+
+//# sourceMappingURL=delay.js.map
+
+/***/ }),
+
+/***/ 718:
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return YearPipe; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(1);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__app_app_config__ = __webpack_require__(27);
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+
+
+/**
+ * Generated class for the YearPipe pipe.
+ *
+ * See https://angular.io/docs/ts/latest/guide/pipes.html for more info on
+ * Angular Pipes.
+ */
+var YearPipe = (function () {
+    function YearPipe() {
+    }
+    /**
+     * Takes a value and makes it lowercase.
+     */
+    YearPipe.prototype.transform = function (value) {
+        var args = [];
+        for (var _i = 1; _i < arguments.length; _i++) {
+            args[_i - 1] = arguments[_i];
+        }
+        if (typeof (value) != "string") {
+            if (typeof (value) == "number") {
+                if (__WEBPACK_IMPORTED_MODULE_1__app_app_config__["a" /* AppConfig */].timestampToDatestring(value).length < 10) {
+                    return "未知日期";
+                }
+                else {
+                    return __WEBPACK_IMPORTED_MODULE_1__app_app_config__["a" /* AppConfig */].timestampToDatestring(value).substr(0, 4);
+                }
+            }
+            else {
+                return "未知日期";
+            }
+        }
+        if (value == null || value.length < 4) {
+            return "未知日期";
+        }
+        return value.substr(0, 4);
+    };
+    return YearPipe;
+}());
+YearPipe = __decorate([
+    Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Pipe"])({
+        name: 'YearPipe',
+    })
+], YearPipe);
+
+//# sourceMappingURL=year.js.map
+
+/***/ }),
+
+/***/ 719:
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return MonthPipe; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(1);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__app_app_config__ = __webpack_require__(27);
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+
+
+/**
+ * Generated class for the MonthPipe pipe.
+ *
+ * See https://angular.io/docs/ts/latest/guide/pipes.html for more info on
+ * Angular Pipes.
+ */
+var MonthPipe = (function () {
+    function MonthPipe() {
+    }
+    /**
+     * Takes a value and makes it lowercase.
+     */
+    MonthPipe.prototype.transform = function (value) {
+        var args = [];
+        for (var _i = 1; _i < arguments.length; _i++) {
+            args[_i - 1] = arguments[_i];
+        }
+        if (typeof (value) != "string") {
+            if (typeof (value) == "number") {
+                if (__WEBPACK_IMPORTED_MODULE_1__app_app_config__["a" /* AppConfig */].timestampToDatestring(value).length < 10) {
+                    return "未知日期";
+                }
+                else {
+                    return __WEBPACK_IMPORTED_MODULE_1__app_app_config__["a" /* AppConfig */].timestampToDatestring(value).substr(5, 5);
+                }
+            }
+            else {
+                return "未知日期";
+            }
+        }
+        if (value == null || value.length < 10) {
+            return "未知日期";
+        }
+        return value.substr(5, 5);
+    };
+    return MonthPipe;
+}());
+MonthPipe = __decorate([
+    Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Pipe"])({
+        name: 'MonthPipe',
+    })
+], MonthPipe);
+
+//# sourceMappingURL=month.js.map
+
+/***/ }),
+
+/***/ 720:
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return DayPipe; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(1);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__app_app_config__ = __webpack_require__(27);
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+
+
+/**
+ * Generated class for the DayPipe pipe.
+ *
+ * See https://angular.io/docs/ts/latest/guide/pipes.html for more info on
+ * Angular Pipes.
+ */
+var DayPipe = (function () {
+    function DayPipe() {
+    }
+    /**
+     * Takes a value and makes it lowercase.
+     */
+    DayPipe.prototype.transform = function (value) {
+        var args = [];
+        for (var _i = 1; _i < arguments.length; _i++) {
+            args[_i - 1] = arguments[_i];
+        }
+        if (typeof (value) != "string") {
+            if (typeof (value) == "number") {
+                if (__WEBPACK_IMPORTED_MODULE_1__app_app_config__["a" /* AppConfig */].timestampToDatestring(value).length < 10) {
+                    return "未知日期";
+                }
+                else {
+                    return __WEBPACK_IMPORTED_MODULE_1__app_app_config__["a" /* AppConfig */].timestampToDatestring(value).substr(8, 2);
+                }
+            }
+            else {
+                return "未知日期";
+            }
+        }
+        if (value == null) {
+            return "未知日期";
+        }
+        if (value.length < 10) {
+            return "未知日期";
+        }
+        return value.substr(8, 2);
+    };
+    return DayPipe;
+}());
+DayPipe = __decorate([
+    Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Pipe"])({
+        name: 'DayPipe',
+    })
+], DayPipe);
+
+//# sourceMappingURL=day.js.map
+
+/***/ }),
+
+/***/ 721:
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return WeekayPipe; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(1);
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+
+/**
+ * Generated class for the WeekayPipe pipe.
+ *
+ * See https://angular.io/docs/ts/latest/guide/pipes.html for more info on
+ * Angular Pipes.
+ */
+var WeekayPipe = (function () {
+    function WeekayPipe() {
+    }
+    /**
+     * Takes a value and makes it lowercase.
+     */
+    WeekayPipe.prototype.transform = function (value) {
+        var args = [];
+        for (var _i = 1; _i < arguments.length; _i++) {
+            args[_i - 1] = arguments[_i];
+        }
+        if (typeof (value) == 'string') {
+            var date = new Date(value.replace(/-/g, "/"));
+            switch (date.getDay()) {
+                case 1:
+                    return '周一';
+                case 2:
+                    return '周二';
+                case 3:
+                    return '周三';
+                case 4:
+                    return '周四';
+                case 5:
+                    return '周五';
+                case 6:
+                    return '周六';
+                case 7:
+                    return '周天';
+                default:
+                    return '未知';
+            }
+        }
+        else {
+            return '未知';
+        }
+    };
+    return WeekayPipe;
+}());
+WeekayPipe = __decorate([
+    Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Pipe"])({
+        name: 'WeekayPipe',
+    })
+], WeekayPipe);
+
+//# sourceMappingURL=weekay.js.map
+
+/***/ }),
+
+/***/ 722:
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return YearAndMonthPipe; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(1);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__app_app_config__ = __webpack_require__(27);
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+
+
+/**
+ * Generated class for the YearAndMonthPipe pipe.
+ *
+ * See https://angular.io/docs/ts/latest/guide/pipes.html for more info on
+ * Angular Pipes.
+ */
+var YearAndMonthPipe = (function () {
+    function YearAndMonthPipe() {
+    }
+    /**
+     * Takes a value and makes it lowercase.
+     */
+    YearAndMonthPipe.prototype.transform = function (value) {
+        var args = [];
+        for (var _i = 1; _i < arguments.length; _i++) {
+            args[_i - 1] = arguments[_i];
+        }
+        if (value == null || value.length < 7) {
+            return "未知日期";
+        }
+        if (value instanceof Date) {
+            return __WEBPACK_IMPORTED_MODULE_1__app_app_config__["a" /* AppConfig */].dateToString(value).substr(0, 7);
+        }
+        return value.substr(0, 7);
+    };
+    return YearAndMonthPipe;
+}());
+YearAndMonthPipe = __decorate([
+    Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Pipe"])({
+        name: 'YearAndMonthPipe',
+    })
+], YearAndMonthPipe);
+
+//# sourceMappingURL=year-and-month.js.map
+
+/***/ }),
+
+/***/ 723:
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return StampToDatePipe; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(1);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__app_app_config__ = __webpack_require__(27);
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+
+
+/**
+ * Generated class for the StampToDatePipe pipe.
+ *
+ * See https://angular.io/docs/ts/latest/guide/pipes.html for more info on
+ * Angular Pipes.
+ */
+var StampToDatePipe = (function () {
+    function StampToDatePipe() {
+    }
+    /**
+     * Takes a value and makes it lowercase.
+     */
+    StampToDatePipe.prototype.transform = function (value) {
+        var args = [];
+        for (var _i = 1; _i < arguments.length; _i++) {
+            args[_i - 1] = arguments[_i];
+        }
+        var timeStamp = "";
+        if (typeof (value) == "number") {
+            timeStamp = __WEBPACK_IMPORTED_MODULE_1__app_app_config__["a" /* AppConfig */].timestampToDatestring(value);
+        }
+        else {
+            timeStamp = value;
+        }
+        return timeStamp;
+    };
+    return StampToDatePipe;
+}());
+StampToDatePipe = __decorate([
+    Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Pipe"])({
+        name: 'stampToDate',
+    })
+], StampToDatePipe);
+
+//# sourceMappingURL=stamp-to-date.js.map
+
+/***/ }),
+
+/***/ 724:
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return ItemlevelPipe; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(1);
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+
+/**
+ * Generated class for the ItemlevelPipe pipe.
+ *
+ * See https://angular.io/docs/ts/latest/guide/pipes.html for more info on
+ * Angular Pipes.
+ */
+var ItemlevelPipe = (function () {
+    function ItemlevelPipe() {
+    }
+    /**
+     * Takes a value and makes it lowercase.
+     */
+    ItemlevelPipe.prototype.transform = function (value) {
+        var args = [];
+        for (var _i = 1; _i < arguments.length; _i++) {
+            args[_i - 1] = arguments[_i];
+        }
+        switch (parseInt(value)) {
+            case 1:
+                return "一级";
+            case 2:
+                return "二级";
+            case 3:
+                return "三级";
+            case 4:
+                return "四级";
+            default:
+                return "未知级别";
+        }
+    };
+    return ItemlevelPipe;
+}());
+ItemlevelPipe = __decorate([
+    Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Pipe"])({
+        name: 'itemlevelPipe',
+    })
+], ItemlevelPipe);
+
+//# sourceMappingURL=itemlevel.js.map
+
 /***/ })
 
-},[202]);
+},[390]);
 //# sourceMappingURL=main.js.map

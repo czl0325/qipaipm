@@ -28,6 +28,7 @@ export class MyApp {
       // Here you can do any higher level native things you might need.
       statusBar.styleDefault();
       splashScreen.hide();
+      //(<any>window).navigator.splashscreen.hide();
     });
 
     this.keyboard.hideKeyboardAccessoryBar(false);
