@@ -5,13 +5,13 @@ import { SplashScreen } from '@ionic-native/splash-screen';
 import { Keyboard } from "@ionic-native/keyboard";
 
 import { HomePage } from '../pages/home/home';
-// import { LoginPage } from "../pages/login/login";
+import { LoginPage } from "../pages/login/login";
 
 @Component({
   templateUrl: 'app.html'
 })
 export class MyApp {
-  rootPage:any = HomePage;
+  rootPage:any = LoginPage;
   config: any;
 
   constructor(platform: Platform, statusBar: StatusBar, splashScreen: SplashScreen,
@@ -28,7 +28,7 @@ export class MyApp {
       // Here you can do any higher level native things you might need.
       statusBar.styleDefault();
       splashScreen.hide();
-      (<any>window).navigator.splashscreen.hide();
+      //(<any>window).navigator.splashscreen.hide();
     });
 
     this.keyboard.hideKeyboardAccessoryBar(false);

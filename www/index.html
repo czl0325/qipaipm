@@ -1,9 +1,6 @@
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
 <head>
-  <script data-ionic="inject">
-    (function(w){var i=w.Ionic=w.Ionic||{};i.version='3.6.0';i.angular='4.1.3';i.staticDir='build/';})(window);
-  </script>
   <meta charset="UTF-8">
   <title>Ionic App</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
@@ -18,35 +15,9 @@
   <script src="cordova.js"></script>
   <!--<script type="text/javascript" charset="utf-8" src="http://52.80.11.196:9090/auth/js/keycloak.js"></script>-->
   <!--<script type="text/javascript" charset="utf-8" src="keycloak.js"></script>-->
-  <script src="http://52.80.11.196:9090/auth/js/keycloak.js"></script>
+  <script src="http://localhost:8080/auth/js/keycloak.js"></script>
   <script type="text/javascript" charset="utf-8">
-      var keycloak = new Keycloak();
-      keycloak.onAuthSuccess = updateState;
-      keycloak.onAuthRefreshSuccess = updateState;
-      keycloak.onAuthLogout = updateState;
-      function updateState() {
-          if (keycloak.authenticated) {
-              document.getElementById('authenticated').style.display = 'block';
-              document.getElementById('not-authenticated').style.display = 'none';
-              document.getElementById('subject').innerText = keycloak.subject;
-              document.getElementById('username').innerText = keycloak.idTokenParsed.preferred_username;
-              document.getElementById('tokenExpires').innerText = new Date(keycloak.tokenParsed.exp * 1000).toLocaleString();
-              document.getElementById('tokenRefreshExpires').innerText = new Date(keycloak.refreshTokenParsed.exp * 1000).toLocaleString();
-              document.getElementById('token').innerText = JSON.stringify(keycloak.tokenParsed, null, '  ');
-              document.getElementById('idToken').innerText = JSON.stringify(keycloak.idTokenParsed, null, '  ');
-          } else {
-              document.getElementById('authenticated').style.display = 'none';
-              document.getElementById('not-authenticated').style.display = 'block';
-          }
-      }
-      function error() {
-          document.getElementById('authenticated').style.display = 'none';
-          document.getElementById('not-authenticated').style.display = 'block';
-          document.getElementById('error').innerText = 'Failed to initialize Keycloak adapter';
-      }
-      document.addEventListener("deviceready", function() {
-          keycloak.init({ onLoad: "check-sso" }).success(updateState).error(error);
-      }, false);
+
   </script>
   <style>
     td {

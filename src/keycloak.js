@@ -412,7 +412,8 @@
                     if (refreshQueue.length == 1) {
                         var req = new XMLHttpRequest();
                         req.open('POST', url, true);
-                        req.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+                        //req.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+                        req.setRequestHeader('Content-type', 'application/vnd.google-earth.kml+xml; charset=utf-8')
                         req.withCredentials = true;
 
                         if (kc.clientId && kc.clientSecret) {
@@ -520,7 +521,8 @@
 
                 var req = new XMLHttpRequest();
                 req.open('POST', url, true);
-                req.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+                //req.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+                req.setRequestHeader('Content-type', 'application/vnd.google-earth.kml+xml; charset=utf-8')
 
                 if (kc.clientId && kc.clientSecret) {
                     req.setRequestHeader('Authorization', 'Basic ' + btoa(kc.clientId + ':' + kc.clientSecret));
