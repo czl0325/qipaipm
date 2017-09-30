@@ -39,6 +39,7 @@ export class Keycloak2Provider {
             "ssl-required": "external",
             "resource": "qipaipm",
             "clientId": "qipaipm",
+            "use-resource-role-mappings":true,
             "credentials": {
                 "secret": "affdd342-69ca-4887-acce-0f9114b26195"
             },
