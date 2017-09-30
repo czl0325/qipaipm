@@ -39,7 +39,7 @@ export class LoginPage {
               console.log("成功");
           })
           .catch(() => {
-              console.log("失败");
+
           });
   }
 

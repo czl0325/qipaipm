@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Http } from '@angular/http';
 import 'rxjs/add/operator/map';
+import '../../keycloak.js'
 declare var Keycloak: any;
 /*
   Generated class for the Keycloak2Provider provider.
@@ -16,38 +17,56 @@ export class Keycloak2Provider {
   }
 
     static init(): Promise<any> {
-        const keycloakAuth: any = Keycloak({
+        // const keycloakAuth: any = Keycloak({
+        //     "realm": "qipai",
+        //     "url": "http://localhost:8080/auth",
+        //     "clientId": "qipaipm",
+        //     "cors": true,
+        //     "ssl-required" : "external",
+        //     "clientSecret": "affdd342-69ca-4887-acce-0f9114b26195",
+        //     //"sessionId":"1619f21c-0292-4b9d-9e1c-dcd0fdd1a2a8",
+        //     "publicClient":true,
+        //     "use-resource-role-mappings": true,
+        //     "bearer-only": false,
+        //     "redirect_uri": "http://localhost:8100/*",
+        //     "resource": "tutorial-frontend",
+        // });
+
+        const keycloakAuth: any = new Keycloak({
             "realm": "qipai",
-            "url": "http://52.80.11.196:9090/auth",
+            "auth-server-url": "http://localhost:8080/auth",
+            "url": "http://localhost:8080/auth",
+            "ssl-required": "external",
+            "resource": "qipaipm",
             "clientId": "qipaipm",
-            "enable-cors": true,
-            "ssl-required" : "external",
-            "sessionId":"1619f21c-0292-4b9d-9e1c-dcd0fdd1a2a8",
-            "publicClient":true,
-            "use-resource-role-mappings": true,
-            "bearer-only": false,
+            "credentials": {
+                "secret": "affdd342-69ca-4887-acce-0f9114b26195"
+            },
+            "policy-enforcer": {}
         });
 
         Keycloak2Provider.auth.loggedIn = false;
 
         return new Promise((resolve, reject) => {
-            keycloakAuth.init({ onLoad: 'login-required', checkLoginIframeInterval:1, checkLoginIframe: true})
+            //adapter : 'cordova', checkLoginIframeInterval:1, checkLoginIframe: true
+            keycloakAuth.init({ onLoad: 'login-required'})
                 .success(() => {
-              console.log(keycloakAuth);
-                    if (keycloakAuth.authenticated) {
-                        console.log(keycloakAuth.tokenParsed);
-                    } else {
-                        console.log("未认证");
-                    }
-                    Keycloak2Provider.auth.loggedIn = true;
-                    Keycloak2Provider.auth.authz = keycloakAuth;
-                    Keycloak2Provider.auth.logoutUrl = keycloakAuth.authServerUrl
-                        + '/realms/afiliamedica/protocol/openid-connect/logout?redirect_uri='
-                        + document.baseURI;
-                    resolve();
+                console.log(keycloakAuth);
+                if (keycloakAuth.authenticated) {
+                    console.log(keycloakAuth.tokenParsed);
+                } else {
+                    console.log("未认证");
+                }
+                Keycloak2Provider.auth.loggedIn = true;
+                Keycloak2Provider.auth.authz = keycloakAuth;
+                Keycloak2Provider.auth.logoutUrl = keycloakAuth.authServerUrl
+                    + '/realms/afiliamedica/protocol/openid-connect/logout?redirect_uri='
+                    + document.baseURI;
+                resolve();
                 })
                 .error(() => {
                     reject();
+                    console.log("失败");
                 });
         });
     }

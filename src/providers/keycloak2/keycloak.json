@@ -1,0 +1,12 @@
+{
+  "realm": "qipai",
+  "auth-server-url": "http://localhost:8080/auth",
+  "url": "http://localhost:8080/auth",
+  "ssl-required": "external",
+  "resource": "qipaipm",
+  "clientId": "qipaipm",
+  "credentials": {
+    "secret": "affdd342-69ca-4887-acce-0f9114b26195"
+  },
+  "policy-enforcer": {}
+}
