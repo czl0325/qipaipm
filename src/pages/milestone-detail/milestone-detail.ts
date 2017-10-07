@@ -5,7 +5,7 @@ import { DatePipe } from "@angular/common";
 import { AppService } from "../../app/app.service";
 import { AppConfig } from "../../app/app.config";
 import { ContactPage } from "../contact/contact";
-import { SimpleChanges } from "@angular/core";
+//import { SimpleChanges } from "@angular/core";
 
 /**
  * Generated class for the MilestoneDetailPage page.

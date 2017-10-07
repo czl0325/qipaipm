@@ -34,14 +34,14 @@ export class Keycloak2Provider {
 
         const keycloakAuth: any = new Keycloak({
             "realm": "qipai",
-            "auth-server-url": "http://localhost:8080/auth",
-            "url": "http://localhost:8080/auth",
+            "auth-server-url": "http://52.80.11.196:8088/auth",
+            "url": "http://52.80.11.196:8088/auth",
             "ssl-required": "external",
-            "resource": "qipaipm",
-            "clientId": "qipaipm",
+            "resource": "demo-web",
+            "clientId": "demo-web",
             "use-resource-role-mappings":true,
             "credentials": {
-                "secret": "affdd342-69ca-4887-acce-0f9114b26195"
+                "secret": "45628776-b765-4b99-90df-823f2947af6d"
             },
             "policy-enforcer": {}
         });
