@@ -2,8 +2,6 @@ import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { FormBuilder, Validators, FormGroup } from '@angular/forms';
 import { ForgetPage } from "../forget/forget";
-import { KeycloakServiceProvider } from "../../providers/keycloak-service/keycloak-service";
-// import { KeycloakService } from "../../app/keycloak/keycloak.service";
 import { Keycloak2Provider } from "../../providers/keycloak2/keycloak2";
 
 /**
@@ -23,8 +21,7 @@ export class LoginPage {
   loginForm: FormGroup;
 
   constructor(public navCtrl: NavController, public navParams: NavParams,
-              private formBuilder: FormBuilder, private keycloak: KeycloakServiceProvider,
-              private keycloak2: Keycloak2Provider) {
+              private formBuilder: FormBuilder) {
     this.errorText = '手机号码错误';
     this.loginForm = this.formBuilder.group({
           mobile: ['', Validators.compose([Validators.minLength(11), Validators.maxLength(11), Validators.required, Validators.pattern("^(13[0-9]|15[012356789]|17[03678]|18[0-9]|14[57])[0-9]{8}$")])],

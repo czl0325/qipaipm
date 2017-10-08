@@ -1197,7 +1197,7 @@ NewpwPage = __decorate([
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(1);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(12);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__angular_forms__ = __webpack_require__(21);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_rxjs_Rx__ = __webpack_require__(417);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_rxjs_Rx__ = __webpack_require__(416);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_rxjs_Rx___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3_rxjs_Rx__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__newpw_newpw__ = __webpack_require__(140);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
@@ -1334,150 +1334,12 @@ module.exports = webpackAsyncContext;
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return KeycloakServiceProvider; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(1);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_http__ = __webpack_require__(54);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_rxjs_add_operator_map__ = __webpack_require__(110);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_rxjs_add_operator_map___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_rxjs_add_operator_map__);
-var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
-    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
-    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
-    return c > 3 && r && Object.defineProperty(target, key, r), r;
-};
-var __metadata = (this && this.__metadata) || function (k, v) {
-    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
-};
-
-
-
-var keycloakConfig = __webpack_require__(683);
-/*
-  Generated class for the KeycloakServiceProvider provider.
-
-  See https://angular.io/docs/ts/latest/guide/dependency-injection.html
-  for more info on providers and Angular DI.
-*/
-var KeycloakServiceProvider = KeycloakServiceProvider_1 = (function () {
-    function KeycloakServiceProvider(http) {
-        this.http = http;
-    }
-    /**
-     * Initialise the Keycloak Client Adapter
-     */
-    KeycloakServiceProvider.init = function () {
-        // Create a new Keycloak Client Instance
-        var keycloakAuth = new Keycloak(keycloakConfig);
-        return new Promise(function (resolve, reject) {
-            keycloakAuth.init({ onLoad: 'login-required', flow: 'implicit' }).success(function () {
-                KeycloakServiceProvider_1.auth.authz = keycloakAuth;
-                KeycloakServiceProvider_1.auth.logoutUrl = keycloakAuth.authServerUrl + "/realms/keypress/protocol/openid-connect/logout?redirect_uri=/";
-                resolve();
-            }).error(function (err) {
-                reject(err);
-            });
-        });
-    };
-    /**
-     * Redirect to logout
-     */
-    KeycloakServiceProvider.prototype.logout = function () {
-        KeycloakServiceProvider_1.auth.authz.logout();
-    };
-    /**
-     * Redirect to Login
-     */
-    KeycloakServiceProvider.prototype.login = function () {
-        KeycloakServiceProvider_1.auth.authz.login();
-    };
-    /**
-     * Clears Authentication State
-     */
-    KeycloakServiceProvider.prototype.clearToken = function () {
-        KeycloakServiceProvider_1.auth.authz.clearToken();
-    };
-    /**
-     * Return the users realm level roles
-     */
-    KeycloakServiceProvider.prototype.getRealmRoles = function () {
-        return KeycloakServiceProvider_1.auth.authz.realmAccess.roles;
-    };
-    /**
-     * Check if the user has a specified realm role
-     */
-    KeycloakServiceProvider.prototype.hasRealmRole = function (role) {
-        return KeycloakServiceProvider_1.auth.authz.hasRealmRole(role);
-    };
-    /**
-     * Get Server/Open ID Connect specific server info
-     */
-    KeycloakServiceProvider.prototype.getConfiguration = function () {
-        var notAvailable = "N/A";
-        return {
-            "authServerUrl": KeycloakServiceProvider_1.auth.authz.authServerUrl ? KeycloakServiceProvider_1.auth.authz.authServerUrl : notAvailable,
-            "openIdFlow": KeycloakServiceProvider_1.auth.authz.flow ? KeycloakServiceProvider_1.auth.authz.flow : notAvailable,
-            "openIdResponseMode": KeycloakServiceProvider_1.auth.authz.responseMode ? KeycloakServiceProvider_1.auth.authz.responseMode : notAvailable,
-            "openIdResponseType": KeycloakServiceProvider_1.auth.authz.responseType ? KeycloakServiceProvider_1.auth.authz.responseType : notAvailable,
-            "realm": KeycloakServiceProvider_1.auth.authz.realm ? KeycloakServiceProvider_1.auth.authz.realm : notAvailable,
-            "clientId": KeycloakServiceProvider_1.auth.authz.clientId ? KeycloakServiceProvider_1.auth.authz.clientId : notAvailable,
-            "timeSkew": KeycloakServiceProvider_1.auth.authz.timeSkew ? KeycloakServiceProvider_1.auth.authz.timeSkew : notAvailable
-        };
-    };
-    /**
-     * Redirects to the Account Management Console
-     */
-    KeycloakServiceProvider.prototype.accountManagement = function () {
-        KeycloakServiceProvider_1.auth.authz.accountManagement();
-    };
-    /**
-     * Get the users profile
-     */
-    KeycloakServiceProvider.prototype.loadUserProfile = function () {
-        // Retrieve User Profile
-        return new Promise(function (resolve, reject) {
-            KeycloakServiceProvider_1.auth.authz.loadUserProfile().success(function (profile) {
-                resolve(profile);
-            }).error(function () {
-                reject('Failed to retrieve user profile');
-            });
-        });
-    };
-    /**
-     * Check if the user has a given role
-     * @param role The role to check if the user posesses
-     */
-    KeycloakServiceProvider.prototype.viewGuard = function (role) {
-        if (KeycloakServiceProvider_1.auth.authz.hasRealmRole(role)) {
-            return true;
-        }
-        else {
-            //this.alertCtrl.create({title: 'Access Denied', subTitle: "You don't have access to the requested resource."}).present();
-            return false;
-        }
-    };
-    return KeycloakServiceProvider;
-}());
-KeycloakServiceProvider.auth = {};
-KeycloakServiceProvider = KeycloakServiceProvider_1 = __decorate([
-    Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Injectable"])(),
-    __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1__angular_http__["a" /* Http */]])
-], KeycloakServiceProvider);
-
-var KeycloakServiceProvider_1;
-//# sourceMappingURL=keycloak-service.js.map
-
-/***/ }),
-
-/***/ 222:
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return Keycloak2Provider; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(1);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_http__ = __webpack_require__(54);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_rxjs_add_operator_map__ = __webpack_require__(110);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_rxjs_add_operator_map___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_rxjs_add_operator_map__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__keycloak_js__ = __webpack_require__(684);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__keycloak_js__ = __webpack_require__(682);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__keycloak_js___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3__keycloak_js__);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -1591,7 +1453,7 @@ var Keycloak2Provider_1;
 
 /***/ }),
 
-/***/ 267:
+/***/ 266:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -1600,7 +1462,7 @@ var Keycloak2Provider_1;
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(12);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__project_create_project_create__ = __webpack_require__(135);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__project_detail_project_detail__ = __webpack_require__(138);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__search_search__ = __webpack_require__(268);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__search_search__ = __webpack_require__(267);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__app_app_service__ = __webpack_require__(36);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__app_app_config__ = __webpack_require__(27);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
@@ -1708,7 +1570,7 @@ HomePage = __decorate([
 
 /***/ }),
 
-/***/ 268:
+/***/ 267:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -2200,7 +2062,7 @@ AppService = __decorate([
 
 /***/ }),
 
-/***/ 390:
+/***/ 389:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -2209,8 +2071,7 @@ AppService = __decorate([
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(12);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__angular_forms__ = __webpack_require__(21);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__forget_forget__ = __webpack_require__(141);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__providers_keycloak_service_keycloak_service__ = __webpack_require__(221);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__providers_keycloak2_keycloak2__ = __webpack_require__(222);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__providers_keycloak2_keycloak2__ = __webpack_require__(221);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -2225,8 +2086,6 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 
 
 
-// import { KeycloakService } from "../../app/keycloak/keycloak.service";
-
 /**
  * Generated class for the LoginPage page.
  *
@@ -2234,12 +2093,10 @@ var __metadata = (this && this.__metadata) || function (k, v) {
  * on Ionic pages and navigation.
  */
 var LoginPage = (function () {
-    function LoginPage(navCtrl, navParams, formBuilder, keycloak, keycloak2) {
+    function LoginPage(navCtrl, navParams, formBuilder) {
         this.navCtrl = navCtrl;
         this.navParams = navParams;
         this.formBuilder = formBuilder;
-        this.keycloak = keycloak;
-        this.keycloak2 = keycloak2;
         this.errorText = '手机号码错误';
         this.loginForm = this.formBuilder.group({
             mobile: ['', __WEBPACK_IMPORTED_MODULE_2__angular_forms__["Validators"].compose([__WEBPACK_IMPORTED_MODULE_2__angular_forms__["Validators"].minLength(11), __WEBPACK_IMPORTED_MODULE_2__angular_forms__["Validators"].maxLength(11), __WEBPACK_IMPORTED_MODULE_2__angular_forms__["Validators"].required, __WEBPACK_IMPORTED_MODULE_2__angular_forms__["Validators"].pattern("^(13[0-9]|15[012356789]|17[03678]|18[0-9]|14[57])[0-9]{8}$")])],
@@ -2248,7 +2105,7 @@ var LoginPage = (function () {
     }
     LoginPage.prototype.ionViewDidLoad = function () {
         // KeycloakServiceProvider.init();
-        __WEBPACK_IMPORTED_MODULE_5__providers_keycloak2_keycloak2__["a" /* Keycloak2Provider */].init()
+        __WEBPACK_IMPORTED_MODULE_4__providers_keycloak2_keycloak2__["a" /* Keycloak2Provider */].init()
             .then(function () {
             console.log("成功");
         })
@@ -2269,21 +2126,20 @@ LoginPage = __decorate([
         selector: 'page-login',template:/*ion-inline-start:"/Users/zhaoliangchen/Desktop/qipaipm-company/src/pages/login/login.html"*/'<!--\n  Generated template for the LoginPage page.\n\n  See http://ionicframework.com/docs/components/#navigation for more info on\n  Ionic pages and navigation.\n-->\n\n<ion-content fullscreen>\n  <img class="login_icon" src="../../assets/png/login_logo.png">\n  <form [formGroup]="loginForm" (ngSubmit)="login(loginForm.value)">\n    <div style="margin: 0 30px;">\n      <div class="row">\n        <img class="area" src="../../assets/png/icon_tel.png">\n        <ion-input no-padding no-margin type="text" placeholder="输入手机号" formControlName="mobile" maxlength="11"></ion-input>\n      </div>\n      <div class="row">\n        <img class="area" src="../../assets/png/icon_pw.png">\n        <ion-input no-padding no-margin type="password" placeholder="输入密码" formControlName="password" maxlength="12"></ion-input>\n      </div>\n      <!--<input class="login_input" type="text" formControlName="mobile" placeholder="请输入手机号"/>-->\n      <!--<input class="login_input" type="password" formControlName="password" placeholder="请输入密码"/>-->\n      <!--<div style="width: 80%;height: 30px;margin: 30px auto">-->\n        <!--<p style="float: left; margin-left: 10px; color: red">{{errorText}}</p>-->\n        <!--<button ion-button no-padding no-margin clear style="margin-right: 10px; float: right">忘记密码?</button>-->\n      <!--</div>-->\n      <button ion-button block class="login_btn" type="submit">登录</button>\n    </div>\n  </form>\n  <div style="position: fixed;bottom: 20px;width: 100%">\n    <button ion-button no-border no-padding clear class="forget" (click)="onForgetPassword($event)">忘记密码?</button>\n  </div>\n\n</ion-content>\n'/*ion-inline-end:"/Users/zhaoliangchen/Desktop/qipaipm-company/src/pages/login/login.html"*/,
     }),
     __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["NavController"], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["NavParams"],
-        __WEBPACK_IMPORTED_MODULE_2__angular_forms__["FormBuilder"], __WEBPACK_IMPORTED_MODULE_4__providers_keycloak_service_keycloak_service__["a" /* KeycloakServiceProvider */],
-        __WEBPACK_IMPORTED_MODULE_5__providers_keycloak2_keycloak2__["a" /* Keycloak2Provider */]])
+        __WEBPACK_IMPORTED_MODULE_2__angular_forms__["FormBuilder"]])
 ], LoginPage);
 
 //# sourceMappingURL=login.js.map
 
 /***/ }),
 
-/***/ 391:
+/***/ 390:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_platform_browser_dynamic__ = __webpack_require__(392);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__app_module__ = __webpack_require__(396);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_platform_browser_dynamic__ = __webpack_require__(391);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__app_module__ = __webpack_require__(395);
 
 
 Object(__WEBPACK_IMPORTED_MODULE_0__angular_platform_browser_dynamic__["a" /* platformBrowserDynamic */])().bootstrapModule(__WEBPACK_IMPORTED_MODULE_1__app_module__["a" /* AppModule */]);
@@ -2291,7 +2147,7 @@ Object(__WEBPACK_IMPORTED_MODULE_0__angular_platform_browser_dynamic__["a" /* pl
 
 /***/ }),
 
-/***/ 396:
+/***/ 395:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -2299,29 +2155,29 @@ Object(__WEBPACK_IMPORTED_MODULE_0__angular_platform_browser_dynamic__["a" /* pl
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_platform_browser__ = __webpack_require__(43);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_core__ = __webpack_require__(1);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_ionic_angular__ = __webpack_require__(12);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__ionic_native_splash_screen__ = __webpack_require__(263);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__ionic_native_status_bar__ = __webpack_require__(265);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__ionic_native_splash_screen__ = __webpack_require__(262);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__ionic_native_status_bar__ = __webpack_require__(264);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__angular_http__ = __webpack_require__(54);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__ionic_native_keyboard__ = __webpack_require__(266);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__app_component__ = __webpack_require__(705);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__pages_home_home__ = __webpack_require__(267);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__ionic_native_keyboard__ = __webpack_require__(265);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__app_component__ = __webpack_require__(703);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__pages_home_home__ = __webpack_require__(266);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__pages_project_create_project_create__ = __webpack_require__(135);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__pages_milestone_detail_milestone_detail__ = __webpack_require__(136);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_11__pages_project_detail_project_detail__ = __webpack_require__(138);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_12__pages_subtask_subtask__ = __webpack_require__(137);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_13__pages_search_search__ = __webpack_require__(268);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_13__pages_search_search__ = __webpack_require__(267);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_14__pages_contact_contact__ = __webpack_require__(59);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_15__pages_forget_forget__ = __webpack_require__(141);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_16__pages_newpw_newpw__ = __webpack_require__(140);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_17__components_components_module__ = __webpack_require__(706);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_18_ion2_calendar__ = __webpack_require__(709);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_19_ion_multi_picker__ = __webpack_require__(714);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_17__components_components_module__ = __webpack_require__(704);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_18_ion2_calendar__ = __webpack_require__(707);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_19_ion_multi_picker__ = __webpack_require__(712);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_19_ion_multi_picker___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_19_ion_multi_picker__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_20__pipes_pipes_module__ = __webpack_require__(717);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_20__pipes_pipes_module__ = __webpack_require__(715);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_21__app_service__ = __webpack_require__(36);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_22__pages_login_login__ = __webpack_require__(390);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_23__providers_keycloak_service_keycloak_service__ = __webpack_require__(221);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_24__providers_keycloak2_keycloak2__ = __webpack_require__(222);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_22__pages_login_login__ = __webpack_require__(389);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_23__providers_keycloak_service_keycloak_service__ = __webpack_require__(724);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_24__providers_keycloak2_keycloak2__ = __webpack_require__(221);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -2596,21 +2452,7 @@ var ContactPage_1;
 
 /***/ }),
 
-/***/ 683:
-/***/ (function(module, exports) {
-
-module.exports = {
-	"realm": "qipai",
-	"url": "http://52.80.11.196:9090/auth",
-	"ssl-required": "external",
-	"clientId": "qipaipm",
-	"public-client": true,
-	"use-resource-role-mappings": true
-};
-
-/***/ }),
-
-/***/ 684:
+/***/ 682:
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function(module) {var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*
@@ -3882,21 +3724,21 @@ module.exports = {
         }
     }
 })( window );
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(223)(module)))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(222)(module)))
 
 /***/ }),
 
-/***/ 705:
+/***/ 703:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return MyApp; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(1);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(12);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__ionic_native_status_bar__ = __webpack_require__(265);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__ionic_native_splash_screen__ = __webpack_require__(263);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__ionic_native_keyboard__ = __webpack_require__(266);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__pages_home_home__ = __webpack_require__(267);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__ionic_native_status_bar__ = __webpack_require__(264);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__ionic_native_splash_screen__ = __webpack_require__(262);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__ionic_native_keyboard__ = __webpack_require__(265);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__pages_home_home__ = __webpack_require__(266);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -3978,15 +3820,15 @@ MyApp = __decorate([
 
 /***/ }),
 
-/***/ 706:
+/***/ 704:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return ComponentsModule; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(1);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(12);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__test_test__ = __webpack_require__(707);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__calendar_calendar__ = __webpack_require__(708);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__test_test__ = __webpack_require__(705);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__calendar_calendar__ = __webpack_require__(706);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -4023,7 +3865,7 @@ var ComponentsModule_1;
 
 /***/ }),
 
-/***/ 707:
+/***/ 705:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -4063,7 +3905,7 @@ TestComponent = __decorate([
 
 /***/ }),
 
-/***/ 708:
+/***/ 706:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -4455,240 +4297,240 @@ CalendarComponent = __decorate([
 
 /***/ }),
 
-/***/ 711:
+/***/ 709:
 /***/ (function(module, exports, __webpack_require__) {
 
 var map = {
-	"./af": 269,
-	"./af.js": 269,
-	"./ar": 270,
-	"./ar-dz": 271,
-	"./ar-dz.js": 271,
-	"./ar-kw": 272,
-	"./ar-kw.js": 272,
-	"./ar-ly": 273,
-	"./ar-ly.js": 273,
-	"./ar-ma": 274,
-	"./ar-ma.js": 274,
-	"./ar-sa": 275,
-	"./ar-sa.js": 275,
-	"./ar-tn": 276,
-	"./ar-tn.js": 276,
-	"./ar.js": 270,
-	"./az": 277,
-	"./az.js": 277,
-	"./be": 278,
-	"./be.js": 278,
-	"./bg": 279,
-	"./bg.js": 279,
-	"./bn": 280,
-	"./bn.js": 280,
-	"./bo": 281,
-	"./bo.js": 281,
-	"./br": 282,
-	"./br.js": 282,
-	"./bs": 283,
-	"./bs.js": 283,
-	"./ca": 284,
-	"./ca.js": 284,
-	"./cs": 285,
-	"./cs.js": 285,
-	"./cv": 286,
-	"./cv.js": 286,
-	"./cy": 287,
-	"./cy.js": 287,
-	"./da": 288,
-	"./da.js": 288,
-	"./de": 289,
-	"./de-at": 290,
-	"./de-at.js": 290,
-	"./de-ch": 291,
-	"./de-ch.js": 291,
-	"./de.js": 289,
-	"./dv": 292,
-	"./dv.js": 292,
-	"./el": 293,
-	"./el.js": 293,
-	"./en-au": 294,
-	"./en-au.js": 294,
-	"./en-ca": 295,
-	"./en-ca.js": 295,
-	"./en-gb": 296,
-	"./en-gb.js": 296,
-	"./en-ie": 297,
-	"./en-ie.js": 297,
-	"./en-nz": 298,
-	"./en-nz.js": 298,
-	"./eo": 299,
-	"./eo.js": 299,
-	"./es": 300,
-	"./es-do": 301,
-	"./es-do.js": 301,
-	"./es.js": 300,
-	"./et": 302,
-	"./et.js": 302,
-	"./eu": 303,
-	"./eu.js": 303,
-	"./fa": 304,
-	"./fa.js": 304,
-	"./fi": 305,
-	"./fi.js": 305,
-	"./fo": 306,
-	"./fo.js": 306,
-	"./fr": 307,
-	"./fr-ca": 308,
-	"./fr-ca.js": 308,
-	"./fr-ch": 309,
-	"./fr-ch.js": 309,
-	"./fr.js": 307,
-	"./fy": 310,
-	"./fy.js": 310,
-	"./gd": 311,
-	"./gd.js": 311,
-	"./gl": 312,
-	"./gl.js": 312,
-	"./gom-latn": 313,
-	"./gom-latn.js": 313,
-	"./he": 314,
-	"./he.js": 314,
-	"./hi": 315,
-	"./hi.js": 315,
-	"./hr": 316,
-	"./hr.js": 316,
-	"./hu": 317,
-	"./hu.js": 317,
-	"./hy-am": 318,
-	"./hy-am.js": 318,
-	"./id": 319,
-	"./id.js": 319,
-	"./is": 320,
-	"./is.js": 320,
-	"./it": 321,
-	"./it.js": 321,
-	"./ja": 322,
-	"./ja.js": 322,
-	"./jv": 323,
-	"./jv.js": 323,
-	"./ka": 324,
-	"./ka.js": 324,
-	"./kk": 325,
-	"./kk.js": 325,
-	"./km": 326,
-	"./km.js": 326,
-	"./kn": 327,
-	"./kn.js": 327,
-	"./ko": 328,
-	"./ko.js": 328,
-	"./ky": 329,
-	"./ky.js": 329,
-	"./lb": 330,
-	"./lb.js": 330,
-	"./lo": 331,
-	"./lo.js": 331,
-	"./lt": 332,
-	"./lt.js": 332,
-	"./lv": 333,
-	"./lv.js": 333,
-	"./me": 334,
-	"./me.js": 334,
-	"./mi": 335,
-	"./mi.js": 335,
-	"./mk": 336,
-	"./mk.js": 336,
-	"./ml": 337,
-	"./ml.js": 337,
-	"./mr": 338,
-	"./mr.js": 338,
-	"./ms": 339,
-	"./ms-my": 340,
-	"./ms-my.js": 340,
-	"./ms.js": 339,
-	"./my": 341,
-	"./my.js": 341,
-	"./nb": 342,
-	"./nb.js": 342,
-	"./ne": 343,
-	"./ne.js": 343,
-	"./nl": 344,
-	"./nl-be": 345,
-	"./nl-be.js": 345,
-	"./nl.js": 344,
-	"./nn": 346,
-	"./nn.js": 346,
-	"./pa-in": 347,
-	"./pa-in.js": 347,
-	"./pl": 348,
-	"./pl.js": 348,
-	"./pt": 349,
-	"./pt-br": 350,
-	"./pt-br.js": 350,
-	"./pt.js": 349,
-	"./ro": 351,
-	"./ro.js": 351,
-	"./ru": 352,
-	"./ru.js": 352,
-	"./sd": 353,
-	"./sd.js": 353,
-	"./se": 354,
-	"./se.js": 354,
-	"./si": 355,
-	"./si.js": 355,
-	"./sk": 356,
-	"./sk.js": 356,
-	"./sl": 357,
-	"./sl.js": 357,
-	"./sq": 358,
-	"./sq.js": 358,
-	"./sr": 359,
-	"./sr-cyrl": 360,
-	"./sr-cyrl.js": 360,
-	"./sr.js": 359,
-	"./ss": 361,
-	"./ss.js": 361,
-	"./sv": 362,
-	"./sv.js": 362,
-	"./sw": 363,
-	"./sw.js": 363,
-	"./ta": 364,
-	"./ta.js": 364,
-	"./te": 365,
-	"./te.js": 365,
-	"./tet": 366,
-	"./tet.js": 366,
-	"./th": 367,
-	"./th.js": 367,
-	"./tl-ph": 368,
-	"./tl-ph.js": 368,
-	"./tlh": 369,
-	"./tlh.js": 369,
-	"./tr": 370,
-	"./tr.js": 370,
-	"./tzl": 371,
-	"./tzl.js": 371,
-	"./tzm": 372,
-	"./tzm-latn": 373,
-	"./tzm-latn.js": 373,
-	"./tzm.js": 372,
-	"./uk": 374,
-	"./uk.js": 374,
-	"./ur": 375,
-	"./ur.js": 375,
-	"./uz": 376,
-	"./uz-latn": 377,
-	"./uz-latn.js": 377,
-	"./uz.js": 376,
-	"./vi": 378,
-	"./vi.js": 378,
-	"./x-pseudo": 379,
-	"./x-pseudo.js": 379,
-	"./yo": 380,
-	"./yo.js": 380,
-	"./zh-cn": 381,
-	"./zh-cn.js": 381,
-	"./zh-hk": 382,
-	"./zh-hk.js": 382,
-	"./zh-tw": 383,
-	"./zh-tw.js": 383
+	"./af": 268,
+	"./af.js": 268,
+	"./ar": 269,
+	"./ar-dz": 270,
+	"./ar-dz.js": 270,
+	"./ar-kw": 271,
+	"./ar-kw.js": 271,
+	"./ar-ly": 272,
+	"./ar-ly.js": 272,
+	"./ar-ma": 273,
+	"./ar-ma.js": 273,
+	"./ar-sa": 274,
+	"./ar-sa.js": 274,
+	"./ar-tn": 275,
+	"./ar-tn.js": 275,
+	"./ar.js": 269,
+	"./az": 276,
+	"./az.js": 276,
+	"./be": 277,
+	"./be.js": 277,
+	"./bg": 278,
+	"./bg.js": 278,
+	"./bn": 279,
+	"./bn.js": 279,
+	"./bo": 280,
+	"./bo.js": 280,
+	"./br": 281,
+	"./br.js": 281,
+	"./bs": 282,
+	"./bs.js": 282,
+	"./ca": 283,
+	"./ca.js": 283,
+	"./cs": 284,
+	"./cs.js": 284,
+	"./cv": 285,
+	"./cv.js": 285,
+	"./cy": 286,
+	"./cy.js": 286,
+	"./da": 287,
+	"./da.js": 287,
+	"./de": 288,
+	"./de-at": 289,
+	"./de-at.js": 289,
+	"./de-ch": 290,
+	"./de-ch.js": 290,
+	"./de.js": 288,
+	"./dv": 291,
+	"./dv.js": 291,
+	"./el": 292,
+	"./el.js": 292,
+	"./en-au": 293,
+	"./en-au.js": 293,
+	"./en-ca": 294,
+	"./en-ca.js": 294,
+	"./en-gb": 295,
+	"./en-gb.js": 295,
+	"./en-ie": 296,
+	"./en-ie.js": 296,
+	"./en-nz": 297,
+	"./en-nz.js": 297,
+	"./eo": 298,
+	"./eo.js": 298,
+	"./es": 299,
+	"./es-do": 300,
+	"./es-do.js": 300,
+	"./es.js": 299,
+	"./et": 301,
+	"./et.js": 301,
+	"./eu": 302,
+	"./eu.js": 302,
+	"./fa": 303,
+	"./fa.js": 303,
+	"./fi": 304,
+	"./fi.js": 304,
+	"./fo": 305,
+	"./fo.js": 305,
+	"./fr": 306,
+	"./fr-ca": 307,
+	"./fr-ca.js": 307,
+	"./fr-ch": 308,
+	"./fr-ch.js": 308,
+	"./fr.js": 306,
+	"./fy": 309,
+	"./fy.js": 309,
+	"./gd": 310,
+	"./gd.js": 310,
+	"./gl": 311,
+	"./gl.js": 311,
+	"./gom-latn": 312,
+	"./gom-latn.js": 312,
+	"./he": 313,
+	"./he.js": 313,
+	"./hi": 314,
+	"./hi.js": 314,
+	"./hr": 315,
+	"./hr.js": 315,
+	"./hu": 316,
+	"./hu.js": 316,
+	"./hy-am": 317,
+	"./hy-am.js": 317,
+	"./id": 318,
+	"./id.js": 318,
+	"./is": 319,
+	"./is.js": 319,
+	"./it": 320,
+	"./it.js": 320,
+	"./ja": 321,
+	"./ja.js": 321,
+	"./jv": 322,
+	"./jv.js": 322,
+	"./ka": 323,
+	"./ka.js": 323,
+	"./kk": 324,
+	"./kk.js": 324,
+	"./km": 325,
+	"./km.js": 325,
+	"./kn": 326,
+	"./kn.js": 326,
+	"./ko": 327,
+	"./ko.js": 327,
+	"./ky": 328,
+	"./ky.js": 328,
+	"./lb": 329,
+	"./lb.js": 329,
+	"./lo": 330,
+	"./lo.js": 330,
+	"./lt": 331,
+	"./lt.js": 331,
+	"./lv": 332,
+	"./lv.js": 332,
+	"./me": 333,
+	"./me.js": 333,
+	"./mi": 334,
+	"./mi.js": 334,
+	"./mk": 335,
+	"./mk.js": 335,
+	"./ml": 336,
+	"./ml.js": 336,
+	"./mr": 337,
+	"./mr.js": 337,
+	"./ms": 338,
+	"./ms-my": 339,
+	"./ms-my.js": 339,
+	"./ms.js": 338,
+	"./my": 340,
+	"./my.js": 340,
+	"./nb": 341,
+	"./nb.js": 341,
+	"./ne": 342,
+	"./ne.js": 342,
+	"./nl": 343,
+	"./nl-be": 344,
+	"./nl-be.js": 344,
+	"./nl.js": 343,
+	"./nn": 345,
+	"./nn.js": 345,
+	"./pa-in": 346,
+	"./pa-in.js": 346,
+	"./pl": 347,
+	"./pl.js": 347,
+	"./pt": 348,
+	"./pt-br": 349,
+	"./pt-br.js": 349,
+	"./pt.js": 348,
+	"./ro": 350,
+	"./ro.js": 350,
+	"./ru": 351,
+	"./ru.js": 351,
+	"./sd": 352,
+	"./sd.js": 352,
+	"./se": 353,
+	"./se.js": 353,
+	"./si": 354,
+	"./si.js": 354,
+	"./sk": 355,
+	"./sk.js": 355,
+	"./sl": 356,
+	"./sl.js": 356,
+	"./sq": 357,
+	"./sq.js": 357,
+	"./sr": 358,
+	"./sr-cyrl": 359,
+	"./sr-cyrl.js": 359,
+	"./sr.js": 358,
+	"./ss": 360,
+	"./ss.js": 360,
+	"./sv": 361,
+	"./sv.js": 361,
+	"./sw": 362,
+	"./sw.js": 362,
+	"./ta": 363,
+	"./ta.js": 363,
+	"./te": 364,
+	"./te.js": 364,
+	"./tet": 365,
+	"./tet.js": 365,
+	"./th": 366,
+	"./th.js": 366,
+	"./tl-ph": 367,
+	"./tl-ph.js": 367,
+	"./tlh": 368,
+	"./tlh.js": 368,
+	"./tr": 369,
+	"./tr.js": 369,
+	"./tzl": 370,
+	"./tzl.js": 370,
+	"./tzm": 371,
+	"./tzm-latn": 372,
+	"./tzm-latn.js": 372,
+	"./tzm.js": 371,
+	"./uk": 373,
+	"./uk.js": 373,
+	"./ur": 374,
+	"./ur.js": 374,
+	"./uz": 375,
+	"./uz-latn": 376,
+	"./uz-latn.js": 376,
+	"./uz.js": 375,
+	"./vi": 377,
+	"./vi.js": 377,
+	"./x-pseudo": 378,
+	"./x-pseudo.js": 378,
+	"./yo": 379,
+	"./yo.js": 379,
+	"./zh-cn": 380,
+	"./zh-cn.js": 380,
+	"./zh-hk": 381,
+	"./zh-hk.js": 381,
+	"./zh-tw": 382,
+	"./zh-tw.js": 382
 };
 function webpackContext(req) {
 	return __webpack_require__(webpackContextResolve(req));
@@ -4704,24 +4546,24 @@ webpackContext.keys = function webpackContextKeys() {
 };
 webpackContext.resolve = webpackContextResolve;
 module.exports = webpackContext;
-webpackContext.id = 711;
+webpackContext.id = 709;
 
 /***/ }),
 
-/***/ 717:
+/***/ 715:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return PipesModule; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(1);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__pipes_delay_delay__ = __webpack_require__(718);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__pipes_year_year__ = __webpack_require__(719);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__pipes_month_month__ = __webpack_require__(720);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__day_day__ = __webpack_require__(721);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__weekay_weekay__ = __webpack_require__(722);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__year_and_month_year_and_month__ = __webpack_require__(723);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__stamp_to_date_stamp_to_date__ = __webpack_require__(724);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__itemlevel_itemlevel__ = __webpack_require__(725);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__pipes_delay_delay__ = __webpack_require__(716);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__pipes_year_year__ = __webpack_require__(717);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__pipes_month_month__ = __webpack_require__(718);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__day_day__ = __webpack_require__(719);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__weekay_weekay__ = __webpack_require__(720);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__year_and_month_year_and_month__ = __webpack_require__(721);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__stamp_to_date_stamp_to_date__ = __webpack_require__(722);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__itemlevel_itemlevel__ = __webpack_require__(723);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -4772,7 +4614,7 @@ PipesModule = __decorate([
 
 /***/ }),
 
-/***/ 718:
+/***/ 716:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -4828,7 +4670,7 @@ DelayPipe = __decorate([
 
 /***/ }),
 
-/***/ 719:
+/***/ 717:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -4890,7 +4732,7 @@ YearPipe = __decorate([
 
 /***/ }),
 
-/***/ 720:
+/***/ 718:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -4952,7 +4794,7 @@ MonthPipe = __decorate([
 
 /***/ }),
 
-/***/ 721:
+/***/ 719:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -5017,7 +4859,7 @@ DayPipe = __decorate([
 
 /***/ }),
 
-/***/ 722:
+/***/ 720:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -5084,7 +4926,7 @@ WeekayPipe = __decorate([
 
 /***/ }),
 
-/***/ 723:
+/***/ 721:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -5136,7 +4978,7 @@ YearAndMonthPipe = __decorate([
 
 /***/ }),
 
-/***/ 724:
+/***/ 722:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -5189,7 +5031,7 @@ StampToDatePipe = __decorate([
 
 /***/ }),
 
-/***/ 725:
+/***/ 723:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -5242,7 +5084,159 @@ ItemlevelPipe = __decorate([
 
 //# sourceMappingURL=itemlevel.js.map
 
+/***/ }),
+
+/***/ 724:
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return KeycloakServiceProvider; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(1);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_http__ = __webpack_require__(54);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_rxjs_add_operator_map__ = __webpack_require__(110);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_rxjs_add_operator_map___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_rxjs_add_operator_map__);
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+
+
+
+var keycloakConfig = __webpack_require__(725);
+/*
+  Generated class for the KeycloakServiceProvider provider.
+
+  See https://angular.io/docs/ts/latest/guide/dependency-injection.html
+  for more info on providers and Angular DI.
+*/
+var KeycloakServiceProvider = KeycloakServiceProvider_1 = (function () {
+    function KeycloakServiceProvider(http) {
+        this.http = http;
+    }
+    /**
+     * Initialise the Keycloak Client Adapter
+     */
+    KeycloakServiceProvider.init = function () {
+        // Create a new Keycloak Client Instance
+        var keycloakAuth = new Keycloak(keycloakConfig);
+        return new Promise(function (resolve, reject) {
+            keycloakAuth.init({ onLoad: 'login-required', flow: 'implicit' }).success(function () {
+                KeycloakServiceProvider_1.auth.authz = keycloakAuth;
+                KeycloakServiceProvider_1.auth.logoutUrl = keycloakAuth.authServerUrl + "/realms/keypress/protocol/openid-connect/logout?redirect_uri=/";
+                resolve();
+            }).error(function (err) {
+                reject(err);
+            });
+        });
+    };
+    /**
+     * Redirect to logout
+     */
+    KeycloakServiceProvider.prototype.logout = function () {
+        KeycloakServiceProvider_1.auth.authz.logout();
+    };
+    /**
+     * Redirect to Login
+     */
+    KeycloakServiceProvider.prototype.login = function () {
+        KeycloakServiceProvider_1.auth.authz.login();
+    };
+    /**
+     * Clears Authentication State
+     */
+    KeycloakServiceProvider.prototype.clearToken = function () {
+        KeycloakServiceProvider_1.auth.authz.clearToken();
+    };
+    /**
+     * Return the users realm level roles
+     */
+    KeycloakServiceProvider.prototype.getRealmRoles = function () {
+        return KeycloakServiceProvider_1.auth.authz.realmAccess.roles;
+    };
+    /**
+     * Check if the user has a specified realm role
+     */
+    KeycloakServiceProvider.prototype.hasRealmRole = function (role) {
+        return KeycloakServiceProvider_1.auth.authz.hasRealmRole(role);
+    };
+    /**
+     * Get Server/Open ID Connect specific server info
+     */
+    KeycloakServiceProvider.prototype.getConfiguration = function () {
+        var notAvailable = "N/A";
+        return {
+            "authServerUrl": KeycloakServiceProvider_1.auth.authz.authServerUrl ? KeycloakServiceProvider_1.auth.authz.authServerUrl : notAvailable,
+            "openIdFlow": KeycloakServiceProvider_1.auth.authz.flow ? KeycloakServiceProvider_1.auth.authz.flow : notAvailable,
+            "openIdResponseMode": KeycloakServiceProvider_1.auth.authz.responseMode ? KeycloakServiceProvider_1.auth.authz.responseMode : notAvailable,
+            "openIdResponseType": KeycloakServiceProvider_1.auth.authz.responseType ? KeycloakServiceProvider_1.auth.authz.responseType : notAvailable,
+            "realm": KeycloakServiceProvider_1.auth.authz.realm ? KeycloakServiceProvider_1.auth.authz.realm : notAvailable,
+            "clientId": KeycloakServiceProvider_1.auth.authz.clientId ? KeycloakServiceProvider_1.auth.authz.clientId : notAvailable,
+            "timeSkew": KeycloakServiceProvider_1.auth.authz.timeSkew ? KeycloakServiceProvider_1.auth.authz.timeSkew : notAvailable
+        };
+    };
+    /**
+     * Redirects to the Account Management Console
+     */
+    KeycloakServiceProvider.prototype.accountManagement = function () {
+        KeycloakServiceProvider_1.auth.authz.accountManagement();
+    };
+    /**
+     * Get the users profile
+     */
+    KeycloakServiceProvider.prototype.loadUserProfile = function () {
+        // Retrieve User Profile
+        return new Promise(function (resolve, reject) {
+            KeycloakServiceProvider_1.auth.authz.loadUserProfile().success(function (profile) {
+                resolve(profile);
+            }).error(function () {
+                reject('Failed to retrieve user profile');
+            });
+        });
+    };
+    /**
+     * Check if the user has a given role
+     * @param role The role to check if the user posesses
+     */
+    KeycloakServiceProvider.prototype.viewGuard = function (role) {
+        if (KeycloakServiceProvider_1.auth.authz.hasRealmRole(role)) {
+            return true;
+        }
+        else {
+            //this.alertCtrl.create({title: 'Access Denied', subTitle: "You don't have access to the requested resource."}).present();
+            return false;
+        }
+    };
+    return KeycloakServiceProvider;
+}());
+KeycloakServiceProvider.auth = {};
+KeycloakServiceProvider = KeycloakServiceProvider_1 = __decorate([
+    Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Injectable"])(),
+    __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1__angular_http__["a" /* Http */]])
+], KeycloakServiceProvider);
+
+var KeycloakServiceProvider_1;
+//# sourceMappingURL=keycloak-service.js.map
+
+/***/ }),
+
+/***/ 725:
+/***/ (function(module, exports) {
+
+module.exports = {
+	"realm": "qipai",
+	"url": "http://52.80.11.196:9090/auth",
+	"ssl-required": "external",
+	"clientId": "qipaipm",
+	"public-client": true,
+	"use-resource-role-mappings": true
+};
+
 /***/ })
 
-},[391]);
+},[390]);
 //# sourceMappingURL=main.js.map
