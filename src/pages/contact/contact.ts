@@ -93,9 +93,9 @@ export class ContactPage {
                   }
               }
           } else {
-              this.appService.httpGet("http://192.168.72.101:8888/uc/group/searchUsersByGroup",{"id":value.id},this,function (view, res) {
+              this.appService.httpGet("http://192.168.10.118:8888/uc/group/searchUsersByGroup",{"id":value.id},this,function (view, res) {
                   if (res.status == 200) {
-                      var array = res.json();
+                      var array = res.json().list;
                       if (array == null) {
                           let alert = view.alertCtrl.create({
                               title: '错误信息',
