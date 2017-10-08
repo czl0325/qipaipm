@@ -11,7 +11,8 @@ declare var Keycloak: any;
 */
 @Injectable()
 export class Keycloak2Provider {
-    static auth: any = {};
+  static auth: any = {};
+
   constructor(public http: Http) {
 
   }
@@ -32,18 +33,19 @@ export class Keycloak2Provider {
         //     "resource": "tutorial-frontend",
         // });
 
+
         const keycloakAuth: any = new Keycloak({
             "realm": "qipai",
-            "auth-server-url": "http://52.80.11.196:8088/auth",
-            "url": "http://52.80.11.196:8088/auth",
-            "ssl-required": "external",
-            "resource": "demo-web",
-            "clientId": "demo-web",
-            "use-resource-role-mappings":true,
+            "auth-server-url": "http://192.168.72.101:8080/auth",
+            "url": "http://192.168.72.101:8080/auth",
+            "ssl-required": "none",
+            "resource": "qipai-web",
+            "clientId": "qipai-web",
+            //"use-resource-role-mappings":true,
             "credentials": {
-                "secret": "45628776-b765-4b99-90df-823f2947af6d"
+                "secret": "90e55a65-217c-4b87-b698-c95c4e7e0644"
             },
-            "policy-enforcer": {}
+            //"policy-enforcer": {}
         });
 
         Keycloak2Provider.auth.loggedIn = false;
@@ -53,21 +55,15 @@ export class Keycloak2Provider {
             keycloakAuth.init({ onLoad: 'login-required'})
                 .success(() => {
                 console.log(keycloakAuth);
-                if (keycloakAuth.authenticated) {
-                    console.log(keycloakAuth.tokenParsed);
-                } else {
-                    console.log("未认证");
-                }
                 Keycloak2Provider.auth.loggedIn = true;
                 Keycloak2Provider.auth.authz = keycloakAuth;
                 Keycloak2Provider.auth.logoutUrl = keycloakAuth.authServerUrl
-                    + '/realms/afiliamedica/protocol/openid-connect/logout?redirect_uri='
+                    + + "/realms/" + "qipai" + "/protocol/openid-connect/logout?redirect_uri="
                     + document.baseURI;
                 resolve();
                 })
                 .error(() => {
                     reject();
-                    console.log("失败");
                 });
         });
     }
@@ -76,8 +72,69 @@ export class Keycloak2Provider {
         Keycloak2Provider.auth.authz.logout();
         Keycloak2Provider.auth.loggedIn = false;
         Keycloak2Provider.auth.authz = null;
+    }
 
-        //window.location.href = KeycloakService.auth.logoutUrl;
+    login(): void {
+        Keycloak2Provider.auth.authz.login();
+    }
+    /**
+     * Clears Authentication State
+     */
+    clearToken(): void {
+        Keycloak2Provider.auth.authz.clearToken();
+    }
+    /**
+     * Return the users realm level roles
+     */
+    getRealmRoles(): void {
+        return Keycloak2Provider.auth.authz.realmAccess.roles;
+    }
+
+    hasRealmRole(role: String): boolean {
+        return Keycloak2Provider.auth.authz.hasRealmRole(role);
+    }
+    /**
+     * Get Server/Open ID Connect specific server info
+     */
+    getConfiguration(): object {
+        var notAvailable = "N/A";
+        return {
+            "authServerUrl": Keycloak2Provider.auth.authz.authServerUrl ? Keycloak2Provider.auth.authz.authServerUrl : notAvailable,
+            "openIdFlow": Keycloak2Provider.auth.authz.flow ? Keycloak2Provider.auth.authz.flow : notAvailable,
+            "openIdResponseMode": Keycloak2Provider.auth.authz.responseMode ? Keycloak2Provider.auth.authz.responseMode : notAvailable,
+            "openIdResponseType": Keycloak2Provider.auth.authz.responseType ? Keycloak2Provider.auth.authz.responseType : notAvailable,
+            "realm": Keycloak2Provider.auth.authz.realm ? Keycloak2Provider.auth.authz.realm : notAvailable,
+            "clientId": Keycloak2Provider.auth.authz.clientId ? Keycloak2Provider.auth.authz.clientId : notAvailable,
+            "timeSkew": Keycloak2Provider.auth.authz.timeSkew ? Keycloak2Provider.auth.authz.timeSkew : notAvailable
+        };
+    }
+    /**
+     * Redirects to the Account Management Console
+     */
+    accountManagement(): void {
+        Keycloak2Provider.auth.authz.accountManagement();
+    }
+    /**
+     * Get the users profile
+     */
+    loadUserProfile(): any {
+        // Retrieve User Profile
+        return new Promise((resolve, reject) => {
+            Keycloak2Provider.auth.authz.loadUserProfile().success((profile) => {
+                resolve(<object>profile);
+            }).error(() => {
+                reject('Failed to retrieve user profile');
+            });
+        });
+    }
+
+    viewGuard(role: string): boolean {
+        if(Keycloak2Provider.auth.authz.hasRealmRole(role)) {
+            return true
+        } else {
+            //this.alertCtrl.create({title: 'Access Denied', subTitle: "You don't have access to the requested resource."}).present();
+            return false;
+        }
     }
 
     getToken(): Promise<string> {
