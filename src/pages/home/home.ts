@@ -76,7 +76,7 @@ export class HomePage {
   onChangeType($event) {
     if (this.type == 1) {
       this.type = 2;
-      this.namevalue = "ios-calendar-outline";
+      this.namevalue = "appname-calendar";
     } else {
       this.type = 1;
       this.namevalue = "appname-list";

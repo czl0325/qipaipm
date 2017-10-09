@@ -54,6 +54,12 @@ ion-icon {
     width: 1.5rem;
     height: 1.5rem;
   }
+  &[class*="appname-calendar"] {
+    -webkit-mask-image: url(../assets/svg/icon_calendar.svg);
+    background-color: #fc5c53;
+    width: 1.5rem;
+    height: 1.5rem;
+  }
   &[class*="appname-add"] {
     -webkit-mask-image: url(../assets/svg/icon_tianjia.svg);
     background-color: #fc5c53;

@@ -2,6 +2,7 @@ import { LoadingController, AlertController, ToastController } from 'ionic-angul
 import { Injectable } from '@angular/core';
 import { Http/*, Headers*/ } from '@angular/http';
 import 'rxjs/add/operator/toPromise';
+import { Network } from '@ionic-native/network';
 
 @Injectable()
 export class AppGlobal {
@@ -25,7 +26,7 @@ export class AppGlobal {
 @Injectable()
 export class AppService {
 
-  constructor(public http: Http, public loadingCtrl: LoadingController, private alertCtrl: AlertController, private toastCtrl: ToastController, ) { }
+  constructor(public http: Http, public loadingCtrl: LoadingController, private alertCtrl: AlertController, private toastCtrl: ToastController, private network: Network) { }
 
   // 对参数进行编码
   encode(params) {
@@ -43,57 +44,19 @@ export class AppService {
   }
 
   httpGet(url, params, view, callback, loader: boolean = false) {
-    let loading = this.loadingCtrl.create({});
-    if (loader) {
-      loading.present();
-    }
-    console.log("get请求地址======="+(url.substr(0,4)=='http'?"":AppGlobal.domain) + url + this.encode(params));
-    this.http.get((url.substr(0,4)=='http'?"":AppGlobal.domain) + url + this.encode(params))
-      .toPromise()
-      .then(res => {
-        //var d = res.json();
-        if (loader) {
-          loading.dismiss();
-        }
-        //callback(d == null ? "[]" : d);
-        callback(view, res);
-      })
-      .catch(error => {
-        if (loader) {
-          loading.dismiss();
-        }
-        this.handleError(error);
-      });
-  }
+    // let disconnectSubscription = this.network.onDisconnect().subscribe(() => {
+    //     this.toast("网络未连接!");
+    // });
+    //
+    // disconnectSubscription.unsubscribe();
 
-  httpPost(url, params, view, callback, loader: boolean = false) {
-    let loading = this.loadingCtrl.create();
-    if (loader) {
-      loading.present();
-    }
-    this.http.post((url.substr(0,4)=='http'?"":AppGlobal.domain) + url, params)
-      .toPromise()
-      .then(res => {
-        //var d = res.json();
-        if (loader) {
-          loading.dismiss();
-        }
-        //callback(d == null ? "[]" : d);
-        callback(view, res);
-      }).catch(error => {
-        if (loader) {
-          loading.dismiss();
-        }
-        this.handleError(error);
-    });
-  }
-
-  httpDelete(url, params, view, callback, loader: boolean = false) {
-      let loading = this.loadingCtrl.create();
+    //let connectSubscription = this.network.onConnect().subscribe(() => {
+      let loading = this.loadingCtrl.create({});
       if (loader) {
           loading.present();
       }
-      this.http.delete(AppGlobal.domain + url + this.encode(params))
+      console.log("get请求地址======="+(url.substr(0,4)=='http'?"":AppGlobal.domain) + url + this.encode(params));
+      this.http.get((url.substr(0,4)=='http'?"":AppGlobal.domain) + url + this.encode(params))
           .toPromise()
           .then(res => {
               //var d = res.json();
@@ -102,12 +65,77 @@ export class AppService {
               }
               //callback(d == null ? "[]" : d);
               callback(view, res);
-          }).catch(error => {
-          if (loader) {
-              loading.dismiss();
-          }
-          this.handleError(error);
-      });
+          })
+          .catch(error => {
+              if (loader) {
+                  loading.dismiss();
+              }
+              this.handleError(error);
+          });
+    // });
+    // connectSubscription.unsubscribe();
+  }
+
+  httpPost(url, params, view, callback, loader: boolean = false) {
+    // let disconnectSubscription = this.network.onDisconnect().subscribe(() => {
+    //     this.toast("网络未连接!");
+    // });
+    //
+    // disconnectSubscription.unsubscribe();
+    //
+    // let connectSubscription = this.network.onConnect().subscribe(() => {
+        let loading = this.loadingCtrl.create();
+        if (loader) {
+            loading.present();
+        }
+        this.http.post((url.substr(0,4)=='http'?"":AppGlobal.domain) + url, params)
+            .toPromise()
+            .then(res => {
+                //var d = res.json();
+                if (loader) {
+                    loading.dismiss();
+                }
+                //callback(d == null ? "[]" : d);
+                callback(view, res);
+            }).catch(error => {
+            if (loader) {
+                loading.dismiss();
+            }
+            this.handleError(error);
+        });
+    // });
+    // connectSubscription.unsubscribe();
+  }
+
+  httpDelete(url, params, view, callback, loader: boolean = false) {
+    // let disconnectSubscription = this.network.onDisconnect().subscribe(() => {
+    //     this.toast("网络未连接!");
+    // });
+    //
+    // disconnectSubscription.unsubscribe();
+    //
+    // let connectSubscription = this.network.onConnect().subscribe(() => {
+        let loading = this.loadingCtrl.create();
+        if (loader) {
+            loading.present();
+        }
+        this.http.delete(AppGlobal.domain + url + this.encode(params))
+            .toPromise()
+            .then(res => {
+                //var d = res.json();
+                if (loader) {
+                    loading.dismiss();
+                }
+                //callback(d == null ? "[]" : d);
+                callback(view, res);
+            }).catch(error => {
+            if (loader) {
+                loading.dismiss();
+            }
+            this.handleError(error);
+        });
+    // });
+    // connectSubscription.unsubscribe();
   }
 
   private handleError(error: Response | any) {
