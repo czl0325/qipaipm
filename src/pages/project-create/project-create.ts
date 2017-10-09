@@ -257,7 +257,7 @@ export class ProjectCreatePage {
             var p1 = this.project.children[0];
             var d1 = AppConfig.timestampToDate(p1.deliveryTime);
             var d2 = AppConfig.timestampToDate(milestone.deliveryTime);
-            if (d1 <= d2) {
+            if (d1 <= d2 || AppConfig.isSameDay(d1, d2)) {
                 this.project.children.push(milestone);
                 if (this.isExpand != null) {
                     this.isExpand.push(false);

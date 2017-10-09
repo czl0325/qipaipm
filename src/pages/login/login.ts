@@ -2,7 +2,8 @@ import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { FormBuilder, Validators, FormGroup } from '@angular/forms';
 import { ForgetPage } from "../forget/forget";
-import { Keycloak2Provider } from "../../providers/keycloak2/keycloak2";
+import { AppService } from "../../app/app.service";
+
 
 /**
  * Generated class for the LoginPage page.
@@ -21,7 +22,7 @@ export class LoginPage {
   loginForm: FormGroup;
 
   constructor(public navCtrl: NavController, public navParams: NavParams,
-              private formBuilder: FormBuilder) {
+              private formBuilder: FormBuilder, private appService: AppService) {
     this.errorText = '手机号码错误';
     this.loginForm = this.formBuilder.group({
           mobile: ['', Validators.compose([Validators.minLength(11), Validators.maxLength(11), Validators.required, Validators.pattern("^(13[0-9]|15[012356789]|17[03678]|18[0-9]|14[57])[0-9]{8}$")])],
@@ -30,18 +31,14 @@ export class LoginPage {
   }
 
   ionViewDidLoad() {
-    // KeycloakServiceProvider.init();
-      Keycloak2Provider.init()
-          .then(() => {
-              console.log("成功");
-          })
-          .catch(() => {
-              console.log("失败");
-          });
+
   }
 
   login (value) {
-    //this.keycloak.login();
+    this.appService.httpGet("http://192.168.10.118:8888/uc/user/login",
+        {"telPhone":value.mobile, "password":value.password},this,function (view, res) {
+        console.log(res);
+    },true);
   }
 
   onForgetPassword($event) {
