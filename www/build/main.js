@@ -2081,7 +2081,7 @@ var AppService = (function () {
     };
     AppService.prototype.alert = function (message, callback) {
         if (callback) {
-            var alert = this.alertCtrl.create({
+            var alert_1 = this.alertCtrl.create({
                 title: '提示',
                 message: message,
                 buttons: [{
@@ -2091,15 +2091,15 @@ var AppService = (function () {
                         }
                     }]
             });
-            alert.present();
+            alert_1.present();
         }
         else {
-            var alert = this.alertCtrl.create({
+            var alert_2 = this.alertCtrl.create({
                 title: '提示',
                 message: message,
                 buttons: ["确定"]
             });
-            alert.present();
+            alert_2.present();
         }
     };
     AppService.prototype.toast = function (message, callback) {
@@ -2136,10 +2136,9 @@ var AppService = (function () {
 }());
 AppService = __decorate([
     Object(__WEBPACK_IMPORTED_MODULE_1__angular_core__["Injectable"])(),
-    __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_2__angular_http__["a" /* Http */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_2__angular_http__["a" /* Http */]) === "function" && _a || Object, typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_0_ionic_angular__["LoadingController"] !== "undefined" && __WEBPACK_IMPORTED_MODULE_0_ionic_angular__["LoadingController"]) === "function" && _b || Object, typeof (_c = typeof __WEBPACK_IMPORTED_MODULE_0_ionic_angular__["AlertController"] !== "undefined" && __WEBPACK_IMPORTED_MODULE_0_ionic_angular__["AlertController"]) === "function" && _c || Object, typeof (_d = typeof __WEBPACK_IMPORTED_MODULE_0_ionic_angular__["ToastController"] !== "undefined" && __WEBPACK_IMPORTED_MODULE_0_ionic_angular__["ToastController"]) === "function" && _d || Object, typeof (_e = typeof __WEBPACK_IMPORTED_MODULE_4__ionic_native_network__["a" /* Network */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_4__ionic_native_network__["a" /* Network */]) === "function" && _e || Object])
+    __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_2__angular_http__["a" /* Http */], __WEBPACK_IMPORTED_MODULE_0_ionic_angular__["LoadingController"], __WEBPACK_IMPORTED_MODULE_0_ionic_angular__["AlertController"], __WEBPACK_IMPORTED_MODULE_0_ionic_angular__["ToastController"], __WEBPACK_IMPORTED_MODULE_4__ionic_native_network__["a" /* Network */]])
 ], AppService);
 
-var _a, _b, _c, _d, _e;
 //# sourceMappingURL=app.service.js.map
 
 /***/ }),
