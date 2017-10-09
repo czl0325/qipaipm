@@ -104,7 +104,7 @@
         <!--<div style="width: 1px; background-color: #ececec; height: 10px; position: absolute; left: 20px; top: 0px" ></div>-->
         <ion-label no-padding no-margin class="label-radius">{{mile.itemProgress}}</ion-label>
         <ion-label no-padding no-margin class="mile-number">{{"里程碑"+(i+1)}}</ion-label>
-        <ion-label no-padding no-margin class="delay-radius1" [hidden]="mile.delayDays==0">{{"延期"+mile.delayDays+"天"}}</ion-label>
+        <ion-label no-padding no-margin class="delay-radius1" [hidden]="mile.delayDays==0">{{"延"+mile.delayDays}}</ion-label>
       </div>
       <!--[ngClass]="{'arrow-css1':mile.type==0,'arrow-css2':mile.type==1,'arrow-css3':mile.type==2}"-->
       <ion-icon name="appname-arrow" class="arrow-css2" ></ion-icon>

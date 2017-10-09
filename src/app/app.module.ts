@@ -7,6 +7,7 @@ import { JsonpModule } from "@angular/http";
 import { Keyboard } from "@ionic-native/keyboard";
 import { HttpModule } from "@angular/http";
 import { Network } from "@ionic-native/network";
+import { AppShare } from "./app.share";
 
 //页面类
 import { MyApp } from './app.component';
@@ -91,6 +92,7 @@ import { Keycloak2Provider } from '../providers/keycloak2/keycloak2';
     Keyboard,
     AppService,
     Network,
+    AppShare,
     {provide: ErrorHandler, useClass: IonicErrorHandler},
     KeycloakServiceProvider,
     Keycloak2Provider
