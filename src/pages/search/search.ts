@@ -71,7 +71,7 @@ export class SearchPage {
     if (this.searchValue.length < 1) {
         this.array = [];
     } else {
-        this.appService.httpGet("item/searchByContion", {itemName:this.searchValue,page:1,limit:100}, this, function (view, res) {
+        this.appService.httpGet("item/searchByCondition", {itemName:this.searchValue,page:1,limit:100}, this, function (view, res) {
             var response = res.json();
             if (response.success == true) {
                 var data = response.data;

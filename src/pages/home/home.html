@@ -1,7 +1,7 @@
 <ion-header>
   <ion-navbar>
-    <ion-title>
-
+    <ion-title [hidden]="type==1">
+        {{currentDate | YearAndMonthPipe}}
     </ion-title>
     <ion-buttons end >
       <button ion-button (click)="onChangeType($event)" id="btMode">
@@ -66,7 +66,7 @@
       <ion-label float-left no-margin no-padding class="list_weekday">{{project.itemStartTime | WeekayPipe}}</ion-label>
       <ion-label float-left no-margin no-padding text-center
           [ngClass]="{'list_circle':1===1,'nostart':project.itemState=='07010010','ing':project.itemState=='07010020'|| project.itemState=='07010030','end':project.itemState=='07010040'}">{{project.itemLevel}}</ion-label>
-      <ion-label float-left no-margin no-padding class="list_itemname">{{project.itemName}}</ion-label>
+      <ion-label float-left no-margin no-padding class="list_itemname" [ngStyle]="{'color':project.itemState=='07010030'?'#fc780e':'black'}">{{project.itemName}}</ion-label>
     </div>
   </div>
 </ion-content>

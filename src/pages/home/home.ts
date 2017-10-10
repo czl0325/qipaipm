@@ -5,6 +5,7 @@ import { ProjectDetailPage } from "../project-detail/project-detail";
 import { SearchPage } from "../search/search";
 import { AppService} from "../../app/app.service";
 import { AppConfig} from "../../app/app.config";
+import { Storage } from '@ionic/storage';
 
 @Component({
   selector: 'page-home',
@@ -17,12 +18,14 @@ export class HomePage {
   projectsOnMonth;
   currentDate:string;
 
-  constructor(public navCtrl: NavController, public appService: AppService, public events: Events) {
+  constructor(public navCtrl: NavController, public appService: AppService,
+              public events: Events, private storage: Storage) {
     this.type = 1;
     this.namevalue = "appname-list";
     this.projects = [];
     this.projectsOnMonth = [];
     this.currentDate = "";
+    console.log("查看登录情况"+this.storage.get("user"));
   }
   ionViewDidLoad() {
     this.events.subscribe('homeProjectReload', ()=> {
@@ -53,7 +56,7 @@ export class HomePage {
   reloadProjectList(dateString:string) {
     this.events.publish('onGetProjectDate');
     this.projects = [];
-    this.appService.httpGet("item/searchByCondition", {"itemStartTime":dateString,"endTime":dateString,"itemIsEnd":"0","page":1,"limit":100}, this, function (view ,res){
+    this.appService.httpGet("item/searchByCondition", {"itemStartTime":dateString,"endTime":dateString,"page":1,"limit":100}, this, function (view ,res){
         var data = res.json();
         if (data.success == true) {
             view.projects = data.data;

@@ -31,7 +31,7 @@ export class CalendarComponent {
   @Output() onChangeMonth: EventEmitter<any> = new EventEmitter<any>();
   @Output() onEventClicked: EventEmitter<any> = new EventEmitter<any>();
 
-  weekDays: string[] = ["周日","周一","周二","周三","周四","周五","周六"];
+  weekDays: string[] = ["周一","周二","周三","周四","周五","周六","周日"];
   pastDates: number[] = [];
 
   rows = [];
@@ -186,18 +186,24 @@ export class CalendarComponent {
     let tmp = new Date(this.currentDate.getTime());
     tmp.setDate(1);
 
+    var myDay = -1;
     while(tmp.getMonth() == this.currentDate.getMonth()){
       /* Pushes a new empty row */
       this.rows.push(['', '', '', '', '', '', '']);
-      while(tmp.getDay() < 6 && tmp.getMonth() == this.currentDate.getMonth()){
+      myDay = (tmp.getDay()-1)<0?6:tmp.getDay()-1;
+      while(myDay < 6 && tmp.getMonth() == this.currentDate.getMonth()){
         /* Populates the row only where needed */
-        this.rows[this.rows.length - 1][tmp.getDay()] = tmp.getDate();
+        this.rows[this.rows.length - 1][myDay] = tmp.getDate();
         tmp.setDate(tmp.getDate() + 1);
+        myDay = (tmp.getDay()-1)<0?6:tmp.getDay()-1;
       }
-      if(tmp.getMonth() == this.currentDate.getMonth())
-        this.rows[this.rows.length - 1][tmp.getDay()] = tmp.getDate();
+      if(tmp.getMonth() == this.currentDate.getMonth()) {
+          this.rows[this.rows.length - 1][(tmp.getDay()-1)<0?6:tmp.getDay()-1] = tmp.getDate();
+          myDay = (tmp.getDay()-1)<0?6:tmp.getDay()-1;
+      }
       tmp.setDate(tmp.getDate() + 1);
     }
+    console.log(this.rows);
 
     setTimeout(() => {
       /* Needs to be executed only after the DOM has been updated */
@@ -260,7 +266,7 @@ export class CalendarComponent {
       }
     }
 
-    this.appService.httpGet("item/searchByCondition", {"itemStartTime":firstDateString,"endTime":lastDateString,"itemIsEnd":"0","page":"1","limit":"100"}, this,function (view, res){
+    this.appService.httpGet("item/searchByCondition", {"itemStartTime":firstDateString,"endTime":lastDateString,"page":"1","limit":"100"}, this,function (view, res){
       var data = res.json();
       if (data.success == true) {
         view.dayHasProject = data.data;

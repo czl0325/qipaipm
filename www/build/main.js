@@ -1,6 +1,6 @@
 webpackJsonp([4],{
 
-/***/ 135:
+/***/ 114:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -8,9 +8,9 @@ webpackJsonp([4],{
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(1);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(12);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__angular_common__ = __webpack_require__(34);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__milestone_detail_milestone_detail__ = __webpack_require__(136);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__milestone_detail_milestone_detail__ = __webpack_require__(115);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__app_app_service__ = __webpack_require__(30);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__contact_contact__ = __webpack_require__(59);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__contact_contact__ = __webpack_require__(60);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__app_app_config__ = __webpack_require__(27);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -361,18 +361,18 @@ ProjectCreatePage = __decorate([
 
 /***/ }),
 
-/***/ 136:
+/***/ 115:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return MilestoneDetailPage; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(1);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(12);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__subtask_subtask__ = __webpack_require__(137);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__subtask_subtask__ = __webpack_require__(116);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__angular_common__ = __webpack_require__(34);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__app_app_service__ = __webpack_require__(30);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__app_app_config__ = __webpack_require__(27);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__contact_contact__ = __webpack_require__(59);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__contact_contact__ = __webpack_require__(60);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -607,7 +607,7 @@ __decorate([
 ], MilestoneDetailPage.prototype, "content", void 0);
 MilestoneDetailPage = __decorate([
     Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Component"])({
-        selector: 'page-milestone-detail',template:/*ion-inline-start:"/Users/zhaoliangchen/Desktop/qipaipm-company/src/pages/milestone-detail/milestone-detail.html"*/'<!--\n  Generated template for the MilestoneDetailPage page.\n\n  See http://ionicframework.com/docs/components/#navigation for more info on\n  Ionic pages and navigation.\n-->\n<ion-header>\n\n  <ion-navbar>\n    <ion-title>\n      {{this.type==1?"新建里程碑":"里程碑详情"}}\n    </ion-title>\n    <ion-buttons end >\n      <button ion-button (click)="onSaveMilestone($event)" style="color: #fc5c53">\n        保存\n      </button>\n    </ion-buttons>\n  </ion-navbar>\n\n</ion-header>\n\n\n<ion-content fullscreen>\n  <ion-list no-padding no-lines style="margin-bottom: 0px; border-bottom: solid 1px #ececec">\n    <ion-item >\n      <ion-icon item-start name="appname-pname"></ion-icon>\n      <ion-label>项目名称:</ion-label>\n      <ion-label right text-right>{{this.project.itemName}}</ion-label>\n    </ion-item>\n  </ion-list>\n\n  <ion-label full style="text-align: center">{{tempMilestone.milestoneName}}</ion-label>\n\n  <ion-list no-lines style="border: solid 1px #ececec">\n    <button ion-item style="border-bottom: solid 1px #ececec" (click)="onMilestoneLeader($event)" >\n      <ion-icon item-start name="appname-admin"></ion-icon>\n      <ion-label item-start>负责人:</ion-label>\n      <ion-label item-end text-right>{{tempMilestone.leader}}</ion-label>\n    </button>\n    <!--<ion-item style="border-bottom: solid 1px #ececec;">-->\n      <!--<ion-icon item-start name="appname-admin"></ion-icon>-->\n      <!--<ion-label>负责人:</ion-label>-->\n      <!--<ion-input text-right type="text" [(ngModel)]="tempMilestone.milestoneLeader" required [disabled]=""></ion-input>-->\n    <!--</ion-item>-->\n    <ion-item style="border-bottom: solid 1px #ececec;">\n      <ion-icon item-start name="appname-time"></ion-icon>\n      <ion-label>交付时间:</ion-label>\n      <ion-datetime text-right displayFormat="YYYY-MM-DD" max="2030" min="2015" cancelText="取消" doneText="确认" required [disabled]=""\n                    ngModel="{{tempMilestone.deliveryTime | stampToDate}}"\n                    (ngModelChange)="tempMilestone.deliveryTime = $event">\n      </ion-datetime>\n    </ion-item>\n    <ion-item style="border-bottom: solid 1px #ececec">\n      <ion-icon item-start name="appname-plan"></ion-icon>\n      <ion-label>项目进度</ion-label>\n      <ion-select interface="action-sheet" [(ngModel)]="tempMilestone.itemProgress">\n        <ion-option value="10%">10%</ion-option>\n        <ion-option value="20%">20%</ion-option>\n        <ion-option value="30%">30%</ion-option>\n        <ion-option value="40%">40%</ion-option>\n        <ion-option value="50%">50%</ion-option>\n        <ion-option value="60%">60%</ion-option>\n        <ion-option value="70%">70%</ion-option>\n        <ion-option value="80%">80%</ion-option>\n        <ion-option value="90%">90%</ion-option>\n        <ion-option value="100%">100%</ion-option>\n      </ion-select>\n    </ion-item>\n    <ion-item style="border-bottom: solid 1px #ececec;">\n      <ion-icon item-start name="appname-result"></ion-icon>\n      <ion-label no-padding no-margin>交付成果:</ion-label>\n      <ion-input text-right type="text" [(ngModel)]="tempMilestone.deliveryResult" required [disabled]=""></ion-input>\n    </ion-item>\n    <ion-item *ngIf="tempMilestone.delay > 0" style="border-bottom: solid 1px #ececec;">\n      <ion-label >延迟情况:</ion-label>\n      <ion-label text-right item-end></ion-label>\n    </ion-item>\n  </ion-list>\n\n  <ion-list no-lines no-padding no-margin *ngIf="this.tempMilestone.id.length>0">\n    <ion-item style="border-top: solid 1px #ececec;border-bottom: solid 1px #ececec">\n      <div item-start>是否完成</div>\n      <ion-label>完成</ion-label>\n      <ion-checkbox [(ngModel)]="tempMilestone.itemIsEnd"></ion-checkbox>\n    </ion-item>\n    <ion-item style="border-bottom: solid 10px #ececec; height: 100px;">\n      <ion-label item-start>备注:</ion-label>\n      <ion-textarea item-end no-padding no-margin [(ngModel)]="tempMilestone.remark"></ion-textarea>\n    </ion-item>\n  </ion-list>\n\n  <div *ngFor="let subtask of tempMilestone.children; let i = index">\n    <div style="height: 30px; border-bottom: solid 1px #ececec; ">\n      <div style="width: 5px; height: 30px; background-color: #555555; float: left;"></div>\n      <ion-label no-margin no-padding style="line-height: 30px; margin-left: 10px; float: left;">{{subtask.subtaskName}}</ion-label>\n      <div style="float: right; width: 30px; height: 30px;position: relative">\n        <ion-icon name="close" style="position: absolute; top: 50%; right: 0px; -webkit-transform: translateY(-50%); transform: translateY(-50%); margin-right: 10px; " (click)="onRemoveSubtask($event, subtask)"></ion-icon>\n      </div>\n    </div>\n    <ion-list no-lines no-padding no-margin>\n      <ion-item style="border-bottom: solid 1px #ececec;">\n        <ion-icon item-start name="appname-admin"></ion-icon>\n        <ion-label>负责人:</ion-label>\n        <ion-input text-right type="text" [(ngModel)]="subtask.leader" required [disabled]="type==2"></ion-input>\n      </ion-item>\n      <ion-item style="border-bottom: solid 1px #ececec;">\n        <ion-icon item-start name="appname-time"></ion-icon>\n        <ion-label>交付时间</ion-label>\n        <ion-datetime item-end displayFormat="YYYY年MM月DD日" max="2030" min="2015" cancelText="取消" doneText="确认"\n                      ngModel="{{subtask.deliveryTime | stampToDate}}"\n                      (ngModelChange)="subtask.deliveryTime = $event"\n                      [disabled]="type==2"></ion-datetime>\n      </ion-item>\n      <ion-item style="border-bottom: solid 10px #ececec;">\n        <ion-icon item-start name="appname-result"></ion-icon>\n        <ion-label no-padding no-margin>交付成果:</ion-label>\n        <ion-input text-right type="text" [(ngModel)]="subtask.deliveryResult" required [disabled]="type==2"></ion-input>\n      </ion-item>\n    </ion-list>\n  </div>\n\n  <div style="padding: 10px;" *ngIf="this.tempMilestone.id.length>0">\n    <button ion-button (click)="onAddSubtask($event)" block style="background-color: #fc5c53">+ 添加子任务</button>\n  </div>\n</ion-content>\n'/*ion-inline-end:"/Users/zhaoliangchen/Desktop/qipaipm-company/src/pages/milestone-detail/milestone-detail.html"*/,
+        selector: 'page-milestone-detail',template:/*ion-inline-start:"/Users/zhaoliangchen/Desktop/qipaipm-company/src/pages/milestone-detail/milestone-detail.html"*/'<!--\n  Generated template for the MilestoneDetailPage page.\n\n  See http://ionicframework.com/docs/components/#navigation for more info on\n  Ionic pages and navigation.\n-->\n<ion-header>\n\n  <ion-navbar>\n    <ion-title>\n      {{this.type==1?"新建里程碑":"里程碑详情"}}\n    </ion-title>\n    <ion-buttons end >\n      <button ion-button (click)="onSaveMilestone($event)" style="color: #fc5c53">\n        保存\n      </button>\n    </ion-buttons>\n  </ion-navbar>\n\n</ion-header>\n\n\n<ion-content fullscreen>\n  <ion-list no-padding no-lines style="margin-bottom: 0px; border-bottom: solid 1px #ececec">\n    <ion-item >\n      <ion-icon item-start name="appname-pname"></ion-icon>\n      <ion-label>项目名称:</ion-label>\n      <ion-label right text-right>{{this.project.itemName}}</ion-label>\n    </ion-item>\n  </ion-list>\n\n  <ion-label full style="text-align: center">{{tempMilestone.milestoneName}}</ion-label>\n\n  <ion-list no-lines style="border: solid 1px #ececec">\n    <button ion-item style="border-bottom: solid 1px #ececec" (click)="onMilestoneLeader($event)" >\n      <ion-icon item-start name="appname-admin"></ion-icon>\n      <ion-label item-start>负责人:</ion-label>\n      <ion-label item-end text-right>{{tempMilestone.leader}}</ion-label>\n    </button>\n    <!--<ion-item style="border-bottom: solid 1px #ececec;">-->\n      <!--<ion-icon item-start name="appname-admin"></ion-icon>-->\n      <!--<ion-label>负责人:</ion-label>-->\n      <!--<ion-input text-right type="text" [(ngModel)]="tempMilestone.milestoneLeader" required [disabled]=""></ion-input>-->\n    <!--</ion-item>-->\n    <ion-item style="border-bottom: solid 1px #ececec;">\n      <ion-icon item-start name="appname-time"></ion-icon>\n      <ion-label>交付时间:</ion-label>\n      <ion-datetime text-right displayFormat="YYYY-MM-DD" max="2030" min="2015" cancelText="取消" doneText="确认" required [disabled]=""\n                    ngModel="{{tempMilestone.deliveryTime | stampToDate}}"\n                    (ngModelChange)="tempMilestone.deliveryTime = $event">\n      </ion-datetime>\n    </ion-item>\n    <ion-item style="border-bottom: solid 1px #ececec">\n      <ion-icon item-start name="appname-plan"></ion-icon>\n      <ion-label>项目进度</ion-label>\n      <ion-select interface="action-sheet" [(ngModel)]="tempMilestone.itemProgress" cancelText="取消" doneText="确认" >\n        <ion-option value="10%">10%</ion-option>\n        <ion-option value="20%">20%</ion-option>\n        <ion-option value="30%">30%</ion-option>\n        <ion-option value="40%">40%</ion-option>\n        <ion-option value="50%">50%</ion-option>\n        <ion-option value="60%">60%</ion-option>\n        <ion-option value="70%">70%</ion-option>\n        <ion-option value="80%">80%</ion-option>\n        <ion-option value="90%">90%</ion-option>\n        <ion-option value="100%">100%</ion-option>\n      </ion-select>\n    </ion-item>\n    <ion-item style="border-bottom: solid 1px #ececec;">\n      <ion-icon item-start name="appname-result"></ion-icon>\n      <ion-label no-padding no-margin>交付成果:</ion-label>\n      <ion-input text-right type="text" [(ngModel)]="tempMilestone.deliveryResult" required [disabled]=""></ion-input>\n    </ion-item>\n    <ion-item *ngIf="tempMilestone.delay > 0" style="border-bottom: solid 1px #ececec;">\n      <ion-label >延迟情况:</ion-label>\n      <ion-label text-right item-end></ion-label>\n    </ion-item>\n  </ion-list>\n\n  <ion-list no-lines no-padding no-margin *ngIf="this.tempMilestone.id.length>0">\n    <ion-item style="border-top: solid 1px #ececec;border-bottom: solid 1px #ececec">\n      <div item-start>是否完成</div>\n      <ion-label>完成</ion-label>\n      <ion-checkbox [(ngModel)]="tempMilestone.itemIsEnd"></ion-checkbox>\n    </ion-item>\n    <ion-item style="border-bottom: solid 10px #ececec; height: 100px;">\n      <ion-label item-start>备注:</ion-label>\n      <ion-textarea item-end no-padding no-margin [(ngModel)]="tempMilestone.remark"></ion-textarea>\n    </ion-item>\n  </ion-list>\n\n  <div *ngFor="let subtask of tempMilestone.children; let i = index">\n    <div style="height: 30px; border-bottom: solid 1px #ececec; ">\n      <div style="width: 5px; height: 30px; background-color: #555555; float: left;"></div>\n      <ion-label no-margin no-padding style="line-height: 30px; margin-left: 10px; float: left;">{{subtask.subtaskName}}</ion-label>\n      <div style="float: right; width: 30px; height: 30px;position: relative">\n        <ion-icon name="close" style="position: absolute; top: 50%; right: 0px; -webkit-transform: translateY(-50%); transform: translateY(-50%); margin-right: 10px; " (click)="onRemoveSubtask($event, subtask)"></ion-icon>\n      </div>\n    </div>\n    <ion-list no-lines no-padding no-margin>\n      <ion-item style="border-bottom: solid 1px #ececec;">\n        <ion-icon item-start name="appname-admin"></ion-icon>\n        <ion-label>负责人:</ion-label>\n        <ion-input text-right type="text" [(ngModel)]="subtask.leader" required [disabled]="type==2"></ion-input>\n      </ion-item>\n      <ion-item style="border-bottom: solid 1px #ececec;">\n        <ion-icon item-start name="appname-time"></ion-icon>\n        <ion-label>交付时间</ion-label>\n        <ion-datetime item-end displayFormat="YYYY年MM月DD日" max="2030" min="2015" cancelText="取消" doneText="确认"\n                      ngModel="{{subtask.deliveryTime | stampToDate}}"\n                      (ngModelChange)="subtask.deliveryTime = $event"\n                      [disabled]="type==2"></ion-datetime>\n      </ion-item>\n      <ion-item style="border-bottom: solid 10px #ececec;">\n        <ion-icon item-start name="appname-result"></ion-icon>\n        <ion-label no-padding no-margin>交付成果:</ion-label>\n        <ion-input text-right type="text" [(ngModel)]="subtask.deliveryResult" required [disabled]="type==2"></ion-input>\n      </ion-item>\n    </ion-list>\n  </div>\n\n  <div style="padding: 10px;" *ngIf="this.tempMilestone.id.length>0">\n    <button ion-button (click)="onAddSubtask($event)" block style="background-color: #fc5c53">+ 添加子任务</button>\n  </div>\n</ion-content>\n'/*ion-inline-end:"/Users/zhaoliangchen/Desktop/qipaipm-company/src/pages/milestone-detail/milestone-detail.html"*/,
     })
     /*
         @ApiModelProperty(value = "里程碑id")
@@ -633,7 +633,7 @@ MilestoneDetailPage = __decorate([
 
 /***/ }),
 
-/***/ 137:
+/***/ 116:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -642,7 +642,7 @@ MilestoneDetailPage = __decorate([
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(12);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__app_app_config__ = __webpack_require__(27);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__app_app_service__ = __webpack_require__(30);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__contact_contact__ = __webpack_require__(59);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__contact_contact__ = __webpack_require__(60);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__angular_common__ = __webpack_require__(34);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -774,7 +774,7 @@ SubtaskPage = __decorate([
 
 /***/ }),
 
-/***/ 138:
+/***/ 117:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -782,9 +782,9 @@ SubtaskPage = __decorate([
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "b", function() { return ProjectDetailPage; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(1);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(12);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__subtask_subtask__ = __webpack_require__(137);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__milestone_detail_milestone_detail__ = __webpack_require__(136);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__project_create_project_create__ = __webpack_require__(135);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__subtask_subtask__ = __webpack_require__(116);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__milestone_detail_milestone_detail__ = __webpack_require__(115);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__project_create_project_create__ = __webpack_require__(114);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__app_app_service__ = __webpack_require__(30);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__app_app_config__ = __webpack_require__(27);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
@@ -1123,7 +1123,7 @@ __decorate([
 ], ProjectDetailPage.prototype, "content", void 0);
 ProjectDetailPage = __decorate([
     Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Component"])({
-        selector: 'page-project-detail',template:/*ion-inline-start:"/Users/zhaoliangchen/Desktop/qipaipm-company/src/pages/project-detail/project-detail.html"*/'<!--\n  Generated template for the ProjectDetailPage page.\n\n  See http://ionicframework.com/docs/components/#navigation for more info on\n  Ionic pages and navigation.\n-->\n<ion-header>\n  <ion-navbar>\n    <ion-title>\n      {{project.itemName}}\n    </ion-title>\n    <ion-buttons end>\n      <button ion-button icon-only (click)="presentPopover($event)">\n        <ion-icon name="more" style="color: #fc5c53"></ion-icon>\n      </button>\n    </ion-buttons>\n  </ion-navbar>\n</ion-header>\n\n\n<ion-content #popoverContent fullscreen>\n  <div class="pj-item">\n    <div class="mile-bottom">\n      <div class="item1">\n        <ion-label style="margin-bottom: 3px;font-size: 10px">{{project.itemStartTime | MonthPipe}}</ion-label>\n        <section class="line"></section>\n        <ion-label style="margin-top: 3px;font-size: 10px">{{project.itemStartTime | YearPipe}}</ion-label>\n      </div>\n      <div class="item2">\n        <ion-icon name="ios-arrow-dropdown-circle" style="color: #fc5c53;padding-top: 15px"></ion-icon>\n        <ion-label no-padding no-margin style="margin-top: 3px;font-size: 10px;text-align: center">启动</ion-label>\n        <!--<div style="width: 1px; background-color: #ececec; height: 100%; position: absolute; left: 20px" ></div>-->\n      </div>\n      <ion-icon name="appname-arrow" class="arrow-css1"></ion-icon>\n      <div class="item3-1">\n        <ion-row>\n          <ion-col col-5 style="float: left">\n            负责人：\n          </ion-col>\n          <ion-col col-7 style="float: right">\n            {{project.leader}}\n          </ion-col>\n        </ion-row>\n        <ion-row>\n          <ion-col col-5 style="float: left">\n            交付成果：\n          </ion-col>\n          <ion-col col-7 style="float: right">\n        <span class="item-right">\n          {{project.itemStartResult}}\n        </span>\n          </ion-col>\n        </ion-row>\n        <ion-row>\n          <ion-col col-5 style="float: left">\n            紧急程度：\n          </ion-col>\n          <ion-col col-7 style="float: right">\n        <span class="item-right">\n          {{project.itemLevel | itemlevelPipe}}\n        </span>\n          </ion-col>\n        </ion-row>\n      </div>\n    </div>\n  </div>\n\n  <!-- 里程碑  -->\n  <div class="pj-item" *ngFor="let mile of project.children; let i = index">\n    <div class="mile-top" id="{{mile.id}}">\n      <div style="width: 1px; background-color: #ececec; height: 100%; position: absolute; left: 65px; top: 0px" >\n\n      </div >\n      <div [hidden]="mile.children.length<=0">\n        <div class="subtask-title" *ngIf="isExpand[i]==false ">\n          <ion-label no-margin no-padding text-center class="horizontal-center" style="line-height: 25px; font-size: 15px">{{mile.children.length+"个子任务"}}</ion-label>\n        </div>\n        <div class="subtask-wrap" *ngIf="isExpand[i]==true ">\n          <div class="subtask-item" *ngFor="let subtask of mile.children" (click)="onClickSubtask($event, subtask, mile)">\n            <div class="subtask-css" >\n              <ion-label class="subtask-left">子任务:</ion-label>\n              <ion-label class="subtask-right" >{{subtask.subtaskName}}</ion-label>\n            </div>\n            <div class="subtask-css" >\n              <ion-label class="subtask-left">交付时间:</ion-label>\n              <ion-label class="subtask-right" >{{subtask.deliveryTime | stampToDate}}</ion-label>\n            </div>\n            <div class="subtask-css" >\n              <ion-label class="subtask-left">负责人:</ion-label>\n              <ion-label class="subtask-right" >{{subtask.leader}}</ion-label>\n            </div>\n          </div>\n        </div>\n        <ion-icon [name]="isExpand[i]==false?\'appname-expand\':\'appname-fold\'" class="fold" (click)="onClickExpand($event, i)"></ion-icon>\n      </div>\n    </div>\n    <div class="mile-bottom">\n      <div class="item1">\n        <ion-label style="margin-bottom: 3px;font-size: 10px">{{mile.deliveryTime | MonthPipe}}</ion-label>\n        <section class="line"></section>\n        <ion-label style="margin-top: 3px;font-size: 10px">{{mile.deliveryTime | YearPipe}}</ion-label>\n      </div>\n      <div class="item2">\n        <!--<div style="width: 1px; background-color: #ececec; height: 10px; position: absolute; left: 20px; top: 0px" ></div>-->\n        <ion-label no-padding no-margin class="label-radius">{{mile.itemProgress}}</ion-label>\n        <ion-label no-padding no-margin class="mile-number">{{"里程碑"+(i+1)}}</ion-label>\n        <ion-label no-padding no-margin class="delay-radius1" [hidden]="mile.delayDays==0">{{"延"+mile.delayDays}}</ion-label>\n      </div>\n      <!--[ngClass]="{\'arrow-css1\':mile.type==0,\'arrow-css2\':mile.type==1,\'arrow-css3\':mile.type==2}"-->\n      <ion-icon name="appname-arrow" class="arrow-css2" ></ion-icon>\n      <div class="item3-2" (click)="onClickMilestone($event, mile)">\n        <ion-row>\n          <ion-col col-5 style="float: left">\n            负责人：\n          </ion-col>\n          <ion-col col-7 style="float: right">\n            {{mile.leader}}\n          </ion-col>\n        </ion-row>\n        <ion-row>\n          <ion-col col-5 style="float: left">\n            交付成果：\n          </ion-col>\n          <ion-col col-7 style="float: right">\n        <span class="item-right">\n          {{mile.deliveryResult}}\n        </span>\n          </ion-col>\n        </ion-row>\n      </div>\n    </div>\n  </div>\n\n  <!-- 项目结束 -->\n  <div class="mile-bottom">\n    <div class="item1">\n      <ion-label style="margin-bottom: 3px;font-size: 10px">{{project.endTime | MonthPipe}}</ion-label>\n      <section class="line"></section>\n      <ion-label style="margin-top: 3px;font-size: 10px">{{project.endTime | YearPipe}}</ion-label>\n    </div>\n    <div class="item2">\n      <!--<div style="width: 1px; background-color: #ececec; height: 10px; position: absolute; left: 20px; top: 0px" ></div>-->\n      <ion-icon name="ios-arrow-dropup-circle" style="color: #fc5c53;padding-top: 15px"></ion-icon>\n      <ion-label no-padding no-margin style="margin-top: 3px;font-size: 10px;text-align: center">结束</ion-label>\n    </div>\n    <ion-icon name="appname-arrow" class="arrow-css1"></ion-icon>\n    <div class="item3-1">\n      <ion-row>\n        <ion-col col-5 style="float: left">\n          负责人：\n        </ion-col>\n        <ion-col col-7 style="float: right">\n          {{project.leader}}\n        </ion-col>\n      </ion-row>\n      <ion-row>\n        <ion-col col-5 style="float: left">\n          交付成果：\n        </ion-col>\n        <ion-col col-7 style="float: right">\n        <span class="item-right">\n          {{project.itemEndResult}}\n        </span>\n        </ion-col>\n      </ion-row>\n    </div>\n  </div>\n\n  <!-- 项目延期 -->\n  <div *ngIf="project.delayDays>0" class="mile-bottom" style="margin-top: 5px">\n    <div class="item1">\n      <ion-label style="margin-bottom: 3px;font-size: 10px">{{project.delayTime | MonthPipe}}</ion-label>\n      <section class="line"></section>\n      <ion-label style="margin-top: 3px;font-size: 10px">{{project.delayTime | YearPipe}}</ion-label>\n    </div>\n    <div class="item2">\n      <!--<div style="width: 1px; background-color: #ececec; height: 10px; position: absolute; left: 20px; top: 0px" ></div>-->\n      <ion-label no-padding no-margin class="delay-radius2">延</ion-label>\n      <ion-label no-padding no-margin class="item2_text">延期</ion-label>\n    </div>\n    <ion-icon name="appname-arrow" class="arrow-css3"></ion-icon>\n    <div class="item3-3">\n      <ion-row>\n        <ion-col col-5 style="float: left">\n          负责人：\n        </ion-col>\n        <ion-col col-7 style="float: right">\n          {{project.leader}}\n        </ion-col>\n      </ion-row>\n      <ion-row>\n        <ion-col col-5 style="float: left">\n          交付成果：\n        </ion-col>\n        <ion-col col-7 style="float: right">\n        <span class="item-right">\n          {{project.itemEndResult}}\n        </span>\n        </ion-col>\n      </ion-row>\n    </div>\n  </div>\n\n  <!--[ngStyle]="{\'bottom\':isShowShare==false?\'-200px\':\'0px\'}"-->\n  <div id="shareView" class="share-css" >\n    <ion-label text-center>分享到</ion-label>\n    <ion-row style="height: 100px;@extend .vertical-middle;">\n      <ion-col text-center >\n        <ion-icon name="appname-dingding"></ion-icon>\n      </ion-col>\n      <ion-col text-center>\n        <ion-icon name="appname-qq"></ion-icon>\n      </ion-col>\n      <ion-col text-center>\n        <ion-icon name="appname-weixin"></ion-icon>\n      </ion-col>\n    </ion-row>\n    <button ion-button no-padding no-margin style="width: 100%; height: 50px; border-top: solid 1px #ececec; background-color: white; color: black" (click)="onCancelShare($event)">取消</button>\n  </div>\n</ion-content>\n'/*ion-inline-end:"/Users/zhaoliangchen/Desktop/qipaipm-company/src/pages/project-detail/project-detail.html"*/,
+        selector: 'page-project-detail',template:/*ion-inline-start:"/Users/zhaoliangchen/Desktop/qipaipm-company/src/pages/project-detail/project-detail.html"*/'<!--\n  Generated template for the ProjectDetailPage page.\n\n  See http://ionicframework.com/docs/components/#navigation for more info on\n  Ionic pages and navigation.\n-->\n<ion-header>\n  <ion-navbar>\n    <ion-title>\n      {{project.itemName}}\n    </ion-title>\n    <ion-buttons end>\n      <button ion-button icon-only (click)="presentPopover($event)">\n        <ion-icon name="more" style="color: #fc5c53"></ion-icon>\n      </button>\n    </ion-buttons>\n  </ion-navbar>\n</ion-header>\n\n\n<ion-content #popoverContent fullscreen>\n  <div class="pj-item">\n    <div class="mile-bottom">\n      <div class="item1">\n        <ion-label style="margin-bottom: 3px;font-size: 10px">{{project.itemStartTime | MonthPipe}}</ion-label>\n        <section class="line"></section>\n        <ion-label style="margin-top: 3px;font-size: 10px">{{project.itemStartTime | YearPipe}}</ion-label>\n      </div>\n      <div class="item2">\n        <ion-icon name="ios-arrow-dropdown-circle" style="color: #fc5c53;padding-top: 15px"></ion-icon>\n        <ion-label no-padding no-margin style="margin-top: 3px;font-size: 10px;text-align: center">启动</ion-label>\n      </div>\n        <div class="item3">\n            <ion-icon name="appname-arrow" class="arrow-css1"></ion-icon>\n            <div class="item3-1">\n                <div class="text-wrap">\n                    <div class="text-left">负责人：</div>\n                    <div class="text-right">{{project.leader}}</div>\n                    <!--<div style="clear: both"></div>-->\n                </div>\n                <div  class="text-wrap">\n                    <div class="text-left">交付成果：</div>\n                    <div class="text-right">{{project.itemStartResult}}</div>\n                    <!--<div style="clear: both"></div>-->\n                </div>\n                <div  class="text-wrap">\n                    <div class="text-left">紧急程度：</div>\n                    <div class="text-right">{{project.itemLevel | itemlevelPipe}}</div>\n                    <!--<div style="clear: both"></div>-->\n                </div>\n            </div>\n        </div>\n    </div>\n  </div>\n\n  <!-- 里程碑  -->\n  <div class="pj-item" *ngFor="let mile of project.children; let i = index">\n    <div class="mile-top" id="{{mile.id}}">\n      <div style="width: 1px; background-color: #ececec; height: 100%; position: absolute; left: 65px; top: 0px" >\n\n      </div >\n      <div [hidden]="mile.children.length<=0">\n        <div class="subtask-title" *ngIf="isExpand[i]==false ">\n          <ion-label no-margin no-padding text-center class="horizontal-center" style="line-height: 25px; font-size: 15px">{{mile.children.length+"个子任务"}}</ion-label>\n        </div>\n        <div class="subtask-wrap" *ngIf="isExpand[i]==true ">\n          <div class="subtask-item" *ngFor="let subtask of mile.children" (click)="onClickSubtask($event, subtask, mile)">\n            <div class="subtask-css" >\n              <ion-label class="subtask-left">子任务:</ion-label>\n              <ion-label class="subtask-right" >{{subtask.subtaskName}}</ion-label>\n            </div>\n            <div class="subtask-css" >\n              <ion-label class="subtask-left">交付时间:</ion-label>\n              <ion-label class="subtask-right" >{{subtask.deliveryTime | stampToDate}}</ion-label>\n            </div>\n            <div class="subtask-css" >\n              <ion-label class="subtask-left">负责人:</ion-label>\n              <ion-label class="subtask-right" >{{subtask.leader}}</ion-label>\n            </div>\n          </div>\n        </div>\n        <ion-icon [name]="isExpand[i]==false?\'appname-expand\':\'appname-fold\'" class="fold" (click)="onClickExpand($event, i)"></ion-icon>\n      </div>\n    </div>\n    <div class="mile-bottom">\n      <div class="item1">\n        <ion-label style="margin-bottom: 3px;font-size: 10px">{{mile.deliveryTime | MonthPipe}}</ion-label>\n        <section class="line"></section>\n        <ion-label style="margin-top: 3px;font-size: 10px">{{mile.deliveryTime | YearPipe}}</ion-label>\n      </div>\n      <div class="item2">\n        <!--<div style="width: 1px; background-color: #ececec; height: 10px; position: absolute; left: 20px; top: 0px" ></div>-->\n        <ion-label no-padding no-margin class="label-radius">{{mile.itemProgress}}</ion-label>\n        <ion-label no-padding no-margin class="mile-number">{{"里程碑"+(i+1)}}</ion-label>\n        <ion-label no-padding no-margin class="delay-radius1" [hidden]="mile.delayDays==0">{{"延"+mile.delayDays}}</ion-label>\n      </div>\n      <!--[ngClass]="{\'arrow-css1\':mile.type==0,\'arrow-css2\':mile.type==1,\'arrow-css3\':mile.type==2}"-->\n\n        <div class="item3">\n            <ion-icon name="appname-arrow" class="arrow-css2" ></ion-icon>\n            <div class="item3-2" (click)="onClickMilestone($event, mile)">\n                <div class="text-wrap">\n                    <div class="text-left">负责人：</div>\n                    <div class="text-right">{{mile.leader}}</div>\n                </div>\n                <div  class="text-wrap">\n                    <div class="text-left">交付成果：</div>\n                    <div class="text-right">{{mile.deliveryResult}}</div>\n                </div>\n            </div>\n        </div>\n    </div>\n  </div>\n\n  <!-- 项目结束 -->\n  <div class="mile-bottom">\n    <div class="item1">\n      <ion-label style="margin-bottom: 3px;font-size: 10px">{{project.endTime | MonthPipe}}</ion-label>\n      <section class="line"></section>\n      <ion-label style="margin-top: 3px;font-size: 10px">{{project.endTime | YearPipe}}</ion-label>\n    </div>\n    <div class="item2">\n      <!--<div style="width: 1px; background-color: #ececec; height: 10px; position: absolute; left: 20px; top: 0px" ></div>-->\n      <ion-icon name="ios-arrow-dropup-circle" style="color: #fc5c53;padding-top: 15px"></ion-icon>\n      <ion-label no-padding no-margin style="margin-top: 3px;font-size: 10px;text-align: center">结束</ion-label>\n    </div>\n      <div class="item3">\n          <ion-icon name="appname-arrow" class="arrow-css1"></ion-icon>\n          <div class="item3-1">\n              <div  class="text-wrap">\n                  <div no-padding no-margin class="text-left">负责人：</div>\n                  <div no-padding no-margin class="text-right">{{project.leader}}</div>\n              </div>\n              <div  class="text-wrap">\n                  <div no-padding no-margin class="text-left">交付成果：</div>\n                  <div no-padding no-margin class="text-right">{{project.itemEndResult}}</div>\n              </div>\n          </div>\n      </div>\n  </div>\n\n  <!-- 项目延期 -->\n  <div *ngIf="project.delayDays>0" class="mile-bottom" style="margin-top: 5px">\n    <div class="item1">\n      <ion-label style="margin-bottom: 3px;font-size: 10px">{{project.delayTime | MonthPipe}}</ion-label>\n      <section class="line"></section>\n      <ion-label style="margin-top: 3px;font-size: 10px">{{project.delayTime | YearPipe}}</ion-label>\n    </div>\n    <div class="item2">\n      <!--<div style="width: 1px; background-color: #ececec; height: 10px; position: absolute; left: 20px; top: 0px" ></div>-->\n      <ion-label no-padding no-margin class="delay-radius2">延</ion-label>\n      <ion-label no-padding no-margin class="item2_text">延期</ion-label>\n    </div>\n      <div class="item3">\n          <ion-icon name="appname-arrow" class="arrow-css3"></ion-icon>\n          <div class="item3-3">\n              <div class="text-wrap">\n                  <div no-padding no-margin class="text-left">负责人：</div>\n                  <div no-padding no-margin class="text-right">{{project.leader}}</div>\n              </div>\n              <div  class="text-wrap">\n                  <div no-padding no-margin class="text-left">交付成果：</div>\n                  <div no-padding no-margin class="text-right">{{project.itemEndResult}}</div>\n              </div>\n          </div>\n      </div>\n    </div>\n\n  <!--[ngStyle]="{\'bottom\':isShowShare==false?\'-200px\':\'0px\'}"-->\n  <div id="shareView" class="share-css" >\n    <ion-label text-center>分享到</ion-label>\n    <ion-row style="height: 100px;@extend .vertical-middle;">\n      <ion-col text-center >\n        <ion-icon name="appname-dingding"></ion-icon>\n      </ion-col>\n      <ion-col text-center>\n        <ion-icon name="appname-qq"></ion-icon>\n      </ion-col>\n      <ion-col text-center>\n        <ion-icon name="appname-weixin"></ion-icon>\n      </ion-col>\n    </ion-row>\n    <button ion-button no-padding no-margin style="width: 100%; height: 50px; border-top: solid 1px #ececec; background-color: white; color: black" (click)="onCancelShare($event)">取消</button>\n  </div>\n</ion-content>\n'/*ion-inline-end:"/Users/zhaoliangchen/Desktop/qipaipm-company/src/pages/project-detail/project-detail.html"*/,
     }),
     __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["NavController"], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["NavParams"], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["PopoverController"],
         __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["Events"], __WEBPACK_IMPORTED_MODULE_5__app_app_service__["a" /* AppService */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["ToastController"]])
@@ -1133,7 +1133,7 @@ ProjectDetailPage = __decorate([
 
 /***/ }),
 
-/***/ 140:
+/***/ 141:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -1189,7 +1189,7 @@ NewpwPage = __decorate([
 
 /***/ }),
 
-/***/ 141:
+/***/ 142:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -1197,9 +1197,9 @@ NewpwPage = __decorate([
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(1);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(12);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__angular_forms__ = __webpack_require__(21);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_rxjs_Rx__ = __webpack_require__(423);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_rxjs_Rx__ = __webpack_require__(425);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_rxjs_Rx___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3_rxjs_Rx__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__newpw_newpw__ = __webpack_require__(140);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__newpw_newpw__ = __webpack_require__(141);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -1276,72 +1276,18 @@ ForgetPage = __decorate([
 
 /***/ }),
 
-/***/ 152:
-/***/ (function(module, exports) {
-
-function webpackEmptyAsyncContext(req) {
-	// Here Promise.resolve().then() is used instead of new Promise() to prevent
-	// uncatched exception popping up in devtools
-	return Promise.resolve().then(function() {
-		throw new Error("Cannot find module '" + req + "'.");
-	});
-}
-webpackEmptyAsyncContext.keys = function() { return []; };
-webpackEmptyAsyncContext.resolve = webpackEmptyAsyncContext;
-module.exports = webpackEmptyAsyncContext;
-webpackEmptyAsyncContext.id = 152;
-
-/***/ }),
-
-/***/ 195:
-/***/ (function(module, exports, __webpack_require__) {
-
-var map = {
-	"../pages/contact/contact.module": [
-		729,
-		3
-	],
-	"../pages/forget/forget.module": [
-		731,
-		2
-	],
-	"../pages/login/login.module": [
-		732,
-		1
-	],
-	"../pages/newpw/newpw.module": [
-		730,
-		0
-	]
-};
-function webpackAsyncContext(req) {
-	var ids = map[req];
-	if(!ids)
-		return Promise.reject(new Error("Cannot find module '" + req + "'."));
-	return __webpack_require__.e(ids[1]).then(function() {
-		return __webpack_require__(ids[0]);
-	});
-};
-webpackAsyncContext.keys = function webpackAsyncContextKeys() {
-	return Object.keys(map);
-};
-webpackAsyncContext.id = 195;
-module.exports = webpackAsyncContext;
-
-/***/ }),
-
-/***/ 266:
+/***/ 143:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return HomePage; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return LoginPage; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(1);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(12);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__project_create_project_create__ = __webpack_require__(135);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__project_detail_project_detail__ = __webpack_require__(138);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__search_search__ = __webpack_require__(267);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__app_app_service__ = __webpack_require__(30);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__app_app_config__ = __webpack_require__(27);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__angular_forms__ = __webpack_require__(21);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__forget_forget__ = __webpack_require__(142);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__app_app_service__ = __webpack_require__(30);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__home_home__ = __webpack_require__(226);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__ionic_storage__ = __webpack_require__(118);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -1358,16 +1304,162 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 
 
 
+/**
+ * Generated class for the LoginPage page.
+ *
+ * See http://ionicframework.com/docs/components/#navigation for more info
+ * on Ionic pages and navigation.
+ */
+var LoginPage = (function () {
+    function LoginPage(navCtrl, navParams, formBuilder, appService, storage, toastCtrl) {
+        this.navCtrl = navCtrl;
+        this.navParams = navParams;
+        this.formBuilder = formBuilder;
+        this.appService = appService;
+        this.storage = storage;
+        this.toastCtrl = toastCtrl;
+        this.errorText = '手机号码错误';
+        this.loginForm = this.formBuilder.group({
+            mobile: ['', __WEBPACK_IMPORTED_MODULE_2__angular_forms__["Validators"].compose([__WEBPACK_IMPORTED_MODULE_2__angular_forms__["Validators"].minLength(11), __WEBPACK_IMPORTED_MODULE_2__angular_forms__["Validators"].maxLength(11), __WEBPACK_IMPORTED_MODULE_2__angular_forms__["Validators"].required, __WEBPACK_IMPORTED_MODULE_2__angular_forms__["Validators"].pattern("^(13[0-9]|15[012356789]|17[03678]|18[0-9]|14[57])[0-9]{8}$")])],
+            password: ['', __WEBPACK_IMPORTED_MODULE_2__angular_forms__["Validators"].compose([__WEBPACK_IMPORTED_MODULE_2__angular_forms__["Validators"].required, __WEBPACK_IMPORTED_MODULE_2__angular_forms__["Validators"].minLength(6), __WEBPACK_IMPORTED_MODULE_2__angular_forms__["Validators"].maxLength(12)])]
+        });
+    }
+    LoginPage.prototype.ionViewDidLoad = function () {
+    };
+    LoginPage.prototype.login = function (value) {
+        this.appService.httpGet("http://192.168.10.118:8888/uc/user/login", { "telPhone": value.mobile, "password": value.password }, this, function (view, res) {
+            var data = res.json();
+            console.log(data);
+            if (data != null) {
+                view.storage.ready().then(function () {
+                    view.storage.set('user', data);
+                });
+                view.navCtrl.push(__WEBPACK_IMPORTED_MODULE_5__home_home__["a" /* HomePage */]);
+            }
+            else {
+                var toast = view.toastCtrl.create({
+                    message: "登录失败",
+                    duration: 2000,
+                    dismissOnPageChange: true,
+                });
+                toast.present();
+            }
+        }, true);
+    };
+    LoginPage.prototype.onForgetPassword = function ($event) {
+        this.navCtrl.push(__WEBPACK_IMPORTED_MODULE_3__forget_forget__["a" /* ForgetPage */]);
+    };
+    return LoginPage;
+}());
+LoginPage = __decorate([
+    Object(__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["IonicPage"])(),
+    Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Component"])({
+        selector: 'page-login',template:/*ion-inline-start:"/Users/zhaoliangchen/Desktop/qipaipm-company/src/pages/login/login.html"*/'<!--\n  Generated template for the LoginPage page.\n\n  See http://ionicframework.com/docs/components/#navigation for more info on\n  Ionic pages and navigation.\n-->\n\n<ion-content fullscreen>\n  <img class="login_icon" src="../../assets/png/login_logo.png">\n  <form [formGroup]="loginForm" (ngSubmit)="login(loginForm.value)">\n    <div style="margin: 0 30px;">\n      <div class="row">\n        <img class="area" src="../../assets/png/icon_tel.png">\n        <ion-input no-padding no-margin type="text" placeholder="输入手机号" formControlName="mobile" maxlength="11"></ion-input>\n      </div>\n      <div class="row">\n        <img class="area" src="../../assets/png/icon_pw.png">\n        <ion-input no-padding no-margin type="password" placeholder="输入密码" formControlName="password" maxlength="12"></ion-input>\n      </div>\n      <!--<input class="login_input" type="text" formControlName="mobile" placeholder="请输入手机号"/>-->\n      <!--<input class="login_input" type="password" formControlName="password" placeholder="请输入密码"/>-->\n      <!--<div style="width: 80%;height: 30px;margin: 30px auto">-->\n        <!--<p style="float: left; margin-left: 10px; color: red">{{errorText}}</p>-->\n        <!--<button ion-button no-padding no-margin clear style="margin-right: 10px; float: right">忘记密码?</button>-->\n      <!--</div>-->\n      <button ion-button block class="login_btn" type="submit">登录</button>\n    </div>\n  </form>\n  <div style="position: fixed;bottom: 20px;width: 100%">\n    <button ion-button no-border no-padding clear class="forget" (click)="onForgetPassword($event)">忘记密码?</button>\n  </div>\n\n</ion-content>\n'/*ion-inline-end:"/Users/zhaoliangchen/Desktop/qipaipm-company/src/pages/login/login.html"*/,
+    }),
+    __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["NavController"] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["NavController"]) === "function" && _a || Object, typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["NavParams"] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["NavParams"]) === "function" && _b || Object, typeof (_c = typeof __WEBPACK_IMPORTED_MODULE_2__angular_forms__["FormBuilder"] !== "undefined" && __WEBPACK_IMPORTED_MODULE_2__angular_forms__["FormBuilder"]) === "function" && _c || Object, typeof (_d = typeof __WEBPACK_IMPORTED_MODULE_4__app_app_service__["a" /* AppService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_4__app_app_service__["a" /* AppService */]) === "function" && _d || Object, typeof (_e = typeof __WEBPACK_IMPORTED_MODULE_6__ionic_storage__["b" /* Storage */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_6__ionic_storage__["b" /* Storage */]) === "function" && _e || Object, typeof (_f = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["ToastController"] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["ToastController"]) === "function" && _f || Object])
+], LoginPage);
+
+var _a, _b, _c, _d, _e, _f;
+//# sourceMappingURL=login.js.map
+
+/***/ }),
+
+/***/ 154:
+/***/ (function(module, exports) {
+
+function webpackEmptyAsyncContext(req) {
+	// Here Promise.resolve().then() is used instead of new Promise() to prevent
+	// uncatched exception popping up in devtools
+	return Promise.resolve().then(function() {
+		throw new Error("Cannot find module '" + req + "'.");
+	});
+}
+webpackEmptyAsyncContext.keys = function() { return []; };
+webpackEmptyAsyncContext.resolve = webpackEmptyAsyncContext;
+module.exports = webpackEmptyAsyncContext;
+webpackEmptyAsyncContext.id = 154;
+
+/***/ }),
+
+/***/ 197:
+/***/ (function(module, exports, __webpack_require__) {
+
+var map = {
+	"../pages/contact/contact.module": [
+		734,
+		3
+	],
+	"../pages/forget/forget.module": [
+		736,
+		2
+	],
+	"../pages/login/login.module": [
+		737,
+		1
+	],
+	"../pages/newpw/newpw.module": [
+		735,
+		0
+	]
+};
+function webpackAsyncContext(req) {
+	var ids = map[req];
+	if(!ids)
+		return Promise.reject(new Error("Cannot find module '" + req + "'."));
+	return __webpack_require__.e(ids[1]).then(function() {
+		return __webpack_require__(ids[0]);
+	});
+};
+webpackAsyncContext.keys = function webpackAsyncContextKeys() {
+	return Object.keys(map);
+};
+webpackAsyncContext.id = 197;
+module.exports = webpackAsyncContext;
+
+/***/ }),
+
+/***/ 226:
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return HomePage; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(1);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(12);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__project_create_project_create__ = __webpack_require__(114);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__project_detail_project_detail__ = __webpack_require__(117);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__search_search__ = __webpack_require__(227);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__app_app_service__ = __webpack_require__(30);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__app_app_config__ = __webpack_require__(27);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__ionic_storage__ = __webpack_require__(118);
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+
+
+
+
+
+
+
+
 var HomePage = (function () {
-    function HomePage(navCtrl, appService, events) {
+    function HomePage(navCtrl, appService, events, storage) {
         this.navCtrl = navCtrl;
         this.appService = appService;
         this.events = events;
+        this.storage = storage;
         this.type = 1;
         this.namevalue = "appname-list";
         this.projects = [];
         this.projectsOnMonth = [];
         this.currentDate = "";
+        console.log("查看登录情况" + this.storage.get("user"));
     }
     HomePage.prototype.ionViewDidLoad = function () {
         var _this = this;
@@ -1393,7 +1485,7 @@ var HomePage = (function () {
     HomePage.prototype.reloadProjectList = function (dateString) {
         this.events.publish('onGetProjectDate');
         this.projects = [];
-        this.appService.httpGet("item/searchByCondition", { "itemStartTime": dateString, "endTime": dateString, "itemIsEnd": "0", "page": 1, "limit": 100 }, this, function (view, res) {
+        this.appService.httpGet("item/searchByCondition", { "itemStartTime": dateString, "endTime": dateString, "page": 1, "limit": 100 }, this, function (view, res) {
             var data = res.json();
             if (data.success == true) {
                 view.projects = data.data;
@@ -1438,16 +1530,17 @@ var HomePage = (function () {
 }());
 HomePage = __decorate([
     Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Component"])({
-        selector: 'page-home',template:/*ion-inline-start:"/Users/zhaoliangchen/Desktop/qipaipm-company/src/pages/home/home.html"*/'<ion-header>\n  <ion-navbar>\n    <ion-title>\n\n    </ion-title>\n    <ion-buttons end >\n      <button ion-button (click)="onChangeType($event)" id="btMode">\n        <ion-icon style="color: #fc5c53; margin-right: 10px" name={{namevalue}} >\n        </ion-icon>\n      </button>\n      <button ion-button (click)="onClickSearch()">\n        <ion-icon style="color: #fc5c53; margin-right: 10px" name="appname-search" >\n        </ion-icon>\n      </button>\n      <button ion-button (click)="onCreateProject()">\n        <ion-icon style="color: #fc5c53; margin-right: 5px" name="appname-add" >\n        </ion-icon>\n      </button>\n    </ion-buttons>\n  </ion-navbar>\n</ion-header>\n\n<ion-content fullscreen>\n  <div [hidden]="type==2" no-padding no-margin>\n    <calendar id="calendar" (onChange)="onSelectDate($event)" (onChangeMonth)="onChangeMonthProject($event)">\n\n    </calendar>\n\n    <div style="margin-top: 10px; height: 1px; background-color: #c5c6c7; width: 100%"></div>\n    <ion-item (click)="onClickProject(project)" *ngFor="let project of projects">\n      <ion-label no-padding no-margin text-center float-left\n                 [ngClass]="{\'circle_home\':1===1,\'nostart\':project.itemState==\'07010010\',\'ing\':project.itemState==\'07010020\'|| project.itemState==\'07010030\',\'end\':project.itemState==\'07010040\'}">{{project.itemLevel}}</ion-label>\n          <!--<div [ngClass]="{\'circle_nostart\':project.itemState==\'未启动\',\'circle_ing\':project.itemState==\'进行中\',\'circle_end\':project.itemState==\'已结束\'}"></div>-->\n        <ion-label no-padding no-margin float-left class="pj-name" [ngStyle]="{\'color\':project.itemState==\'07010030\'?\'#fc780e\':\'black\'}">{{project.itemName}}</ion-label>\n        </ion-item>\n      </div>\n    <div [hidden]="type==1" no-padding no-margin>\n      <div no-margin no-padding style="background-color: #ececec; height: 50px">\n        <ion-label no-margin no-padding float-left style="margin-left: 10px; line-height: 50px">开始日期</ion-label>\n        <ion-label no-margin no-padding float-left style="margin-left: 50px; line-height: 50px">项目名称</ion-label>\n        <div float-end style="position: relative; width: 120px; height: 100%">\n          <div no-margin no-padding style="position:absolute; top: 4px; right: 10px; height: 40%; width: 100%">\n            <div style="float: left">\n              <div style="width: 10px; height: 10px; background-color: #fc780e; float: left"></div>\n              <ion-label float-left no-margin no-padding style="line-height: 12px">进行中</ion-label>\n            </div>\n            <div style="float: right">\n              <div style="width: 10px; height: 10px; background-color: #10c619; float: left"></div>\n              <ion-label float-left no-margin no-padding style="line-height: 12px">未开始</ion-label>\n            </div>\n          </div>\n          <div no-margin no-padding style="position:absolute; bottom: 0px; right: 10px; height: 40%; width: 100%">\n            <div style="float: left">\n              <div style="width: 10px; height: 10px; background-color: #fc780e; float: left"></div>\n              <ion-label float-left no-margin no-padding style="line-height: 12px">延期中</ion-label>\n            </div>\n           <div style="float: right">\n            <div style="width: 10px; height: 10px; background-color: #c1c8d2; float: left"></div>\n            <ion-label float-left no-margin no-padding style="line-height: 12px">已完成</ion-label>\n          </div>\n        </div>\n      </div>\n    </div>\n    <div *ngFor="let project of projectsOnMonth" style="position: relative; height: 50px; border-bottom: solid 1px #ececec" (click)="onClickProject(project)">\n      <ion-label float-left no-margin no-padding class="list_day">{{project.itemStartTime | DayPipe}}</ion-label>\n      <ion-label float-left no-margin no-padding class="list_weekday">{{project.itemStartTime | WeekayPipe}}</ion-label>\n      <ion-label float-left no-margin no-padding text-center\n          [ngClass]="{\'list_circle\':1===1,\'nostart\':project.itemState==\'07010010\',\'ing\':project.itemState==\'07010020\'|| project.itemState==\'07010030\',\'end\':project.itemState==\'07010040\'}">{{project.itemLevel}}</ion-label>\n      <ion-label float-left no-margin no-padding class="list_itemname">{{project.itemName}}</ion-label>\n    </div>\n  </div>\n</ion-content>\n'/*ion-inline-end:"/Users/zhaoliangchen/Desktop/qipaipm-company/src/pages/home/home.html"*/
+        selector: 'page-home',template:/*ion-inline-start:"/Users/zhaoliangchen/Desktop/qipaipm-company/src/pages/home/home.html"*/'<ion-header>\n  <ion-navbar>\n    <ion-title [hidden]="type==1">\n        {{currentDate | YearAndMonthPipe}}\n    </ion-title>\n    <ion-buttons end >\n      <button ion-button (click)="onChangeType($event)" id="btMode">\n        <ion-icon style="color: #fc5c53; margin-right: 10px" name={{namevalue}} >\n        </ion-icon>\n      </button>\n      <button ion-button (click)="onClickSearch()">\n        <ion-icon style="color: #fc5c53; margin-right: 10px" name="appname-search" >\n        </ion-icon>\n      </button>\n      <button ion-button (click)="onCreateProject()">\n        <ion-icon style="color: #fc5c53; margin-right: 5px" name="appname-add" >\n        </ion-icon>\n      </button>\n    </ion-buttons>\n  </ion-navbar>\n</ion-header>\n\n<ion-content fullscreen>\n  <div [hidden]="type==2" no-padding no-margin>\n    <calendar id="calendar" (onChange)="onSelectDate($event)" (onChangeMonth)="onChangeMonthProject($event)">\n\n    </calendar>\n\n    <div style="margin-top: 10px; height: 1px; background-color: #c5c6c7; width: 100%"></div>\n    <ion-item (click)="onClickProject(project)" *ngFor="let project of projects">\n      <ion-label no-padding no-margin text-center float-left\n                 [ngClass]="{\'circle_home\':1===1,\'nostart\':project.itemState==\'07010010\',\'ing\':project.itemState==\'07010020\'|| project.itemState==\'07010030\',\'end\':project.itemState==\'07010040\'}">{{project.itemLevel}}</ion-label>\n          <!--<div [ngClass]="{\'circle_nostart\':project.itemState==\'未启动\',\'circle_ing\':project.itemState==\'进行中\',\'circle_end\':project.itemState==\'已结束\'}"></div>-->\n        <ion-label no-padding no-margin float-left class="pj-name" [ngStyle]="{\'color\':project.itemState==\'07010030\'?\'#fc780e\':\'black\'}">{{project.itemName}}</ion-label>\n        </ion-item>\n      </div>\n    <div [hidden]="type==1" no-padding no-margin>\n      <div no-margin no-padding style="background-color: #ececec; height: 50px">\n        <ion-label no-margin no-padding float-left style="margin-left: 10px; line-height: 50px">开始日期</ion-label>\n        <ion-label no-margin no-padding float-left style="margin-left: 50px; line-height: 50px">项目名称</ion-label>\n        <div float-end style="position: relative; width: 120px; height: 100%">\n          <div no-margin no-padding style="position:absolute; top: 4px; right: 10px; height: 40%; width: 100%">\n            <div style="float: left">\n              <div style="width: 10px; height: 10px; background-color: #fc780e; float: left"></div>\n              <ion-label float-left no-margin no-padding style="line-height: 12px">进行中</ion-label>\n            </div>\n            <div style="float: right">\n              <div style="width: 10px; height: 10px; background-color: #10c619; float: left"></div>\n              <ion-label float-left no-margin no-padding style="line-height: 12px">未开始</ion-label>\n            </div>\n          </div>\n          <div no-margin no-padding style="position:absolute; bottom: 0px; right: 10px; height: 40%; width: 100%">\n            <div style="float: left">\n              <div style="width: 10px; height: 10px; background-color: #fc780e; float: left"></div>\n              <ion-label float-left no-margin no-padding style="line-height: 12px">延期中</ion-label>\n            </div>\n           <div style="float: right">\n            <div style="width: 10px; height: 10px; background-color: #c1c8d2; float: left"></div>\n            <ion-label float-left no-margin no-padding style="line-height: 12px">已完成</ion-label>\n          </div>\n        </div>\n      </div>\n    </div>\n    <div *ngFor="let project of projectsOnMonth" style="position: relative; height: 50px; border-bottom: solid 1px #ececec" (click)="onClickProject(project)">\n      <ion-label float-left no-margin no-padding class="list_day">{{project.itemStartTime | DayPipe}}</ion-label>\n      <ion-label float-left no-margin no-padding class="list_weekday">{{project.itemStartTime | WeekayPipe}}</ion-label>\n      <ion-label float-left no-margin no-padding text-center\n          [ngClass]="{\'list_circle\':1===1,\'nostart\':project.itemState==\'07010010\',\'ing\':project.itemState==\'07010020\'|| project.itemState==\'07010030\',\'end\':project.itemState==\'07010040\'}">{{project.itemLevel}}</ion-label>\n      <ion-label float-left no-margin no-padding class="list_itemname" [ngStyle]="{\'color\':project.itemState==\'07010030\'?\'#fc780e\':\'black\'}">{{project.itemName}}</ion-label>\n    </div>\n  </div>\n</ion-content>\n'/*ion-inline-end:"/Users/zhaoliangchen/Desktop/qipaipm-company/src/pages/home/home.html"*/
     }),
-    __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["NavController"], __WEBPACK_IMPORTED_MODULE_5__app_app_service__["a" /* AppService */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["Events"]])
+    __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["NavController"], __WEBPACK_IMPORTED_MODULE_5__app_app_service__["a" /* AppService */],
+        __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["Events"], __WEBPACK_IMPORTED_MODULE_7__ionic_storage__["b" /* Storage */]])
 ], HomePage);
 
 //# sourceMappingURL=home.js.map
 
 /***/ }),
 
-/***/ 267:
+/***/ 227:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -1455,7 +1548,7 @@ HomePage = __decorate([
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(1);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(12);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__app_app_service__ = __webpack_require__(30);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__project_detail_project_detail__ = __webpack_require__(138);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__project_detail_project_detail__ = __webpack_require__(117);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -1526,7 +1619,7 @@ var SearchPage = (function () {
             this.array = [];
         }
         else {
-            this.appService.httpGet("item/searchByContion", { itemName: this.searchValue, page: 1, limit: 100 }, this, function (view, res) {
+            this.appService.httpGet("item/searchByCondition", { itemName: this.searchValue, page: 1, limit: 100 }, this, function (view, res) {
                 var response = res.json();
                 if (response.success == true) {
                     var data = response.data;
@@ -1556,7 +1649,7 @@ var SearchPage = (function () {
 }());
 SearchPage = __decorate([
     Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Component"])({
-        selector: 'page-search',template:/*ion-inline-start:"/Users/zhaoliangchen/Desktop/qipaipm-company/src/pages/search/search.html"*/'<!--\n  Generated template for the SearchPage page.\n\n  See http://ionicframework.com/docs/components/#navigation for more info on\n  Ionic pages and navigation.\n-->\n<ion-header>\n  <ion-navbar>\n    <form (submit)="onSearch($event)">\n      <ion-searchbar placeholder="搜索项目名称" [(ngModel)]=searchValue\n                     [showCancelButton]="false"\n                     (ionInput)="onSearchInput($event)"\n                     (ionCancel)="onSearchCancel($event)"\n                      name="itemName">\n      </ion-searchbar>\n    </form>\n  </ion-navbar>\n  <!--<div class="head" >-->\n    <!--<div class="icon-left" (click)="goBack()">-->\n      <!--<ion-icon name="arrow-back" ></ion-icon>-->\n    <!--</div>-->\n    <!--<div class="searchcotain">-->\n      <!--<div class="searchmain">-->\n        <!--<div class="searchicon"><ion-icon name="search"></ion-icon></div>-->\n        <!--<div class="searchinput"><input type="text" placeholder="搜索"></div>-->\n      <!--</div>-->\n    <!--</div>-->\n    <!--<div class="icon-rightnew">-->\n      <!--<a>搜索</a>-->\n    <!--</div>-->\n  <!--</div>-->\n</ion-header>\n\n<ion-content fullscreen>\n    <div *ngFor="let dic of array">\n      <div style="background-color: #f5f6f7; height: 20px;padding-left: 5px">{{dic.year+"年"}}</div>\n      <div style="height: 44px; border-bottom: solid 1px #f5f6f7; position:relative;" *ngFor="let project of dic.projects" (click)="onClickProject($event,project)">\n        <ion-label no-padding no-margin float-left class="vertical_center" style="left: 5px">{{project.itemStartTime | MonthPipe}}</ion-label>\n        <ion-label no-padding no-margin float-right class="vertical_center" style="right: 5px;">{{project.itemName}}</ion-label>\n      </div>\n    </div>\n</ion-content>\n'/*ion-inline-end:"/Users/zhaoliangchen/Desktop/qipaipm-company/src/pages/search/search.html"*/,
+        selector: 'page-search',template:/*ion-inline-start:"/Users/zhaoliangchen/Desktop/qipaipm-company/src/pages/search/search.html"*/'<!--\n  Generated template for the SearchPage page.\n\n  See http://ionicframework.com/docs/components/#navigation for more info on\n  Ionic pages and navigation.\n-->\n<ion-header>\n  <ion-navbar>\n    <form (submit)="onSearch($event)">\n      <ion-searchbar placeholder="搜索项目名称" [(ngModel)]=searchValue\n                     [showCancelButton]="false"\n                     (ionInput)="onSearchInput($event)"\n                     (ionCancel)="onSearchCancel($event)"\n                      name="itemName">\n      </ion-searchbar>\n    </form>\n  </ion-navbar>\n  <!--<div class="head" >-->\n    <!--<div class="icon-left" (click)="goBack()">-->\n      <!--<ion-icon name="arrow-back" ></ion-icon>-->\n    <!--</div>-->\n    <!--<div class="searchcotain">-->\n      <!--<div class="searchmain">-->\n        <!--<div class="searchicon"><ion-icon name="search"></ion-icon></div>-->\n        <!--<div class="searchinput"><input type="text" placeholder="搜索"></div>-->\n      <!--</div>-->\n    <!--</div>-->\n    <!--<div class="icon-rightnew">-->\n      <!--<a>搜索</a>-->\n    <!--</div>-->\n  <!--</div>-->\n</ion-header>\n\n<ion-content fullscreen>\n    <div *ngFor="let dic of array">\n      <div style="background-color: #f5f6f7; height: 30px;padding-left: 5px; position:relative;">\n          <ion-label no-padding no-margin class="vertical_center" style="left: 5px; width: 120px">{{dic.year+"年"}}</ion-label>\n      </div>\n      <div style="height: 50px; border-bottom: solid 1px #f5f6f7; position:relative;" *ngFor="let project of dic.projects" (click)="onClickProject($event,project)">\n        <ion-label no-padding no-margin class="vertical_center" style="left: 5px; width: 120px">{{project.itemStartTime | MonthPipe}}</ion-label>\n        <ion-label no-padding no-margin class="vertical_center" style="left: 140px;">{{project.itemName}}</ion-label>\n      </div>\n    </div>\n</ion-content>\n'/*ion-inline-end:"/Users/zhaoliangchen/Desktop/qipaipm-company/src/pages/search/search.html"*/,
     }),
     __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["NavController"], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["NavParams"], __WEBPACK_IMPORTED_MODULE_2__app_app_service__["a" /* AppService */]])
 ], SearchPage);
@@ -1728,9 +1821,9 @@ var AppConfig = (function () {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_ionic_angular__ = __webpack_require__(12);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_core__ = __webpack_require__(1);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__angular_http__ = __webpack_require__(54);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_rxjs_add_operator_toPromise__ = __webpack_require__(196);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_rxjs_add_operator_toPromise__ = __webpack_require__(198);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_rxjs_add_operator_toPromise___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3_rxjs_add_operator_toPromise__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__ionic_native_network__ = __webpack_require__(197);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__ionic_native_network__ = __webpack_require__(199);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -1972,80 +2065,13 @@ AppService = __decorate([
 
 /***/ }),
 
-/***/ 390:
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return LoginPage; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(1);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(12);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__angular_forms__ = __webpack_require__(21);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__forget_forget__ = __webpack_require__(141);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__app_app_service__ = __webpack_require__(30);
-var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
-    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
-    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
-    return c > 3 && r && Object.defineProperty(target, key, r), r;
-};
-var __metadata = (this && this.__metadata) || function (k, v) {
-    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
-};
-
-
-
-
-
-/**
- * Generated class for the LoginPage page.
- *
- * See http://ionicframework.com/docs/components/#navigation for more info
- * on Ionic pages and navigation.
- */
-var LoginPage = (function () {
-    function LoginPage(navCtrl, navParams, formBuilder, appService) {
-        this.navCtrl = navCtrl;
-        this.navParams = navParams;
-        this.formBuilder = formBuilder;
-        this.appService = appService;
-        this.errorText = '手机号码错误';
-        this.loginForm = this.formBuilder.group({
-            mobile: ['', __WEBPACK_IMPORTED_MODULE_2__angular_forms__["Validators"].compose([__WEBPACK_IMPORTED_MODULE_2__angular_forms__["Validators"].minLength(11), __WEBPACK_IMPORTED_MODULE_2__angular_forms__["Validators"].maxLength(11), __WEBPACK_IMPORTED_MODULE_2__angular_forms__["Validators"].required, __WEBPACK_IMPORTED_MODULE_2__angular_forms__["Validators"].pattern("^(13[0-9]|15[012356789]|17[03678]|18[0-9]|14[57])[0-9]{8}$")])],
-            password: ['', __WEBPACK_IMPORTED_MODULE_2__angular_forms__["Validators"].compose([__WEBPACK_IMPORTED_MODULE_2__angular_forms__["Validators"].required, __WEBPACK_IMPORTED_MODULE_2__angular_forms__["Validators"].minLength(6), __WEBPACK_IMPORTED_MODULE_2__angular_forms__["Validators"].maxLength(12)])]
-        });
-    }
-    LoginPage.prototype.ionViewDidLoad = function () {
-    };
-    LoginPage.prototype.login = function (value) {
-        this.appService.httpGet("http://192.168.10.118:8888/uc/user/login", { "telPhone": value.mobile, "password": value.password }, this, function (view, res) {
-            console.log(res);
-        }, true);
-    };
-    LoginPage.prototype.onForgetPassword = function ($event) {
-        this.navCtrl.push(__WEBPACK_IMPORTED_MODULE_3__forget_forget__["a" /* ForgetPage */]);
-    };
-    return LoginPage;
-}());
-LoginPage = __decorate([
-    Object(__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["IonicPage"])(),
-    Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Component"])({
-        selector: 'page-login',template:/*ion-inline-start:"/Users/zhaoliangchen/Desktop/qipaipm-company/src/pages/login/login.html"*/'<!--\n  Generated template for the LoginPage page.\n\n  See http://ionicframework.com/docs/components/#navigation for more info on\n  Ionic pages and navigation.\n-->\n\n<ion-content fullscreen>\n  <img class="login_icon" src="../../assets/png/login_logo.png">\n  <form [formGroup]="loginForm" (ngSubmit)="login(loginForm.value)">\n    <div style="margin: 0 30px;">\n      <div class="row">\n        <img class="area" src="../../assets/png/icon_tel.png">\n        <ion-input no-padding no-margin type="text" placeholder="输入手机号" formControlName="mobile" maxlength="11"></ion-input>\n      </div>\n      <div class="row">\n        <img class="area" src="../../assets/png/icon_pw.png">\n        <ion-input no-padding no-margin type="password" placeholder="输入密码" formControlName="password" maxlength="12"></ion-input>\n      </div>\n      <!--<input class="login_input" type="text" formControlName="mobile" placeholder="请输入手机号"/>-->\n      <!--<input class="login_input" type="password" formControlName="password" placeholder="请输入密码"/>-->\n      <!--<div style="width: 80%;height: 30px;margin: 30px auto">-->\n        <!--<p style="float: left; margin-left: 10px; color: red">{{errorText}}</p>-->\n        <!--<button ion-button no-padding no-margin clear style="margin-right: 10px; float: right">忘记密码?</button>-->\n      <!--</div>-->\n      <button ion-button block class="login_btn" type="submit">登录</button>\n    </div>\n  </form>\n  <div style="position: fixed;bottom: 20px;width: 100%">\n    <button ion-button no-border no-padding clear class="forget" (click)="onForgetPassword($event)">忘记密码?</button>\n  </div>\n\n</ion-content>\n'/*ion-inline-end:"/Users/zhaoliangchen/Desktop/qipaipm-company/src/pages/login/login.html"*/,
-    }),
-    __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["NavController"], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["NavParams"],
-        __WEBPACK_IMPORTED_MODULE_2__angular_forms__["FormBuilder"], __WEBPACK_IMPORTED_MODULE_4__app_app_service__["a" /* AppService */]])
-], LoginPage);
-
-//# sourceMappingURL=login.js.map
-
-/***/ }),
-
-/***/ 391:
+/***/ 393:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_platform_browser_dynamic__ = __webpack_require__(392);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__app_module__ = __webpack_require__(396);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_platform_browser_dynamic__ = __webpack_require__(394);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__app_module__ = __webpack_require__(398);
 
 
 Object(__WEBPACK_IMPORTED_MODULE_0__angular_platform_browser_dynamic__["a" /* platformBrowserDynamic */])().bootstrapModule(__WEBPACK_IMPORTED_MODULE_1__app_module__["a" /* AppModule */]);
@@ -2053,7 +2079,7 @@ Object(__WEBPACK_IMPORTED_MODULE_0__angular_platform_browser_dynamic__["a" /* pl
 
 /***/ }),
 
-/***/ 396:
+/***/ 398:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -2061,37 +2087,41 @@ Object(__WEBPACK_IMPORTED_MODULE_0__angular_platform_browser_dynamic__["a" /* pl
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_platform_browser__ = __webpack_require__(43);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_core__ = __webpack_require__(1);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_ionic_angular__ = __webpack_require__(12);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__ionic_native_splash_screen__ = __webpack_require__(263);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__ionic_native_status_bar__ = __webpack_require__(264);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__ionic_native_splash_screen__ = __webpack_require__(267);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__ionic_native_status_bar__ = __webpack_require__(268);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__angular_http__ = __webpack_require__(54);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__ionic_native_keyboard__ = __webpack_require__(265);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__ionic_native_network__ = __webpack_require__(197);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__app_share__ = __webpack_require__(702);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__app_component__ = __webpack_require__(703);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__pages_home_home__ = __webpack_require__(266);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_11__pages_project_create_project_create__ = __webpack_require__(135);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_12__pages_milestone_detail_milestone_detail__ = __webpack_require__(136);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_13__pages_project_detail_project_detail__ = __webpack_require__(138);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_14__pages_subtask_subtask__ = __webpack_require__(137);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_15__pages_search_search__ = __webpack_require__(267);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_16__pages_contact_contact__ = __webpack_require__(59);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_17__pages_forget_forget__ = __webpack_require__(141);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_18__pages_newpw_newpw__ = __webpack_require__(140);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_19__components_components_module__ = __webpack_require__(704);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_20_ion2_calendar__ = __webpack_require__(707);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_21_ion_multi_picker__ = __webpack_require__(713);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_21_ion_multi_picker___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_21_ion_multi_picker__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_22__pipes_pipes_module__ = __webpack_require__(716);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_23__app_service__ = __webpack_require__(30);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_24__pages_login_login__ = __webpack_require__(390);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_25__providers_keycloak_service_keycloak_service__ = __webpack_require__(725);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_26__providers_keycloak2_keycloak2__ = __webpack_require__(727);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__ionic_native_keyboard__ = __webpack_require__(269);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__ionic_native_network__ = __webpack_require__(199);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__app_share__ = __webpack_require__(707);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__ionic_native_native_storage__ = __webpack_require__(270);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__ionic_storage__ = __webpack_require__(118);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_11__app_component__ = __webpack_require__(708);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_12__pages_home_home__ = __webpack_require__(226);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_13__pages_project_create_project_create__ = __webpack_require__(114);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_14__pages_milestone_detail_milestone_detail__ = __webpack_require__(115);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_15__pages_project_detail_project_detail__ = __webpack_require__(117);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_16__pages_subtask_subtask__ = __webpack_require__(116);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_17__pages_search_search__ = __webpack_require__(227);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_18__pages_contact_contact__ = __webpack_require__(60);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_19__pages_forget_forget__ = __webpack_require__(142);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_20__pages_newpw_newpw__ = __webpack_require__(141);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_21__components_components_module__ = __webpack_require__(709);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_22_ion2_calendar__ = __webpack_require__(712);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_23_ion_multi_picker__ = __webpack_require__(718);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_23_ion_multi_picker___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_23_ion_multi_picker__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_24__pipes_pipes_module__ = __webpack_require__(721);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_25__app_service__ = __webpack_require__(30);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_26__pages_login_login__ = __webpack_require__(143);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_27__providers_keycloak_service_keycloak_service__ = __webpack_require__(730);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_28__providers_keycloak2_keycloak2__ = __webpack_require__(732);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
     else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
+
+
 
 
 
@@ -2132,25 +2162,25 @@ var AppModule = (function () {
 AppModule = __decorate([
     Object(__WEBPACK_IMPORTED_MODULE_1__angular_core__["NgModule"])({
         declarations: [
-            __WEBPACK_IMPORTED_MODULE_9__app_component__["a" /* MyApp */],
-            __WEBPACK_IMPORTED_MODULE_10__pages_home_home__["a" /* HomePage */],
-            __WEBPACK_IMPORTED_MODULE_11__pages_project_create_project_create__["a" /* ProjectCreatePage */],
-            __WEBPACK_IMPORTED_MODULE_12__pages_milestone_detail_milestone_detail__["a" /* MilestoneDetailPage */],
-            __WEBPACK_IMPORTED_MODULE_13__pages_project_detail_project_detail__["b" /* ProjectDetailPage */],
-            __WEBPACK_IMPORTED_MODULE_14__pages_subtask_subtask__["a" /* SubtaskPage */],
-            __WEBPACK_IMPORTED_MODULE_15__pages_search_search__["a" /* SearchPage */],
-            __WEBPACK_IMPORTED_MODULE_16__pages_contact_contact__["a" /* ContactPage */],
-            __WEBPACK_IMPORTED_MODULE_24__pages_login_login__["a" /* LoginPage */],
-            __WEBPACK_IMPORTED_MODULE_17__pages_forget_forget__["a" /* ForgetPage */],
-            __WEBPACK_IMPORTED_MODULE_18__pages_newpw_newpw__["a" /* NewpwPage */],
-            __WEBPACK_IMPORTED_MODULE_13__pages_project_detail_project_detail__["a" /* PopoverPage */],
+            __WEBPACK_IMPORTED_MODULE_11__app_component__["a" /* MyApp */],
+            __WEBPACK_IMPORTED_MODULE_12__pages_home_home__["a" /* HomePage */],
+            __WEBPACK_IMPORTED_MODULE_13__pages_project_create_project_create__["a" /* ProjectCreatePage */],
+            __WEBPACK_IMPORTED_MODULE_14__pages_milestone_detail_milestone_detail__["a" /* MilestoneDetailPage */],
+            __WEBPACK_IMPORTED_MODULE_15__pages_project_detail_project_detail__["b" /* ProjectDetailPage */],
+            __WEBPACK_IMPORTED_MODULE_16__pages_subtask_subtask__["a" /* SubtaskPage */],
+            __WEBPACK_IMPORTED_MODULE_17__pages_search_search__["a" /* SearchPage */],
+            __WEBPACK_IMPORTED_MODULE_18__pages_contact_contact__["a" /* ContactPage */],
+            __WEBPACK_IMPORTED_MODULE_26__pages_login_login__["a" /* LoginPage */],
+            __WEBPACK_IMPORTED_MODULE_19__pages_forget_forget__["a" /* ForgetPage */],
+            __WEBPACK_IMPORTED_MODULE_20__pages_newpw_newpw__["a" /* NewpwPage */],
+            __WEBPACK_IMPORTED_MODULE_15__pages_project_detail_project_detail__["a" /* PopoverPage */],
         ],
         imports: [
             __WEBPACK_IMPORTED_MODULE_0__angular_platform_browser__["a" /* BrowserModule */],
-            __WEBPACK_IMPORTED_MODULE_19__components_components_module__["a" /* ComponentsModule */],
-            __WEBPACK_IMPORTED_MODULE_22__pipes_pipes_module__["a" /* PipesModule */],
+            __WEBPACK_IMPORTED_MODULE_21__components_components_module__["a" /* ComponentsModule */],
+            __WEBPACK_IMPORTED_MODULE_24__pipes_pipes_module__["a" /* PipesModule */],
             __WEBPACK_IMPORTED_MODULE_5__angular_http__["b" /* HttpModule */],
-            __WEBPACK_IMPORTED_MODULE_2_ionic_angular__["IonicModule"].forRoot(__WEBPACK_IMPORTED_MODULE_9__app_component__["a" /* MyApp */], {
+            __WEBPACK_IMPORTED_MODULE_2_ionic_angular__["IonicModule"].forRoot(__WEBPACK_IMPORTED_MODULE_11__app_component__["a" /* MyApp */], {
                 backButtonText: '',
                 backButtonIcon: 'md-arrow-back',
                 //mode: 'ios',
@@ -2167,35 +2197,37 @@ AppModule = __decorate([
                     { loadChildren: '../pages/login/login.module#LoginPageModule', name: 'LoginPage', segment: 'login', priority: 'low', defaultHistory: [] }
                 ]
             }),
+            __WEBPACK_IMPORTED_MODULE_10__ionic_storage__["a" /* IonicStorageModule */].forRoot(),
             __WEBPACK_IMPORTED_MODULE_5__angular_http__["c" /* JsonpModule */],
-            __WEBPACK_IMPORTED_MODULE_20_ion2_calendar__["a" /* CalendarModule */],
-            __WEBPACK_IMPORTED_MODULE_21_ion_multi_picker__["MultiPickerModule"],
+            __WEBPACK_IMPORTED_MODULE_22_ion2_calendar__["a" /* CalendarModule */],
+            __WEBPACK_IMPORTED_MODULE_23_ion_multi_picker__["MultiPickerModule"],
         ],
         bootstrap: [__WEBPACK_IMPORTED_MODULE_2_ionic_angular__["IonicApp"]],
         entryComponents: [
-            __WEBPACK_IMPORTED_MODULE_9__app_component__["a" /* MyApp */],
-            __WEBPACK_IMPORTED_MODULE_10__pages_home_home__["a" /* HomePage */],
-            __WEBPACK_IMPORTED_MODULE_11__pages_project_create_project_create__["a" /* ProjectCreatePage */],
-            __WEBPACK_IMPORTED_MODULE_12__pages_milestone_detail_milestone_detail__["a" /* MilestoneDetailPage */],
-            __WEBPACK_IMPORTED_MODULE_13__pages_project_detail_project_detail__["b" /* ProjectDetailPage */],
-            __WEBPACK_IMPORTED_MODULE_14__pages_subtask_subtask__["a" /* SubtaskPage */],
-            __WEBPACK_IMPORTED_MODULE_15__pages_search_search__["a" /* SearchPage */],
-            __WEBPACK_IMPORTED_MODULE_16__pages_contact_contact__["a" /* ContactPage */],
-            __WEBPACK_IMPORTED_MODULE_24__pages_login_login__["a" /* LoginPage */],
-            __WEBPACK_IMPORTED_MODULE_17__pages_forget_forget__["a" /* ForgetPage */],
-            __WEBPACK_IMPORTED_MODULE_18__pages_newpw_newpw__["a" /* NewpwPage */],
-            __WEBPACK_IMPORTED_MODULE_13__pages_project_detail_project_detail__["a" /* PopoverPage */],
+            __WEBPACK_IMPORTED_MODULE_11__app_component__["a" /* MyApp */],
+            __WEBPACK_IMPORTED_MODULE_12__pages_home_home__["a" /* HomePage */],
+            __WEBPACK_IMPORTED_MODULE_13__pages_project_create_project_create__["a" /* ProjectCreatePage */],
+            __WEBPACK_IMPORTED_MODULE_14__pages_milestone_detail_milestone_detail__["a" /* MilestoneDetailPage */],
+            __WEBPACK_IMPORTED_MODULE_15__pages_project_detail_project_detail__["b" /* ProjectDetailPage */],
+            __WEBPACK_IMPORTED_MODULE_16__pages_subtask_subtask__["a" /* SubtaskPage */],
+            __WEBPACK_IMPORTED_MODULE_17__pages_search_search__["a" /* SearchPage */],
+            __WEBPACK_IMPORTED_MODULE_18__pages_contact_contact__["a" /* ContactPage */],
+            __WEBPACK_IMPORTED_MODULE_26__pages_login_login__["a" /* LoginPage */],
+            __WEBPACK_IMPORTED_MODULE_19__pages_forget_forget__["a" /* ForgetPage */],
+            __WEBPACK_IMPORTED_MODULE_20__pages_newpw_newpw__["a" /* NewpwPage */],
+            __WEBPACK_IMPORTED_MODULE_15__pages_project_detail_project_detail__["a" /* PopoverPage */],
         ],
         providers: [
             __WEBPACK_IMPORTED_MODULE_4__ionic_native_status_bar__["a" /* StatusBar */],
             __WEBPACK_IMPORTED_MODULE_3__ionic_native_splash_screen__["a" /* SplashScreen */],
             __WEBPACK_IMPORTED_MODULE_6__ionic_native_keyboard__["a" /* Keyboard */],
-            __WEBPACK_IMPORTED_MODULE_23__app_service__["a" /* AppService */],
+            __WEBPACK_IMPORTED_MODULE_25__app_service__["a" /* AppService */],
             __WEBPACK_IMPORTED_MODULE_7__ionic_native_network__["a" /* Network */],
             __WEBPACK_IMPORTED_MODULE_8__app_share__["a" /* AppShare */],
+            __WEBPACK_IMPORTED_MODULE_9__ionic_native_native_storage__["a" /* NativeStorage */],
             { provide: __WEBPACK_IMPORTED_MODULE_1__angular_core__["ErrorHandler"], useClass: __WEBPACK_IMPORTED_MODULE_2_ionic_angular__["IonicErrorHandler"] },
-            __WEBPACK_IMPORTED_MODULE_25__providers_keycloak_service_keycloak_service__["a" /* KeycloakServiceProvider */],
-            __WEBPACK_IMPORTED_MODULE_26__providers_keycloak2_keycloak2__["a" /* Keycloak2Provider */]
+            __WEBPACK_IMPORTED_MODULE_27__providers_keycloak_service_keycloak_service__["a" /* KeycloakServiceProvider */],
+            __WEBPACK_IMPORTED_MODULE_28__providers_keycloak2_keycloak2__["a" /* Keycloak2Provider */]
         ]
     })
 ], AppModule);
@@ -2204,7 +2236,7 @@ AppModule = __decorate([
 
 /***/ }),
 
-/***/ 59:
+/***/ 60:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -2306,16 +2338,15 @@ var ContactPage = ContactPage_1 = (function () {
             }
             else {
                 this.appService.httpGet("http://192.168.10.118:8888/uc/group/searchUsersByGroup", { "id": value.id }, this, function (view, res) {
-                    console.log(res);
                     if (res.status == 200) {
                         var array = res.json();
                         if (array == null) {
-                            var alert = view.alertCtrl.create({
+                            var alert_1 = view.alertCtrl.create({
                                 title: '错误信息',
                                 subTitle: '该组织架构没有成员!',
                                 buttons: ['确定']
                             });
-                            alert.present();
+                            alert_1.present();
                         }
                         else {
                             if (array.length > 0) {
@@ -2327,12 +2358,12 @@ var ContactPage = ContactPage_1 = (function () {
                                 });
                             }
                             else {
-                                var alert = view.alertCtrl.create({
+                                var alert_2 = view.alertCtrl.create({
                                     title: '错误信息',
                                     subTitle: '该组织架构没有成员!',
                                     buttons: ['确定']
                                 });
-                                alert.present();
+                                alert_2.present();
                             }
                         }
                     }
@@ -2356,15 +2387,16 @@ ContactPage = ContactPage_1 = __decorate([
     Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Component"])({
         selector: 'page-contact',template:/*ion-inline-start:"/Users/zhaoliangchen/Desktop/qipaipm-company/src/pages/contact/contact.html"*/'<!--\n  Generated template for the ContactPage page.\n\n  See http://ionicframework.com/docs/components/#navigation for more info on\n  Ionic pages and navigation.\n-->\n<ion-header>\n  <ion-navbar>\n    <ion-title>通讯录</ion-title>\n  </ion-navbar>\n</ion-header>\n\n\n<ion-content fullscreen>\n  <form (submit)="onSearchContact($event)">\n    <ion-searchbar\n            placeholder="输入名字搜索" [(ngModel)]=searchValue\n            name="searchValue">\n    </ion-searchbar>\n  </form>\n  <div class="organization">\n    <ion-label no-margin no-padding class="vertical_center text">{{organization}}</ion-label>\n  </div>\n  <ion-item tappable *ngFor="let department of arrayDepartment" (click)="goNextDepartment($event, department)">\n    <ion-icon item-start name="appname-tree"></ion-icon>\n    <ion-label no-padding no-margin>{{department.text}}</ion-label>\n    <ion-note item-end>{{department.count+"人"}}</ion-note>\n  </ion-item>\n\n  <ion-item tappable *ngFor="let staff of arrayStaff" (click)="goNextDepartment($event, staff)">\n    <ion-icon item-start name="appname-head"></ion-icon>\n    <ion-label no-padding no-margin>{{staff.name}}</ion-label>\n    <ion-note item-end>{{staff.telphone}}</ion-note>\n  </ion-item>\n\n</ion-content>\n'/*ion-inline-end:"/Users/zhaoliangchen/Desktop/qipaipm-company/src/pages/contact/contact.html"*/,
     }),
-    __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["NavController"] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["NavController"]) === "function" && _a || Object, typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["NavParams"] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["NavParams"]) === "function" && _b || Object, typeof (_c = typeof __WEBPACK_IMPORTED_MODULE_2__app_app_service__["a" /* AppService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_2__app_app_service__["a" /* AppService */]) === "function" && _c || Object, typeof (_d = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["AlertController"] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["AlertController"]) === "function" && _d || Object, typeof (_e = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["Events"] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["Events"]) === "function" && _e || Object])
+    __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["NavController"], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["NavParams"], __WEBPACK_IMPORTED_MODULE_2__app_app_service__["a" /* AppService */],
+        __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["AlertController"], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["Events"]])
 ], ContactPage);
 
-var ContactPage_1, _a, _b, _c, _d, _e;
+var ContactPage_1;
 //# sourceMappingURL=contact.js.map
 
 /***/ }),
 
-/***/ 702:
+/***/ 707:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -2473,17 +2505,20 @@ AppShare = __decorate([
 
 /***/ }),
 
-/***/ 703:
+/***/ 708:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return MyApp; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(1);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(12);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__ionic_native_status_bar__ = __webpack_require__(264);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__ionic_native_splash_screen__ = __webpack_require__(263);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__ionic_native_keyboard__ = __webpack_require__(265);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__pages_home_home__ = __webpack_require__(266);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__ionic_native_status_bar__ = __webpack_require__(268);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__ionic_native_splash_screen__ = __webpack_require__(267);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__ionic_native_keyboard__ = __webpack_require__(269);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__pages_home_home__ = __webpack_require__(226);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__pages_login_login__ = __webpack_require__(143);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__ionic_native_native_storage__ = __webpack_require__(270);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__ionic_storage__ = __webpack_require__(118);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -2499,18 +2534,24 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 
 
 
-//import { LoginPage } from "../pages/login/login";
+
+
+
 var MyApp = (function () {
-    function MyApp(platform, statusBar, splashScreen, 
-        // private storage: Storage,
+    function MyApp(platform, statusBar, splashScreen, storage, 
         // public geolocation: Geolocation,
         _config, 
         // public toastCtrl: ToastController,
         // public app: App,
-        keyboard) {
+        keyboard, 
+        // private ionicApp: IonicApp,
+        nativeStorage) {
+        var _this = this;
+        this.storage = storage;
         this._config = _config;
         this.keyboard = keyboard;
-        this.rootPage = __WEBPACK_IMPORTED_MODULE_5__pages_home_home__["a" /* HomePage */];
+        this.nativeStorage = nativeStorage;
+        this.rootPage = __WEBPACK_IMPORTED_MODULE_6__pages_login_login__["a" /* LoginPage */];
         platform.ready().then(function () {
             // Okay, so the platform is ready and our plugins are available.
             // Here you can do any higher level native things you might need.
@@ -2520,6 +2561,11 @@ var MyApp = (function () {
         });
         this.keyboard.hideKeyboardAccessoryBar(false);
         this.keyboard.disableScroll(true); //当输入焦点时，防止本机UIScrollView移动。
+        this.storage.get('user').then(function (val) {
+            if (val.username != null) {
+                _this.rootPage = __WEBPACK_IMPORTED_MODULE_5__pages_home_home__["a" /* HomePage */];
+            }
+        });
         // if (platform.is('ios')) {
         //   this.config = {
         //     'backButtonIcon': 'arrow-back',
@@ -2556,24 +2602,23 @@ var MyApp = (function () {
 MyApp = __decorate([
     Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Component"])({template:/*ion-inline-start:"/Users/zhaoliangchen/Desktop/qipaipm-company/src/app/app.html"*/'<ion-nav [root]="rootPage"></ion-nav>\n'/*ion-inline-end:"/Users/zhaoliangchen/Desktop/qipaipm-company/src/app/app.html"*/
     }),
-    __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["Platform"], __WEBPACK_IMPORTED_MODULE_2__ionic_native_status_bar__["a" /* StatusBar */], __WEBPACK_IMPORTED_MODULE_3__ionic_native_splash_screen__["a" /* SplashScreen */],
-        __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["Config"],
-        __WEBPACK_IMPORTED_MODULE_4__ionic_native_keyboard__["a" /* Keyboard */]])
+    __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["Platform"] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["Platform"]) === "function" && _a || Object, typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_2__ionic_native_status_bar__["a" /* StatusBar */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_2__ionic_native_status_bar__["a" /* StatusBar */]) === "function" && _b || Object, typeof (_c = typeof __WEBPACK_IMPORTED_MODULE_3__ionic_native_splash_screen__["a" /* SplashScreen */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_3__ionic_native_splash_screen__["a" /* SplashScreen */]) === "function" && _c || Object, typeof (_d = typeof __WEBPACK_IMPORTED_MODULE_8__ionic_storage__["b" /* Storage */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_8__ionic_storage__["b" /* Storage */]) === "function" && _d || Object, typeof (_e = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["Config"] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["Config"]) === "function" && _e || Object, typeof (_f = typeof __WEBPACK_IMPORTED_MODULE_4__ionic_native_keyboard__["a" /* Keyboard */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_4__ionic_native_keyboard__["a" /* Keyboard */]) === "function" && _f || Object, typeof (_g = typeof __WEBPACK_IMPORTED_MODULE_7__ionic_native_native_storage__["a" /* NativeStorage */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_7__ionic_native_native_storage__["a" /* NativeStorage */]) === "function" && _g || Object])
 ], MyApp);
 
+var _a, _b, _c, _d, _e, _f, _g;
 //# sourceMappingURL=app.component.js.map
 
 /***/ }),
 
-/***/ 704:
+/***/ 709:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return ComponentsModule; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(1);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(12);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__test_test__ = __webpack_require__(705);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__calendar_calendar__ = __webpack_require__(706);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__test_test__ = __webpack_require__(710);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__calendar_calendar__ = __webpack_require__(711);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -2610,7 +2655,7 @@ var ComponentsModule_1;
 
 /***/ }),
 
-/***/ 705:
+/***/ 710:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -2650,7 +2695,7 @@ TestComponent = __decorate([
 
 /***/ }),
 
-/***/ 706:
+/***/ 711:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -2699,7 +2744,7 @@ var CalendarComponent = (function () {
         this.onChange = new __WEBPACK_IMPORTED_MODULE_0__angular_core__["EventEmitter"]();
         this.onChangeMonth = new __WEBPACK_IMPORTED_MODULE_0__angular_core__["EventEmitter"]();
         this.onEventClicked = new __WEBPACK_IMPORTED_MODULE_0__angular_core__["EventEmitter"]();
-        this.weekDays = ["周日", "周一", "周二", "周三", "周四", "周五", "周六"];
+        this.weekDays = ["周一", "周二", "周三", "周四", "周五", "周六", "周日"];
         this.pastDates = [];
         this.rows = [];
         this.dayHasProject = [];
@@ -2823,18 +2868,24 @@ var CalendarComponent = (function () {
         this.rows = [];
         var tmp = new Date(this.currentDate.getTime());
         tmp.setDate(1);
+        var myDay = -1;
         while (tmp.getMonth() == this.currentDate.getMonth()) {
             /* Pushes a new empty row */
             this.rows.push(['', '', '', '', '', '', '']);
-            while (tmp.getDay() < 6 && tmp.getMonth() == this.currentDate.getMonth()) {
+            myDay = (tmp.getDay() - 1) < 0 ? 6 : tmp.getDay() - 1;
+            while (myDay < 6 && tmp.getMonth() == this.currentDate.getMonth()) {
                 /* Populates the row only where needed */
-                this.rows[this.rows.length - 1][tmp.getDay()] = tmp.getDate();
+                this.rows[this.rows.length - 1][myDay] = tmp.getDate();
                 tmp.setDate(tmp.getDate() + 1);
+                myDay = (tmp.getDay() - 1) < 0 ? 6 : tmp.getDay() - 1;
             }
-            if (tmp.getMonth() == this.currentDate.getMonth())
-                this.rows[this.rows.length - 1][tmp.getDay()] = tmp.getDate();
+            if (tmp.getMonth() == this.currentDate.getMonth()) {
+                this.rows[this.rows.length - 1][(tmp.getDay() - 1) < 0 ? 6 : tmp.getDay() - 1] = tmp.getDate();
+                myDay = (tmp.getDay() - 1) < 0 ? 6 : tmp.getDay() - 1;
+            }
             tmp.setDate(tmp.getDate() + 1);
         }
+        console.log(this.rows);
         setTimeout(function () {
             /* Needs to be executed only after the DOM has been updated */
             _this.setHasEventsClass();
@@ -2889,7 +2940,7 @@ var CalendarComponent = (function () {
                 dot.style.display = "none";
             }
         }
-        this.appService.httpGet("item/searchByCondition", { "itemStartTime": firstDateString, "endTime": lastDateString, "itemIsEnd": "0", "page": "1", "limit": "100" }, this, function (view, res) {
+        this.appService.httpGet("item/searchByCondition", { "itemStartTime": firstDateString, "endTime": lastDateString, "page": "1", "limit": "100" }, this, function (view, res) {
             var data = res.json();
             if (data.success == true) {
                 view.dayHasProject = data.data;
@@ -3042,240 +3093,240 @@ CalendarComponent = __decorate([
 
 /***/ }),
 
-/***/ 709:
+/***/ 714:
 /***/ (function(module, exports, __webpack_require__) {
 
 var map = {
-	"./af": 269,
-	"./af.js": 269,
-	"./ar": 270,
-	"./ar-dz": 271,
-	"./ar-dz.js": 271,
-	"./ar-kw": 272,
-	"./ar-kw.js": 272,
-	"./ar-ly": 273,
-	"./ar-ly.js": 273,
-	"./ar-ma": 274,
-	"./ar-ma.js": 274,
-	"./ar-sa": 275,
-	"./ar-sa.js": 275,
-	"./ar-tn": 276,
-	"./ar-tn.js": 276,
-	"./ar.js": 270,
-	"./az": 277,
-	"./az.js": 277,
-	"./be": 278,
-	"./be.js": 278,
-	"./bg": 279,
-	"./bg.js": 279,
-	"./bn": 280,
-	"./bn.js": 280,
-	"./bo": 281,
-	"./bo.js": 281,
-	"./br": 282,
-	"./br.js": 282,
-	"./bs": 283,
-	"./bs.js": 283,
-	"./ca": 284,
-	"./ca.js": 284,
-	"./cs": 285,
-	"./cs.js": 285,
-	"./cv": 286,
-	"./cv.js": 286,
-	"./cy": 287,
-	"./cy.js": 287,
-	"./da": 288,
-	"./da.js": 288,
-	"./de": 289,
-	"./de-at": 290,
-	"./de-at.js": 290,
-	"./de-ch": 291,
-	"./de-ch.js": 291,
-	"./de.js": 289,
-	"./dv": 292,
-	"./dv.js": 292,
-	"./el": 293,
-	"./el.js": 293,
-	"./en-au": 294,
-	"./en-au.js": 294,
-	"./en-ca": 295,
-	"./en-ca.js": 295,
-	"./en-gb": 296,
-	"./en-gb.js": 296,
-	"./en-ie": 297,
-	"./en-ie.js": 297,
-	"./en-nz": 298,
-	"./en-nz.js": 298,
-	"./eo": 299,
-	"./eo.js": 299,
-	"./es": 300,
-	"./es-do": 301,
-	"./es-do.js": 301,
-	"./es.js": 300,
-	"./et": 302,
-	"./et.js": 302,
-	"./eu": 303,
-	"./eu.js": 303,
-	"./fa": 304,
-	"./fa.js": 304,
-	"./fi": 305,
-	"./fi.js": 305,
-	"./fo": 306,
-	"./fo.js": 306,
-	"./fr": 307,
-	"./fr-ca": 308,
-	"./fr-ca.js": 308,
-	"./fr-ch": 309,
-	"./fr-ch.js": 309,
-	"./fr.js": 307,
-	"./fy": 310,
-	"./fy.js": 310,
-	"./gd": 311,
-	"./gd.js": 311,
-	"./gl": 312,
-	"./gl.js": 312,
-	"./gom-latn": 313,
-	"./gom-latn.js": 313,
-	"./he": 314,
-	"./he.js": 314,
-	"./hi": 315,
-	"./hi.js": 315,
-	"./hr": 316,
-	"./hr.js": 316,
-	"./hu": 317,
-	"./hu.js": 317,
-	"./hy-am": 318,
-	"./hy-am.js": 318,
-	"./id": 319,
-	"./id.js": 319,
-	"./is": 320,
-	"./is.js": 320,
-	"./it": 321,
-	"./it.js": 321,
-	"./ja": 322,
-	"./ja.js": 322,
-	"./jv": 323,
-	"./jv.js": 323,
-	"./ka": 324,
-	"./ka.js": 324,
-	"./kk": 325,
-	"./kk.js": 325,
-	"./km": 326,
-	"./km.js": 326,
-	"./kn": 327,
-	"./kn.js": 327,
-	"./ko": 328,
-	"./ko.js": 328,
-	"./ky": 329,
-	"./ky.js": 329,
-	"./lb": 330,
-	"./lb.js": 330,
-	"./lo": 331,
-	"./lo.js": 331,
-	"./lt": 332,
-	"./lt.js": 332,
-	"./lv": 333,
-	"./lv.js": 333,
-	"./me": 334,
-	"./me.js": 334,
-	"./mi": 335,
-	"./mi.js": 335,
-	"./mk": 336,
-	"./mk.js": 336,
-	"./ml": 337,
-	"./ml.js": 337,
-	"./mr": 338,
-	"./mr.js": 338,
-	"./ms": 339,
-	"./ms-my": 340,
-	"./ms-my.js": 340,
-	"./ms.js": 339,
-	"./my": 341,
-	"./my.js": 341,
-	"./nb": 342,
-	"./nb.js": 342,
-	"./ne": 343,
-	"./ne.js": 343,
-	"./nl": 344,
-	"./nl-be": 345,
-	"./nl-be.js": 345,
-	"./nl.js": 344,
-	"./nn": 346,
-	"./nn.js": 346,
-	"./pa-in": 347,
-	"./pa-in.js": 347,
-	"./pl": 348,
-	"./pl.js": 348,
-	"./pt": 349,
-	"./pt-br": 350,
-	"./pt-br.js": 350,
-	"./pt.js": 349,
-	"./ro": 351,
-	"./ro.js": 351,
-	"./ru": 352,
-	"./ru.js": 352,
-	"./sd": 353,
-	"./sd.js": 353,
-	"./se": 354,
-	"./se.js": 354,
-	"./si": 355,
-	"./si.js": 355,
-	"./sk": 356,
-	"./sk.js": 356,
-	"./sl": 357,
-	"./sl.js": 357,
-	"./sq": 358,
-	"./sq.js": 358,
-	"./sr": 359,
-	"./sr-cyrl": 360,
-	"./sr-cyrl.js": 360,
-	"./sr.js": 359,
-	"./ss": 361,
-	"./ss.js": 361,
-	"./sv": 362,
-	"./sv.js": 362,
-	"./sw": 363,
-	"./sw.js": 363,
-	"./ta": 364,
-	"./ta.js": 364,
-	"./te": 365,
-	"./te.js": 365,
-	"./tet": 366,
-	"./tet.js": 366,
-	"./th": 367,
-	"./th.js": 367,
-	"./tl-ph": 368,
-	"./tl-ph.js": 368,
-	"./tlh": 369,
-	"./tlh.js": 369,
-	"./tr": 370,
-	"./tr.js": 370,
-	"./tzl": 371,
-	"./tzl.js": 371,
-	"./tzm": 372,
-	"./tzm-latn": 373,
-	"./tzm-latn.js": 373,
-	"./tzm.js": 372,
-	"./uk": 374,
-	"./uk.js": 374,
-	"./ur": 375,
-	"./ur.js": 375,
-	"./uz": 376,
-	"./uz-latn": 377,
-	"./uz-latn.js": 377,
-	"./uz.js": 376,
-	"./vi": 378,
-	"./vi.js": 378,
-	"./x-pseudo": 379,
-	"./x-pseudo.js": 379,
-	"./yo": 380,
-	"./yo.js": 380,
-	"./zh-cn": 381,
-	"./zh-cn.js": 381,
-	"./zh-hk": 382,
-	"./zh-hk.js": 382,
-	"./zh-tw": 383,
-	"./zh-tw.js": 383
+	"./af": 272,
+	"./af.js": 272,
+	"./ar": 273,
+	"./ar-dz": 274,
+	"./ar-dz.js": 274,
+	"./ar-kw": 275,
+	"./ar-kw.js": 275,
+	"./ar-ly": 276,
+	"./ar-ly.js": 276,
+	"./ar-ma": 277,
+	"./ar-ma.js": 277,
+	"./ar-sa": 278,
+	"./ar-sa.js": 278,
+	"./ar-tn": 279,
+	"./ar-tn.js": 279,
+	"./ar.js": 273,
+	"./az": 280,
+	"./az.js": 280,
+	"./be": 281,
+	"./be.js": 281,
+	"./bg": 282,
+	"./bg.js": 282,
+	"./bn": 283,
+	"./bn.js": 283,
+	"./bo": 284,
+	"./bo.js": 284,
+	"./br": 285,
+	"./br.js": 285,
+	"./bs": 286,
+	"./bs.js": 286,
+	"./ca": 287,
+	"./ca.js": 287,
+	"./cs": 288,
+	"./cs.js": 288,
+	"./cv": 289,
+	"./cv.js": 289,
+	"./cy": 290,
+	"./cy.js": 290,
+	"./da": 291,
+	"./da.js": 291,
+	"./de": 292,
+	"./de-at": 293,
+	"./de-at.js": 293,
+	"./de-ch": 294,
+	"./de-ch.js": 294,
+	"./de.js": 292,
+	"./dv": 295,
+	"./dv.js": 295,
+	"./el": 296,
+	"./el.js": 296,
+	"./en-au": 297,
+	"./en-au.js": 297,
+	"./en-ca": 298,
+	"./en-ca.js": 298,
+	"./en-gb": 299,
+	"./en-gb.js": 299,
+	"./en-ie": 300,
+	"./en-ie.js": 300,
+	"./en-nz": 301,
+	"./en-nz.js": 301,
+	"./eo": 302,
+	"./eo.js": 302,
+	"./es": 303,
+	"./es-do": 304,
+	"./es-do.js": 304,
+	"./es.js": 303,
+	"./et": 305,
+	"./et.js": 305,
+	"./eu": 306,
+	"./eu.js": 306,
+	"./fa": 307,
+	"./fa.js": 307,
+	"./fi": 308,
+	"./fi.js": 308,
+	"./fo": 309,
+	"./fo.js": 309,
+	"./fr": 310,
+	"./fr-ca": 311,
+	"./fr-ca.js": 311,
+	"./fr-ch": 312,
+	"./fr-ch.js": 312,
+	"./fr.js": 310,
+	"./fy": 313,
+	"./fy.js": 313,
+	"./gd": 314,
+	"./gd.js": 314,
+	"./gl": 315,
+	"./gl.js": 315,
+	"./gom-latn": 316,
+	"./gom-latn.js": 316,
+	"./he": 317,
+	"./he.js": 317,
+	"./hi": 318,
+	"./hi.js": 318,
+	"./hr": 319,
+	"./hr.js": 319,
+	"./hu": 320,
+	"./hu.js": 320,
+	"./hy-am": 321,
+	"./hy-am.js": 321,
+	"./id": 322,
+	"./id.js": 322,
+	"./is": 323,
+	"./is.js": 323,
+	"./it": 324,
+	"./it.js": 324,
+	"./ja": 325,
+	"./ja.js": 325,
+	"./jv": 326,
+	"./jv.js": 326,
+	"./ka": 327,
+	"./ka.js": 327,
+	"./kk": 328,
+	"./kk.js": 328,
+	"./km": 329,
+	"./km.js": 329,
+	"./kn": 330,
+	"./kn.js": 330,
+	"./ko": 331,
+	"./ko.js": 331,
+	"./ky": 332,
+	"./ky.js": 332,
+	"./lb": 333,
+	"./lb.js": 333,
+	"./lo": 334,
+	"./lo.js": 334,
+	"./lt": 335,
+	"./lt.js": 335,
+	"./lv": 336,
+	"./lv.js": 336,
+	"./me": 337,
+	"./me.js": 337,
+	"./mi": 338,
+	"./mi.js": 338,
+	"./mk": 339,
+	"./mk.js": 339,
+	"./ml": 340,
+	"./ml.js": 340,
+	"./mr": 341,
+	"./mr.js": 341,
+	"./ms": 342,
+	"./ms-my": 343,
+	"./ms-my.js": 343,
+	"./ms.js": 342,
+	"./my": 344,
+	"./my.js": 344,
+	"./nb": 345,
+	"./nb.js": 345,
+	"./ne": 346,
+	"./ne.js": 346,
+	"./nl": 347,
+	"./nl-be": 348,
+	"./nl-be.js": 348,
+	"./nl.js": 347,
+	"./nn": 349,
+	"./nn.js": 349,
+	"./pa-in": 350,
+	"./pa-in.js": 350,
+	"./pl": 351,
+	"./pl.js": 351,
+	"./pt": 352,
+	"./pt-br": 353,
+	"./pt-br.js": 353,
+	"./pt.js": 352,
+	"./ro": 354,
+	"./ro.js": 354,
+	"./ru": 355,
+	"./ru.js": 355,
+	"./sd": 356,
+	"./sd.js": 356,
+	"./se": 357,
+	"./se.js": 357,
+	"./si": 358,
+	"./si.js": 358,
+	"./sk": 359,
+	"./sk.js": 359,
+	"./sl": 360,
+	"./sl.js": 360,
+	"./sq": 361,
+	"./sq.js": 361,
+	"./sr": 362,
+	"./sr-cyrl": 363,
+	"./sr-cyrl.js": 363,
+	"./sr.js": 362,
+	"./ss": 364,
+	"./ss.js": 364,
+	"./sv": 365,
+	"./sv.js": 365,
+	"./sw": 366,
+	"./sw.js": 366,
+	"./ta": 367,
+	"./ta.js": 367,
+	"./te": 368,
+	"./te.js": 368,
+	"./tet": 369,
+	"./tet.js": 369,
+	"./th": 370,
+	"./th.js": 370,
+	"./tl-ph": 371,
+	"./tl-ph.js": 371,
+	"./tlh": 372,
+	"./tlh.js": 372,
+	"./tr": 373,
+	"./tr.js": 373,
+	"./tzl": 374,
+	"./tzl.js": 374,
+	"./tzm": 375,
+	"./tzm-latn": 376,
+	"./tzm-latn.js": 376,
+	"./tzm.js": 375,
+	"./uk": 377,
+	"./uk.js": 377,
+	"./ur": 378,
+	"./ur.js": 378,
+	"./uz": 379,
+	"./uz-latn": 380,
+	"./uz-latn.js": 380,
+	"./uz.js": 379,
+	"./vi": 381,
+	"./vi.js": 381,
+	"./x-pseudo": 382,
+	"./x-pseudo.js": 382,
+	"./yo": 383,
+	"./yo.js": 383,
+	"./zh-cn": 384,
+	"./zh-cn.js": 384,
+	"./zh-hk": 385,
+	"./zh-hk.js": 385,
+	"./zh-tw": 386,
+	"./zh-tw.js": 386
 };
 function webpackContext(req) {
 	return __webpack_require__(webpackContextResolve(req));
@@ -3291,24 +3342,24 @@ webpackContext.keys = function webpackContextKeys() {
 };
 webpackContext.resolve = webpackContextResolve;
 module.exports = webpackContext;
-webpackContext.id = 709;
+webpackContext.id = 714;
 
 /***/ }),
 
-/***/ 716:
+/***/ 721:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return PipesModule; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(1);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__pipes_delay_delay__ = __webpack_require__(717);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__pipes_year_year__ = __webpack_require__(718);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__pipes_month_month__ = __webpack_require__(719);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__day_day__ = __webpack_require__(720);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__weekay_weekay__ = __webpack_require__(721);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__year_and_month_year_and_month__ = __webpack_require__(722);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__stamp_to_date_stamp_to_date__ = __webpack_require__(723);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__itemlevel_itemlevel__ = __webpack_require__(724);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__pipes_delay_delay__ = __webpack_require__(722);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__pipes_year_year__ = __webpack_require__(723);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__pipes_month_month__ = __webpack_require__(724);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__day_day__ = __webpack_require__(725);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__weekay_weekay__ = __webpack_require__(726);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__year_and_month_year_and_month__ = __webpack_require__(727);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__stamp_to_date_stamp_to_date__ = __webpack_require__(728);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__itemlevel_itemlevel__ = __webpack_require__(729);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -3359,7 +3410,7 @@ PipesModule = __decorate([
 
 /***/ }),
 
-/***/ 717:
+/***/ 722:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -3415,7 +3466,7 @@ DelayPipe = __decorate([
 
 /***/ }),
 
-/***/ 718:
+/***/ 723:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -3477,7 +3528,7 @@ YearPipe = __decorate([
 
 /***/ }),
 
-/***/ 719:
+/***/ 724:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -3539,7 +3590,7 @@ MonthPipe = __decorate([
 
 /***/ }),
 
-/***/ 720:
+/***/ 725:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -3604,7 +3655,7 @@ DayPipe = __decorate([
 
 /***/ }),
 
-/***/ 721:
+/***/ 726:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -3671,7 +3722,7 @@ WeekayPipe = __decorate([
 
 /***/ }),
 
-/***/ 722:
+/***/ 727:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -3723,7 +3774,7 @@ YearAndMonthPipe = __decorate([
 
 /***/ }),
 
-/***/ 723:
+/***/ 728:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -3776,7 +3827,7 @@ StampToDatePipe = __decorate([
 
 /***/ }),
 
-/***/ 724:
+/***/ 729:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -3831,7 +3882,7 @@ ItemlevelPipe = __decorate([
 
 /***/ }),
 
-/***/ 725:
+/***/ 730:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -3852,7 +3903,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 
 
 
-var keycloakConfig = __webpack_require__(726);
+var keycloakConfig = __webpack_require__(731);
 /*
   Generated class for the KeycloakServiceProvider provider.
 
@@ -3969,7 +4020,7 @@ var KeycloakServiceProvider_1;
 
 /***/ }),
 
-/***/ 726:
+/***/ 731:
 /***/ (function(module, exports) {
 
 module.exports = {
@@ -3983,7 +4034,7 @@ module.exports = {
 
 /***/ }),
 
-/***/ 727:
+/***/ 732:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -3992,7 +4043,7 @@ module.exports = {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_http__ = __webpack_require__(54);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_rxjs_add_operator_map__ = __webpack_require__(112);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_rxjs_add_operator_map___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_rxjs_add_operator_map__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__keycloak_js__ = __webpack_require__(728);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__keycloak_js__ = __webpack_require__(733);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__keycloak_js___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3__keycloak_js__);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -4158,7 +4209,7 @@ var Keycloak2Provider_1;
 
 /***/ }),
 
-/***/ 728:
+/***/ 733:
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function(module) {var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*
@@ -5430,9 +5481,9 @@ var Keycloak2Provider_1;
         }
     }
 })( window );
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(268)(module)))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(271)(module)))
 
 /***/ })
 
-},[391]);
+},[393]);
 //# sourceMappingURL=main.js.map

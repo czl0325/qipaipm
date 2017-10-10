@@ -5,24 +5,27 @@ import { SplashScreen } from '@ionic-native/splash-screen';
 import { Keyboard } from "@ionic-native/keyboard";
 
 import { HomePage } from '../pages/home/home';
-//import { LoginPage } from "../pages/login/login";
+import { LoginPage } from "../pages/login/login";
+import { NativeStorage } from "@ionic-native/native-storage";
+import { Storage } from "@ionic/storage";
 
 @Component({
   templateUrl: 'app.html'
 })
 export class MyApp {
-  rootPage:any = HomePage;
+  rootPage:any = LoginPage;
   config: any;
 
   constructor(platform: Platform, statusBar: StatusBar, splashScreen: SplashScreen,
-              // private storage: Storage,
+              private storage: Storage,
               // public geolocation: Geolocation,
               public _config: Config,
               // public toastCtrl: ToastController,
               // public app: App,
               public keyboard: Keyboard,
               // private ionicApp: IonicApp,
-              ) {
+              private nativeStorage: NativeStorage
+  ) {
     platform.ready().then(() => {
       // Okay, so the platform is ready and our plugins are available.
       // Here you can do any higher level native things you might need.
@@ -33,6 +36,12 @@ export class MyApp {
 
     this.keyboard.hideKeyboardAccessoryBar(false);
     this.keyboard.disableScroll(true);//当输入焦点时，防止本机UIScrollView移动。
+      this.storage.get('user').then((val) => {
+         if (val.username != null) {
+             this.rootPage = HomePage;
+         }
+      });
+
 
     // if (platform.is('ios')) {
     //   this.config = {

@@ -27,6 +27,12 @@
         },
         "cordova-plugin-network-information": {
             "PACKAGE_NAME": "com.qipai.pm"
+        },
+        "cordova-plugin-nativestorage": {
+            "PACKAGE_NAME": "com.qipai.qipaipm"
+        },
+        "cordova-sqlite-storage": {
+            "PACKAGE_NAME": "com.qipai.qipaipm"
         }
     },
     "dependent_plugins": {}

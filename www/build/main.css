@@ -27605,7 +27605,6 @@ page-project-detail .mile-bottom {
   display: -webkit-flex;
   display: -ms-flexbox;
   display: flex;
-  position: relative;
 }
 
 page-project-detail .mile-bottom .item1 {
@@ -27615,7 +27614,7 @@ page-project-detail .mile-bottom .item1 {
   text-align: right;
   margin-right: 0px;
   display: inline;
-  width: 40px;
+  min-width: 40px;
 }
 
 page-project-detail .mile-bottom .item1 .line {
@@ -27628,7 +27627,7 @@ page-project-detail .mile-bottom .item2 {
   margin: 0;
   text-align: center;
   display: inline;
-  width: 40px;
+  min-width: 40px;
   position: relative;
 }
 
@@ -27694,7 +27693,7 @@ page-project-detail .mile-bottom .item2 .item2_text {
 
 page-project-detail .mile-bottom .arrow-css1 {
   background-color: #fc5c53;
-  width: 10px;
+  min-width: 10px;
   margin-top: 15px;
   margin-left: 0px;
   text-align: right;
@@ -27704,7 +27703,7 @@ page-project-detail .mile-bottom .arrow-css1 {
 
 page-project-detail .mile-bottom .arrow-css2 {
   background-color: #617fde;
-  width: 10px;
+  min-width: 10px;
   margin-top: 15px;
   margin-left: 0px;
   text-align: right;
@@ -27714,7 +27713,7 @@ page-project-detail .mile-bottom .arrow-css2 {
 
 page-project-detail .mile-bottom .arrow-css3 {
   background-color: #fc780e;
-  width: 10px;
+  min-width: 10px;
   margin-top: 15px;
   margin-left: 0px;
   text-align: right;
@@ -27722,44 +27721,73 @@ page-project-detail .mile-bottom .arrow-css3 {
   display: inline;
 }
 
-page-project-detail .mile-bottom .item3-1 {
+page-project-detail .mile-bottom .item3 {
   -webkit-box-flex: 1;
   -webkit-flex-grow: 1;
   -ms-flex-positive: 1;
   flex-grow: 1;
   margin-right: 5px;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+}
+
+page-project-detail .mile-bottom .item3-1 {
   background-color: #fc5c53;
   border-radius: 5px;
+  -webkit-box-flex: 1;
+  -webkit-flex-grow: 1;
+  -ms-flex-positive: 1;
+  flex-grow: 1;
 }
 
 page-project-detail .mile-bottom .item3-2 {
+  background-color: #617fde;
+  border-radius: 5px;
   -webkit-box-flex: 1;
   -webkit-flex-grow: 1;
   -ms-flex-positive: 1;
   flex-grow: 1;
-  margin-right: 5px;
-  background-color: #617fde;
-  border-radius: 5px;
 }
 
 page-project-detail .mile-bottom .item3-3 {
+  background-color: #fc780e;
+  border-radius: 5px;
   -webkit-box-flex: 1;
   -webkit-flex-grow: 1;
   -ms-flex-positive: 1;
   flex-grow: 1;
+}
+
+page-project-detail .mile-bottom .text-wrap {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+}
+
+page-project-detail .mile-bottom .text-wrap .text-left {
+  margin-left: 5px;
+  min-width: 90px;
+}
+
+page-project-detail .mile-bottom .text-wrap .text-right {
+  -webkit-box-flex: 1;
+  -webkit-flex-grow: 1;
+  -ms-flex-positive: 1;
+  flex-grow: 1;
+  float: right;
   margin-right: 5px;
-  background-color: #fc780e;
-  border-radius: 5px;
 }
 
 page-project-detail .share-css {
-  background-color: red;
+  background-color: white;
   border-top: solid 1px #ececec;
   position: fixed;
   bottom: -200px;
   width: 100%;
   height: 200px;
-  background-color: white;
 }
 
 page-search .head .icon-rightnew {

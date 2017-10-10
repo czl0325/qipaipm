@@ -61,7 +61,7 @@ page-project-detail {
   }
   .mile-bottom {
     display: flex;
-    position: relative;
+    //position: relative;
 
     .item1 {
       padding: 0;
@@ -70,7 +70,7 @@ page-project-detail {
       text-align: right;
       margin-right: 0px;
       display: inline;
-      width: 40px;
+      min-width: 40px;
 
       .line {
         background-color: #fc5c53;
@@ -82,7 +82,7 @@ page-project-detail {
       margin: 0;
       text-align: center;
       display: inline;
-      width: 40px;
+      min-width: 40px;
       position: relative;
 
       .label-radius {
@@ -143,7 +143,7 @@ page-project-detail {
     }
     .arrow-css1 {
       background-color: #fc5c53;
-      width: 10px;
+      min-width: 10px;
       margin-top: 15px;
       margin-left: 0px;
       text-align: right;
@@ -152,7 +152,7 @@ page-project-detail {
     }
     .arrow-css2 {
       background-color: #617fde;
-      width: 10px;
+      min-width: 10px;
       margin-top: 15px;
       margin-left: 0px;
       text-align: right;
@@ -161,40 +161,54 @@ page-project-detail {
     }
     .arrow-css3 {
       background-color: #fc780e;
-      width: 10px;
+      min-width: 10px;
       margin-top: 15px;
       margin-left: 0px;
       text-align: right;
       padding: 0;
       display: inline;
     }
-
-    .item3-1 {
+    .item3 {
       flex-grow: 1;
       margin-right: 5px;
+      display: flex;
+    }
+    .item3-1 {
       background-color: #fc5c53;
       border-radius: 5px;
+      flex-grow: 1;
     }
     .item3-2 {
-      flex-grow: 1;
-      margin-right: 5px;
       background-color: #617fde;
       border-radius: 5px;
+      flex-grow: 1;
     }
     .item3-3 {
-      flex-grow: 1;
-      margin-right: 5px;
       background-color: #fc780e;
       border-radius: 5px;
+      flex-grow: 1;
+    }
+    .text-wrap {
+      display: flex;
+      .text-left {
+        margin-left: 5px;
+        min-width: 90px;
+      }
+      .text-right {
+        flex-grow: 1;
+        float: right;
+        margin-right: 5px;
+        //width: 70%;
+        //word-break:break-all;
+      }
     }
   }
   .share-css {
-    background-color: red;
+    background-color: white;
     border-top: solid 1px #ececec;
     position: fixed;
     bottom: -200px;
     width: 100%;
     height: 200px;
-    background-color: white
   }
 }

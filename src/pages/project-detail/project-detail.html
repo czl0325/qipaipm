@@ -29,39 +29,27 @@
       <div class="item2">
         <ion-icon name="ios-arrow-dropdown-circle" style="color: #fc5c53;padding-top: 15px"></ion-icon>
         <ion-label no-padding no-margin style="margin-top: 3px;font-size: 10px;text-align: center">启动</ion-label>
-        <!--<div style="width: 1px; background-color: #ececec; height: 100%; position: absolute; left: 20px" ></div>-->
       </div>
-      <ion-icon name="appname-arrow" class="arrow-css1"></ion-icon>
-      <div class="item3-1">
-        <ion-row>
-          <ion-col col-5 style="float: left">
-            负责人：
-          </ion-col>
-          <ion-col col-7 style="float: right">
-            {{project.leader}}
-          </ion-col>
-        </ion-row>
-        <ion-row>
-          <ion-col col-5 style="float: left">
-            交付成果：
-          </ion-col>
-          <ion-col col-7 style="float: right">
-        <span class="item-right">
-          {{project.itemStartResult}}
-        </span>
-          </ion-col>
-        </ion-row>
-        <ion-row>
-          <ion-col col-5 style="float: left">
-            紧急程度：
-          </ion-col>
-          <ion-col col-7 style="float: right">
-        <span class="item-right">
-          {{project.itemLevel | itemlevelPipe}}
-        </span>
-          </ion-col>
-        </ion-row>
-      </div>
+        <div class="item3">
+            <ion-icon name="appname-arrow" class="arrow-css1"></ion-icon>
+            <div class="item3-1">
+                <div class="text-wrap">
+                    <div class="text-left">负责人：</div>
+                    <div class="text-right">{{project.leader}}</div>
+                    <!--<div style="clear: both"></div>-->
+                </div>
+                <div  class="text-wrap">
+                    <div class="text-left">交付成果：</div>
+                    <div class="text-right">{{project.itemStartResult}}</div>
+                    <!--<div style="clear: both"></div>-->
+                </div>
+                <div  class="text-wrap">
+                    <div class="text-left">紧急程度：</div>
+                    <div class="text-right">{{project.itemLevel | itemlevelPipe}}</div>
+                    <!--<div style="clear: both"></div>-->
+                </div>
+            </div>
+        </div>
     </div>
   </div>
 
@@ -107,27 +95,20 @@
         <ion-label no-padding no-margin class="delay-radius1" [hidden]="mile.delayDays==0">{{"延"+mile.delayDays}}</ion-label>
       </div>
       <!--[ngClass]="{'arrow-css1':mile.type==0,'arrow-css2':mile.type==1,'arrow-css3':mile.type==2}"-->
-      <ion-icon name="appname-arrow" class="arrow-css2" ></ion-icon>
-      <div class="item3-2" (click)="onClickMilestone($event, mile)">
-        <ion-row>
-          <ion-col col-5 style="float: left">
-            负责人：
-          </ion-col>
-          <ion-col col-7 style="float: right">
-            {{mile.leader}}
-          </ion-col>
-        </ion-row>
-        <ion-row>
-          <ion-col col-5 style="float: left">
-            交付成果：
-          </ion-col>
-          <ion-col col-7 style="float: right">
-        <span class="item-right">
-          {{mile.deliveryResult}}
-        </span>
-          </ion-col>
-        </ion-row>
-      </div>
+
+        <div class="item3">
+            <ion-icon name="appname-arrow" class="arrow-css2" ></ion-icon>
+            <div class="item3-2" (click)="onClickMilestone($event, mile)">
+                <div class="text-wrap">
+                    <div class="text-left">负责人：</div>
+                    <div class="text-right">{{mile.leader}}</div>
+                </div>
+                <div  class="text-wrap">
+                    <div class="text-left">交付成果：</div>
+                    <div class="text-right">{{mile.deliveryResult}}</div>
+                </div>
+            </div>
+        </div>
     </div>
   </div>
 
@@ -143,27 +124,19 @@
       <ion-icon name="ios-arrow-dropup-circle" style="color: #fc5c53;padding-top: 15px"></ion-icon>
       <ion-label no-padding no-margin style="margin-top: 3px;font-size: 10px;text-align: center">结束</ion-label>
     </div>
-    <ion-icon name="appname-arrow" class="arrow-css1"></ion-icon>
-    <div class="item3-1">
-      <ion-row>
-        <ion-col col-5 style="float: left">
-          负责人：
-        </ion-col>
-        <ion-col col-7 style="float: right">
-          {{project.leader}}
-        </ion-col>
-      </ion-row>
-      <ion-row>
-        <ion-col col-5 style="float: left">
-          交付成果：
-        </ion-col>
-        <ion-col col-7 style="float: right">
-        <span class="item-right">
-          {{project.itemEndResult}}
-        </span>
-        </ion-col>
-      </ion-row>
-    </div>
+      <div class="item3">
+          <ion-icon name="appname-arrow" class="arrow-css1"></ion-icon>
+          <div class="item3-1">
+              <div  class="text-wrap">
+                  <div no-padding no-margin class="text-left">负责人：</div>
+                  <div no-padding no-margin class="text-right">{{project.leader}}</div>
+              </div>
+              <div  class="text-wrap">
+                  <div no-padding no-margin class="text-left">交付成果：</div>
+                  <div no-padding no-margin class="text-right">{{project.itemEndResult}}</div>
+              </div>
+          </div>
+      </div>
   </div>
 
   <!-- 项目延期 -->
@@ -178,28 +151,20 @@
       <ion-label no-padding no-margin class="delay-radius2">延</ion-label>
       <ion-label no-padding no-margin class="item2_text">延期</ion-label>
     </div>
-    <ion-icon name="appname-arrow" class="arrow-css3"></ion-icon>
-    <div class="item3-3">
-      <ion-row>
-        <ion-col col-5 style="float: left">
-          负责人：
-        </ion-col>
-        <ion-col col-7 style="float: right">
-          {{project.leader}}
-        </ion-col>
-      </ion-row>
-      <ion-row>
-        <ion-col col-5 style="float: left">
-          交付成果：
-        </ion-col>
-        <ion-col col-7 style="float: right">
-        <span class="item-right">
-          {{project.itemEndResult}}
-        </span>
-        </ion-col>
-      </ion-row>
+      <div class="item3">
+          <ion-icon name="appname-arrow" class="arrow-css3"></ion-icon>
+          <div class="item3-3">
+              <div class="text-wrap">
+                  <div no-padding no-margin class="text-left">负责人：</div>
+                  <div no-padding no-margin class="text-right">{{project.leader}}</div>
+              </div>
+              <div  class="text-wrap">
+                  <div no-padding no-margin class="text-left">交付成果：</div>
+                  <div no-padding no-margin class="text-right">{{project.itemEndResult}}</div>
+              </div>
+          </div>
+      </div>
     </div>
-  </div>
 
   <!--[ngStyle]="{'bottom':isShowShare==false?'-200px':'0px'}"-->
   <div id="shareView" class="share-css" >

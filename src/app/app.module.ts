@@ -8,6 +8,8 @@ import { Keyboard } from "@ionic-native/keyboard";
 import { HttpModule } from "@angular/http";
 import { Network } from "@ionic-native/network";
 import { AppShare } from "./app.share";
+import { NativeStorage } from '@ionic-native/native-storage';
+import { IonicStorageModule } from '@ionic/storage';
 
 //页面类
 import { MyApp } from './app.component';
@@ -66,6 +68,7 @@ import { Keycloak2Provider } from '../providers/keycloak2/keycloak2';
       tabsPlacement: 'bottom', //tabweizhi
       pageTransition: 'ios-transition' //使用ios页面动画
     }),
+    IonicStorageModule.forRoot(),
     JsonpModule,
     CalendarModule,
     MultiPickerModule,
@@ -93,6 +96,7 @@ import { Keycloak2Provider } from '../providers/keycloak2/keycloak2';
     AppService,
     Network,
     AppShare,
+    NativeStorage,
     {provide: ErrorHandler, useClass: IonicErrorHandler},
     KeycloakServiceProvider,
     Keycloak2Provider
