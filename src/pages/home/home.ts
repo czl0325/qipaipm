@@ -6,6 +6,7 @@ import { SearchPage } from "../search/search";
 import { AppService} from "../../app/app.service";
 import { AppConfig} from "../../app/app.config";
 import { Storage } from '@ionic/storage';
+import { AppSingleton } from "../../app/app.singleton";
 
 @Component({
   selector: 'page-home',
@@ -25,7 +26,6 @@ export class HomePage {
     this.projects = [];
     this.projectsOnMonth = [];
     this.currentDate = "";
-    console.log("查看登录情况"+this.storage.get("user"));
   }
   ionViewDidLoad() {
     this.events.subscribe('homeProjectReload', ()=> {
@@ -56,7 +56,7 @@ export class HomePage {
   reloadProjectList(dateString:string) {
     this.events.publish('onGetProjectDate');
     this.projects = [];
-    this.appService.httpGet("item/searchByCondition", {"itemStartTime":dateString,"endTime":dateString,"page":1,"limit":100}, this, function (view ,res){
+    this.appService.httpGet("item/searchByCondition", {"itemStartTime":dateString,"endTime":dateString,"empNum":AppSingleton.getInstance().currentUserInfo.username,"page":1,"limit":100}, this, function (view ,res){
         var data = res.json();
         if (data.success == true) {
             view.projects = data.data;

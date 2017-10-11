@@ -1,10 +1,11 @@
 import { Component } from '@angular/core';
-import { NavController, NavParams, ToastController, Events } from 'ionic-angular';
+import {NavController, NavParams, ToastController, Events, AlertController} from 'ionic-angular';
 import { DatePipe } from "@angular/common";
 import { MilestoneDetailPage } from "../milestone-detail/milestone-detail";
 import { AppService } from "../../app/app.service";
 import { ContactPage } from "../contact/contact";
 import { AppConfig } from "../../app/app.config";
+import {AppSingleton} from "../../app/app.singleton";
 
 /**
  * Generated class for the ProjectCreatePage page.
@@ -73,10 +74,10 @@ export class ProjectCreatePage {
   public project = {
     id : '',                    //项目id
     itemName : '',              //项目的名称
-    itemFounder : '陈昭良',      //项目的创建人
-    founderEmpNum : '003169',   //项目创建人工号
-    leader : '',                  //项目负责人
-    itemLeaderEmpNum :'',       //项目负责人工号
+    itemFounder : AppSingleton.getInstance().currentUserInfo.name,      //项目的创建人
+    founderEmpNum : AppSingleton.getInstance().currentUserInfo.username,   //项目创建人工号
+    itemEndLeader : '',             //项目结束负责人
+    itemEndLeaderNum :'',        //项目结束负责人工号
     // empNum: '',
     itemCreateTime : '',        //项目的创建时间
     itemStartTime : new DatePipe('en-US').transform(new Date(), 'yyyy-MM-dd'),  //项目的启动时间
@@ -88,7 +89,8 @@ export class ProjectCreatePage {
     itemLevel : '',             //项目级别
     itemStartResult : '',      //项目启动的交付成果
     itemEndResult : '',        //项目结束的交付成果
-    children : [],              //项目里程碑
+    milestoneVo1 : [],              //项目里程碑
+    milestoneVo2: [],         //项目延期里程碑
     itemRaise : '',             //项目提出人
     itemRevision : '',          //项目修订人
     itemDept : '',              //项目部门
@@ -98,9 +100,11 @@ export class ProjectCreatePage {
     itemProgress : '',          //项目进度
     itemIsEnd : false,          //是否结束项目
   };
+  minTime: string = new DatePipe('en-US').transform(new Date(), 'yyyy-MM-dd');
 
   constructor(public navCtrl: NavController, public navParams: NavParams,
-              public appService : AppService, public toastCtrl: ToastController, public events: Events) {
+              public appService : AppService, public toastCtrl: ToastController,
+              public events: Events, private alertCtrl: AlertController) {
     var data = this.navParams.get('project');
     this.type = this.navParams.get('type');
     this.isExpand = this.navParams.get('isExpand');
@@ -114,8 +118,8 @@ export class ProjectCreatePage {
 
   ionViewDidLoad() {
     this.events.subscribe('onConfirmProjectLeader',(leader)=>{
-        this.project.leader = leader.name;
-        this.project.itemLeaderEmpNum = leader.username;
+        this.project.itemEndLeader = leader.name;
+        this.project.itemEndLeaderNum = leader.username;
     });
   }
 
@@ -145,6 +149,15 @@ export class ProjectCreatePage {
     //     return;
     //   }
     // }
+    if (this.project.itemLevel.length < 1) {
+      let alert = this.alertCtrl.create({
+        title: '错误信息',
+        subTitle: '请选择项目紧急程度!',
+        buttons: ['确定']
+      });
+    alert.present();
+    return;
+  }
     this.appService.httpPost("item/createItem", this.project, this, function (view ,res){
       // var data = res.json().data;
       view.events.publish('homeProjectReload');
@@ -181,7 +194,7 @@ export class ProjectCreatePage {
     // }
     var milestone = {
       id : '',                    //里程碑id
-      milestoneName : '里程碑'+(this.project.children.length+1),         //里程碑的名称
+      milestoneName : '里程碑'+(this.project.milestoneVo1.length+1),         //里程碑的名称
       leader : '',       //里程碑的负责人
       leaderEmpNum : '',          //里程碑负责人工号
       // milestoneDelivery : '',
@@ -193,11 +206,13 @@ export class ProjectCreatePage {
       remark : '',                //里程碑备注
       isAccomplish : false,       //里程碑是否完成
       delayDays : 0,              //里程碑延迟天数
+      milestoneType : 1,          //1是普通里程碑，2是延期里程碑
       children : [],              //里程碑子任务
     };
     // this.project.children.push(milestone);
     this.navCtrl.push(MilestoneDetailPage, {
       milestone : milestone,
+      mileType : 1,
       project : this.project,
       type : this.type,
       callback : this.milestoneCallback,
@@ -225,17 +240,17 @@ export class ProjectCreatePage {
   deleteOneMile(mile) {
       var deleteId = mile.id;
       var index = -1;
-      for (let i=0; i<this.project.children.length; i++) {
-          var milestone1 = this.project.children[i];
+      for (let i=0; i<this.project.milestoneVo1.length; i++) {
+          var milestone1 = this.project.milestoneVo1[i];
           if (deleteId == milestone1.id) {
               index = i;
               break;
           }
       }
       if (index >= 0) {
-          this.project.children.splice(index, 1);
-          for (let i=0; i<this.project.children.length; i++) {
-              var milestone2 = this.project.children[i];
+          this.project.milestoneVo1.splice(index, 1);
+          for (let i=0; i<this.project.milestoneVo1.length; i++) {
+              var milestone2 = this.project.milestoneVo1[i];
               milestone2.milestoneName = '里程碑'+(i+1);
           }
       }
@@ -248,37 +263,37 @@ export class ProjectCreatePage {
   }
 
     addOneMilestone(milestone) {
-        if (this.project.children.length == 0) {
-            this.project.children.push(milestone);
+        if (this.project.milestoneVo1.length == 0) {
+            this.project.milestoneVo1.push(milestone);
             if (this.isExpand != null) {
                 this.isExpand.push(false);
             }
-        } else if (this.project.children.length == 1) {
-            var p1 = this.project.children[0];
+        } else if (this.project.milestoneVo1.length == 1) {
+            var p1 = this.project.milestoneVo1[0];
             var d1 = AppConfig.timestampToDate(p1.deliveryTime);
             var d2 = AppConfig.timestampToDate(milestone.deliveryTime);
             if (d1 <= d2 || AppConfig.isSameDay(d1, d2)) {
-                this.project.children.push(milestone);
+                this.project.milestoneVo1.push(milestone);
                 if (this.isExpand != null) {
                     this.isExpand.push(false);
                 }
             } else {
-                this.project.children.splice(0, 0, milestone);
+                this.project.milestoneVo1.splice(0, 0, milestone);
                 if (this.isExpand != null) {
                     this.isExpand.splice(0, 0, false);
                 }
             }
         } else {
             var isInsert = false;
-            for (let i=0; i<this.project.children.length-1; i++) {
-                var pp1 = this.project.children[i];
-                var pp2 = this.project.children[i+1];
+            for (let i=0; i<this.project.milestoneVo1.length-1; i++) {
+                var pp1 = this.project.milestoneVo1[i];
+                var pp2 = this.project.milestoneVo1[i+1];
                 var dd1 = AppConfig.timestampToDate(pp1.deliveryTime);
                 var dd2 = AppConfig.timestampToDate(pp2.deliveryTime);
                 var dd3 = AppConfig.timestampToDate(milestone.deliveryTime);
                 if (i==0 && dd3<dd1) {
                     isInsert = true;
-                    this.project.children.splice(0, 0, milestone);
+                    this.project.milestoneVo1.splice(0, 0, milestone);
                     if (this.isExpand != null) {
                         this.isExpand.splice(0, 0, false);
                     }
@@ -286,15 +301,15 @@ export class ProjectCreatePage {
                 }
                 if (dd3>dd1 && dd3<dd2) {
                     isInsert = true;
-                    this.project.children.splice(i+1, 0, milestone);
+                    this.project.milestoneVo1.splice(i+1, 0, milestone);
                     if (this.isExpand != null) {
                         this.isExpand.splice(i + 1, 0, false);
                     }
                     break;
                 }
-                if (i==this.project.children.length-2 && dd3>dd2) {
+                if (i==this.project.milestoneVo1.length-2 && dd3>dd2) {
                     isInsert = true;
-                    this.project.children.push(milestone);
+                    this.project.milestoneVo1.push(milestone);
                     if (this.isExpand != null) {
                         this.isExpand.push(false);
                     }
@@ -302,13 +317,13 @@ export class ProjectCreatePage {
                 }
             }
             if (isInsert==false) {
-                this.project.children.push(milestone);
+                this.project.milestoneVo1.push(milestone);
                 if (this.isExpand != null) {
                     this.isExpand.push(false);
                 }
             }
-            for (let i=0; i<this.project.children.length; i++) {
-              var mm = this.project.children[i];
+            for (let i=0; i<this.project.milestoneVo1.length; i++) {
+              var mm = this.project.milestoneVo1[i];
               mm.milestoneName = '里程碑'+(i+1);
             }
         }
@@ -319,11 +334,11 @@ export class ProjectCreatePage {
     return new Promise((resolve, reject) => {
       if (typeof (milestone) != 'undefined') {
         var isIn = false;
-        for (let i=0; i<this.project.children.length; i++) {
-          var tempMile = this.project.children[i];
+        for (let i=0; i<this.project.milestoneVo1.length; i++) {
+          var tempMile = this.project.milestoneVo1[i];
           if (tempMile.id == milestone.id) {
             isIn = true;
-            this.project.children.splice(i, 1, milestone);
+            this.project.milestoneVo1.splice(i, 1, milestone);
             break;
           }
         }

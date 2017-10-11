@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { NavController, NavParams } from 'ionic-angular';
 import { AppService } from "../../app/app.service";
 import { ProjectDetailPage } from "../project-detail/project-detail";
+import { AppSingleton } from "../../app/app.singleton";
 
 /**
  * Generated class for the SearchPage page.
@@ -71,7 +72,7 @@ export class SearchPage {
     if (this.searchValue.length < 1) {
         this.array = [];
     } else {
-        this.appService.httpGet("item/searchByCondition", {itemName:this.searchValue,page:1,limit:100}, this, function (view, res) {
+        this.appService.httpGet("item/searchByCondition", {itemName:this.searchValue,"empNum":AppSingleton.getInstance().currentUserInfo.username,page:1,limit:100}, this, function (view, res) {
             var response = res.json();
             if (response.success == true) {
                 var data = response.data;

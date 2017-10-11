@@ -27272,7 +27272,17 @@ calendar .hasEvents {
 
 calendar .selectedMonthLabel {
   text-transform: capitalize;
+  position: relative;
   margin-top: 10px;
+}
+
+calendar .selectedDatetime {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
 }
 
 page-contact .input-search {
@@ -27692,8 +27702,9 @@ page-project-detail .mile-bottom .item2 .item2_text {
 }
 
 page-project-detail .mile-bottom .arrow-css1 {
-  background-color: #fc5c53;
+  color: #fc5c53;
   min-width: 10px;
+  min-height: 15px;
   margin-top: 15px;
   margin-left: 0px;
   text-align: right;
@@ -27702,8 +27713,9 @@ page-project-detail .mile-bottom .arrow-css1 {
 }
 
 page-project-detail .mile-bottom .arrow-css2 {
-  background-color: #617fde;
+  color: #617fde;
   min-width: 10px;
+  min-height: 15px;
   margin-top: 15px;
   margin-left: 0px;
   text-align: right;
@@ -27712,8 +27724,9 @@ page-project-detail .mile-bottom .arrow-css2 {
 }
 
 page-project-detail .mile-bottom .arrow-css3 {
-  background-color: #fc780e;
+  color: #fc780e;
   min-width: 10px;
+  min-height: 15px;
   margin-top: 15px;
   margin-left: 0px;
   text-align: right;

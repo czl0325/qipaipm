@@ -33,7 +33,7 @@
       <ion-item style="border-bottom: solid 1px #ececec;">
         <ion-icon item-start name="appname-time"></ion-icon>
         <ion-label>交付时间</ion-label>
-        <ion-datetime item-end displayFormat="YYYY年MM月DD日" max="2030" min="2015" [(ngModel)]="project.itemStartTime" cancelText="取消" doneText="确认"></ion-datetime>
+        <ion-datetime item-end displayFormat="YYYY年MM月DD日" max="2030" min={{minTime}} [(ngModel)]="project.itemStartTime" cancelText="取消" doneText="确认"></ion-datetime>
       </ion-item>
       <ion-item style="border-bottom: solid 1px #ececec;">
         <ion-icon item-start name="appname-result"></ion-icon>
@@ -52,7 +52,7 @@
       </ion-item>
     </ion-list>
 
-    <div style="border-bottom: solid 10px #f5f6f7;" *ngFor="let mile of project.children">
+    <div style="border-bottom: solid 10px #f5f6f7;" *ngFor="let mile of project.milestoneVo1">
       <div style="height: 30px; border-bottom: solid 1px #ececec; ">
         <div style="width: 5px; height: 30px; background-color: orange; float: left;"></div>
         <ion-label no-margin no-padding style="line-height: 30px; margin-left: 10px; float: left;">{{mile.milestoneName}}</ion-label>
@@ -69,7 +69,7 @@
         <ion-item style="border-bottom: solid 1px #ececec">
           <ion-icon item-start name="appname-time"></ion-icon>
           <ion-label>交付时间</ion-label>
-          <ion-datetime item-end displayFormat="YYYY年MM月DD日" max="2030" min="2015" cancelText="取消" doneText="确认"
+          <ion-datetime item-end displayFormat="YYYY年MM月DD日" max="2030" min={{minTime}} cancelText="取消" doneText="确认"
                         ngModel="{{mile.deliveryTime | stampToDate}}"
                         (ngModelChange)="mile.deliveryTime = $event"></ion-datetime>
         </ion-item>
@@ -111,7 +111,7 @@
         <ion-icon item-start name="appname-admin"></ion-icon>
         <ion-label item-start>负责人</ion-label>
         <!--<ion-input item-end text-right placeholder="请输入负责人" [(ngModel)]="project.itemLeader"></ion-input>-->
-        <ion-label item-end text-right>{{project.leader}}</ion-label>
+        <ion-label item-end text-right>{{project.itemEndLeader}}</ion-label>
       </button>
       <ion-item  style="border-bottom: solid 1px #ececec">
         <ion-icon item-start name="appname-time"></ion-icon>

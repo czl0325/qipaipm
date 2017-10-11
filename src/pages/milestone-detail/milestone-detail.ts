@@ -5,7 +5,7 @@ import { DatePipe } from "@angular/common";
 import { AppService } from "../../app/app.service";
 import { AppConfig } from "../../app/app.config";
 import { ContactPage } from "../contact/contact";
-//import { SimpleChanges } from "@angular/core";
+import { AppSingleton } from "../../app/app.singleton";
 
 /**
  * Generated class for the MilestoneDetailPage page.
@@ -57,20 +57,34 @@ export class MilestoneDetailPage {
     delayDays : 0,              //里程碑延迟天数
     children : [],              //里程碑子任务
     itemIsEnd : false,          //里程碑是否完成
+    milestoneType : 1,          //1是普通里程碑，2是延期里程碑
   };
   tempMilestone;
+  canEdit: boolean = true;
+  canFinish: boolean = false;
+  mileType: number;
 
   constructor(public navCtrl: NavController, public navParams: NavParams, private appService: AppService, private cd: ChangeDetectorRef, public events: Events) {
     var data = this.navParams.get('milestone');
     this.project = this.navParams.get('project');
     this.callback = this.navParams.get('callback');
     this.type = this.navParams.get('type');
+    this.mileType = this.navParams.get('mileType');
     this.milestone = data;
     if (this.milestone.id.length < 1) {
-        if (typeof (this.project.children != 'undefined')) {
-            this.milestone.milestoneName = '里程碑'+(this.project.children.length+1);
+        if (this.mileType == 1) {
+            if (typeof (this.project.children) != 'undefined') {
+                this.milestone.milestoneName = '里程碑'+(this.project.children.length+1);
+            } else {
+                this.milestone.milestoneName = '里程碑'+'1';
+            }
         } else {
-            this.milestone.milestoneName = '里程碑1';
+            console.log();
+            if (typeof (this.project.delayMilestone) != 'undefined') {
+                this.milestone.milestoneName = '延期'+(this.project.delayMilestone.length+1);
+            } else {
+                this.milestone.milestoneName = '延期'+'1';
+            }
         }
     }
     if (typeof (this.milestone.children) != 'undefined') {
@@ -80,6 +94,14 @@ export class MilestoneDetailPage {
         }
     }
     this.tempMilestone = AppConfig.deepCopy(this.milestone);
+    if (this.type == 2) {
+        if (AppSingleton.getInstance().currentUserInfo.username != this.project.founderEmpNum) {
+            this.canEdit = false;
+        }
+        if (AppSingleton.getInstance().currentUserInfo.username == this.milestone.leaderEmpNum) {
+            this.canFinish = true;
+        }
+    }
   }
 
     ionViewDidLoad() {
@@ -123,25 +145,49 @@ export class MilestoneDetailPage {
     //   return;
     // }
 
+
     var param = AppConfig.deepCopy(this.tempMilestone);
-    if (this.type == 1) {
-        this.milestone = this.tempMilestone;
-        this.callback(this.milestone).then(()=>{
-            this.navCtrl.pop()
-        });
+    if (this.mileType == 1) {
+        if (this.type == 1) {
+            this.tempMilestone.milestoneType = 1;
+            this.milestone = this.tempMilestone;
+            this.callback(this.milestone).then(()=>{
+                this.navCtrl.pop()
+            });
+        } else {
+            param.milestoneType = 1;
+            param.projectinfo = this.project;
+            this.appService.httpPost("item/createMilestone",param,this,function (view, res) {
+                if (res.status == 200) {
+                    view.tempMilestone = res.json().data;
+                    if (typeof (view.project.children != 'undefined')) {
+                        view.tempMilestone.milestoneName = '里程碑'+(view.project.children.length+1);
+                    } else {
+                        view.tempMilestone.milestoneName = '里程碑1';
+                    }
+                    view.milestone = view.tempMilestone;
+                    view.callback(view.milestone).then(()=>{
+                        view.navCtrl.pop()
+                    });
+                } else {
+                    let toast = view.toastCtrl.create({
+                        message: view.type==1?'新建里程碑失败!':'编辑里程碑失败!',
+                        duration: 3000
+                    });
+                    toast.present();
+                }
+            },true);
+        }
     } else {
-        // param.itemName = this.pname;
-        // param.pid = this.pid;
-        // param.mid = param.id;
+        param.milestoneType = 2;
         param.projectinfo = this.project;
         this.appService.httpPost("item/createMilestone",param,this,function (view, res) {
             if (res.status == 200) {
                 view.tempMilestone = res.json().data;
-                console.log(view.tempMilestone);
                 if (typeof (view.project.children != 'undefined')) {
-                    view.tempMilestone.milestoneName = '里程碑'+(view.project.children.length+1);
+                    view.tempMilestone.milestoneName = '延期'+(view.project.children.length+1);
                 } else {
-                    view.tempMilestone.milestoneName = '里程碑1';
+                    view.tempMilestone.milestoneName = '延期1';
                 }
                 view.milestone = view.tempMilestone;
                 view.callback(view.milestone).then(()=>{

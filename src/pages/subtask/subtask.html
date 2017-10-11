@@ -22,7 +22,7 @@
   <ion-label full class="subtask-title-css">{{tempSubtask.subtaskName}}</ion-label>
 
   <ion-list no-lines style="border: solid 1px #ececec">
-    <button ion-item style="border-bottom: solid 1px #ececec" (click)="onSubtaskLeader($event)">
+    <button ion-item style="border-bottom: solid 1px #ececec" (click)="onSubtaskLeader($event)" [disabled]="type==2">
       <ion-icon item-start name="appname-admin"></ion-icon>
       <ion-label item-start>负责人:</ion-label>
       <ion-label item-end text-right>{{tempSubtask.leader}}</ion-label>
@@ -35,14 +35,14 @@
     <ion-item style="border-bottom: solid 1px #ececec;">
       <ion-icon item-start name="appname-time"></ion-icon>
       <ion-label>交付时间:</ion-label>
-      <ion-datetime text-right displayFormat="YYYY-MM-DD" max="2030" min="2015" cancelText="取消" doneText="确认"
+      <ion-datetime text-right displayFormat="YYYY-MM-DD" max="2030" min={{minTime}} cancelText="取消" doneText="确认"
                     ngModel="{{tempSubtask.deliveryTime | stampToDate}}"
-                    (ngModelChange)="tempSubtask.deliveryTime = $event"></ion-datetime>
+                    (ngModelChange)="tempSubtask.deliveryTime = $event" [disabled]="type==2"></ion-datetime>
     </ion-item>
     <ion-item>
       <ion-icon item-start name="appname-result"></ion-icon>
       <ion-label>交付成果:</ion-label>
-      <ion-input text-right type="text" [(ngModel)]=tempSubtask.deliveryResult></ion-input>
+      <ion-input text-right type="text" [(ngModel)]=tempSubtask.deliveryResult [disabled]="type==2"></ion-input>
     </ion-item>
     <ion-item *ngIf="tempSubtask.delayDays>0">
       <ion-label>延迟情况:</ion-label>
@@ -54,11 +54,11 @@
     <ion-item style="border-top: solid 1px #ececec;border-bottom: solid 1px #ececec">
       <div item-start>是否完成</div>
       <ion-label>完成</ion-label>
-      <ion-checkbox [(ngModel)]=tempSubtask.itemIsEnd></ion-checkbox>
+      <ion-checkbox [(ngModel)]=tempSubtask.itemIsEnd [disabled]="canEdit==false"></ion-checkbox>
     </ion-item>
     <ion-item style="border-bottom: solid 1px #ececec; height: 100px;">
       <ion-label item-start>备注:</ion-label>
-      <ion-textarea item-end [(ngModel)]=tempSubtask.remark></ion-textarea>
+      <ion-textarea item-end [(ngModel)]=tempSubtask.remark [disabled]="canEdit==false"></ion-textarea>
     </ion-item>
   </ion-list>
 </ion-content>

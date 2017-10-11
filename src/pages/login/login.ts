@@ -5,6 +5,7 @@ import { ForgetPage } from "../forget/forget";
 import { AppService } from "../../app/app.service";
 import { HomePage } from "../home/home";
 import { Storage } from '@ionic/storage';
+import { AppSingleton } from "../../app/app.singleton";
 
 /**
  * Generated class for the LoginPage page.
@@ -44,6 +45,7 @@ export class LoginPage {
         if (data != null) {
             view.storage.ready().then(()=> {
                 view.storage.set('user', data);
+                AppSingleton.getInstance().currentUserInfo = data;
             });
             view.navCtrl.push(HomePage);
         } else {

@@ -11,7 +11,8 @@
       {{this.type==1?"新建里程碑":"里程碑详情"}}
     </ion-title>
     <ion-buttons end >
-      <button ion-button (click)="onSaveMilestone($event)" style="color: #fc5c53">
+      <button ion-button (click)="onSaveMilestone($event)" style="color: #fc5c53"
+            [hidden]="(canEdit==false||canFinish==false)&&type!=1">
         保存
       </button>
     </ion-buttons>
@@ -32,7 +33,7 @@
   <ion-label full style="text-align: center">{{tempMilestone.milestoneName}}</ion-label>
 
   <ion-list no-lines style="border: solid 1px #ececec">
-    <button ion-item style="border-bottom: solid 1px #ececec" (click)="onMilestoneLeader($event)" >
+    <button ion-item style="border-bottom: solid 1px #ececec" (click)="onMilestoneLeader($event)" [disabled]="canEdit==false">
       <ion-icon item-start name="appname-admin"></ion-icon>
       <ion-label item-start>负责人:</ion-label>
       <ion-label item-end text-right>{{tempMilestone.leader}}</ion-label>
@@ -45,15 +46,15 @@
     <ion-item style="border-bottom: solid 1px #ececec;">
       <ion-icon item-start name="appname-time"></ion-icon>
       <ion-label>交付时间:</ion-label>
-      <ion-datetime text-right displayFormat="YYYY-MM-DD" max="2030" min="2015" cancelText="取消" doneText="确认" required [disabled]=""
+      <ion-datetime text-right displayFormat="YYYY-MM-DD" max="2030" min="2015" cancelText="取消" doneText="确认" required [disabled]="canEdit==false"
                     ngModel="{{tempMilestone.deliveryTime | stampToDate}}"
                     (ngModelChange)="tempMilestone.deliveryTime = $event">
       </ion-datetime>
     </ion-item>
-    <ion-item style="border-bottom: solid 1px #ececec">
+    <ion-item style="border-bottom: solid 1px #ececec"  >
       <ion-icon item-start name="appname-plan"></ion-icon>
       <ion-label>项目进度</ion-label>
-      <ion-select interface="action-sheet" [(ngModel)]="tempMilestone.itemProgress" cancelText="取消" doneText="确认" >
+      <ion-select interface="action-sheet" [(ngModel)]="tempMilestone.itemProgress" cancelText="取消" doneText="确认" [disabled]="canEdit==false">
         <ion-option value="10%">10%</ion-option>
         <ion-option value="20%">20%</ion-option>
         <ion-option value="30%">30%</ion-option>
@@ -66,12 +67,12 @@
         <ion-option value="100%">100%</ion-option>
       </ion-select>
     </ion-item>
-    <ion-item style="border-bottom: solid 1px #ececec;">
+    <ion-item style="border-bottom: solid 1px #ececec;"  >
       <ion-icon item-start name="appname-result"></ion-icon>
       <ion-label no-padding no-margin>交付成果:</ion-label>
-      <ion-input text-right type="text" [(ngModel)]="tempMilestone.deliveryResult" required [disabled]=""></ion-input>
+      <ion-input text-right type="text" [(ngModel)]="tempMilestone.deliveryResult" required [disabled]="canEdit==false"></ion-input>
     </ion-item>
-    <ion-item *ngIf="tempMilestone.delay > 0" style="border-bottom: solid 1px #ececec;">
+    <ion-item *ngIf="tempMilestone.delay > 0" style="border-bottom: solid 1px #ececec;" >
       <ion-label >延迟情况:</ion-label>
       <ion-label text-right item-end></ion-label>
     </ion-item>
@@ -81,11 +82,11 @@
     <ion-item style="border-top: solid 1px #ececec;border-bottom: solid 1px #ececec">
       <div item-start>是否完成</div>
       <ion-label>完成</ion-label>
-      <ion-checkbox [(ngModel)]="tempMilestone.itemIsEnd"></ion-checkbox>
+      <ion-checkbox [(ngModel)]="tempMilestone.itemIsEnd" [disabled]="canFinish==false"></ion-checkbox>
     </ion-item>
-    <ion-item style="border-bottom: solid 10px #ececec; height: 100px;">
+    <ion-item style="border-bottom: solid 10px #ececec; height: 100px;" >
       <ion-label item-start>备注:</ion-label>
-      <ion-textarea item-end no-padding no-margin [(ngModel)]="tempMilestone.remark"></ion-textarea>
+      <ion-textarea item-end no-padding no-margin [(ngModel)]="tempMilestone.remark" [disabled]="canFinish==false"></ion-textarea>
     </ion-item>
   </ion-list>
 
@@ -101,7 +102,7 @@
       <ion-item style="border-bottom: solid 1px #ececec;">
         <ion-icon item-start name="appname-admin"></ion-icon>
         <ion-label>负责人:</ion-label>
-        <ion-input text-right type="text" [(ngModel)]="subtask.leader" required [disabled]="type==2"></ion-input>
+        <ion-input text-right type="text" [(ngModel)]="subtask.leader" required [disabled]="canEdit==false||type==2"></ion-input>
       </ion-item>
       <ion-item style="border-bottom: solid 1px #ececec;">
         <ion-icon item-start name="appname-time"></ion-icon>
@@ -109,17 +110,17 @@
         <ion-datetime item-end displayFormat="YYYY年MM月DD日" max="2030" min="2015" cancelText="取消" doneText="确认"
                       ngModel="{{subtask.deliveryTime | stampToDate}}"
                       (ngModelChange)="subtask.deliveryTime = $event"
-                      [disabled]="type==2"></ion-datetime>
+                      [disabled]="canEdit==false||type==2"></ion-datetime>
       </ion-item>
       <ion-item style="border-bottom: solid 10px #ececec;">
         <ion-icon item-start name="appname-result"></ion-icon>
         <ion-label no-padding no-margin>交付成果:</ion-label>
-        <ion-input text-right type="text" [(ngModel)]="subtask.deliveryResult" required [disabled]="type==2"></ion-input>
+        <ion-input text-right type="text" [(ngModel)]="subtask.deliveryResult" required [disabled]="canEdit==false||type==2"></ion-input>
       </ion-item>
     </ion-list>
   </div>
 
-  <div style="padding: 10px;" *ngIf="this.tempMilestone.id.length>0">
+  <div style="padding: 10px;" *ngIf="this.tempMilestone.id.length>0&&canEdit==true">
     <button ion-button (click)="onAddSubtask($event)" block style="background-color: #fc5c53">+ 添加子任务</button>
   </div>
 </ion-content>

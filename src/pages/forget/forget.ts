@@ -1,8 +1,9 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams} from 'ionic-angular';
+import {AlertController, IonicPage, NavController, NavParams, ToastController} from 'ionic-angular';
 import { FormBuilder, Validators, FormGroup } from '@angular/forms';
 import { Observable, Subscription } from 'rxjs/Rx';
 import { NewpwPage } from "../newpw/newpw";
+import {AppService} from "../../app/app.service";
 
 /**
  * Generated class for the ForgetPage page.
@@ -26,11 +27,13 @@ export class ForgetPage {
     private timer: any;
     isCountDowning: boolean = false;
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, private formBuilder: FormBuilder) {
+  constructor(public navCtrl: NavController, public navParams: NavParams,
+              private formBuilder: FormBuilder, private appService: AppService,
+              private toastCtrl: ToastController, private alertCtrl: AlertController) {
       this.countDownText = this.defCountDownText;
       this.forgetForm = this.formBuilder.group({
           mobile: ['', Validators.compose([Validators.minLength(11), Validators.maxLength(11), Validators.required, Validators.pattern("^(13[0-9]|15[012356789]|17[03678]|18[0-9]|14[57])[0-9]{8}$")])],
-          code: ['', Validators.compose([Validators.required, Validators.minLength(6)])]
+          code: ['', Validators.compose([Validators.required, Validators.minLength(1)])]
       })
 
       this.timer = Observable.timer(1, 1000);
@@ -50,6 +53,26 @@ export class ForgetPage {
     if (this.isCountDowning == true) {
         return;
     }
+    var test = /^(13[0-9]|15[012356789]|17[03678]|18[0-9]|14[57])[0-9]{8}$/;
+    if (!test.test(this.forgetForm.value.mobile)) {
+        let toast = this.toastCtrl.create({
+            message: "手机号码输入错误!",
+            duration: 2000,
+            dismissOnPageChange: true,
+        });
+        toast.present();
+    }
+    this.appService.httpGet("http://192.168.10.120:8888/sms/sendSmg/"+this.forgetForm.value.mobile,{},
+        this,function (view, res) {
+            if (res.status == 200) {
+                let alert = view.alertCtrl.create({
+                    title: '提示',
+                    subTitle: res.json()._return,
+                    buttons: ['确定']
+                });
+                alert.present();
+            }
+        },true);
     this.countDownTime = this.defCountDownTime;
     this.isCountDowning = true;
     this.sub = this.timer.subscribe(
@@ -66,7 +89,21 @@ export class ForgetPage {
   }
 
     goNext(value) {
-        this.navCtrl.push(NewpwPage);
+        this.appService.httpGet("http://192.168.10.120:8888/sms/checkSmg/"+value.mobile+"/"+value.code,{},
+            this,function (view, res) {
+            if (res.status == 200) {
+                view.navCtrl.push(NewpwPage, {
+                    telPhone: value.mobile
+                });
+            } else {
+                let alert = view.alertCtrl.create({
+                    title: '错误信息',
+                    subTitle: '验证码校对错误',
+                    buttons: ['确定']
+                });
+                alert.present();
+            }
+        },true);
 
     }
 }

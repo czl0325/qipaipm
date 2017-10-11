@@ -4,7 +4,8 @@ import { SubtaskPage } from "../subtask/subtask";
 import { MilestoneDetailPage } from "../milestone-detail/milestone-detail";
 import { ProjectCreatePage } from "../project-create/project-create";
 import { AppService } from "../../app/app.service";
-import {AppConfig} from "../../app/app.config";
+import { AppConfig } from "../../app/app.config";
+import { DatePipe } from "@angular/common";
 
 /**
  * Generated class for the ProjectDetailPage page.
@@ -76,7 +77,7 @@ export class PopoverPage {
 
   onClickDelay($event) {
     this.viewCtrl.dismiss();
-
+    this.events.publish('onDelayProject');
   }
 }
 
@@ -133,10 +134,18 @@ export class ProjectDetailPage {
       }
     });
     this.events.subscribe('onDeleteProject',()=> {
-        this.appService.httpDelete("item/delete",{"ids":this.project.id}, this, function (view, res) {
+        this.appService.httpDelete("item/delete",{"ids":[this.project.id]}, this, function (view, res) {
+            console.log(res._body);
             if (res.status == 200) {
                 view.events.publish('homeProjectReload');
                 view.navCtrl.pop();
+            } else {
+                var data = res.json()._body.msg;
+                let toast = view.toastCtrl.create({
+                    message: data.msg,
+                    duration: 3000
+                });
+                toast.present();
             }
         },true);
     });
@@ -152,6 +161,33 @@ export class ProjectDetailPage {
             });
             toast.present();
         } ,true);
+    });
+    this.events.subscribe('onDelayProject',()=>{
+        var milestone = {
+            id : '',                    //里程碑id
+            milestoneName : '里程碑'+(this.project.children.length+1),         //里程碑的名称
+            leader : '',       //里程碑的负责人
+            leaderEmpNum : '',          //里程碑负责人工号
+            // milestoneDelivery : '',
+            deliveryResult: '',         //里程碑的交付成果
+            itemProgress : '',          //里程碑的进度
+            deliveryTime : new DatePipe('en-US').transform(new Date(), 'yyyy-MM-dd'),         //里程碑交付时间
+            planTime : new DatePipe('en-US').transform(new Date(), 'yyyy-MM-dd'),              //里程碑计划完成时间
+            realTime : new DatePipe('en-US').transform(new Date(), 'yyyy-MM-dd'),              //里程碑实际完成时间
+            remark : '',                //里程碑备注
+            isAccomplish : false,       //里程碑是否完成
+            delayDays : 0,              //里程碑延迟天数
+            milestoneType : 2,          //1是普通里程碑，2是延期里程碑
+            children : [],              //里程碑子任务
+        };
+        this.navCtrl.push(MilestoneDetailPage, {
+            milestone : milestone,
+            mileType : 2,
+            isExpand : this.isExpand,
+            project : this.project,
+            callback : this.delayMilestoneCallback,
+            type : 1,
+        });
     });
   }
 
@@ -174,6 +210,7 @@ export class ProjectDetailPage {
     this.events.unsubscribe('onPushProjectDetail');
     this.events.unsubscribe('reloadMilestone');
     this.events.unsubscribe('onEndProject');
+    this.events.unsubscribe('onDelayProject');
   }
 
   ionViewCanEnter(){
@@ -197,6 +234,7 @@ export class ProjectDetailPage {
   onClickMilestone($event, mile) {
     this.navCtrl.push(MilestoneDetailPage, {
       milestone : mile,
+      mileType : 1,
       isExpand : this.isExpand,
       project : this.project,
       callback : this.milestoneCallback,
@@ -238,9 +276,9 @@ export class ProjectDetailPage {
   }
 
   reloadArray() {
-      if (typeof (this.project.children) != 'undefined') {
-          for (let i=0; i<this.project.children.length; i++) {
-              var milestone = this.project.children[i];
+      if (typeof (this.project.milestoneVo1) != 'undefined') {
+          for (let i=0; i<this.project.milestoneVo1.length; i++) {
+              var milestone = this.project.milestoneVo1[i];
               milestone.milestoneName = '里程碑'+(i+1);
               if (typeof (milestone.children) != 'undefined') {
                   for (let j = 0; j < milestone.children.length; j++) {
@@ -250,58 +288,64 @@ export class ProjectDetailPage {
               }
           }
       }
+      if (typeof (this.project.milestoneVo2) != 'undefined') {
+          for (let i=0; i<this.project.milestoneVo2.length; i++) {
+              var delayMile = this.project.milestoneVo2[i];
+              delayMile.milestoneName = '延期'+(i+1);
+          }
+      }
       this.isExpand = [];
-      if (typeof (this.project.children) != 'undefined') {
-          for (let i = 0; i < this.project.children.length; i++) {
+      if (typeof (this.project.milestoneVo1) != 'undefined') {
+          for (let i = 0; i < this.project.milestoneVo1.length; i++) {
               this.isExpand.push(false);
           }
       }
   }
 
   addOneMilestone(milestone) {
-      if (this.project.children.length == 0) {
-          this.project.children.push(milestone);
+      if (this.project.milestoneVo1.length == 0) {
+          this.project.milestoneVo1.push(milestone);
           this.isExpand.push(false);
-      } else if (this.project.children.length == 1) {
-          var p1 = this.project.children[0];
+      } else if (this.project.milestoneVo1.length == 1) {
+          var p1 = this.project.milestoneVo1[0];
           var d1 = AppConfig.timestampToDate(p1.deliveryTime);
           var d2 = AppConfig.timestampToDate(milestone.deliveryTime);
           if (d1 <= d2) {
-              this.project.children.push(milestone);
+              this.project.milestoneVo1.push(milestone);
               this.isExpand.push(false);
           } else {
-              this.project.children.splice(0, 0, milestone);
+              this.project.milestoneVo1.splice(0, 0, milestone);
               this.isExpand.splice(0, 0, false);
           }
       } else {
           var isInsert = false;
-          for (let i=0; i<this.project.children.length-1; i++) {
-              var pp1 = this.project.children[i];
-              var pp2 = this.project.children[i+1];
+          for (let i=0; i<this.project.milestoneVo1.length-1; i++) {
+              var pp1 = this.project.milestoneVo1[i];
+              var pp2 = this.project.milestoneVo1[i+1];
               var dd1 = AppConfig.timestampToDate(pp1.deliveryTime);
               var dd2 = AppConfig.timestampToDate(pp2.deliveryTime);
               var dd3 = AppConfig.timestampToDate(milestone.deliveryTime);
               if (i==0 && dd3<dd1) {
                   isInsert = true;
-                  this.project.children.splice(0, 0, milestone);
+                  this.project.milestoneVo1.splice(0, 0, milestone);
                   this.isExpand.splice(0, 0, false);
                   break;
               }
               if (dd3>dd1 && dd3<dd2) {
                   isInsert = true;
-                  this.project.children.splice(i+1, 0, milestone);
+                  this.project.milestoneVo1.splice(i+1, 0, milestone);
                   this.isExpand.splice(i+1, 0, false);
                   break;
               }
-              if (i==this.project.children.length-2 && dd3>dd2) {
+              if (i==this.project.milestoneVo1.length-2 && dd3>dd2) {
                   isInsert = true;
-                  this.project.children.push(milestone);
+                  this.project.milestoneVo1.push(milestone);
                   this.isExpand.push(false);
                   break;
               }
           }
           if (isInsert==false) {
-              this.project.children.push(milestone);
+              this.project.milestoneVo1.push(milestone);
               this.isExpand.push(false);
           }
       }
@@ -313,11 +357,11 @@ export class ProjectDetailPage {
       return new Promise((resolve, reject) => {
           if (typeof (milestone) != 'undefined') {
               var isIn = false;
-              for (let i=0; i<this.project.children.length; i++) {
-                  var tempMile = this.project.children[i];
+              for (let i=0; i<this.project.milestoneVo1.length; i++) {
+                  var tempMile = this.project.milestoneVo1[i];
                   if (tempMile.id == milestone.id) {
                       isIn = true;
-                      this.project.children.splice(i, 1, milestone);
+                      this.project.milestoneVo1.splice(i, 1, milestone);
                       break;
                   }
               }
@@ -345,12 +389,36 @@ export class ProjectDetailPage {
       });
   };
 
+    delayMilestoneCallback = (milestone) =>
+    {
+        return new Promise((resolve, reject) => {
+            if (typeof (milestone) != 'undefined') {
+                var isIn = false;
+                for (let i=0; i<this.project.milestoneVo2.length; i++) {
+                    var tempMile = this.project.milestoneVo2[i];
+                    if (tempMile.id == milestone.id) {
+                        isIn = true;
+                        this.project.milestoneVo2.splice(i, 1, milestone);
+                        break;
+                    }
+                }
+                if (!isIn) {
+                    this.project.milestoneVo2.push(milestone);
+                }
+                this.reloadArray();
+            } else {
+
+            }
+            resolve();
+        });
+    };
+
     //点击进入子任务的回调
     subtaskCallback = (subtask) => {
       return new Promise((resolve, reject) => {
         if (typeof (subtask) != 'undefined') {
-            for (let i=0; i<this.project.children.length; i++) {
-                var milestone = this.project.children[i];
+            for (let i=0; i<this.project.milestoneVo1.length; i++) {
+                var milestone = this.project.milestoneVo1[i];
                 var isIn = false;
                 for (let j=0; j<milestone.children.length; j++) {
                     var sub = milestone.children[j];

@@ -4,6 +4,7 @@ import { AppConfig } from "../../app/app.config";
 import { AppService } from "../../app/app.service";
 import { ContactPage } from "../contact/contact";
 import { DatePipe } from "@angular/common";
+import { AppSingleton } from "../../app/app.singleton";
 
 /**
  * Generated class for the SubtaskPage page.
@@ -56,6 +57,8 @@ export class SubtaskPage {
       itemIsEnd : false, //子任务是否完成
   };
   tempSubtask: any;
+  canEdit: boolean = true;
+  minTime: string = new DatePipe('en-US').transform(new Date(), 'yyyy-MM-dd');
 
 
   constructor(public navCtrl: NavController, private navParams: NavParams, private appService: AppService, public events: Events) {
@@ -68,6 +71,11 @@ export class SubtaskPage {
       this.subtask = data;
     }
     this.tempSubtask = AppConfig.deepCopy(this.subtask);
+    if (this.type == 2) {
+        if (this.subtask.leaderEmpNum != AppSingleton.getInstance().currentUserInfo.username) {
+            this.canEdit = false;
+        }
+    }
   }
 
     ionViewDidLoad() {

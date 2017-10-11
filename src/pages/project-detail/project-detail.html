@@ -31,7 +31,7 @@
         <ion-label no-padding no-margin style="margin-top: 3px;font-size: 10px;text-align: center">启动</ion-label>
       </div>
         <div class="item3">
-            <ion-icon name="appname-arrow" class="arrow-css1"></ion-icon>
+            <ion-icon no-border no-margin no-padding name="md-arrow-dropleft" class="arrow-css1"></ion-icon>
             <div class="item3-1">
                 <div class="text-wrap">
                     <div class="text-left">负责人：</div>
@@ -54,7 +54,7 @@
   </div>
 
   <!-- 里程碑  -->
-  <div class="pj-item" *ngFor="let mile of project.children; let i = index">
+  <div class="pj-item" *ngFor="let mile of project.milestoneVo1; let i = index">
     <div class="mile-top" id="{{mile.id}}">
       <div style="width: 1px; background-color: #ececec; height: 100%; position: absolute; left: 65px; top: 0px" >
 
@@ -97,7 +97,7 @@
       <!--[ngClass]="{'arrow-css1':mile.type==0,'arrow-css2':mile.type==1,'arrow-css3':mile.type==2}"-->
 
         <div class="item3">
-            <ion-icon name="appname-arrow" class="arrow-css2" ></ion-icon>
+            <ion-icon no-border no-padding no-margin name="md-arrow-dropleft" class="arrow-css2" ></ion-icon>
             <div class="item3-2" (click)="onClickMilestone($event, mile)">
                 <div class="text-wrap">
                     <div class="text-left">负责人：</div>
@@ -125,7 +125,7 @@
       <ion-label no-padding no-margin style="margin-top: 3px;font-size: 10px;text-align: center">结束</ion-label>
     </div>
       <div class="item3">
-          <ion-icon name="appname-arrow" class="arrow-css1"></ion-icon>
+          <ion-icon no-border no-padding no-margin name="md-arrow-dropleft" class="arrow-css1"></ion-icon>
           <div class="item3-1">
               <div  class="text-wrap">
                   <div no-padding no-margin class="text-left">负责人：</div>
@@ -139,28 +139,32 @@
       </div>
   </div>
 
-  <!-- 项目延期 -->
-  <div *ngIf="project.delayDays>0" class="mile-bottom" style="margin-top: 5px">
-    <div class="item1">
-      <ion-label style="margin-bottom: 3px;font-size: 10px">{{project.delayTime | MonthPipe}}</ion-label>
-      <section class="line"></section>
-      <ion-label style="margin-top: 3px;font-size: 10px">{{project.delayTime | YearPipe}}</ion-label>
-    </div>
-    <div class="item2">
-      <!--<div style="width: 1px; background-color: #ececec; height: 10px; position: absolute; left: 20px; top: 0px" ></div>-->
-      <ion-label no-padding no-margin class="delay-radius2">延</ion-label>
-      <ion-label no-padding no-margin class="item2_text">延期</ion-label>
-    </div>
+  <!-- 延期里程碑 -->
+  <div class="mile-bottom" style="margin-top: 5px"
+       *ngFor="let dalayMile of project.milestoneVo2; let i = index">
+      <div class="item1">
+          <ion-label style="margin-bottom: 3px;font-size: 10px">{{dalayMile.deliveryTime | MonthPipe}}</ion-label>
+          <section class="line"></section>
+          <ion-label style="margin-top: 3px;font-size: 10px">{{dalayMile.deliveryTime | YearPipe}}</ion-label>
+      </div>
+      <div class="item2">
+          <!--<div style="width: 1px; background-color: #ececec; height: 10px; position: absolute; left: 20px; top: 0px" ></div>-->
+          <ion-label no-padding no-margin class="label-radius">{{dalayMile.itemProgress}}</ion-label>
+          <ion-label no-padding no-margin class="mile-number">{{"延期"+(i+1)}}</ion-label>
+          <ion-label no-padding no-margin class="delay-radius1" [hidden]="dalayMile.delayDays==0">{{"延"+dalayMile.delayDays}}</ion-label>
+      </div>
+      <!--[ngClass]="{'arrow-css1':mile.type==0,'arrow-css2':mile.type==1,'arrow-css3':mile.type==2}"-->
+
       <div class="item3">
-          <ion-icon name="appname-arrow" class="arrow-css3"></ion-icon>
-          <div class="item3-3">
+          <ion-icon no-border no-padding no-margin name="md-arrow-dropleft" class="arrow-css3" ></ion-icon>
+          <div class="item3-3" (click)="onClickMilestone($event, dalayMile)">
               <div class="text-wrap">
-                  <div no-padding no-margin class="text-left">负责人：</div>
-                  <div no-padding no-margin class="text-right">{{project.leader}}</div>
+                  <div class="text-left">负责人：</div>
+                  <div class="text-right">{{dalayMile.leader}}</div>
               </div>
               <div  class="text-wrap">
-                  <div no-padding no-margin class="text-left">交付成果：</div>
-                  <div no-padding no-margin class="text-right">{{project.itemEndResult}}</div>
+                  <div class="text-left">交付成果：</div>
+                  <div class="text-right">{{dalayMile.deliveryResult}}</div>
               </div>
           </div>
       </div>

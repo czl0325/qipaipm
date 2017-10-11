@@ -2,7 +2,8 @@ import { Component, Input, Output, EventEmitter, SimpleChanges } from '@angular/
 import { DatePipe } from "@angular/common";
 import { AppService } from "../../app/app.service";
 import { AppConfig } from "../../app/app.config";
-import {Events, ModalController} from "ionic-angular";
+import { Events, ModalController } from "ionic-angular";
+import { AppSingleton } from "../../app/app.singleton";
 // import { CalendarModal, CalendarModalOptions } from "ion2-calendar";
 
 /**
@@ -38,9 +39,11 @@ export class CalendarComponent {
   dayHasProject = [];
   stop = false;
   todayEvents = [];
+  currentMonth : string;
 
   constructor(private datePipe: DatePipe, public appService: AppService, public modalCtrl: ModalController, public events: Events) {
     //this.setUpWeekDaysLabels();
+      this.currentMonth = "2017-10";
   }
 
   setUpWeekDaysLabels() {
@@ -149,8 +152,13 @@ export class CalendarComponent {
     var dateString = AppConfig.dateToString(this.currentDate);
     for (let i=0; i<this.dayHasProject.length; i++) {
       var object = this.dayHasProject[i];
-      var itemStartTime = object.itemStartTime;
-      var day = "1970-01-01";
+      var itemStartTime = "1970-01-01";
+      if (typeof (object.itemStartTime)=='string') {
+          itemStartTime = object.itemStartTime;
+      } else if (typeof (object.itemStartTime)=='number') {
+          itemStartTime = AppConfig.timestampToDatestring(object.itemStartTime);
+      }
+      var day = "01";
       if (itemStartTime != null) {
           day = itemStartTime.substr(itemStartTime.length-2,2);
       }
@@ -203,7 +211,6 @@ export class CalendarComponent {
       }
       tmp.setDate(tmp.getDate() + 1);
     }
-    console.log(this.rows);
 
     setTimeout(() => {
       /* Needs to be executed only after the DOM has been updated */
@@ -266,15 +273,20 @@ export class CalendarComponent {
       }
     }
 
-    this.appService.httpGet("item/searchByCondition", {"itemStartTime":firstDateString,"endTime":lastDateString,"page":"1","limit":"100"}, this,function (view, res){
+    this.appService.httpGet("item/searchByCondition", {"itemStartTime":firstDateString,"endTime":lastDateString,"empNum":AppSingleton.getInstance().currentUserInfo.username,"page":"1","limit":"100"}, this,function (view, res){
       var data = res.json();
       if (data.success == true) {
         view.dayHasProject = data.data;
         view.onChangeMonth.emit(view.dayHasProject);
         for (let i=0; i<view.dayHasProject.length; i++) {
           var object = view.dayHasProject[i];
-          var itemStartTime = object.itemStartTime;
-          var day = "1970-01-01";
+            var itemStartTime = "1970-01-01";
+            if (typeof (object.itemStartTime)=='string') {
+                itemStartTime = object.itemStartTime;
+            } else if (typeof (object.itemStartTime)=='number') {
+                itemStartTime = AppConfig.timestampToDatestring(object.itemStartTime);
+            }
+          var day = "01";
           if (itemStartTime != null) {
               day = itemStartTime.substr(itemStartTime.length-2,2);
           }
@@ -332,6 +344,12 @@ export class CalendarComponent {
     this.updateSelectedDate(tmp);
 
     this.calc();
+  }
+
+  onSelectMonth(month) {
+      var date = month + "-01 00:00:00";
+      this.updateSelectedDate(AppConfig.stringToDate(date));
+      this.calc();
   }
 
   /**

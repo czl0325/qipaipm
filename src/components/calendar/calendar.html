@@ -8,14 +8,16 @@
         </button>
       </ion-col>
       <ion-col no-margin no-padding text-center class="selectedDateLabel" (click)="openCalendar($event)">
-        <h5 no-padding no-margin class="selectedMonthLabel">{{ currentDate | date:'yyyy-MM' }}</h5>
-        <!--<ion-item no-lines style="background-color: #32db64">-->
-          <!--<ion-datetime no-padding no-margin class="selectedMonthLabel" text-center displayFormat="YYYY-MM" max="2030" min="1979" cancelText="取消" doneText="确认"-->
-                        <!--ngModel="{{currentDate | date:'yyyy-MM'}}"-->
-                        <!--(ngModelChange)="currentDate = $event"></ion-datetime>-->
-        <!--</ion-item>-->
-        <!--<ion-multi-picker item-content [multiPickerColumns]="simpleColumns"></ion-multi-picker>>-->
-        <!--<button *ngIf="showTodayButton" (click)="setToday()" ion-button small outline>{{ todayText }}</button>-->
+        <h5 no-padding no-margin class="selectedMonthLabel">{{ currentDate | date:'yyyy-MM' }}
+            <ion-datetime class="selectedDatetime"
+                          displayFormat="YYYY年MM月" pickerFormat="MMMM YYYY" max="2030" min="2015"
+                          cancelText="取消" doneText="确认"
+                          monthNames="1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12"
+                          monthShortNames="1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12"
+                          ngModel="{{currentMonth}}"
+                          (ngModelChange)=onSelectMonth($event)></ion-datetime>
+        </h5>
+
       </ion-col>
       <ion-col no-padding no-margin text-left class="titleCol">
         <button ion-button icon-only clear (click)="nextMonth()">

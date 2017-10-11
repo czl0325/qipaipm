@@ -142,14 +142,33 @@ export class AppService {
     let msg = '';
     if (error.status == 400) {
       msg = '请求无效(code：404)';
+      console.log(error.json());
+      var data1 = error.json();
+      if (data1 != null) {
+          if (data1.msg != null) {
+              msg = data1.msg;
+          }
+      }
       console.log('请检查参数类型是否匹配');
     }
     if (error.status == 404) {
       msg = '请求资源不存在(code：404)';
+        var data2 = error.json();
+        if (data2 != null) {
+            if (data2.msg != null) {
+                msg = data2.msg;
+            }
+        }
       console.error(msg + '，请检查路径是否正确');
     }
     if (error.status == 500) {
       msg = '服务器发生错误(code：500)';
+        var data3 = error.json();
+        if (data3 != null) {
+            if (data3.msg != null) {
+                msg = data3.msg;
+            }
+        }
       console.error(msg + '，请检查路径是否正确');
     }
     if (error != null) {

@@ -8,12 +8,13 @@ import { HomePage } from '../pages/home/home';
 import { LoginPage } from "../pages/login/login";
 import { NativeStorage } from "@ionic-native/native-storage";
 import { Storage } from "@ionic/storage";
+import { AppSingleton } from "./app.singleton";
 
 @Component({
   templateUrl: 'app.html'
 })
 export class MyApp {
-  rootPage:any = LoginPage;
+  rootPage:any;// = LoginPage;
   config: any;
 
   constructor(platform: Platform, statusBar: StatusBar, splashScreen: SplashScreen,
@@ -38,7 +39,10 @@ export class MyApp {
     this.keyboard.disableScroll(true);//当输入焦点时，防止本机UIScrollView移动。
       this.storage.get('user').then((val) => {
          if (val.username != null) {
+             AppSingleton.getInstance().currentUserInfo = val;
              this.rootPage = HomePage;
+         } else {
+              this.rootPage = LoginPage;
          }
       });
 
