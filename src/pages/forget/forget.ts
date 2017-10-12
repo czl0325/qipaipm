@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, ToastController} from 'ionic-angular';
+import {AlertController, IonicPage, NavController, NavParams, ToastController} from 'ionic-angular';
 import { FormBuilder, Validators, FormGroup } from '@angular/forms';
 import { Observable, Subscription } from 'rxjs/Rx';
 import { NewpwPage } from "../newpw/newpw";
@@ -29,7 +29,7 @@ export class ForgetPage {
 
   constructor(public navCtrl: NavController, public navParams: NavParams,
               private formBuilder: FormBuilder, private appService: AppService,
-              private toastCtrl: ToastController) {
+              private toastCtrl: ToastController, private alertCtrl: AlertController) {
       this.countDownText = this.defCountDownText;
       this.forgetForm = this.formBuilder.group({
           mobile: ['', Validators.compose([Validators.minLength(11), Validators.maxLength(11), Validators.required, Validators.pattern("^(13[0-9]|15[012356789]|17[03678]|18[0-9]|14[57])[0-9]{8}$")])],
