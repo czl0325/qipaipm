@@ -11,6 +11,7 @@ import { AppShare } from "./app.share";
 import { NativeStorage } from '@ionic-native/native-storage';
 import { IonicStorageModule } from '@ionic/storage';
 import { WechatService } from "./wechat.service";
+import { SocialSharing } from '@ionic-native/social-sharing';
 
 //页面类
 import { MyApp } from './app.component';
@@ -97,6 +98,7 @@ import {LoginPage} from "../pages/login/login";
     AppShare,
     NativeStorage,
     WechatService,
+    SocialSharing,
     {provide: ErrorHandler, useClass: IonicErrorHandler},
   ]
 })

@@ -6,7 +6,8 @@ import { ProjectCreatePage } from "../project-create/project-create";
 import { AppService } from "../../app/app.service";
 import { AppConfig } from "../../app/app.config";
 import { DatePipe } from "@angular/common";
-import {AppSingleton} from "../../app/app.singleton";
+import { AppSingleton } from "../../app/app.singleton";
+import { SocialSharing } from '@ionic-native/social-sharing';
 
 /**
  * Generated class for the ProjectDetailPage page.
@@ -47,7 +48,8 @@ export class PopoverPage {
   contentEle: any;
   canShow: boolean;
 
-  constructor(public viewCtrl: ViewController ,private navParams: NavParams, public events: Events) {
+  constructor(public viewCtrl: ViewController ,private navParams: NavParams,
+              public events: Events) {
 
   }
 
@@ -96,7 +98,7 @@ export class ProjectDetailPage {
   isExpand;
 
   constructor(public navCtrl: NavController, private navParams: NavParams, private popoverCtrl: PopoverController,
-              public events: Events, public appService: AppService, public toastCtrl: ToastController) {
+              public events: Events, public appService: AppService, public toastCtrl: ToastController, private socialSharing: SocialSharing) {
     this.project = this.navParams.get('project');
     this.isExpand = [];
     this.reloadArray();
@@ -104,16 +106,17 @@ export class ProjectDetailPage {
 
   ionViewDidLoad() {
     this.events.subscribe('showShareView', () => {
-      var shareView = document.getElementById('shareView');
-      var bottom = parseInt(window.getComputedStyle(shareView).bottom) ;
-      this.timer = setInterval(()=> {
-        bottom = bottom + 10;
-        shareView.style.bottom = bottom+'px';
-        if (bottom >= 0) {
-          clearInterval(this.timer);
-          shareView.style.bottom = 0+'px';
-        }
-      }, 16);
+      // var shareView = document.getElementById('shareView');
+      // var bottom = parseInt(window.getComputedStyle(shareView).bottom) ;
+      // this.timer = setInterval(()=> {
+      //   bottom = bottom + 10;
+      //   shareView.style.bottom = bottom+'px';
+      //   if (bottom >= 0) {
+      //     clearInterval(this.timer);
+      //     shareView.style.bottom = 0+'px';
+      //   }
+      // }, 16);
+        this.socialSharing.share("项目分享","柒牌项目管理",null,null);
     });
     this.events.subscribe('onPushProjectDetail',()=>{
       this.navCtrl.push(ProjectCreatePage, {
