@@ -1,19 +1,18 @@
 webpackJsonp([4],{
 
-/***/ 116:
+/***/ 113:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return HomePage; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(1);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(12);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__project_create_project_create__ = __webpack_require__(117);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__project_detail_project_detail__ = __webpack_require__(120);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__search_search__ = __webpack_require__(228);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__project_create_project_create__ = __webpack_require__(114);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__project_detail_project_detail__ = __webpack_require__(117);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__search_search__ = __webpack_require__(224);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__app_app_service__ = __webpack_require__(24);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__app_app_config__ = __webpack_require__(25);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__ionic_storage__ = __webpack_require__(79);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__app_app_singleton__ = __webpack_require__(42);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__app_app_singleton__ = __webpack_require__(37);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -31,13 +30,12 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 
 
 
-
+//import { WechatService } from "../../app/wechat.service";
 var HomePage = (function () {
-    function HomePage(navCtrl, appService, events, storage) {
+    function HomePage(navCtrl, appService, events) {
         this.navCtrl = navCtrl;
         this.appService = appService;
         this.events = events;
-        this.storage = storage;
         this.type = 1;
         this.namevalue = "appname-list";
         this.projects = [];
@@ -49,6 +47,7 @@ var HomePage = (function () {
         this.events.subscribe('homeProjectReload', function () {
             _this.reloadProjectList(_this.currentDate);
         });
+        //this.wechat.share(0, "check-installed");
     };
     HomePage.prototype.ionViewWillUnload = function () {
         this.events.unsubscribe('homeProjectReload');
@@ -68,10 +67,24 @@ var HomePage = (function () {
     HomePage.prototype.reloadProjectList = function (dateString) {
         this.events.publish('onGetProjectDate');
         this.projects = [];
-        this.appService.httpGet("item/searchByCondition", { "itemStartTime": dateString, "endTime": dateString, "empNum": __WEBPACK_IMPORTED_MODULE_8__app_app_singleton__["a" /* AppSingleton */].getInstance().currentUserInfo.username, "page": 1, "limit": 100 }, this, function (view, res) {
+        this.appService.httpGet("item/searchByCondition", { "itemStartTime": dateString, "endTime": dateString, "empNum": __WEBPACK_IMPORTED_MODULE_7__app_app_singleton__["a" /* AppSingleton */].getInstance().currentUserInfo.username, "page": 1, "limit": 100 }, this, function (view, res) {
             var data = res.json();
             if (data.success == true) {
                 view.projects = data.data;
+                for (var i = 0; i < view.projects.length; i++) {
+                    var project = view.projects[i];
+                    project.milestoneVo1 = [];
+                    project.milestoneVo2 = [];
+                    for (var j = 0; j < project.children.length; j++) {
+                        var mile = project.children[j];
+                        if (mile.milestoneType == 1) {
+                            project.milestoneVo1.push(mile);
+                        }
+                        else if (mile.milestoneType == 2) {
+                            project.milestoneVo2.push(mile);
+                        }
+                    }
+                }
                 console.log(view.projects);
             }
         }, true);
@@ -113,17 +126,17 @@ var HomePage = (function () {
 }());
 HomePage = __decorate([
     Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Component"])({
-        selector: 'page-home',template:/*ion-inline-start:"/Users/zhaoliangchen/Desktop/qipaipm-company/src/pages/home/home.html"*/'<ion-header>\n  <ion-navbar>\n    <ion-title [hidden]="type==1">\n        {{currentDate | YearAndMonthPipe}}\n    </ion-title>\n    <ion-buttons end >\n      <button ion-button (click)="onChangeType($event)" id="btMode">\n        <ion-icon style="color: #fc5c53; margin-right: 10px" name={{namevalue}} >\n        </ion-icon>\n      </button>\n      <button ion-button (click)="onClickSearch()">\n        <ion-icon style="color: #fc5c53; margin-right: 10px" name="appname-search" >\n        </ion-icon>\n      </button>\n      <button ion-button (click)="onCreateProject()">\n        <ion-icon style="color: #fc5c53; margin-right: 5px" name="appname-add" >\n        </ion-icon>\n      </button>\n    </ion-buttons>\n  </ion-navbar>\n</ion-header>\n\n<ion-content fullscreen>\n  <div [hidden]="type==2" no-padding no-margin>\n    <calendar id="calendar" (onChange)="onSelectDate($event)" (onChangeMonth)="onChangeMonthProject($event)">\n\n    </calendar>\n\n    <div style="margin-top: 10px; height: 1px; background-color: #c5c6c7; width: 100%"></div>\n    <ion-item (click)="onClickProject(project)" *ngFor="let project of projects">\n      <ion-label no-padding no-margin text-center float-left\n                 [ngClass]="{\'circle_home\':1===1,\'nostart\':project.itemState==\'07010010\',\'ing\':project.itemState==\'07010020\'|| project.itemState==\'07010030\',\'end\':project.itemState==\'07010040\'}">{{project.itemLevel}}</ion-label>\n          <!--<div [ngClass]="{\'circle_nostart\':project.itemState==\'未启动\',\'circle_ing\':project.itemState==\'进行中\',\'circle_end\':project.itemState==\'已结束\'}"></div>-->\n        <ion-label no-padding no-margin float-left class="pj-name" [ngStyle]="{\'color\':project.itemState==\'07010030\'?\'#fc780e\':\'black\'}">{{project.itemName}}</ion-label>\n        </ion-item>\n      </div>\n    <div [hidden]="type==1" no-padding no-margin>\n      <div no-margin no-padding style="background-color: #ececec; height: 50px">\n        <ion-label no-margin no-padding float-left style="margin-left: 10px; line-height: 50px">开始日期</ion-label>\n        <ion-label no-margin no-padding float-left style="margin-left: 50px; line-height: 50px">项目名称</ion-label>\n        <div float-end style="position: relative; width: 120px; height: 100%">\n          <div no-margin no-padding style="position:absolute; top: 4px; right: 10px; height: 40%; width: 100%">\n            <div style="float: left">\n              <div style="width: 10px; height: 10px; background-color: #fc780e; float: left"></div>\n              <ion-label float-left no-margin no-padding style="line-height: 12px">进行中</ion-label>\n            </div>\n            <div style="float: right">\n              <div style="width: 10px; height: 10px; background-color: #10c619; float: left"></div>\n              <ion-label float-left no-margin no-padding style="line-height: 12px">未开始</ion-label>\n            </div>\n          </div>\n          <div no-margin no-padding style="position:absolute; bottom: 0px; right: 10px; height: 40%; width: 100%">\n            <div style="float: left">\n              <div style="width: 10px; height: 10px; background-color: #fc780e; float: left"></div>\n              <ion-label float-left no-margin no-padding style="line-height: 12px">延期中</ion-label>\n            </div>\n           <div style="float: right">\n            <div style="width: 10px; height: 10px; background-color: #c1c8d2; float: left"></div>\n            <ion-label float-left no-margin no-padding style="line-height: 12px">已完成</ion-label>\n          </div>\n        </div>\n      </div>\n    </div>\n    <div *ngFor="let project of projectsOnMonth" style="position: relative; height: 50px; border-bottom: solid 1px #ececec" (click)="onClickProject(project)">\n      <ion-label float-left no-margin no-padding class="list_day">{{project.itemStartTime | DayPipe}}</ion-label>\n      <ion-label float-left no-margin no-padding class="list_weekday">{{project.itemStartTime | WeekayPipe}}</ion-label>\n      <ion-label float-left no-margin no-padding text-center\n          [ngClass]="{\'list_circle\':1===1,\'nostart\':project.itemState==\'07010010\',\'ing\':project.itemState==\'07010020\'|| project.itemState==\'07010030\',\'end\':project.itemState==\'07010040\'}">{{project.itemLevel}}</ion-label>\n      <ion-label float-left no-margin no-padding class="list_itemname" [ngStyle]="{\'color\':project.itemState==\'07010030\'?\'#fc780e\':\'black\'}">{{project.itemName}}</ion-label>\n    </div>\n  </div>\n</ion-content>\n'/*ion-inline-end:"/Users/zhaoliangchen/Desktop/qipaipm-company/src/pages/home/home.html"*/
+        selector: 'page-home',template:/*ion-inline-start:"/Users/zhaoliangchen/Desktop/qipaipm-company/src/pages/home/home.html"*/'<ion-header>\n  <ion-navbar hideBackButton="true">\n    <ion-title [hidden]="type==1">\n        {{currentDate | YearAndMonthPipe}}\n    </ion-title>\n    <ion-buttons end >\n      <button ion-button (click)="onChangeType($event)" id="btMode">\n        <ion-icon style="color: #fc5c53; margin-right: 10px" name={{namevalue}} >\n        </ion-icon>\n      </button>\n      <button ion-button (click)="onClickSearch()">\n        <ion-icon style="color: #fc5c53; margin-right: 10px" name="appname-search" >\n        </ion-icon>\n      </button>\n      <button ion-button (click)="onCreateProject()">\n        <ion-icon style="color: #fc5c53; margin-right: 5px" name="appname-add" >\n        </ion-icon>\n      </button>\n    </ion-buttons>\n  </ion-navbar>\n</ion-header>\n\n<ion-content fullscreen>\n  <div [hidden]="type==2" no-padding no-margin>\n    <calendar id="calendar" (onChange)="onSelectDate($event)" (onChangeMonth)="onChangeMonthProject($event)">\n\n    </calendar>\n\n    <div style="margin-top: 10px; height: 1px; background-color: #c5c6c7; width: 100%"></div>\n    <ion-item (click)="onClickProject(project)" *ngFor="let project of projects">\n      <ion-label no-padding no-margin text-center float-left\n                 [ngClass]="{\'circle_home\':1===1,\'nostart\':project.itemState==\'07010010\',\'ing\':project.itemState==\'07010020\'|| project.itemState==\'07010030\',\'end\':project.itemState==\'07010040\'}">{{project.itemLevel}}</ion-label>\n          <!--<div [ngClass]="{\'circle_nostart\':project.itemState==\'未启动\',\'circle_ing\':project.itemState==\'进行中\',\'circle_end\':project.itemState==\'已结束\'}"></div>-->\n        <ion-label no-padding no-margin float-left class="pj-name" [ngStyle]="{\'color\':project.itemState==\'07010030\'?\'#fc780e\':\'black\'}">{{project.itemName}}</ion-label>\n        </ion-item>\n      </div>\n    <div [hidden]="type==1" no-padding no-margin>\n      <div no-margin no-padding style="background-color: #ececec; height: 50px">\n        <ion-label no-margin no-padding float-left style="margin-left: 10px; line-height: 50px">开始日期</ion-label>\n        <ion-label no-margin no-padding float-left style="margin-left: 50px; line-height: 50px">项目名称</ion-label>\n        <div float-end style="position: relative; width: 120px; height: 100%">\n          <div no-margin no-padding style="position:absolute; top: 4px; right: 10px; height: 40%; width: 100%">\n            <div style="float: left">\n              <div style="width: 10px; height: 10px; background-color: #fc780e; float: left"></div>\n              <ion-label float-left no-margin no-padding style="line-height: 12px">进行中</ion-label>\n            </div>\n            <div style="float: right">\n              <div style="width: 10px; height: 10px; background-color: #10c619; float: left"></div>\n              <ion-label float-left no-margin no-padding style="line-height: 12px">未开始</ion-label>\n            </div>\n          </div>\n          <div no-margin no-padding style="position:absolute; bottom: 0px; right: 10px; height: 40%; width: 100%">\n            <div style="float: left">\n              <div style="width: 10px; height: 10px; background-color: #fc780e; float: left"></div>\n              <ion-label float-left no-margin no-padding style="line-height: 12px">延期中</ion-label>\n            </div>\n           <div style="float: right">\n            <div style="width: 10px; height: 10px; background-color: #c1c8d2; float: left"></div>\n            <ion-label float-left no-margin no-padding style="line-height: 12px">已完成</ion-label>\n          </div>\n        </div>\n      </div>\n    </div>\n    <div *ngFor="let project of projectsOnMonth" style="position: relative; height: 50px; border-bottom: solid 1px #ececec" (click)="onClickProject(project)">\n      <ion-label float-left no-margin no-padding class="list_day">{{project.itemStartTime | DayPipe}}</ion-label>\n      <ion-label float-left no-margin no-padding class="list_weekday">{{project.itemStartTime | WeekayPipe}}</ion-label>\n      <ion-label float-left no-margin no-padding text-center\n          [ngClass]="{\'list_circle\':1===1,\'nostart\':project.itemState==\'07010010\',\'ing\':project.itemState==\'07010020\'|| project.itemState==\'07010030\',\'end\':project.itemState==\'07010040\'}">{{project.itemLevel}}</ion-label>\n      <ion-label float-left no-margin no-padding class="list_itemname" [ngStyle]="{\'color\':project.itemState==\'07010030\'?\'#fc780e\':\'black\'}">{{project.itemName}}</ion-label>\n    </div>\n  </div>\n</ion-content>\n'/*ion-inline-end:"/Users/zhaoliangchen/Desktop/qipaipm-company/src/pages/home/home.html"*/
     }),
     __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["NavController"], __WEBPACK_IMPORTED_MODULE_5__app_app_service__["a" /* AppService */],
-        __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["Events"], __WEBPACK_IMPORTED_MODULE_7__ionic_storage__["b" /* Storage */]])
+        __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["Events"]])
 ], HomePage);
 
 //# sourceMappingURL=home.js.map
 
 /***/ }),
 
-/***/ 117:
+/***/ 114:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -131,11 +144,11 @@ HomePage = __decorate([
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(1);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(12);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__angular_common__ = __webpack_require__(29);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__milestone_detail_milestone_detail__ = __webpack_require__(118);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__milestone_detail_milestone_detail__ = __webpack_require__(115);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__app_app_service__ = __webpack_require__(24);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__contact_contact__ = __webpack_require__(61);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__contact_contact__ = __webpack_require__(60);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__app_app_config__ = __webpack_require__(25);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__app_app_singleton__ = __webpack_require__(42);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__app_app_singleton__ = __webpack_require__(37);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -186,6 +199,7 @@ var ProjectCreatePage = (function () {
             itemLevel: '',
             itemStartResult: '',
             itemEndResult: '',
+            children: [],
             milestoneVo1: [],
             milestoneVo2: [],
             itemRaise: '',
@@ -212,6 +226,7 @@ var ProjectCreatePage = (function () {
                     }
                     if (!isIn) {
                         _this.addOneMilestone(milestone);
+                        _this.project.children.push(milestone);
                     }
                 }
                 else {
@@ -263,12 +278,12 @@ var ProjectCreatePage = (function () {
         //   }
         // }
         if (this.project.itemLevel.length < 1) {
-            var alert = this.alertCtrl.create({
+            var alert_1 = this.alertCtrl.create({
                 title: '错误信息',
                 subTitle: '请选择项目紧急程度!',
                 buttons: ['确定']
             });
-            alert.present();
+            alert_1.present();
             return;
         }
         this.appService.httpPost("item/createItem", this.project, this, function (view, res) {
@@ -307,8 +322,8 @@ var ProjectCreatePage = (function () {
         var milestone = {
             id: '',
             milestoneName: '里程碑' + (this.project.milestoneVo1.length + 1),
-            leader: '',
-            leaderEmpNum: '',
+            itemEndLeader: '',
+            itemEndLeaderNum: '',
             // milestoneDelivery : '',
             deliveryResult: '',
             itemProgress: '',
@@ -340,7 +355,7 @@ var ProjectCreatePage = (function () {
             this.deleteOneMile(mile);
         }
         else {
-            this.appService.httpDelete("item/delete", { "ids": mile.id }, this, function (view, res) {
+            this.appService.httpDelete("item/deleteMilestone", { "ids": [mile.id] }, this, function (view, res) {
                 if (res.status == 200) {
                     view.deleteOneMile(mile);
                 }
@@ -443,7 +458,7 @@ var ProjectCreatePage = (function () {
 }());
 ProjectCreatePage = __decorate([
     Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Component"])({
-        selector: 'page-project-create',template:/*ion-inline-start:"/Users/zhaoliangchen/Desktop/qipaipm-company/src/pages/project-create/project-create.html"*/'<!--\n  Generated template for the ProjectCreatePage page.\n\n  See http://ionicframework.com/docs/components/#navigation for more info on\n  Ionic pages and navigation.\n-->\n<ion-header >\n  <ion-navbar >\n    <ion-title>{{viewTitle}}</ion-title>\n    <ion-buttons end >\n      <button ion-button (click)="onPublish()" color="danger">\n        {{this.project.itemName.length>0?"完成":"发布"}}\n      </button>\n    </ion-buttons>\n  </ion-navbar>\n</ion-header>\n\n\n<ion-content fullscreen>\n    <ion-list no-margin no-lines no-padding style="border-top: solid 10px #f5f6f7; border-bottom: solid 10px #f5f6f7;">\n      <ion-item>\n        <ion-icon item-start name="appname-pname"></ion-icon>\n        <ion-label>项目名称</ion-label>\n        <ion-input item-end text-right placeholder="请输入项目名称" [(ngModel)]="project.itemName"></ion-input>\n      </ion-item>\n    </ion-list>\n\n    <div style="height: 30px; border-bottom: solid 1px #ececec">\n      <div style="width: 5px; height: 30px; background-color: orange; float: left;"></div>\n      <ion-label no-margin no-padding style="line-height: 30px; margin-left: 10px; float: left;">项目启动</ion-label>\n    </div>\n    <ion-list no-lines no-padding no-margin style="border-bottom: solid 10px #f5f6f7;">\n      <ion-item style="border-bottom: solid 1px #ececec;">\n        <ion-icon item-start name="appname-time"></ion-icon>\n        <ion-label>交付时间</ion-label>\n        <ion-datetime item-end displayFormat="YYYY年MM月DD日" max="2030" min={{minTime}} [(ngModel)]="project.itemStartTime" cancelText="取消" doneText="确认"></ion-datetime>\n      </ion-item>\n      <ion-item style="border-bottom: solid 1px #ececec;">\n        <ion-icon item-start name="appname-result"></ion-icon>\n        <ion-label>交付成果</ion-label>\n        <ion-input item-end text-right placeholder="请输入交付成果" [(ngModel)]="project.itemStartResult" required></ion-input>\n      </ion-item>\n      <ion-item >\n        <ion-icon item-start name="appname-plan"></ion-icon>\n        <ion-label>项目级别</ion-label>\n        <ion-select interface="action-sheet" [(ngModel)]="project.itemLevel" cancelText="取消" doneText="确认">\n          <ion-option value="1">一级</ion-option>\n          <ion-option value="2">二级</ion-option>\n          <ion-option value="3">三级</ion-option>\n          <ion-option value="4">四级</ion-option>\n        </ion-select>\n      </ion-item>\n    </ion-list>\n\n    <div style="border-bottom: solid 10px #f5f6f7;" *ngFor="let mile of project.milestoneVo1">\n      <div style="height: 30px; border-bottom: solid 1px #ececec; ">\n        <div style="width: 5px; height: 30px; background-color: orange; float: left;"></div>\n        <ion-label no-margin no-padding style="line-height: 30px; margin-left: 10px; float: left;">{{mile.milestoneName}}</ion-label>\n        <div style="float: right; width: 30px; height: 30px;position: relative">\n          <ion-icon name="close" style="position: absolute; top: 50%; right: 0px; -webkit-transform: translateY(-50%); transform: translateY(-50%); margin-right: 10px; " (click)="onClickRemoveMilestone($event, mile)"></ion-icon>\n        </div>\n      </div>\n      <ion-list no-lines no-margin no-padding>\n        <ion-item style="border-bottom: solid 1px #ececec">\n          <ion-icon item-start name="appname-admin"></ion-icon>\n          <ion-label>负责人</ion-label>\n          <ion-input item-end text-right [(ngModel)]="mile.leader"></ion-input>\n        </ion-item>\n        <ion-item style="border-bottom: solid 1px #ececec">\n          <ion-icon item-start name="appname-time"></ion-icon>\n          <ion-label>交付时间</ion-label>\n          <ion-datetime item-end displayFormat="YYYY年MM月DD日" max="2030" min={{minTime}} cancelText="取消" doneText="确认"\n                        ngModel="{{mile.deliveryTime | stampToDate}}"\n                        (ngModelChange)="mile.deliveryTime = $event"></ion-datetime>\n        </ion-item>\n        <ion-item style="border-bottom: solid 1px #ececec">\n          <ion-icon item-start name="appname-plan"></ion-icon>\n          <ion-label>项目进度</ion-label>\n          <ion-select interface="action-sheet" [(ngModel)]="mile.itemProgress" cancelText="取消" doneText="确认">\n            <ion-option value="10%">10%</ion-option>\n            <ion-option value="20%">20%</ion-option>\n            <ion-option value="30%">30%</ion-option>\n            <ion-option value="40%">40%</ion-option>\n            <ion-option value="50%">50%</ion-option>\n            <ion-option value="60%">60%</ion-option>\n            <ion-option value="70%">70%</ion-option>\n            <ion-option value="80%">80%</ion-option>\n            <ion-option value="90%">90%</ion-option>\n            <ion-option value="100%">100%</ion-option>\n          </ion-select>\n        </ion-item>\n        <ion-item>\n          <ion-icon item-start name="appname-result"></ion-icon>\n          <ion-label>交付成果</ion-label>\n          <ion-textarea item-end text-right [(ngModel)]="mile.deliveryResult"></ion-textarea>\n        </ion-item>\n      </ion-list>\n    </div>\n\n\n    <div style="padding: 10px; border-bottom: solid 10px #f5f6f7">\n      <button ion-button (click)="onAddMilestone()" style="background-color: #fc5c53" block>+ 添加里程碑</button>\n    </div>\n\n    <div style="height: 30px; border-bottom: solid 1px #ececec">\n      <div style="width: 5px; height: 30px; background-color: orange; float: left;"></div>\n      <ion-label no-margin no-padding style="line-height: 30px; margin-left: 10px; float: left;">项目结束</ion-label>\n    </div>\n    <ion-list no-lines no-margin no-padding>\n      <button ion-item style="border-bottom: solid 1px #ececec" (click)="onEndDirector($event)">\n        <ion-icon item-start name="appname-admin"></ion-icon>\n        <ion-label item-start>负责人</ion-label>\n        <!--<ion-input item-end text-right placeholder="请输入负责人" [(ngModel)]="project.itemLeader"></ion-input>-->\n        <ion-label item-end text-right>{{project.itemEndLeader}}</ion-label>\n      </button>\n      <ion-item  style="border-bottom: solid 1px #ececec">\n        <ion-icon item-start name="appname-time"></ion-icon>\n        <ion-label>交付时间</ion-label>\n        <ion-datetime item-end displayFormat="YYYY年MM月DD日" max="2030" min="2015" cancelText="取消" doneText="确认" [(ngModel)]="project.endTime"></ion-datetime>\n      </ion-item>\n      <ion-item>\n        <ion-icon item-start name="appname-result"></ion-icon>\n        <ion-label>交付成果</ion-label>\n        <ion-textarea item-end text-right placeholder="请输入交付成果" [(ngModel)]="project.itemEndResult"></ion-textarea>\n      </ion-item>\n    </ion-list>\n  </ion-content>\n\n\n'/*ion-inline-end:"/Users/zhaoliangchen/Desktop/qipaipm-company/src/pages/project-create/project-create.html"*/,
+        selector: 'page-project-create',template:/*ion-inline-start:"/Users/zhaoliangchen/Desktop/qipaipm-company/src/pages/project-create/project-create.html"*/'<!--\n  Generated template for the ProjectCreatePage page.\n\n  See http://ionicframework.com/docs/components/#navigation for more info on\n  Ionic pages and navigation.\n-->\n<ion-header >\n  <ion-navbar >\n    <ion-title>{{viewTitle}}</ion-title>\n    <ion-buttons end >\n      <button ion-button (click)="onPublish()" color="danger">\n        {{this.project.itemName.length>0?"完成":"发布"}}\n      </button>\n    </ion-buttons>\n  </ion-navbar>\n</ion-header>\n\n\n<ion-content fullscreen>\n    <ion-list no-margin no-lines no-padding style="border-top: solid 10px #f5f6f7; border-bottom: solid 10px #f5f6f7;">\n      <ion-item>\n        <ion-icon item-start name="appname-pname"></ion-icon>\n        <ion-label>项目名称</ion-label>\n        <ion-input item-end text-right placeholder="请输入项目名称" [(ngModel)]="project.itemName"></ion-input>\n      </ion-item>\n    </ion-list>\n\n    <div style="height: 30px; border-bottom: solid 1px #ececec">\n      <div style="width: 5px; height: 30px; background-color: orange; float: left;"></div>\n      <ion-label no-margin no-padding style="line-height: 30px; margin-left: 10px; float: left;">项目启动</ion-label>\n    </div>\n    <ion-list no-lines no-padding no-margin style="border-bottom: solid 10px #f5f6f7;">\n      <ion-item style="border-bottom: solid 1px #ececec;">\n        <ion-icon item-start name="appname-time"></ion-icon>\n        <ion-label>交付时间</ion-label>\n        <ion-datetime item-end displayFormat="YYYY年MM月DD日" max="2030" min={{minTime}}\n                      ngModel="{{project.itemStartTime | stampToDate}}"\n                      (ngModelChange)="project.itemStartTime = $event"\n                      cancelText="取消" doneText="确认"></ion-datetime>\n      </ion-item>\n      <ion-item style="border-bottom: solid 1px #ececec;">\n        <ion-icon item-start name="appname-result"></ion-icon>\n        <ion-label>交付成果</ion-label>\n        <ion-input item-end text-right placeholder="请输入交付成果" [(ngModel)]="project.itemStartResult" required></ion-input>\n      </ion-item>\n      <ion-item >\n        <ion-icon item-start name="appname-plan"></ion-icon>\n        <ion-label>项目级别</ion-label>\n        <ion-select interface="action-sheet" [(ngModel)]="project.itemLevel" cancelText="取消" doneText="确认">\n          <ion-option value="1">一级</ion-option>\n          <ion-option value="2">二级</ion-option>\n          <ion-option value="3">三级</ion-option>\n          <ion-option value="4">四级</ion-option>\n        </ion-select>\n      </ion-item>\n    </ion-list>\n\n    <div style="border-bottom: solid 10px #f5f6f7;" *ngFor="let mile of project.milestoneVo1">\n      <div style="height: 30px; border-bottom: solid 1px #ececec; ">\n        <div style="width: 5px; height: 30px; background-color: orange; float: left;"></div>\n        <ion-label no-margin no-padding style="line-height: 30px; margin-left: 10px; float: left;">{{mile.milestoneName}}</ion-label>\n        <div style="float: right; width: 30px; height: 30px;position: relative">\n          <ion-icon name="close" style="position: absolute; top: 50%; right: 0px; -webkit-transform: translateY(-50%); transform: translateY(-50%); margin-right: 10px; " (click)="onClickRemoveMilestone($event, mile)"></ion-icon>\n        </div>\n      </div>\n      <ion-list no-lines no-margin no-padding>\n        <ion-item style="border-bottom: solid 1px #ececec">\n          <ion-icon item-start name="appname-admin"></ion-icon>\n          <ion-label>负责人</ion-label>\n          <ion-input item-end text-right [(ngModel)]="mile.itemEndLeader"></ion-input>\n        </ion-item>\n        <ion-item style="border-bottom: solid 1px #ececec">\n          <ion-icon item-start name="appname-time"></ion-icon>\n          <ion-label>交付时间</ion-label>\n          <ion-datetime item-end displayFormat="YYYY年MM月DD日" max="2030" min={{minTime}} cancelText="取消" doneText="确认"\n                        ngModel="{{mile.deliveryTime | stampToDate}}"\n                        (ngModelChange)="mile.deliveryTime = $event"></ion-datetime>\n        </ion-item>\n        <ion-item style="border-bottom: solid 1px #ececec">\n          <ion-icon item-start name="appname-plan"></ion-icon>\n          <ion-label>项目进度</ion-label>\n          <ion-select interface="action-sheet" [(ngModel)]="mile.itemProgress" cancelText="取消" doneText="确认">\n            <ion-option value="10%">10%</ion-option>\n            <ion-option value="20%">20%</ion-option>\n            <ion-option value="30%">30%</ion-option>\n            <ion-option value="40%">40%</ion-option>\n            <ion-option value="50%">50%</ion-option>\n            <ion-option value="60%">60%</ion-option>\n            <ion-option value="70%">70%</ion-option>\n            <ion-option value="80%">80%</ion-option>\n            <ion-option value="90%">90%</ion-option>\n            <ion-option value="100%">100%</ion-option>\n          </ion-select>\n        </ion-item>\n        <ion-item>\n          <ion-icon item-start name="appname-result"></ion-icon>\n          <ion-label>交付成果</ion-label>\n          <ion-textarea item-end text-right [(ngModel)]="mile.deliveryResult"></ion-textarea>\n        </ion-item>\n      </ion-list>\n    </div>\n\n\n    <div style="padding: 10px; border-bottom: solid 10px #f5f6f7">\n      <button ion-button (click)="onAddMilestone()" style="background-color: #fc5c53" block>+ 添加里程碑</button>\n    </div>\n\n    <div style="height: 30px; border-bottom: solid 1px #ececec">\n      <div style="width: 5px; height: 30px; background-color: orange; float: left;"></div>\n      <ion-label no-margin no-padding style="line-height: 30px; margin-left: 10px; float: left;">项目结束</ion-label>\n    </div>\n    <ion-list no-lines no-margin no-padding>\n      <button ion-item style="border-bottom: solid 1px #ececec" (click)="onEndDirector($event)">\n        <ion-icon item-start name="appname-admin"></ion-icon>\n        <ion-label item-start>负责人</ion-label>\n        <!--<ion-input item-end text-right placeholder="请输入负责人" [(ngModel)]="project.itemLeader"></ion-input>-->\n        <ion-label item-end text-right>{{project.itemEndLeader}}</ion-label>\n      </button>\n      <ion-item  style="border-bottom: solid 1px #ececec">\n        <ion-icon item-start name="appname-time"></ion-icon>\n        <ion-label>交付时间</ion-label>\n        <ion-datetime item-end displayFormat="YYYY年MM月DD日" max="2030" min={{minTime}}\n                      cancelText="取消" doneText="确认"\n                      ngModel="{{project.endTime | stampToDate}}"\n                      (ngModelChange)="project.endTime = $event"></ion-datetime>\n      </ion-item>\n      <ion-item>\n        <ion-icon item-start name="appname-result"></ion-icon>\n        <ion-label>交付成果</ion-label>\n        <ion-textarea item-end text-right placeholder="请输入交付成果" [(ngModel)]="project.itemEndResult"></ion-textarea>\n      </ion-item>\n    </ion-list>\n  </ion-content>\n\n\n'/*ion-inline-end:"/Users/zhaoliangchen/Desktop/qipaipm-company/src/pages/project-create/project-create.html"*/,
     })
     /*
     @ApiModelProperty(value = "项目id")
@@ -492,27 +507,28 @@ ProjectCreatePage = __decorate([
      */
     //未开始(07010010)    进行中(07010020)      延期(07010030)     已结束(07010040)
     ,
-    __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["NavController"] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["NavController"]) === "function" && _a || Object, typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["NavParams"] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["NavParams"]) === "function" && _b || Object, typeof (_c = typeof __WEBPACK_IMPORTED_MODULE_4__app_app_service__["a" /* AppService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_4__app_app_service__["a" /* AppService */]) === "function" && _c || Object, typeof (_d = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["ToastController"] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["ToastController"]) === "function" && _d || Object, typeof (_e = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["Events"] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["Events"]) === "function" && _e || Object, typeof (_f = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["AlertController"] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["AlertController"]) === "function" && _f || Object])
+    __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["NavController"], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["NavParams"],
+        __WEBPACK_IMPORTED_MODULE_4__app_app_service__["a" /* AppService */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["ToastController"],
+        __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["Events"], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["AlertController"]])
 ], ProjectCreatePage);
 
-var _a, _b, _c, _d, _e, _f;
 //# sourceMappingURL=project-create.js.map
 
 /***/ }),
 
-/***/ 118:
+/***/ 115:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return MilestoneDetailPage; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(1);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(12);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__subtask_subtask__ = __webpack_require__(119);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__subtask_subtask__ = __webpack_require__(116);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__angular_common__ = __webpack_require__(29);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__app_app_service__ = __webpack_require__(24);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__app_app_config__ = __webpack_require__(25);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__contact_contact__ = __webpack_require__(61);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__app_app_singleton__ = __webpack_require__(42);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__contact_contact__ = __webpack_require__(60);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__app_app_singleton__ = __webpack_require__(37);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -547,8 +563,8 @@ var MilestoneDetailPage = (function () {
         this.milestone = {
             id: '',
             milestoneName: '',
-            leader: '',
-            leaderEmpNum: '',
+            itemEndLeader: '',
+            itemEndLeaderNum: '',
             deliveryResult: '',
             // milestoneSchedule : '',     //里程碑的进度
             itemProgress: '',
@@ -563,6 +579,7 @@ var MilestoneDetailPage = (function () {
         };
         this.canEdit = true;
         this.canFinish = false;
+        this.minTime = new __WEBPACK_IMPORTED_MODULE_3__angular_common__["c" /* DatePipe */]('en-US').transform(new Date(), 'yyyy-MM-dd');
         this.subtaskCallback = function (subtask) {
             return new Promise(function (resolve, reject) {
                 if (typeof (subtask) != 'undefined') {
@@ -634,7 +651,7 @@ var MilestoneDetailPage = (function () {
             if (__WEBPACK_IMPORTED_MODULE_7__app_app_singleton__["a" /* AppSingleton */].getInstance().currentUserInfo.username != this.project.founderEmpNum) {
                 this.canEdit = false;
             }
-            if (__WEBPACK_IMPORTED_MODULE_7__app_app_singleton__["a" /* AppSingleton */].getInstance().currentUserInfo.username == this.milestone.leaderEmpNum) {
+            if (__WEBPACK_IMPORTED_MODULE_7__app_app_singleton__["a" /* AppSingleton */].getInstance().currentUserInfo.username == this.milestone.itemEndLeaderNum) {
                 this.canFinish = true;
             }
         }
@@ -642,8 +659,8 @@ var MilestoneDetailPage = (function () {
     MilestoneDetailPage.prototype.ionViewDidLoad = function () {
         var _this = this;
         this.events.subscribe('onConfirmMilestoneLeader', function (leader) {
-            _this.tempMilestone.leader = leader.name;
-            _this.tempMilestone.leaderEmpNum = leader.username;
+            _this.tempMilestone.itemEndLeader = leader.name;
+            _this.tempMilestone.itemEndLeaderNum = leader.username;
         });
     };
     MilestoneDetailPage.prototype.ionViewWillUnload = function () {
@@ -743,8 +760,8 @@ var MilestoneDetailPage = (function () {
         var subtask = {
             id: '',
             subtaskName: '子任务' + (this.tempMilestone.children.length + 1),
-            leader: '',
-            leaderEmpNum: '',
+            itemEndLeader: '',
+            itemEndLeaderNum: '',
             deliveryTime: new __WEBPACK_IMPORTED_MODULE_3__angular_common__["c" /* DatePipe */]('en-US').transform(new Date(), 'yyyy-MM-dd'),
             deliveryResult: '',
             planTime: new __WEBPACK_IMPORTED_MODULE_3__angular_common__["c" /* DatePipe */]('en-US').transform(new Date(), 'yyyy-MM-dd'),
@@ -796,7 +813,7 @@ __decorate([
 ], MilestoneDetailPage.prototype, "content", void 0);
 MilestoneDetailPage = __decorate([
     Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Component"])({
-        selector: 'page-milestone-detail',template:/*ion-inline-start:"/Users/zhaoliangchen/Desktop/qipaipm-company/src/pages/milestone-detail/milestone-detail.html"*/'<!--\n  Generated template for the MilestoneDetailPage page.\n\n  See http://ionicframework.com/docs/components/#navigation for more info on\n  Ionic pages and navigation.\n-->\n<ion-header>\n\n  <ion-navbar>\n    <ion-title>\n      {{this.type==1?"新建里程碑":"里程碑详情"}}\n    </ion-title>\n    <ion-buttons end >\n      <button ion-button (click)="onSaveMilestone($event)" style="color: #fc5c53"\n            [hidden]="(canEdit==false||canFinish==false)&&type!=1">\n        保存\n      </button>\n    </ion-buttons>\n  </ion-navbar>\n\n</ion-header>\n\n\n<ion-content fullscreen>\n  <ion-list no-padding no-lines style="margin-bottom: 0px; border-bottom: solid 1px #ececec">\n    <ion-item >\n      <ion-icon item-start name="appname-pname"></ion-icon>\n      <ion-label>项目名称:</ion-label>\n      <ion-label right text-right>{{this.project.itemName}}</ion-label>\n    </ion-item>\n  </ion-list>\n\n  <ion-label full style="text-align: center">{{tempMilestone.milestoneName}}</ion-label>\n\n  <ion-list no-lines style="border: solid 1px #ececec">\n    <button ion-item style="border-bottom: solid 1px #ececec" (click)="onMilestoneLeader($event)" [disabled]="canEdit==false">\n      <ion-icon item-start name="appname-admin"></ion-icon>\n      <ion-label item-start>负责人:</ion-label>\n      <ion-label item-end text-right>{{tempMilestone.leader}}</ion-label>\n    </button>\n    <!--<ion-item style="border-bottom: solid 1px #ececec;">-->\n      <!--<ion-icon item-start name="appname-admin"></ion-icon>-->\n      <!--<ion-label>负责人:</ion-label>-->\n      <!--<ion-input text-right type="text" [(ngModel)]="tempMilestone.milestoneLeader" required [disabled]=""></ion-input>-->\n    <!--</ion-item>-->\n    <ion-item style="border-bottom: solid 1px #ececec;">\n      <ion-icon item-start name="appname-time"></ion-icon>\n      <ion-label>交付时间:</ion-label>\n      <ion-datetime text-right displayFormat="YYYY-MM-DD" max="2030" min="2015" cancelText="取消" doneText="确认" required [disabled]="canEdit==false"\n                    ngModel="{{tempMilestone.deliveryTime | stampToDate}}"\n                    (ngModelChange)="tempMilestone.deliveryTime = $event">\n      </ion-datetime>\n    </ion-item>\n    <ion-item style="border-bottom: solid 1px #ececec"  >\n      <ion-icon item-start name="appname-plan"></ion-icon>\n      <ion-label>项目进度</ion-label>\n      <ion-select interface="action-sheet" [(ngModel)]="tempMilestone.itemProgress" cancelText="取消" doneText="确认" [disabled]="canEdit==false">\n        <ion-option value="10%">10%</ion-option>\n        <ion-option value="20%">20%</ion-option>\n        <ion-option value="30%">30%</ion-option>\n        <ion-option value="40%">40%</ion-option>\n        <ion-option value="50%">50%</ion-option>\n        <ion-option value="60%">60%</ion-option>\n        <ion-option value="70%">70%</ion-option>\n        <ion-option value="80%">80%</ion-option>\n        <ion-option value="90%">90%</ion-option>\n        <ion-option value="100%">100%</ion-option>\n      </ion-select>\n    </ion-item>\n    <ion-item style="border-bottom: solid 1px #ececec;"  >\n      <ion-icon item-start name="appname-result"></ion-icon>\n      <ion-label no-padding no-margin>交付成果:</ion-label>\n      <ion-input text-right type="text" [(ngModel)]="tempMilestone.deliveryResult" required [disabled]="canEdit==false"></ion-input>\n    </ion-item>\n    <ion-item *ngIf="tempMilestone.delay > 0" style="border-bottom: solid 1px #ececec;" >\n      <ion-label >延迟情况:</ion-label>\n      <ion-label text-right item-end></ion-label>\n    </ion-item>\n  </ion-list>\n\n  <ion-list no-lines no-padding no-margin *ngIf="this.tempMilestone.id.length>0">\n    <ion-item style="border-top: solid 1px #ececec;border-bottom: solid 1px #ececec">\n      <div item-start>是否完成</div>\n      <ion-label>完成</ion-label>\n      <ion-checkbox [(ngModel)]="tempMilestone.itemIsEnd" [disabled]="canFinish==false"></ion-checkbox>\n    </ion-item>\n    <ion-item style="border-bottom: solid 10px #ececec; height: 100px;" >\n      <ion-label item-start>备注:</ion-label>\n      <ion-textarea item-end no-padding no-margin [(ngModel)]="tempMilestone.remark" [disabled]="canFinish==false"></ion-textarea>\n    </ion-item>\n  </ion-list>\n\n  <div *ngFor="let subtask of tempMilestone.children; let i = index">\n    <div style="height: 30px; border-bottom: solid 1px #ececec; ">\n      <div style="width: 5px; height: 30px; background-color: #555555; float: left;"></div>\n      <ion-label no-margin no-padding style="line-height: 30px; margin-left: 10px; float: left;">{{subtask.subtaskName}}</ion-label>\n      <div style="float: right; width: 30px; height: 30px;position: relative">\n        <ion-icon name="close" style="position: absolute; top: 50%; right: 0px; -webkit-transform: translateY(-50%); transform: translateY(-50%); margin-right: 10px; " (click)="onRemoveSubtask($event, subtask)"></ion-icon>\n      </div>\n    </div>\n    <ion-list no-lines no-padding no-margin>\n      <ion-item style="border-bottom: solid 1px #ececec;">\n        <ion-icon item-start name="appname-admin"></ion-icon>\n        <ion-label>负责人:</ion-label>\n        <ion-input text-right type="text" [(ngModel)]="subtask.leader" required [disabled]="canEdit==false||type==2"></ion-input>\n      </ion-item>\n      <ion-item style="border-bottom: solid 1px #ececec;">\n        <ion-icon item-start name="appname-time"></ion-icon>\n        <ion-label>交付时间</ion-label>\n        <ion-datetime item-end displayFormat="YYYY年MM月DD日" max="2030" min="2015" cancelText="取消" doneText="确认"\n                      ngModel="{{subtask.deliveryTime | stampToDate}}"\n                      (ngModelChange)="subtask.deliveryTime = $event"\n                      [disabled]="canEdit==false||type==2"></ion-datetime>\n      </ion-item>\n      <ion-item style="border-bottom: solid 10px #ececec;">\n        <ion-icon item-start name="appname-result"></ion-icon>\n        <ion-label no-padding no-margin>交付成果:</ion-label>\n        <ion-input text-right type="text" [(ngModel)]="subtask.deliveryResult" required [disabled]="canEdit==false||type==2"></ion-input>\n      </ion-item>\n    </ion-list>\n  </div>\n\n  <div style="padding: 10px;" *ngIf="this.tempMilestone.id.length>0&&canEdit==true">\n    <button ion-button (click)="onAddSubtask($event)" block style="background-color: #fc5c53">+ 添加子任务</button>\n  </div>\n</ion-content>\n'/*ion-inline-end:"/Users/zhaoliangchen/Desktop/qipaipm-company/src/pages/milestone-detail/milestone-detail.html"*/,
+        selector: 'page-milestone-detail',template:/*ion-inline-start:"/Users/zhaoliangchen/Desktop/qipaipm-company/src/pages/milestone-detail/milestone-detail.html"*/'<!--\n  Generated template for the MilestoneDetailPage page.\n\n  See http://ionicframework.com/docs/components/#navigation for more info on\n  Ionic pages and navigation.\n-->\n<ion-header>\n\n  <ion-navbar>\n    <ion-title>\n      {{this.type==1?"新建里程碑":"里程碑详情"}}\n    </ion-title>\n    <ion-buttons end >\n      <button ion-button (click)="onSaveMilestone($event)" style="color: #fc5c53"\n            [hidden]="(canEdit==false||canFinish==false)&&type!=1">\n        保存\n      </button>\n    </ion-buttons>\n  </ion-navbar>\n\n</ion-header>\n\n\n<ion-content fullscreen>\n  <ion-list no-padding no-lines style="margin-bottom: 0px; border-bottom: solid 1px #ececec">\n    <ion-item >\n      <ion-icon item-start name="appname-pname"></ion-icon>\n      <ion-label>项目名称:</ion-label>\n      <ion-label right text-right>{{this.project.itemName}}</ion-label>\n    </ion-item>\n  </ion-list>\n\n  <ion-label full style="text-align: center">{{tempMilestone.milestoneName}}</ion-label>\n\n  <ion-list no-lines style="border: solid 1px #ececec">\n    <button ion-item style="border-bottom: solid 1px #ececec" (click)="onMilestoneLeader($event)" [disabled]="canEdit==false">\n      <ion-icon item-start name="appname-admin"></ion-icon>\n      <ion-label item-start>负责人:</ion-label>\n      <ion-label item-end text-right>{{tempMilestone.itemEndLeader}}</ion-label>\n    </button>\n    <!--<ion-item style="border-bottom: solid 1px #ececec;">-->\n      <!--<ion-icon item-start name="appname-admin"></ion-icon>-->\n      <!--<ion-label>负责人:</ion-label>-->\n      <!--<ion-input text-right type="text" [(ngModel)]="tempMilestone.milestoneLeader" required [disabled]=""></ion-input>-->\n    <!--</ion-item>-->\n    <ion-item style="border-bottom: solid 1px #ececec;">\n      <ion-icon item-start name="appname-time"></ion-icon>\n      <ion-label>交付时间:</ion-label>\n      <ion-datetime text-right displayFormat="YYYY-MM-DD" max="2030" min={{minTime}} cancelText="取消" doneText="确认" required [disabled]="canEdit==false"\n                    ngModel="{{tempMilestone.deliveryTime | stampToDate}}"\n                    (ngModelChange)="tempMilestone.deliveryTime = $event">\n      </ion-datetime>\n    </ion-item>\n    <ion-item style="border-bottom: solid 1px #ececec"  >\n      <ion-icon item-start name="appname-plan"></ion-icon>\n      <ion-label>项目进度</ion-label>\n      <ion-select interface="action-sheet" [(ngModel)]="tempMilestone.itemProgress" cancelText="取消" doneText="确认" [disabled]="canEdit==false">\n        <ion-option value="10%">10%</ion-option>\n        <ion-option value="20%">20%</ion-option>\n        <ion-option value="30%">30%</ion-option>\n        <ion-option value="40%">40%</ion-option>\n        <ion-option value="50%">50%</ion-option>\n        <ion-option value="60%">60%</ion-option>\n        <ion-option value="70%">70%</ion-option>\n        <ion-option value="80%">80%</ion-option>\n        <ion-option value="90%">90%</ion-option>\n        <ion-option value="100%">100%</ion-option>\n      </ion-select>\n    </ion-item>\n    <ion-item style="border-bottom: solid 1px #ececec;"  >\n      <ion-icon item-start name="appname-result"></ion-icon>\n      <ion-label no-padding no-margin>交付成果:</ion-label>\n      <ion-input text-right type="text" [(ngModel)]="tempMilestone.deliveryResult" required [disabled]="canEdit==false"></ion-input>\n    </ion-item>\n    <ion-item *ngIf="tempMilestone.delay > 0" style="border-bottom: solid 1px #ececec;" >\n      <ion-label >延迟情况:</ion-label>\n      <ion-label text-right item-end></ion-label>\n    </ion-item>\n  </ion-list>\n\n  <ion-list no-lines no-padding no-margin *ngIf="this.tempMilestone.id.length>0">\n    <ion-item style="border-top: solid 1px #ececec;border-bottom: solid 1px #ececec">\n      <div item-start>是否完成</div>\n      <ion-label>完成</ion-label>\n      <ion-checkbox [(ngModel)]="tempMilestone.itemIsEnd" [disabled]="canFinish==false"></ion-checkbox>\n    </ion-item>\n    <ion-item style="border-bottom: solid 10px #ececec; height: 100px;" >\n      <ion-label item-start>备注:</ion-label>\n      <ion-textarea item-end no-padding no-margin [(ngModel)]="tempMilestone.remark" [disabled]="canFinish==false"></ion-textarea>\n    </ion-item>\n  </ion-list>\n\n  <div *ngFor="let subtask of tempMilestone.children; let i = index">\n    <div style="height: 30px; border-bottom: solid 1px #ececec; ">\n      <div style="width: 5px; height: 30px; background-color: #555555; float: left;"></div>\n      <ion-label no-margin no-padding style="line-height: 30px; margin-left: 10px; float: left;">{{subtask.subtaskName}}</ion-label>\n      <div style="float: right; width: 30px; height: 30px;position: relative">\n        <ion-icon name="close" style="position: absolute; top: 50%; right: 0px; -webkit-transform: translateY(-50%); transform: translateY(-50%); margin-right: 10px; " (click)="onRemoveSubtask($event, subtask)"></ion-icon>\n      </div>\n    </div>\n    <ion-list no-lines no-padding no-margin>\n      <ion-item style="border-bottom: solid 1px #ececec;">\n        <ion-icon item-start name="appname-admin"></ion-icon>\n        <ion-label>负责人:</ion-label>\n        <ion-input text-right type="text" [(ngModel)]="subtask.itemEndLeader"\n                   required [disabled]="type==2"></ion-input>\n      </ion-item>\n      <ion-item style="border-bottom: solid 1px #ececec;">\n        <ion-icon item-start name="appname-time"></ion-icon>\n        <ion-label>交付时间</ion-label>\n        <ion-datetime item-end displayFormat="YYYY年MM月DD日" max="2030" min="2015" cancelText="取消" doneText="确认"\n                      ngModel="{{subtask.deliveryTime | stampToDate}}"\n                      (ngModelChange)="subtask.deliveryTime = $event"\n                      [disabled]="type==2"></ion-datetime>\n      </ion-item>\n      <ion-item style="border-bottom: solid 10px #ececec;">\n        <ion-icon item-start name="appname-result"></ion-icon>\n        <ion-label no-padding no-margin>交付成果:</ion-label>\n        <ion-input text-right type="text" [(ngModel)]="subtask.deliveryResult"\n                   required [disabled]="type==2"></ion-input>\n      </ion-item>\n    </ion-list>\n  </div>\n\n  <div style="padding: 10px;" *ngIf="this.tempMilestone.id.length>0&&canEdit==true">\n    <button ion-button (click)="onAddSubtask($event)" block style="background-color: #fc5c53">+ 添加子任务</button>\n  </div>\n</ion-content>\n'/*ion-inline-end:"/Users/zhaoliangchen/Desktop/qipaipm-company/src/pages/milestone-detail/milestone-detail.html"*/,
     })
     /*
         @ApiModelProperty(value = "里程碑id")
@@ -823,7 +840,7 @@ var _a, _b, _c, _d, _e, _f;
 
 /***/ }),
 
-/***/ 119:
+/***/ 116:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -832,9 +849,9 @@ var _a, _b, _c, _d, _e, _f;
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(12);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__app_app_config__ = __webpack_require__(25);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__app_app_service__ = __webpack_require__(24);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__contact_contact__ = __webpack_require__(61);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__contact_contact__ = __webpack_require__(60);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__angular_common__ = __webpack_require__(29);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__app_app_singleton__ = __webpack_require__(42);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__app_app_singleton__ = __webpack_require__(37);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -866,8 +883,8 @@ var SubtaskPage = (function () {
         this.subtask = {
             id: '',
             subtaskName: '',
-            leader: '',
-            leaderEmpNum: '',
+            itemEndLeader: '',
+            itemEndLeaderNum: '',
             deliveryTime: new __WEBPACK_IMPORTED_MODULE_5__angular_common__["c" /* DatePipe */]('en-US').transform(new Date(), 'yyyy-MM-dd'),
             deliveryResult: '',
             planTime: new __WEBPACK_IMPORTED_MODULE_5__angular_common__["c" /* DatePipe */]('en-US').transform(new Date(), 'yyyy-MM-dd'),
@@ -888,7 +905,7 @@ var SubtaskPage = (function () {
         }
         this.tempSubtask = __WEBPACK_IMPORTED_MODULE_2__app_app_config__["a" /* AppConfig */].deepCopy(this.subtask);
         if (this.type == 2) {
-            if (this.subtask.leaderEmpNum != __WEBPACK_IMPORTED_MODULE_6__app_app_singleton__["a" /* AppSingleton */].getInstance().currentUserInfo.username) {
+            if (this.subtask.itemEndLeaderNum != __WEBPACK_IMPORTED_MODULE_6__app_app_singleton__["a" /* AppSingleton */].getInstance().currentUserInfo.username) {
                 this.canEdit = false;
             }
         }
@@ -896,8 +913,8 @@ var SubtaskPage = (function () {
     SubtaskPage.prototype.ionViewDidLoad = function () {
         var _this = this;
         this.events.subscribe('onConfirmSubtaskLeader', function (leader) {
-            _this.tempSubtask.leader = leader.name;
-            _this.tempSubtask.leaderEmpNum = leader.username;
+            _this.tempSubtask.itemEndLeader = leader.name;
+            _this.tempSubtask.itemEndLeaderNum = leader.username;
         });
     };
     SubtaskPage.prototype.ionViewWillUnload = function () {
@@ -918,7 +935,6 @@ var SubtaskPage = (function () {
         //     });
         // } else {
         param.projectinfo = this.milestone;
-        console.log(param);
         //param.sid = this.tempSubtask.id;
         this.appService.httpPost("item/createSubtask", param, this, function (view, res) {
             if (res.status == 200) {
@@ -943,7 +959,7 @@ var SubtaskPage = (function () {
 }());
 SubtaskPage = __decorate([
     Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Component"])({
-        selector: 'page-subtask',template:/*ion-inline-start:"/Users/zhaoliangchen/Desktop/qipaipm-company/src/pages/subtask/subtask.html"*/'<ion-header>\n\n  <ion-navbar>\n    <ion-title>子任务</ion-title>\n    <ion-buttons end >\n      <button ion-button (click)="onSaveSubtask()" color="danger">\n        保存\n      </button>\n    </ion-buttons>\n  </ion-navbar>\n</ion-header>\n\n\n<ion-content fullscreen>\n  <ion-list no-padding no-lines style="margin-bottom: 0px; border-bottom: solid 1px #ececec">\n    <ion-item >\n      <ion-icon item-start name="appname-pname"></ion-icon>\n      <ion-label>项目名称:</ion-label>\n      <ion-label right text-right>{{projectname}}</ion-label>\n    </ion-item>\n  </ion-list>\n  <ion-label full class="subtask-title-css">{{tempSubtask.subtaskName}}</ion-label>\n\n  <ion-list no-lines style="border: solid 1px #ececec">\n    <button ion-item style="border-bottom: solid 1px #ececec" (click)="onSubtaskLeader($event)" [disabled]="type==2">\n      <ion-icon item-start name="appname-admin"></ion-icon>\n      <ion-label item-start>负责人:</ion-label>\n      <ion-label item-end text-right>{{tempSubtask.leader}}</ion-label>\n    </button>\n    <!--<ion-item style="border-bottom: solid 1px #ececec;">-->\n      <!--<ion-icon item-start name="appname-admin"></ion-icon>-->\n      <!--<ion-label>负责人:</ion-label>-->\n      <!--<ion-input text-right type="text" [(ngModel)]="tempSubtask.subtaskLeader" required [disabled]=""></ion-input>-->\n    <!--</ion-item>-->\n    <ion-item style="border-bottom: solid 1px #ececec;">\n      <ion-icon item-start name="appname-time"></ion-icon>\n      <ion-label>交付时间:</ion-label>\n      <ion-datetime text-right displayFormat="YYYY-MM-DD" max="2030" min={{minTime}} cancelText="取消" doneText="确认"\n                    ngModel="{{tempSubtask.deliveryTime | stampToDate}}"\n                    (ngModelChange)="tempSubtask.deliveryTime = $event" [disabled]="type==2"></ion-datetime>\n    </ion-item>\n    <ion-item>\n      <ion-icon item-start name="appname-result"></ion-icon>\n      <ion-label>交付成果:</ion-label>\n      <ion-input text-right type="text" [(ngModel)]=tempSubtask.deliveryResult [disabled]="type==2"></ion-input>\n    </ion-item>\n    <ion-item *ngIf="tempSubtask.delayDays>0">\n      <ion-label>延迟情况:</ion-label>\n      <ion-label text-right item-end>{{tempSubtask.delayDays | delayPipe}}</ion-label>\n    </ion-item>\n  </ion-list>\n\n  <ion-list no-lines="" [hidden]="this.type==1">\n    <ion-item style="border-top: solid 1px #ececec;border-bottom: solid 1px #ececec">\n      <div item-start>是否完成</div>\n      <ion-label>完成</ion-label>\n      <ion-checkbox [(ngModel)]=tempSubtask.itemIsEnd [disabled]="canEdit==false"></ion-checkbox>\n    </ion-item>\n    <ion-item style="border-bottom: solid 1px #ececec; height: 100px;">\n      <ion-label item-start>备注:</ion-label>\n      <ion-textarea item-end [(ngModel)]=tempSubtask.remark [disabled]="canEdit==false"></ion-textarea>\n    </ion-item>\n  </ion-list>\n</ion-content>\n'/*ion-inline-end:"/Users/zhaoliangchen/Desktop/qipaipm-company/src/pages/subtask/subtask.html"*/,
+        selector: 'page-subtask',template:/*ion-inline-start:"/Users/zhaoliangchen/Desktop/qipaipm-company/src/pages/subtask/subtask.html"*/'<ion-header>\n\n  <ion-navbar>\n    <ion-title>子任务</ion-title>\n    <ion-buttons end >\n      <button ion-button (click)="onSaveSubtask()" color="danger">\n        保存\n      </button>\n    </ion-buttons>\n  </ion-navbar>\n</ion-header>\n\n\n<ion-content fullscreen>\n  <ion-list no-padding no-lines style="margin-bottom: 0px; border-bottom: solid 1px #ececec">\n    <ion-item >\n      <ion-icon item-start name="appname-pname"></ion-icon>\n      <ion-label>项目名称:</ion-label>\n      <ion-label right text-right>{{projectname}}</ion-label>\n    </ion-item>\n  </ion-list>\n  <ion-label full class="subtask-title-css">{{tempSubtask.subtaskName}}</ion-label>\n\n  <ion-list no-lines style="border: solid 1px #ececec">\n    <button ion-item style="border-bottom: solid 1px #ececec" (click)="onSubtaskLeader($event)" [disabled]="type==2">\n      <ion-icon item-start name="appname-admin"></ion-icon>\n      <ion-label item-start>负责人:</ion-label>\n      <ion-label item-end text-right>{{tempSubtask.itemEndLeader}}</ion-label>\n    </button>\n    <!--<ion-item style="border-bottom: solid 1px #ececec;">-->\n      <!--<ion-icon item-start name="appname-admin"></ion-icon>-->\n      <!--<ion-label>负责人:</ion-label>-->\n      <!--<ion-input text-right type="text" [(ngModel)]="tempSubtask.subtaskLeader" required [disabled]=""></ion-input>-->\n    <!--</ion-item>-->\n    <ion-item style="border-bottom: solid 1px #ececec;">\n      <ion-icon item-start name="appname-time"></ion-icon>\n      <ion-label>交付时间:</ion-label>\n      <ion-datetime text-right displayFormat="YYYY-MM-DD" max="2030" min={{minTime}} cancelText="取消" doneText="确认"\n                    ngModel="{{tempSubtask.deliveryTime | stampToDate}}"\n                    (ngModelChange)="tempSubtask.deliveryTime = $event" [disabled]="type==2"></ion-datetime>\n    </ion-item>\n    <ion-item>\n      <ion-icon item-start name="appname-result"></ion-icon>\n      <ion-label>交付成果:</ion-label>\n      <ion-input text-right type="text" [(ngModel)]=tempSubtask.deliveryResult [disabled]="type==2"></ion-input>\n    </ion-item>\n    <ion-item *ngIf="tempSubtask.delayDays>0">\n      <ion-label>延迟情况:</ion-label>\n      <ion-label text-right item-end>{{tempSubtask.delayDays | delayPipe}}</ion-label>\n    </ion-item>\n  </ion-list>\n\n  <ion-list no-lines="" [hidden]="this.type==1">\n    <ion-item style="border-top: solid 1px #ececec;border-bottom: solid 1px #ececec">\n      <div item-start>是否完成</div>\n      <ion-label>完成</ion-label>\n      <ion-checkbox [(ngModel)]=tempSubtask.itemIsEnd [disabled]="canEdit==false"></ion-checkbox>\n    </ion-item>\n    <ion-item style="border-bottom: solid 1px #ececec; height: 100px;">\n      <ion-label item-start>备注:</ion-label>\n      <ion-textarea item-end [(ngModel)]=tempSubtask.remark [disabled]="canEdit==false"></ion-textarea>\n    </ion-item>\n  </ion-list>\n</ion-content>\n'/*ion-inline-end:"/Users/zhaoliangchen/Desktop/qipaipm-company/src/pages/subtask/subtask.html"*/,
     })
     /*
         @ApiModelProperty(value = "子任务的id")
@@ -973,7 +989,7 @@ SubtaskPage = __decorate([
 
 /***/ }),
 
-/***/ 120:
+/***/ 117:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -981,12 +997,13 @@ SubtaskPage = __decorate([
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "b", function() { return ProjectDetailPage; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(1);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(12);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__subtask_subtask__ = __webpack_require__(119);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__milestone_detail_milestone_detail__ = __webpack_require__(118);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__project_create_project_create__ = __webpack_require__(117);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__subtask_subtask__ = __webpack_require__(116);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__milestone_detail_milestone_detail__ = __webpack_require__(115);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__project_create_project_create__ = __webpack_require__(114);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__app_app_service__ = __webpack_require__(24);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__app_app_config__ = __webpack_require__(25);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__angular_common__ = __webpack_require__(29);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__app_app_singleton__ = __webpack_require__(37);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -996,6 +1013,7 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
+
 
 
 
@@ -1019,6 +1037,7 @@ var PopoverPage = (function () {
     PopoverPage.prototype.ngOnInit = function () {
         if (this.navParams.data) {
             this.contentEle = this.navParams.data.contentEle;
+            this.canShow = this.navParams.data.canShow;
         }
     };
     PopoverPage.prototype.onClickEdit = function ($event) {
@@ -1045,9 +1064,9 @@ var PopoverPage = (function () {
 }());
 PopoverPage = __decorate([
     Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Component"])({
-        template: "\n    <ion-list>\n      <ion-item (click)=\"onClickEdit($event)\">\n        <ion-icon name=\"appname-edit\" item-start></ion-icon>\n        \u7F16\u8F91\n      </ion-item>\n      <ion-item (click)=\"onClickShare($event)\">\n        <ion-icon name=\"appname-share\" item-start></ion-icon>\n        \u5206\u4EAB\n      </ion-item>\n      <ion-item (click)=\"onClickDelete($event)\">\n        <ion-icon name=\"appname-delete\" item-start></ion-icon>\n        \u5220\u9664\n      </ion-item>\n      <ion-item (click)=\"onClickFinish($event)\">\n        <ion-icon name=\"appname-finish\" item-start></ion-icon>\n        \u7ED3\u675F\n      </ion-item>\n      <ion-item (click)=\"onClickDelay($event)\">\n        <ion-icon name=\"appname-delay\" item-start></ion-icon>\n        \u5EF6\u671F\n      </ion-item>\n    </ion-list>\n  "
+        template: "\n    <ion-list>\n      <ion-item (click)=\"onClickEdit($event)\" [hidden]=\"!canShow\">\n        <ion-icon name=\"appname-edit\" item-start></ion-icon>\n        \u7F16\u8F91\n      </ion-item>\n      <ion-item (click)=\"onClickShare($event)\">\n        <ion-icon name=\"appname-share\" item-start></ion-icon>\n        \u5206\u4EAB\n      </ion-item>\n      <ion-item (click)=\"onClickDelete($event)\" [hidden]=\"!canShow\">\n        <ion-icon name=\"appname-delete\" item-start></ion-icon>\n        \u5220\u9664\n      </ion-item>\n      <ion-item (click)=\"onClickFinish($event)\" [hidden]=\"!canShow\">\n        <ion-icon name=\"appname-finish\" item-start></ion-icon>\n        \u7ED3\u675F\n      </ion-item>\n      <ion-item (click)=\"onClickDelay($event)\" [hidden]=\"!canShow\">\n        <ion-icon name=\"appname-delay\" item-start></ion-icon>\n        \u5EF6\u671F\n      </ion-item>\n    </ion-list>\n  "
     }),
-    __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["ViewController"] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["ViewController"]) === "function" && _a || Object, typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["NavParams"] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["NavParams"]) === "function" && _b || Object, typeof (_c = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["Events"] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["Events"]) === "function" && _c || Object])
+    __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["ViewController"], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["NavParams"], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["Events"]])
 ], PopoverPage);
 
 var ProjectDetailPage = (function () {
@@ -1258,8 +1277,13 @@ var ProjectDetailPage = (function () {
     ProjectDetailPage.prototype.ionViewCanLeave = function () {
     };
     ProjectDetailPage.prototype.presentPopover = function ($event) {
+        var canShow = true;
+        if (__WEBPACK_IMPORTED_MODULE_8__app_app_singleton__["a" /* AppSingleton */].getInstance().currentUserInfo.username != this.project.founderEmpNum) {
+            canShow = false;
+        }
         var popover = this.popoverCtrl.create(PopoverPage, {
             contentEle: this.content.nativeElement,
+            canShow: canShow,
         });
         popover.present({
             ev: event
@@ -1387,21 +1411,21 @@ var ProjectDetailPage = (function () {
 }());
 __decorate([
     Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["ViewChild"])('popoverContent', { read: __WEBPACK_IMPORTED_MODULE_0__angular_core__["ElementRef"] }),
-    __metadata("design:type", typeof (_d = typeof __WEBPACK_IMPORTED_MODULE_0__angular_core__["ElementRef"] !== "undefined" && __WEBPACK_IMPORTED_MODULE_0__angular_core__["ElementRef"]) === "function" && _d || Object)
+    __metadata("design:type", __WEBPACK_IMPORTED_MODULE_0__angular_core__["ElementRef"])
 ], ProjectDetailPage.prototype, "content", void 0);
 ProjectDetailPage = __decorate([
     Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Component"])({
-        selector: 'page-project-detail',template:/*ion-inline-start:"/Users/zhaoliangchen/Desktop/qipaipm-company/src/pages/project-detail/project-detail.html"*/'<!--\n  Generated template for the ProjectDetailPage page.\n\n  See http://ionicframework.com/docs/components/#navigation for more info on\n  Ionic pages and navigation.\n-->\n<ion-header>\n  <ion-navbar>\n    <ion-title>\n      {{project.itemName}}\n    </ion-title>\n    <ion-buttons end>\n      <button ion-button icon-only (click)="presentPopover($event)">\n        <ion-icon name="more" style="color: #fc5c53"></ion-icon>\n      </button>\n    </ion-buttons>\n  </ion-navbar>\n</ion-header>\n\n\n<ion-content #popoverContent fullscreen>\n  <div class="pj-item">\n    <div class="mile-bottom">\n      <div class="item1">\n        <ion-label style="margin-bottom: 3px;font-size: 10px">{{project.itemStartTime | MonthPipe}}</ion-label>\n        <section class="line"></section>\n        <ion-label style="margin-top: 3px;font-size: 10px">{{project.itemStartTime | YearPipe}}</ion-label>\n      </div>\n      <div class="item2">\n        <ion-icon name="ios-arrow-dropdown-circle" style="color: #fc5c53;padding-top: 15px"></ion-icon>\n        <ion-label no-padding no-margin style="margin-top: 3px;font-size: 10px;text-align: center">启动</ion-label>\n      </div>\n        <div class="item3">\n            <ion-icon no-border no-margin no-padding name="md-arrow-dropleft" class="arrow-css1"></ion-icon>\n            <div class="item3-1">\n                <div class="text-wrap">\n                    <div class="text-left">负责人：</div>\n                    <div class="text-right">{{project.leader}}</div>\n                    <!--<div style="clear: both"></div>-->\n                </div>\n                <div  class="text-wrap">\n                    <div class="text-left">交付成果：</div>\n                    <div class="text-right">{{project.itemStartResult}}</div>\n                    <!--<div style="clear: both"></div>-->\n                </div>\n                <div  class="text-wrap">\n                    <div class="text-left">紧急程度：</div>\n                    <div class="text-right">{{project.itemLevel | itemlevelPipe}}</div>\n                    <!--<div style="clear: both"></div>-->\n                </div>\n            </div>\n        </div>\n    </div>\n  </div>\n\n  <!-- 里程碑  -->\n  <div class="pj-item" *ngFor="let mile of project.milestoneVo1; let i = index">\n    <div class="mile-top" id="{{mile.id}}">\n      <div style="width: 1px; background-color: #ececec; height: 100%; position: absolute; left: 65px; top: 0px" >\n\n      </div >\n      <div [hidden]="mile.children.length<=0">\n        <div class="subtask-title" *ngIf="isExpand[i]==false ">\n          <ion-label no-margin no-padding text-center class="horizontal-center" style="line-height: 25px; font-size: 15px">{{mile.children.length+"个子任务"}}</ion-label>\n        </div>\n        <div class="subtask-wrap" *ngIf="isExpand[i]==true ">\n          <div class="subtask-item" *ngFor="let subtask of mile.children" (click)="onClickSubtask($event, subtask, mile)">\n            <div class="subtask-css" >\n              <ion-label class="subtask-left">子任务:</ion-label>\n              <ion-label class="subtask-right" >{{subtask.subtaskName}}</ion-label>\n            </div>\n            <div class="subtask-css" >\n              <ion-label class="subtask-left">交付时间:</ion-label>\n              <ion-label class="subtask-right" >{{subtask.deliveryTime | stampToDate}}</ion-label>\n            </div>\n            <div class="subtask-css" >\n              <ion-label class="subtask-left">负责人:</ion-label>\n              <ion-label class="subtask-right" >{{subtask.leader}}</ion-label>\n            </div>\n          </div>\n        </div>\n        <ion-icon [name]="isExpand[i]==false?\'appname-expand\':\'appname-fold\'" class="fold" (click)="onClickExpand($event, i)"></ion-icon>\n      </div>\n    </div>\n    <div class="mile-bottom">\n      <div class="item1">\n        <ion-label style="margin-bottom: 3px;font-size: 10px">{{mile.deliveryTime | MonthPipe}}</ion-label>\n        <section class="line"></section>\n        <ion-label style="margin-top: 3px;font-size: 10px">{{mile.deliveryTime | YearPipe}}</ion-label>\n      </div>\n      <div class="item2">\n        <!--<div style="width: 1px; background-color: #ececec; height: 10px; position: absolute; left: 20px; top: 0px" ></div>-->\n        <ion-label no-padding no-margin class="label-radius">{{mile.itemProgress}}</ion-label>\n        <ion-label no-padding no-margin class="mile-number">{{"里程碑"+(i+1)}}</ion-label>\n        <ion-label no-padding no-margin class="delay-radius1" [hidden]="mile.delayDays==0">{{"延"+mile.delayDays}}</ion-label>\n      </div>\n      <!--[ngClass]="{\'arrow-css1\':mile.type==0,\'arrow-css2\':mile.type==1,\'arrow-css3\':mile.type==2}"-->\n\n        <div class="item3">\n            <ion-icon no-border no-padding no-margin name="md-arrow-dropleft" class="arrow-css2" ></ion-icon>\n            <div class="item3-2" (click)="onClickMilestone($event, mile)">\n                <div class="text-wrap">\n                    <div class="text-left">负责人：</div>\n                    <div class="text-right">{{mile.leader}}</div>\n                </div>\n                <div  class="text-wrap">\n                    <div class="text-left">交付成果：</div>\n                    <div class="text-right">{{mile.deliveryResult}}</div>\n                </div>\n            </div>\n        </div>\n    </div>\n  </div>\n\n  <!-- 项目结束 -->\n  <div class="mile-bottom">\n    <div class="item1">\n      <ion-label style="margin-bottom: 3px;font-size: 10px">{{project.endTime | MonthPipe}}</ion-label>\n      <section class="line"></section>\n      <ion-label style="margin-top: 3px;font-size: 10px">{{project.endTime | YearPipe}}</ion-label>\n    </div>\n    <div class="item2">\n      <!--<div style="width: 1px; background-color: #ececec; height: 10px; position: absolute; left: 20px; top: 0px" ></div>-->\n      <ion-icon name="ios-arrow-dropup-circle" style="color: #fc5c53;padding-top: 15px"></ion-icon>\n      <ion-label no-padding no-margin style="margin-top: 3px;font-size: 10px;text-align: center">结束</ion-label>\n    </div>\n      <div class="item3">\n          <ion-icon no-border no-padding no-margin name="md-arrow-dropleft" class="arrow-css1"></ion-icon>\n          <div class="item3-1">\n              <div  class="text-wrap">\n                  <div no-padding no-margin class="text-left">负责人：</div>\n                  <div no-padding no-margin class="text-right">{{project.leader}}</div>\n              </div>\n              <div  class="text-wrap">\n                  <div no-padding no-margin class="text-left">交付成果：</div>\n                  <div no-padding no-margin class="text-right">{{project.itemEndResult}}</div>\n              </div>\n          </div>\n      </div>\n  </div>\n\n  <!-- 延期里程碑 -->\n  <div class="mile-bottom" style="margin-top: 5px"\n       *ngFor="let dalayMile of project.milestoneVo2; let i = index">\n      <div class="item1">\n          <ion-label style="margin-bottom: 3px;font-size: 10px">{{dalayMile.deliveryTime | MonthPipe}}</ion-label>\n          <section class="line"></section>\n          <ion-label style="margin-top: 3px;font-size: 10px">{{dalayMile.deliveryTime | YearPipe}}</ion-label>\n      </div>\n      <div class="item2">\n          <!--<div style="width: 1px; background-color: #ececec; height: 10px; position: absolute; left: 20px; top: 0px" ></div>-->\n          <ion-label no-padding no-margin class="label-radius">{{dalayMile.itemProgress}}</ion-label>\n          <ion-label no-padding no-margin class="mile-number">{{"延期"+(i+1)}}</ion-label>\n          <ion-label no-padding no-margin class="delay-radius1" [hidden]="dalayMile.delayDays==0">{{"延"+dalayMile.delayDays}}</ion-label>\n      </div>\n      <!--[ngClass]="{\'arrow-css1\':mile.type==0,\'arrow-css2\':mile.type==1,\'arrow-css3\':mile.type==2}"-->\n\n      <div class="item3">\n          <ion-icon no-border no-padding no-margin name="md-arrow-dropleft" class="arrow-css3" ></ion-icon>\n          <div class="item3-3" (click)="onClickMilestone($event, dalayMile)">\n              <div class="text-wrap">\n                  <div class="text-left">负责人：</div>\n                  <div class="text-right">{{dalayMile.leader}}</div>\n              </div>\n              <div  class="text-wrap">\n                  <div class="text-left">交付成果：</div>\n                  <div class="text-right">{{dalayMile.deliveryResult}}</div>\n              </div>\n          </div>\n      </div>\n    </div>\n\n  <!--[ngStyle]="{\'bottom\':isShowShare==false?\'-200px\':\'0px\'}"-->\n  <div id="shareView" class="share-css" >\n    <ion-label text-center>分享到</ion-label>\n    <ion-row style="height: 100px;@extend .vertical-middle;">\n      <ion-col text-center >\n        <ion-icon name="appname-dingding"></ion-icon>\n      </ion-col>\n      <ion-col text-center>\n        <ion-icon name="appname-qq"></ion-icon>\n      </ion-col>\n      <ion-col text-center>\n        <ion-icon name="appname-weixin"></ion-icon>\n      </ion-col>\n    </ion-row>\n    <button ion-button no-padding no-margin style="width: 100%; height: 50px; border-top: solid 1px #ececec; background-color: white; color: black" (click)="onCancelShare($event)">取消</button>\n  </div>\n</ion-content>\n'/*ion-inline-end:"/Users/zhaoliangchen/Desktop/qipaipm-company/src/pages/project-detail/project-detail.html"*/,
+        selector: 'page-project-detail',template:/*ion-inline-start:"/Users/zhaoliangchen/Desktop/qipaipm-company/src/pages/project-detail/project-detail.html"*/'<!--\n  Generated template for the ProjectDetailPage page.\n\n  See http://ionicframework.com/docs/components/#navigation for more info on\n  Ionic pages and navigation.\n-->\n<ion-header>\n  <ion-navbar>\n    <ion-title>\n      {{project.itemName}}\n    </ion-title>\n    <ion-buttons end>\n      <button ion-button icon-only (click)="presentPopover($event)">\n        <ion-icon name="more" style="color: #fc5c53"></ion-icon>\n      </button>\n    </ion-buttons>\n  </ion-navbar>\n</ion-header>\n\n\n<ion-content #popoverContent fullscreen>\n  <div class="pj-item">\n    <div class="mile-bottom">\n      <div class="item1">\n        <ion-label style="margin-bottom: 3px;font-size: 10px">{{project.itemStartTime | MonthPipe}}</ion-label>\n        <section class="line"></section>\n        <ion-label style="margin-top: 3px;font-size: 10px">{{project.itemStartTime | YearPipe}}</ion-label>\n      </div>\n      <div class="item2">\n        <ion-icon name="ios-arrow-dropdown-circle" style="color: #fc5c53;padding-top: 15px"></ion-icon>\n        <ion-label no-padding no-margin style="margin-top: 3px;font-size: 10px;text-align: center">启动</ion-label>\n      </div>\n        <div class="item3">\n            <ion-icon no-border no-margin no-padding name="md-arrow-dropleft" class="arrow-css1"></ion-icon>\n            <div class="item3-1">\n                <div class="text-wrap">\n                    <div class="text-left">负责人：</div>\n                    <div class="text-right">{{project.itemFounder}}</div>\n                    <!--<div style="clear: both"></div>-->\n                </div>\n                <div  class="text-wrap">\n                    <div class="text-left">交付成果：</div>\n                    <div class="text-right">{{project.itemStartResult}}</div>\n                    <!--<div style="clear: both"></div>-->\n                </div>\n                <div  class="text-wrap">\n                    <div class="text-left">紧急程度：</div>\n                    <div class="text-right">{{project.itemLevel | itemlevelPipe}}</div>\n                    <!--<div style="clear: both"></div>-->\n                </div>\n            </div>\n        </div>\n    </div>\n  </div>\n\n  <!-- 里程碑  -->\n  <div class="pj-item" *ngFor="let mile of project.milestoneVo1; let i = index">\n    <div class="mile-top" id="{{mile.id}}">\n      <div style="width: 1px; background-color: #ececec; height: 100%; position: absolute; left: 65px; top: 0px" >\n\n      </div >\n      <div [hidden]="mile.children.length<=0">\n        <div class="subtask-title" *ngIf="isExpand[i]==false ">\n          <ion-label no-margin no-padding text-center class="horizontal-center" style="line-height: 25px; font-size: 15px">{{mile.children.length+"个子任务"}}</ion-label>\n        </div>\n        <div class="subtask-wrap" *ngIf="isExpand[i]==true ">\n          <div class="subtask-item" *ngFor="let subtask of mile.children" (click)="onClickSubtask($event, subtask, mile)">\n            <div class="subtask-css" >\n              <ion-label class="subtask-left">子任务:</ion-label>\n              <ion-label class="subtask-right" >{{subtask.subtaskName}}</ion-label>\n            </div>\n            <div class="subtask-css" >\n              <ion-label class="subtask-left">交付时间:</ion-label>\n              <ion-label class="subtask-right" >{{subtask.deliveryTime | stampToDate}}</ion-label>\n            </div>\n            <div class="subtask-css" >\n              <ion-label class="subtask-left">负责人:</ion-label>\n              <ion-label class="subtask-right" >{{subtask.itemEndLeader}}</ion-label>\n            </div>\n          </div>\n        </div>\n        <ion-icon [name]="isExpand[i]==false?\'appname-expand\':\'appname-fold\'" class="fold" (click)="onClickExpand($event, i)"></ion-icon>\n      </div>\n    </div>\n    <div class="mile-bottom">\n      <div class="item1">\n        <ion-label style="margin-bottom: 3px;font-size: 10px">{{mile.deliveryTime | MonthPipe}}</ion-label>\n        <section class="line"></section>\n        <ion-label style="margin-top: 3px;font-size: 10px">{{mile.deliveryTime | YearPipe}}</ion-label>\n      </div>\n      <div class="item2">\n        <!--<div style="width: 1px; background-color: #ececec; height: 10px; position: absolute; left: 20px; top: 0px" ></div>-->\n        <ion-label no-padding no-margin class="label-radius">{{mile.itemProgress}}</ion-label>\n        <ion-label no-padding no-margin class="mile-number">{{"里程碑"+(i+1)}}</ion-label>\n        <ion-label no-padding no-margin class="delay-radius1" [hidden]="mile.delayDays==0">{{"延"+mile.delayDays}}</ion-label>\n      </div>\n      <!--[ngClass]="{\'arrow-css1\':mile.type==0,\'arrow-css2\':mile.type==1,\'arrow-css3\':mile.type==2}"-->\n\n        <div class="item3">\n            <ion-icon no-border no-padding no-margin name="md-arrow-dropleft" class="arrow-css2" ></ion-icon>\n            <div class="item3-2" (click)="onClickMilestone($event, mile)">\n                <div class="text-wrap">\n                    <div class="text-left">负责人：</div>\n                    <div class="text-right">{{mile.itemEndLeader}}</div>\n                </div>\n                <div  class="text-wrap">\n                    <div class="text-left">交付成果：</div>\n                    <div class="text-right">{{mile.deliveryResult}}</div>\n                </div>\n            </div>\n        </div>\n    </div>\n  </div>\n\n  <!-- 项目结束 -->\n  <div class="mile-bottom">\n    <div class="item1">\n      <ion-label style="margin-bottom: 3px;font-size: 10px">{{project.endTime | MonthPipe}}</ion-label>\n      <section class="line"></section>\n      <ion-label style="margin-top: 3px;font-size: 10px">{{project.endTime | YearPipe}}</ion-label>\n    </div>\n    <div class="item2">\n      <!--<div style="width: 1px; background-color: #ececec; height: 10px; position: absolute; left: 20px; top: 0px" ></div>-->\n      <ion-icon name="ios-arrow-dropup-circle" style="color: #fc5c53;padding-top: 15px"></ion-icon>\n      <ion-label no-padding no-margin style="margin-top: 3px;font-size: 10px;text-align: center">结束</ion-label>\n    </div>\n      <div class="item3">\n          <ion-icon no-border no-padding no-margin name="md-arrow-dropleft" class="arrow-css1"></ion-icon>\n          <div class="item3-1">\n              <div  class="text-wrap">\n                  <div no-padding no-margin class="text-left">负责人：</div>\n                  <div no-padding no-margin class="text-right">{{project.itemEndLeader}}</div>\n              </div>\n              <div  class="text-wrap">\n                  <div no-padding no-margin class="text-left">交付成果：</div>\n                  <div no-padding no-margin class="text-right">{{project.itemEndResult}}</div>\n              </div>\n          </div>\n      </div>\n  </div>\n\n  <!-- 延期里程碑 -->\n  <div class="mile-bottom" style="margin-top: 5px"\n       *ngFor="let dalayMile of project.milestoneVo2; let i = index">\n      <div class="item1">\n          <ion-label style="margin-bottom: 3px;font-size: 10px">{{dalayMile.deliveryTime | MonthPipe}}</ion-label>\n          <section class="line"></section>\n          <ion-label style="margin-top: 3px;font-size: 10px">{{dalayMile.deliveryTime | YearPipe}}</ion-label>\n      </div>\n      <div class="item2">\n          <!--<div style="width: 1px; background-color: #ececec; height: 10px; position: absolute; left: 20px; top: 0px" ></div>-->\n          <ion-label no-padding no-margin class="label-radius">{{dalayMile.itemProgress}}</ion-label>\n          <ion-label no-padding no-margin class="mile-number">{{"延期"+(i+1)}}</ion-label>\n          <ion-label no-padding no-margin class="delay-radius1" [hidden]="dalayMile.delayDays==0">{{"延"+dalayMile.delayDays}}</ion-label>\n      </div>\n      <!--[ngClass]="{\'arrow-css1\':mile.type==0,\'arrow-css2\':mile.type==1,\'arrow-css3\':mile.type==2}"-->\n\n      <div class="item3">\n          <ion-icon no-border no-padding no-margin name="md-arrow-dropleft" class="arrow-css3" ></ion-icon>\n          <div class="item3-3" (click)="onClickMilestone($event, dalayMile)">\n              <div class="text-wrap">\n                  <div class="text-left">负责人：</div>\n                  <div class="text-right">{{dalayMile.itemEndLeader}}</div>\n              </div>\n              <div  class="text-wrap">\n                  <div class="text-left">交付成果：</div>\n                  <div class="text-right">{{dalayMile.deliveryResult}}</div>\n              </div>\n          </div>\n      </div>\n    </div>\n\n  <!--[ngStyle]="{\'bottom\':isShowShare==false?\'-200px\':\'0px\'}"-->\n  <div id="shareView" class="share-css" >\n    <ion-label text-center>分享到</ion-label>\n    <ion-row style="height: 100px;@extend .vertical-middle;">\n      <ion-col text-center >\n        <ion-icon name="appname-dingding"></ion-icon>\n      </ion-col>\n      <ion-col text-center>\n        <ion-icon name="appname-qq"></ion-icon>\n      </ion-col>\n      <ion-col text-center>\n        <ion-icon name="appname-weixin"></ion-icon>\n      </ion-col>\n    </ion-row>\n    <button ion-button no-padding no-margin style="width: 100%; height: 50px; border-top: solid 1px #ececec; background-color: white; color: black" (click)="onCancelShare($event)">取消</button>\n  </div>\n</ion-content>\n'/*ion-inline-end:"/Users/zhaoliangchen/Desktop/qipaipm-company/src/pages/project-detail/project-detail.html"*/,
     }),
-    __metadata("design:paramtypes", [typeof (_e = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["NavController"] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["NavController"]) === "function" && _e || Object, typeof (_f = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["NavParams"] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["NavParams"]) === "function" && _f || Object, typeof (_g = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["PopoverController"] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["PopoverController"]) === "function" && _g || Object, typeof (_h = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["Events"] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["Events"]) === "function" && _h || Object, typeof (_j = typeof __WEBPACK_IMPORTED_MODULE_5__app_app_service__["a" /* AppService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_5__app_app_service__["a" /* AppService */]) === "function" && _j || Object, typeof (_k = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["ToastController"] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["ToastController"]) === "function" && _k || Object])
+    __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["NavController"], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["NavParams"], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["PopoverController"],
+        __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["Events"], __WEBPACK_IMPORTED_MODULE_5__app_app_service__["a" /* AppService */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["ToastController"]])
 ], ProjectDetailPage);
 
-var _a, _b, _c, _d, _e, _f, _g, _h, _j, _k;
 //# sourceMappingURL=project-detail.js.map
 
 /***/ }),
 
-/***/ 143:
+/***/ 141:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -1454,15 +1478,15 @@ var NewpwPage = (function () {
             toast.present();
         }
         else {
-            this.appService.httpGet("http://192.168.10.118:8888/group/resetByTelPhone", { "telPhone": this.telPhone, "newPassword": value.newpw1 }, this, function (view, res) {
+            this.appService.httpPost("http://192.168.10.118:8888/uc/user/resetByTelPhone", { "telPhone": this.telPhone, "newPassword": value.newpw1 }, this, function (view, res) {
                 if (res.status == 200) {
-                    var toast = this.toastCtrl.create({
+                    var toast = view.toastCtrl.create({
                         message: "重置密码成功，请用新密码登录",
                         duration: 2000,
                         dismissOnPageChange: false,
                     });
                     toast.present();
-                    this.navCtrl.popToRoot();
+                    view.navCtrl.popToRoot();
                 }
             }, true);
         }
@@ -1483,7 +1507,7 @@ NewpwPage = __decorate([
 
 /***/ }),
 
-/***/ 144:
+/***/ 142:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -1491,9 +1515,9 @@ NewpwPage = __decorate([
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(1);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(12);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__angular_forms__ = __webpack_require__(21);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_rxjs_Rx__ = __webpack_require__(426);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_rxjs_Rx__ = __webpack_require__(417);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_rxjs_Rx___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3_rxjs_Rx__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__newpw_newpw__ = __webpack_require__(143);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__newpw_newpw__ = __webpack_require__(141);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__app_app_service__ = __webpack_require__(24);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -1517,13 +1541,12 @@ var __metadata = (this && this.__metadata) || function (k, v) {
  * on Ionic pages and navigation.
  */
 var ForgetPage = (function () {
-    function ForgetPage(navCtrl, navParams, formBuilder, appService, toastCtrl, alertCtrl) {
+    function ForgetPage(navCtrl, navParams, formBuilder, appService, toastCtrl) {
         this.navCtrl = navCtrl;
         this.navParams = navParams;
         this.formBuilder = formBuilder;
         this.appService = appService;
         this.toastCtrl = toastCtrl;
-        this.alertCtrl = alertCtrl;
         this.defCountDownText = "发送验证码";
         this.defCountDownTime = 60;
         this.isCountDowning = false;
@@ -1542,7 +1565,6 @@ var ForgetPage = (function () {
         }
     };
     ForgetPage.prototype.sendCodeBtnEvent = function ($event) {
-        var _this = this;
         if (this.isCountDowning == true) {
             return;
         }
@@ -1555,27 +1577,39 @@ var ForgetPage = (function () {
             });
             toast.present();
         }
-        this.appService.httpGet("http://192.168.10.120:8888/sms/sendSmg/" + this.forgetForm.value.mobile, {}, this, function (view, res) {
-            if (res.status == 200) {
-                var alert_1 = view.alertCtrl.create({
+        this.appService.httpGet("http://192.168.10.118:8888/uc/user/findPassword", { "telPhone": this.forgetForm.value.mobile }, this, function (view, res) {
+            if (res.json().result == "success") {
+                view.appService.httpGet("http://192.168.10.120:8888/sms/sendSmg/" + view.forgetForm.value.mobile, {}, view, function (view1, res) {
+                    if (res.status == 200) {
+                        var alert_1 = view1.alertCtrl.create({
+                            title: '提示',
+                            subTitle: res.json()._return,
+                            buttons: ['确定']
+                        });
+                        alert_1.present();
+                    }
+                }, true);
+                view.countDownTime = view.defCountDownTime;
+                view.isCountDowning = true;
+                view.sub = view.timer.subscribe(function (t) {
+                    view.countDownText = view.countDownTime.toString() + 's';
+                    if (view.countDownTime < 0) {
+                        view.countDownText = view.defCountDownText;
+                        view.sub.unsubscribe();
+                        view.isCountDowning = false;
+                    }
+                    view.countDownTime--;
+                });
+            }
+            else {
+                var alert_2 = view.alertCtrl.create({
                     title: '提示',
-                    subTitle: res.json()._return,
+                    subTitle: '该手机号码未注册!',
                     buttons: ['确定']
                 });
-                alert_1.present();
+                alert_2.present();
             }
         }, true);
-        this.countDownTime = this.defCountDownTime;
-        this.isCountDowning = true;
-        this.sub = this.timer.subscribe(function (t) {
-            _this.countDownText = _this.countDownTime.toString() + 's';
-            if (_this.countDownTime < 0) {
-                _this.countDownText = _this.defCountDownText;
-                _this.sub.unsubscribe();
-                _this.isCountDowning = false;
-            }
-            _this.countDownTime--;
-        });
     };
     ForgetPage.prototype.goNext = function (value) {
         this.appService.httpGet("http://192.168.10.120:8888/sms/checkSmg/" + value.mobile + "/" + value.code, {}, this, function (view, res) {
@@ -1585,12 +1619,12 @@ var ForgetPage = (function () {
                 });
             }
             else {
-                var alert_2 = view.alertCtrl.create({
+                var alert_3 = view.alertCtrl.create({
                     title: '错误信息',
                     subTitle: '验证码校对错误',
                     buttons: ['确定']
                 });
-                alert_2.present();
+                alert_3.present();
             }
         }, true);
     };
@@ -1603,14 +1637,14 @@ ForgetPage = __decorate([
     }),
     __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["NavController"], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["NavParams"],
         __WEBPACK_IMPORTED_MODULE_2__angular_forms__["FormBuilder"], __WEBPACK_IMPORTED_MODULE_5__app_app_service__["a" /* AppService */],
-        __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["ToastController"], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["AlertController"]])
+        __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["ToastController"]])
 ], ForgetPage);
 
 //# sourceMappingURL=forget.js.map
 
 /***/ }),
 
-/***/ 145:
+/***/ 143:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -1618,11 +1652,11 @@ ForgetPage = __decorate([
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(1);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(12);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__angular_forms__ = __webpack_require__(21);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__forget_forget__ = __webpack_require__(144);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__forget_forget__ = __webpack_require__(142);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__app_app_service__ = __webpack_require__(24);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__home_home__ = __webpack_require__(116);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__ionic_storage__ = __webpack_require__(79);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__app_app_singleton__ = __webpack_require__(42);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__home_home__ = __webpack_require__(113);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__app_app_singleton__ = __webpack_require__(37);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__ionic_storage__ = __webpack_require__(269);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -1647,13 +1681,12 @@ var __metadata = (this && this.__metadata) || function (k, v) {
  * on Ionic pages and navigation.
  */
 var LoginPage = (function () {
-    function LoginPage(navCtrl, navParams, formBuilder, appService, storage, toastCtrl) {
+    function LoginPage(navCtrl, navParams, formBuilder, appService, storage) {
         this.navCtrl = navCtrl;
         this.navParams = navParams;
         this.formBuilder = formBuilder;
         this.appService = appService;
         this.storage = storage;
-        this.toastCtrl = toastCtrl;
         this.errorText = '手机号码错误';
         this.loginForm = this.formBuilder.group({
             mobile: ['', __WEBPACK_IMPORTED_MODULE_2__angular_forms__["Validators"].compose([__WEBPACK_IMPORTED_MODULE_2__angular_forms__["Validators"].minLength(11), __WEBPACK_IMPORTED_MODULE_2__angular_forms__["Validators"].maxLength(11), __WEBPACK_IMPORTED_MODULE_2__angular_forms__["Validators"].required, __WEBPACK_IMPORTED_MODULE_2__angular_forms__["Validators"].pattern("^(13[0-9]|15[012356789]|17[03678]|18[0-9]|14[57])[0-9]{8}$")])],
@@ -1669,9 +1702,12 @@ var LoginPage = (function () {
             if (data != null) {
                 view.storage.ready().then(function () {
                     view.storage.set('user', data);
-                    __WEBPACK_IMPORTED_MODULE_7__app_app_singleton__["a" /* AppSingleton */].getInstance().currentUserInfo = data;
+                    __WEBPACK_IMPORTED_MODULE_6__app_app_singleton__["a" /* AppSingleton */].getInstance().currentUserInfo = data;
                 });
-                view.navCtrl.push(__WEBPACK_IMPORTED_MODULE_5__home_home__["a" /* HomePage */]);
+                view.navCtrl.push(__WEBPACK_IMPORTED_MODULE_5__home_home__["a" /* HomePage */]).then(function () {
+                    //const index = view.navCtrl.getActive().index;
+                    //view.navCtrl.remove(0, index);
+                });
             }
             else {
                 var toast = view.toastCtrl.create({
@@ -1693,16 +1729,15 @@ LoginPage = __decorate([
     Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Component"])({
         selector: 'page-login',template:/*ion-inline-start:"/Users/zhaoliangchen/Desktop/qipaipm-company/src/pages/login/login.html"*/'<!--\n  Generated template for the LoginPage page.\n\n  See http://ionicframework.com/docs/components/#navigation for more info on\n  Ionic pages and navigation.\n-->\n\n<ion-content fullscreen>\n  <img class="login_icon" src="../../assets/png/login_logo.png">\n  <form [formGroup]="loginForm" (ngSubmit)="login(loginForm.value)">\n    <div style="margin: 0 30px;">\n      <div class="row">\n        <img class="area" src="../../assets/png/icon_tel.png">\n        <ion-input no-padding no-margin type="text" placeholder="输入手机号" formControlName="mobile" maxlength="11"></ion-input>\n      </div>\n      <div class="row">\n        <img class="area" src="../../assets/png/icon_pw.png">\n        <ion-input no-padding no-margin type="password" placeholder="输入密码" formControlName="password" maxlength="12"></ion-input>\n      </div>\n      <!--<input class="login_input" type="text" formControlName="mobile" placeholder="请输入手机号"/>-->\n      <!--<input class="login_input" type="password" formControlName="password" placeholder="请输入密码"/>-->\n      <!--<div style="width: 80%;height: 30px;margin: 30px auto">-->\n        <!--<p style="float: left; margin-left: 10px; color: red">{{errorText}}</p>-->\n        <!--<button ion-button no-padding no-margin clear style="margin-right: 10px; float: right">忘记密码?</button>-->\n      <!--</div>-->\n      <button ion-button block class="login_btn" type="submit">登录</button>\n    </div>\n  </form>\n  <div style="position: fixed;bottom: 20px;width: 100%">\n    <button ion-button no-border no-padding clear class="forget" (click)="onForgetPassword($event)">忘记密码?</button>\n  </div>\n\n</ion-content>\n'/*ion-inline-end:"/Users/zhaoliangchen/Desktop/qipaipm-company/src/pages/login/login.html"*/,
     }),
-    __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["NavController"], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["NavParams"],
-        __WEBPACK_IMPORTED_MODULE_2__angular_forms__["FormBuilder"], __WEBPACK_IMPORTED_MODULE_4__app_app_service__["a" /* AppService */],
-        __WEBPACK_IMPORTED_MODULE_6__ionic_storage__["b" /* Storage */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["ToastController"]])
+    __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["NavController"] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["NavController"]) === "function" && _a || Object, typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["NavParams"] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["NavParams"]) === "function" && _b || Object, typeof (_c = typeof __WEBPACK_IMPORTED_MODULE_2__angular_forms__["FormBuilder"] !== "undefined" && __WEBPACK_IMPORTED_MODULE_2__angular_forms__["FormBuilder"]) === "function" && _c || Object, typeof (_d = typeof __WEBPACK_IMPORTED_MODULE_4__app_app_service__["a" /* AppService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_4__app_app_service__["a" /* AppService */]) === "function" && _d || Object, typeof (_e = typeof __WEBPACK_IMPORTED_MODULE_7__ionic_storage__["b" /* Storage */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_7__ionic_storage__["b" /* Storage */]) === "function" && _e || Object])
 ], LoginPage);
 
+var _a, _b, _c, _d, _e;
 //# sourceMappingURL=login.js.map
 
 /***/ }),
 
-/***/ 156:
+/***/ 154:
 /***/ (function(module, exports) {
 
 function webpackEmptyAsyncContext(req) {
@@ -1715,28 +1750,28 @@ function webpackEmptyAsyncContext(req) {
 webpackEmptyAsyncContext.keys = function() { return []; };
 webpackEmptyAsyncContext.resolve = webpackEmptyAsyncContext;
 module.exports = webpackEmptyAsyncContext;
-webpackEmptyAsyncContext.id = 156;
+webpackEmptyAsyncContext.id = 154;
 
 /***/ }),
 
-/***/ 199:
+/***/ 197:
 /***/ (function(module, exports, __webpack_require__) {
 
 var map = {
 	"../pages/contact/contact.module": [
-		736,
+		733,
 		3
 	],
 	"../pages/forget/forget.module": [
-		738,
+		735,
 		2
 	],
 	"../pages/login/login.module": [
-		739,
+		736,
 		1
 	],
 	"../pages/newpw/newpw.module": [
-		737,
+		734,
 		0
 	]
 };
@@ -1751,12 +1786,12 @@ function webpackAsyncContext(req) {
 webpackAsyncContext.keys = function webpackAsyncContextKeys() {
 	return Object.keys(map);
 };
-webpackAsyncContext.id = 199;
+webpackAsyncContext.id = 197;
 module.exports = webpackAsyncContext;
 
 /***/ }),
 
-/***/ 228:
+/***/ 224:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -1764,8 +1799,8 @@ module.exports = webpackAsyncContext;
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(1);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(12);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__app_app_service__ = __webpack_require__(24);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__project_detail_project_detail__ = __webpack_require__(120);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__app_app_singleton__ = __webpack_require__(42);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__project_detail_project_detail__ = __webpack_require__(117);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__app_app_singleton__ = __webpack_require__(37);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -1884,10 +1919,9 @@ SearchPage = __decorate([
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return AppService; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_ionic_angular__ = __webpack_require__(12);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_core__ = __webpack_require__(1);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__angular_http__ = __webpack_require__(55);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_rxjs_add_operator_toPromise__ = __webpack_require__(200);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__angular_http__ = __webpack_require__(107);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_rxjs_add_operator_toPromise__ = __webpack_require__(198);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_rxjs_add_operator_toPromise___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3_rxjs_add_operator_toPromise__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__ionic_native_network__ = __webpack_require__(201);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -1897,7 +1931,6 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
-
 
 
 
@@ -1926,12 +1959,11 @@ AppGlobal = __decorate([
 ], AppGlobal);
 
 var AppService = (function () {
-    function AppService(http, loadingCtrl, alertCtrl, toastCtrl, network) {
+    function AppService(http, loadingCtrl, alertCtrl, toastCtrl) {
         this.http = http;
         this.loadingCtrl = loadingCtrl;
         this.alertCtrl = alertCtrl;
         this.toastCtrl = toastCtrl;
-        this.network = network;
     }
     // 对参数进行编码
     AppService.prototype.encode = function (params) {
@@ -2078,6 +2110,7 @@ var AppService = (function () {
             console.error(msg + '，请检查路径是否正确');
         }
         if (error != null) {
+            msg = '异常错误';
             console.log(error);
         }
         if (msg != '') {
@@ -2086,7 +2119,7 @@ var AppService = (function () {
     };
     AppService.prototype.alert = function (message, callback) {
         if (callback) {
-            var alert = this.alertCtrl.create({
+            var alert_1 = this.alertCtrl.create({
                 title: '提示',
                 message: message,
                 buttons: [{
@@ -2096,15 +2129,15 @@ var AppService = (function () {
                         }
                     }]
             });
-            alert.present();
+            alert_1.present();
         }
         else {
-            var alert = this.alertCtrl.create({
+            var alert_2 = this.alertCtrl.create({
                 title: '提示',
                 message: message,
                 buttons: ["确定"]
             });
-            alert.present();
+            alert_2.present();
         }
     };
     AppService.prototype.toast = function (message, callback) {
@@ -2141,10 +2174,10 @@ var AppService = (function () {
 }());
 AppService = __decorate([
     Object(__WEBPACK_IMPORTED_MODULE_1__angular_core__["Injectable"])(),
-    __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_2__angular_http__["a" /* Http */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_2__angular_http__["a" /* Http */]) === "function" && _a || Object, typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_0_ionic_angular__["LoadingController"] !== "undefined" && __WEBPACK_IMPORTED_MODULE_0_ionic_angular__["LoadingController"]) === "function" && _b || Object, typeof (_c = typeof __WEBPACK_IMPORTED_MODULE_0_ionic_angular__["AlertController"] !== "undefined" && __WEBPACK_IMPORTED_MODULE_0_ionic_angular__["AlertController"]) === "function" && _c || Object, typeof (_d = typeof __WEBPACK_IMPORTED_MODULE_0_ionic_angular__["ToastController"] !== "undefined" && __WEBPACK_IMPORTED_MODULE_0_ionic_angular__["ToastController"]) === "function" && _d || Object, typeof (_e = typeof __WEBPACK_IMPORTED_MODULE_4__ionic_native_network__["a" /* Network */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_4__ionic_native_network__["a" /* Network */]) === "function" && _e || Object])
+    __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_2__angular_http__["a" /* Http */], __WEBPACK_IMPORTED_MODULE_0_ionic_angular__["LoadingController"],
+        __WEBPACK_IMPORTED_MODULE_0_ionic_angular__["AlertController"], __WEBPACK_IMPORTED_MODULE_0_ionic_angular__["ToastController"]])
 ], AppService);
 
-var _a, _b, _c, _d, _e;
 //# sourceMappingURL=app.service.js.map
 
 /***/ }),
@@ -2303,13 +2336,45 @@ var AppConfig = (function () {
 
 /***/ }),
 
-/***/ 394:
+/***/ 37:
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return AppSingleton; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__model_UserInfo__ = __webpack_require__(683);
+
+var AppSingleton = (function () {
+    function AppSingleton() {
+        if (AppSingleton.instance) {
+            throw new Error("错误: 请使用AppGlobal.getInstance() 代替使用new.");
+        }
+        this.currentUserInfo = new __WEBPACK_IMPORTED_MODULE_0__model_UserInfo__["a" /* UserInfo */]();
+        AppSingleton.instance = this;
+    }
+    /**
+     * 获取当前实例
+     *
+     * @static
+     * @returns {AppGlobal}
+     */
+    AppSingleton.getInstance = function () {
+        return AppSingleton.instance;
+    };
+    return AppSingleton;
+}());
+
+AppSingleton.instance = new AppSingleton();
+//# sourceMappingURL=app.singleton.js.map
+
+/***/ }),
+
+/***/ 391:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_platform_browser_dynamic__ = __webpack_require__(395);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__app_module__ = __webpack_require__(399);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_platform_browser_dynamic__ = __webpack_require__(392);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__app_module__ = __webpack_require__(396);
 
 
 Object(__WEBPACK_IMPORTED_MODULE_0__angular_platform_browser_dynamic__["a" /* platformBrowserDynamic */])().bootstrapModule(__WEBPACK_IMPORTED_MODULE_1__app_module__["a" /* AppModule */]);
@@ -2317,7 +2382,7 @@ Object(__WEBPACK_IMPORTED_MODULE_0__angular_platform_browser_dynamic__["a" /* pl
 
 /***/ }),
 
-/***/ 399:
+/***/ 396:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -2325,39 +2390,39 @@ Object(__WEBPACK_IMPORTED_MODULE_0__angular_platform_browser_dynamic__["a" /* pl
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_platform_browser__ = __webpack_require__(44);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_core__ = __webpack_require__(1);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_ionic_angular__ = __webpack_require__(12);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__ionic_native_splash_screen__ = __webpack_require__(268);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__ionic_native_status_bar__ = __webpack_require__(269);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__angular_http__ = __webpack_require__(55);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__ionic_native_keyboard__ = __webpack_require__(270);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__ionic_native_network__ = __webpack_require__(201);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__app_share__ = __webpack_require__(709);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__ionic_native_native_storage__ = __webpack_require__(271);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__ionic_storage__ = __webpack_require__(79);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_11__app_component__ = __webpack_require__(710);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_12__pages_home_home__ = __webpack_require__(116);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_13__pages_project_create_project_create__ = __webpack_require__(117);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_14__pages_milestone_detail_milestone_detail__ = __webpack_require__(118);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_15__pages_project_detail_project_detail__ = __webpack_require__(120);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_16__pages_subtask_subtask__ = __webpack_require__(119);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_17__pages_search_search__ = __webpack_require__(228);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_18__pages_contact_contact__ = __webpack_require__(61);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_19__pages_forget_forget__ = __webpack_require__(144);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_20__pages_newpw_newpw__ = __webpack_require__(143);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_21__components_components_module__ = __webpack_require__(711);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_22_ion2_calendar__ = __webpack_require__(714);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_23_ion_multi_picker__ = __webpack_require__(720);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_23_ion_multi_picker___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_23_ion_multi_picker__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_24__pipes_pipes_module__ = __webpack_require__(723);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_25__app_service__ = __webpack_require__(24);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_26__pages_login_login__ = __webpack_require__(145);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_27__providers_keycloak_service_keycloak_service__ = __webpack_require__(732);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_28__providers_keycloak2_keycloak2__ = __webpack_require__(734);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__ionic_native_splash_screen__ = __webpack_require__(264);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__ionic_native_status_bar__ = __webpack_require__(266);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__angular_http__ = __webpack_require__(107);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__ionic_native_keyboard__ = __webpack_require__(267);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__ionic_native_network__ = __webpack_require__(704);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__app_share__ = __webpack_require__(705);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__ionic_native_native_storage__ = __webpack_require__(268);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__ionic_storage__ = __webpack_require__(269);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_11__wechat_service__ = __webpack_require__(709);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_12__app_component__ = __webpack_require__(710);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_13__pages_home_home__ = __webpack_require__(113);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_14__pages_project_create_project_create__ = __webpack_require__(114);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_15__pages_milestone_detail_milestone_detail__ = __webpack_require__(115);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_16__pages_project_detail_project_detail__ = __webpack_require__(117);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_17__pages_subtask_subtask__ = __webpack_require__(116);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_18__pages_search_search__ = __webpack_require__(224);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_19__pages_contact_contact__ = __webpack_require__(60);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_20__pages_forget_forget__ = __webpack_require__(142);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_21__pages_newpw_newpw__ = __webpack_require__(141);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_22__components_components_module__ = __webpack_require__(711);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_23_ion2_calendar__ = __webpack_require__(714);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_24_ion_multi_picker__ = __webpack_require__(721);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_24_ion_multi_picker___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_24_ion_multi_picker__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_25__pipes_pipes_module__ = __webpack_require__(724);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_26__app_service__ = __webpack_require__(24);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_27__pages_login_login__ = __webpack_require__(143);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
     else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
+
 
 
 
@@ -2389,8 +2454,6 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 
 
 
-
-
 //第三方库
 var AppModule = (function () {
     function AppModule() {
@@ -2400,25 +2463,25 @@ var AppModule = (function () {
 AppModule = __decorate([
     Object(__WEBPACK_IMPORTED_MODULE_1__angular_core__["NgModule"])({
         declarations: [
-            __WEBPACK_IMPORTED_MODULE_11__app_component__["a" /* MyApp */],
-            __WEBPACK_IMPORTED_MODULE_12__pages_home_home__["a" /* HomePage */],
-            __WEBPACK_IMPORTED_MODULE_13__pages_project_create_project_create__["a" /* ProjectCreatePage */],
-            __WEBPACK_IMPORTED_MODULE_14__pages_milestone_detail_milestone_detail__["a" /* MilestoneDetailPage */],
-            __WEBPACK_IMPORTED_MODULE_15__pages_project_detail_project_detail__["b" /* ProjectDetailPage */],
-            __WEBPACK_IMPORTED_MODULE_16__pages_subtask_subtask__["a" /* SubtaskPage */],
-            __WEBPACK_IMPORTED_MODULE_17__pages_search_search__["a" /* SearchPage */],
-            __WEBPACK_IMPORTED_MODULE_18__pages_contact_contact__["a" /* ContactPage */],
-            __WEBPACK_IMPORTED_MODULE_26__pages_login_login__["a" /* LoginPage */],
-            __WEBPACK_IMPORTED_MODULE_19__pages_forget_forget__["a" /* ForgetPage */],
-            __WEBPACK_IMPORTED_MODULE_20__pages_newpw_newpw__["a" /* NewpwPage */],
-            __WEBPACK_IMPORTED_MODULE_15__pages_project_detail_project_detail__["a" /* PopoverPage */],
+            __WEBPACK_IMPORTED_MODULE_12__app_component__["a" /* MyApp */],
+            __WEBPACK_IMPORTED_MODULE_13__pages_home_home__["a" /* HomePage */],
+            __WEBPACK_IMPORTED_MODULE_14__pages_project_create_project_create__["a" /* ProjectCreatePage */],
+            __WEBPACK_IMPORTED_MODULE_15__pages_milestone_detail_milestone_detail__["a" /* MilestoneDetailPage */],
+            __WEBPACK_IMPORTED_MODULE_16__pages_project_detail_project_detail__["b" /* ProjectDetailPage */],
+            __WEBPACK_IMPORTED_MODULE_17__pages_subtask_subtask__["a" /* SubtaskPage */],
+            __WEBPACK_IMPORTED_MODULE_18__pages_search_search__["a" /* SearchPage */],
+            __WEBPACK_IMPORTED_MODULE_19__pages_contact_contact__["a" /* ContactPage */],
+            __WEBPACK_IMPORTED_MODULE_27__pages_login_login__["a" /* LoginPage */],
+            __WEBPACK_IMPORTED_MODULE_20__pages_forget_forget__["a" /* ForgetPage */],
+            __WEBPACK_IMPORTED_MODULE_21__pages_newpw_newpw__["a" /* NewpwPage */],
+            __WEBPACK_IMPORTED_MODULE_16__pages_project_detail_project_detail__["a" /* PopoverPage */],
         ],
         imports: [
             __WEBPACK_IMPORTED_MODULE_0__angular_platform_browser__["a" /* BrowserModule */],
-            __WEBPACK_IMPORTED_MODULE_21__components_components_module__["a" /* ComponentsModule */],
-            __WEBPACK_IMPORTED_MODULE_24__pipes_pipes_module__["a" /* PipesModule */],
+            __WEBPACK_IMPORTED_MODULE_22__components_components_module__["a" /* ComponentsModule */],
+            __WEBPACK_IMPORTED_MODULE_25__pipes_pipes_module__["a" /* PipesModule */],
             __WEBPACK_IMPORTED_MODULE_5__angular_http__["b" /* HttpModule */],
-            __WEBPACK_IMPORTED_MODULE_2_ionic_angular__["IonicModule"].forRoot(__WEBPACK_IMPORTED_MODULE_11__app_component__["a" /* MyApp */], {
+            __WEBPACK_IMPORTED_MODULE_2_ionic_angular__["IonicModule"].forRoot(__WEBPACK_IMPORTED_MODULE_12__app_component__["a" /* MyApp */], {
                 backButtonText: '',
                 backButtonIcon: 'md-arrow-back',
                 //mode: 'ios',
@@ -2437,35 +2500,34 @@ AppModule = __decorate([
             }),
             __WEBPACK_IMPORTED_MODULE_10__ionic_storage__["a" /* IonicStorageModule */].forRoot(),
             __WEBPACK_IMPORTED_MODULE_5__angular_http__["c" /* JsonpModule */],
-            __WEBPACK_IMPORTED_MODULE_22_ion2_calendar__["a" /* CalendarModule */],
-            __WEBPACK_IMPORTED_MODULE_23_ion_multi_picker__["MultiPickerModule"],
+            __WEBPACK_IMPORTED_MODULE_23_ion2_calendar__["a" /* CalendarModule */],
+            __WEBPACK_IMPORTED_MODULE_24_ion_multi_picker__["MultiPickerModule"],
         ],
         bootstrap: [__WEBPACK_IMPORTED_MODULE_2_ionic_angular__["IonicApp"]],
         entryComponents: [
-            __WEBPACK_IMPORTED_MODULE_11__app_component__["a" /* MyApp */],
-            __WEBPACK_IMPORTED_MODULE_12__pages_home_home__["a" /* HomePage */],
-            __WEBPACK_IMPORTED_MODULE_13__pages_project_create_project_create__["a" /* ProjectCreatePage */],
-            __WEBPACK_IMPORTED_MODULE_14__pages_milestone_detail_milestone_detail__["a" /* MilestoneDetailPage */],
-            __WEBPACK_IMPORTED_MODULE_15__pages_project_detail_project_detail__["b" /* ProjectDetailPage */],
-            __WEBPACK_IMPORTED_MODULE_16__pages_subtask_subtask__["a" /* SubtaskPage */],
-            __WEBPACK_IMPORTED_MODULE_17__pages_search_search__["a" /* SearchPage */],
-            __WEBPACK_IMPORTED_MODULE_18__pages_contact_contact__["a" /* ContactPage */],
-            __WEBPACK_IMPORTED_MODULE_26__pages_login_login__["a" /* LoginPage */],
-            __WEBPACK_IMPORTED_MODULE_19__pages_forget_forget__["a" /* ForgetPage */],
-            __WEBPACK_IMPORTED_MODULE_20__pages_newpw_newpw__["a" /* NewpwPage */],
-            __WEBPACK_IMPORTED_MODULE_15__pages_project_detail_project_detail__["a" /* PopoverPage */],
+            __WEBPACK_IMPORTED_MODULE_12__app_component__["a" /* MyApp */],
+            __WEBPACK_IMPORTED_MODULE_13__pages_home_home__["a" /* HomePage */],
+            __WEBPACK_IMPORTED_MODULE_14__pages_project_create_project_create__["a" /* ProjectCreatePage */],
+            __WEBPACK_IMPORTED_MODULE_15__pages_milestone_detail_milestone_detail__["a" /* MilestoneDetailPage */],
+            __WEBPACK_IMPORTED_MODULE_16__pages_project_detail_project_detail__["b" /* ProjectDetailPage */],
+            __WEBPACK_IMPORTED_MODULE_17__pages_subtask_subtask__["a" /* SubtaskPage */],
+            __WEBPACK_IMPORTED_MODULE_18__pages_search_search__["a" /* SearchPage */],
+            __WEBPACK_IMPORTED_MODULE_19__pages_contact_contact__["a" /* ContactPage */],
+            __WEBPACK_IMPORTED_MODULE_27__pages_login_login__["a" /* LoginPage */],
+            __WEBPACK_IMPORTED_MODULE_20__pages_forget_forget__["a" /* ForgetPage */],
+            __WEBPACK_IMPORTED_MODULE_21__pages_newpw_newpw__["a" /* NewpwPage */],
+            __WEBPACK_IMPORTED_MODULE_16__pages_project_detail_project_detail__["a" /* PopoverPage */],
         ],
         providers: [
             __WEBPACK_IMPORTED_MODULE_4__ionic_native_status_bar__["a" /* StatusBar */],
             __WEBPACK_IMPORTED_MODULE_3__ionic_native_splash_screen__["a" /* SplashScreen */],
             __WEBPACK_IMPORTED_MODULE_6__ionic_native_keyboard__["a" /* Keyboard */],
-            __WEBPACK_IMPORTED_MODULE_25__app_service__["a" /* AppService */],
+            __WEBPACK_IMPORTED_MODULE_26__app_service__["a" /* AppService */],
             __WEBPACK_IMPORTED_MODULE_7__ionic_native_network__["a" /* Network */],
             __WEBPACK_IMPORTED_MODULE_8__app_share__["a" /* AppShare */],
             __WEBPACK_IMPORTED_MODULE_9__ionic_native_native_storage__["a" /* NativeStorage */],
+            __WEBPACK_IMPORTED_MODULE_11__wechat_service__["a" /* WechatService */],
             { provide: __WEBPACK_IMPORTED_MODULE_1__angular_core__["ErrorHandler"], useClass: __WEBPACK_IMPORTED_MODULE_2_ionic_angular__["IonicErrorHandler"] },
-            __WEBPACK_IMPORTED_MODULE_27__providers_keycloak_service_keycloak_service__["a" /* KeycloakServiceProvider */],
-            __WEBPACK_IMPORTED_MODULE_28__providers_keycloak2_keycloak2__["a" /* Keycloak2Provider */]
         ]
     })
 ], AppModule);
@@ -2474,39 +2536,7 @@ AppModule = __decorate([
 
 /***/ }),
 
-/***/ 42:
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return AppSingleton; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__model_UserInfo__ = __webpack_require__(688);
-
-var AppSingleton = (function () {
-    function AppSingleton() {
-        if (AppSingleton.instance) {
-            throw new Error("错误: 请使用AppGlobal.getInstance() 代替使用new.");
-        }
-        this.currentUserInfo = new __WEBPACK_IMPORTED_MODULE_0__model_UserInfo__["a" /* UserInfo */]();
-        AppSingleton.instance = this;
-    }
-    /**
-     * 获取当前实例
-     *
-     * @static
-     * @returns {AppGlobal}
-     */
-    AppSingleton.getInstance = function () {
-        return AppSingleton.instance;
-    };
-    return AppSingleton;
-}());
-
-AppSingleton.instance = new AppSingleton();
-//# sourceMappingURL=app.singleton.js.map
-
-/***/ }),
-
-/***/ 61:
+/***/ 60:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -2666,7 +2696,7 @@ var ContactPage_1;
 
 /***/ }),
 
-/***/ 688:
+/***/ 683:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -2681,7 +2711,7 @@ var UserInfo = (function () {
 
 /***/ }),
 
-/***/ 709:
+/***/ 705:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -2790,6 +2820,140 @@ AppShare = __decorate([
 
 /***/ }),
 
+/***/ 709:
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return WechatService; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(1);
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+
+var WechatService = (function () {
+    function WechatService() {
+    }
+    WechatService.prototype.share = function (scene, id) {
+        if (typeof window.Wechat === "undefined") {
+            alert("Wechat plugin is not installed.");
+            return false;
+        }
+        var params = {
+            scene: scene
+        };
+        if (id == 'send-text') {
+            params.text = "人文的东西并不是体现在你看得到的方面，它更多的体现在你看不到的那些方面，它会影响每一个功能，这才是最本质的。但是，对这点可能很多人没有思考过，以为人文的东西就是我们搞一个很小清新的图片什么的。”综合来看，人文的东西其实是贯穿整个产品的脉络，或者说是它的灵魂所在。";
+        }
+        else {
+            params.message = {
+                title: "[TEST]" + id,
+                description: "[TEST]Sending from test application",
+                mediaTagName: "TEST-TAG-001",
+                messageExt: "这是第三方带的测试字段",
+                messageAction: "<action>dotalist</action>",
+                media: {}
+            };
+            switch (id) {
+                case 'check-installed':
+                    window.Wechat.isInstalled(function (installed) {
+                        alert("Wechat installed: " + (installed ? "Yes" : "No"));
+                    });
+                    return true;
+                case 'send-photo-local':
+                    params.message.media.type = window.Wechat.Type.IMAGE;
+                    params.message.media.image = "www/assets/img/res1.jpg";
+                    break;
+                case 'send-photo-remote':
+                    params.message.media.type = window.Wechat.Type.IMAGE;
+                    params.message.media.image = "https://cordova.apache.org/images/cordova_256.png";
+                    break;
+                case 'send-link-thumb-local':
+                    params.message.title = "专访张小龙：产品之上的世界观";
+                    params.message.description = "微信的平台化发展方向是否真的会让这个原本简洁的产品变得臃肿？在国际化发展方向上，微信面临的问题真的是文化差异壁垒吗？腾讯高级副总裁、微信产品负责人张小龙给出了自己的回复。";
+                    params.message.thumb = "www/assets/img/res2.png";
+                    params.message.media.type = window.Wechat.Type.LINK;
+                    params.message.media.webpageUrl = "http://tech.qq.com/";
+                    break;
+                case 'send-link-thumb-remote':
+                    params.message.title = "专访张小龙：产品之上的世界观";
+                    params.message.description = "微信的平台化发展方向是否真的会让这个原本简洁的产品变得臃肿？在国际化发展方向上，微信面临的问题真的是文化差异壁垒吗？腾讯高级副总裁、微信产品负责人张小龙给出了自己的回复。";
+                    params.message.thumb = "https://cordova.apache.org/images/cordova_256.png";
+                    params.message.media.type = window.Wechat.Type.LINK;
+                    params.message.media.webpageUrl = "http://tech.qq.com/";
+                    break;
+                case 'send-music':
+                    params.message.title = "一无所有";
+                    params.message.description = "崔健";
+                    params.message.thumb = "www/assets/img/res3.jpg";
+                    params.message.media.type = window.Wechat.Type.MUSIC;
+                    params.message.media.musicUrl = "http://y.qq.com/i/song.html#p=7B22736F6E675F4E616D65223A22E4B880E697A0E68980E69C89222C22736F6E675F5761704C69766555524C223A22687474703A2F2F74736D7573696334382E74632E71712E636F6D2F586B30305156342F4141414130414141414E5430577532394D7A59344D7A63774D4C6735586A4C517747335A50676F47443864704151526643473444442F4E653765776B617A733D2F31303130333334372E6D34613F7569643D3233343734363930373526616D703B63743D3026616D703B636869643D30222C22736F6E675F5769666955524C223A22687474703A2F2F73747265616D31342E71716D757369632E71712E636F6D2F33303130333334372E6D7033222C226E657454797065223A2277696669222C22736F6E675F416C62756D223A22E4B880E697A0E68980E69C89222C22736F6E675F4944223A3130333334372C22736F6E675F54797065223A312C22736F6E675F53696E676572223A22E5B494E581A5222C22736F6E675F576170446F776E4C6F616455524C223A22687474703A2F2F74736D757369633132382E74632E71712E636F6D2F586C464E4D313574414141416A41414141477A4C36445039536A457A525467304E7A38774E446E752B6473483833344843756B5041576B6D48316C4A434E626F4D34394E4E7A754450444A647A7A45304F513D3D2F33303130333334372E6D70333F7569643D3233343734363930373526616D703B63743D3026616D703B636869643D3026616D703B73747265616D5F706F733D35227D";
+                    params.message.media.musicDataUrl = "http://stream20.qqmusic.qq.com/32464723.mp3";
+                    break;
+                case 'send-video':
+                    params.message.title = "乔布斯访谈";
+                    params.message.description = "饿着肚皮，傻逼着。";
+                    params.message.thumb = "www/assets/img/res7.png";
+                    params.message.media.type = window.Wechat.Type.VIDEO;
+                    params.message.media.videoUrl = "http://v.youku.com/v_show/id_XNTUxNDY1NDY4.html";
+                    break;
+                case 'send-app':
+                    params.message.title = "App消息";
+                    params.message.description = "这种消息只有App自己才能理解，由App指定打开方式！";
+                    params.message.thumb = "www/assets/img/res2.jpg";
+                    params.message.media.type = window.Wechat.Type.APP;
+                    params.message.media.extInfo = "<xml>extend info</xml>";
+                    params.message.media.url = "http://weixin.qq.com";
+                    break;
+                case 'send-nongif':
+                    params.message.thumb = "www/assets/img/res5thumb.png";
+                    params.message.media.type = window.Wechat.Type.EMOTION;
+                    params.message.media.emotion = "www/assets/img/res5.jpg";
+                    break;
+                case 'send-gif':
+                    params.message.thumb = "www/assets/img/res6thumb.png";
+                    params.message.media.type = window.Wechat.Type.EMOTION;
+                    params.message.media.emotion = "www/assets/img/res6.gif";
+                    break;
+                case 'send-file':
+                    params.message.title = "iphone4.pdf";
+                    params.message.description = "Pro CoreData";
+                    params.message.thumb = "www/assets/img/res2.jpg";
+                    params.message.media.type = window.Wechat.Type.FILE;
+                    params.message.media.file = "www/assets/resources/iphone4.pdf";
+                    break;
+                case 'auth':
+                    window.Wechat.auth("snsapi_userinfo", function (response) {
+                        // you may use response.code to get the access token.
+                        alert(JSON.stringify(response));
+                    }, function (reason) {
+                        alert("Failed: " + reason);
+                    });
+                    return true;
+                default:
+                    alert(id + " can not be recognized!");
+                    return false;
+            }
+        }
+        window.Wechat.share(params, function () {
+            alert("Success");
+        }, function (reason) {
+            alert("Failed: " + reason);
+        });
+        return true;
+    };
+    return WechatService;
+}());
+WechatService = __decorate([
+    Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Injectable"])()
+], WechatService);
+
+//# sourceMappingURL=wechat.service.js.map
+
+/***/ }),
+
 /***/ 710:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -2797,14 +2961,13 @@ AppShare = __decorate([
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return MyApp; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(1);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(12);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__ionic_native_status_bar__ = __webpack_require__(269);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__ionic_native_splash_screen__ = __webpack_require__(268);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__ionic_native_keyboard__ = __webpack_require__(270);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__pages_home_home__ = __webpack_require__(116);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__pages_login_login__ = __webpack_require__(145);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__ionic_native_native_storage__ = __webpack_require__(271);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__ionic_storage__ = __webpack_require__(79);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__app_singleton__ = __webpack_require__(42);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__ionic_native_status_bar__ = __webpack_require__(266);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__ionic_native_splash_screen__ = __webpack_require__(264);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__ionic_native_keyboard__ = __webpack_require__(267);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__pages_home_home__ = __webpack_require__(113);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__pages_login_login__ = __webpack_require__(143);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__ionic_storage__ = __webpack_require__(269);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__app_singleton__ = __webpack_require__(37);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -2821,7 +2984,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 
 
 
-
+//import { NativeStorage } from "@ionic-native/native-storage";
 
 
 var MyApp = (function () {
@@ -2830,14 +2993,11 @@ var MyApp = (function () {
         _config, 
         // public toastCtrl: ToastController,
         // public app: App,
-        keyboard, 
-        // private ionicApp: IonicApp,
-        nativeStorage) {
+        keyboard) {
         var _this = this;
         this.storage = storage;
         this._config = _config;
         this.keyboard = keyboard;
-        this.nativeStorage = nativeStorage;
         platform.ready().then(function () {
             // Okay, so the platform is ready and our plugins are available.
             // Here you can do any higher level native things you might need.
@@ -2848,9 +3008,14 @@ var MyApp = (function () {
         this.keyboard.hideKeyboardAccessoryBar(false);
         this.keyboard.disableScroll(true); //当输入焦点时，防止本机UIScrollView移动。
         this.storage.get('user').then(function (val) {
-            if (val.username != null) {
-                __WEBPACK_IMPORTED_MODULE_9__app_singleton__["a" /* AppSingleton */].getInstance().currentUserInfo = val;
-                _this.rootPage = __WEBPACK_IMPORTED_MODULE_5__pages_home_home__["a" /* HomePage */];
+            if (val != null) {
+                if (val.username != null) {
+                    __WEBPACK_IMPORTED_MODULE_8__app_singleton__["a" /* AppSingleton */].getInstance().currentUserInfo = val;
+                    _this.rootPage = __WEBPACK_IMPORTED_MODULE_5__pages_home_home__["a" /* HomePage */];
+                }
+                else {
+                    _this.rootPage = __WEBPACK_IMPORTED_MODULE_6__pages_login_login__["a" /* LoginPage */];
+                }
             }
             else {
                 _this.rootPage = __WEBPACK_IMPORTED_MODULE_6__pages_login_login__["a" /* LoginPage */];
@@ -2892,13 +3057,10 @@ var MyApp = (function () {
 MyApp = __decorate([
     Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Component"])({template:/*ion-inline-start:"/Users/zhaoliangchen/Desktop/qipaipm-company/src/app/app.html"*/'<ion-nav [root]="rootPage"></ion-nav>\n'/*ion-inline-end:"/Users/zhaoliangchen/Desktop/qipaipm-company/src/app/app.html"*/
     }),
-    __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["Platform"], __WEBPACK_IMPORTED_MODULE_2__ionic_native_status_bar__["a" /* StatusBar */], __WEBPACK_IMPORTED_MODULE_3__ionic_native_splash_screen__["a" /* SplashScreen */],
-        __WEBPACK_IMPORTED_MODULE_8__ionic_storage__["b" /* Storage */],
-        __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["Config"],
-        __WEBPACK_IMPORTED_MODULE_4__ionic_native_keyboard__["a" /* Keyboard */],
-        __WEBPACK_IMPORTED_MODULE_7__ionic_native_native_storage__["a" /* NativeStorage */]])
+    __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["Platform"] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["Platform"]) === "function" && _a || Object, typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_2__ionic_native_status_bar__["a" /* StatusBar */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_2__ionic_native_status_bar__["a" /* StatusBar */]) === "function" && _b || Object, typeof (_c = typeof __WEBPACK_IMPORTED_MODULE_3__ionic_native_splash_screen__["a" /* SplashScreen */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_3__ionic_native_splash_screen__["a" /* SplashScreen */]) === "function" && _c || Object, typeof (_d = typeof __WEBPACK_IMPORTED_MODULE_7__ionic_storage__["b" /* Storage */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_7__ionic_storage__["b" /* Storage */]) === "function" && _d || Object, typeof (_e = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["Config"] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["Config"]) === "function" && _e || Object, typeof (_f = typeof __WEBPACK_IMPORTED_MODULE_4__ionic_native_keyboard__["a" /* Keyboard */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_4__ionic_native_keyboard__["a" /* Keyboard */]) === "function" && _f || Object])
 ], MyApp);
 
+var _a, _b, _c, _d, _e, _f;
 //# sourceMappingURL=app.component.js.map
 
 /***/ }),
@@ -2998,7 +3160,7 @@ TestComponent = __decorate([
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__app_app_service__ = __webpack_require__(24);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__app_app_config__ = __webpack_require__(25);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_ionic_angular__ = __webpack_require__(12);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__app_app_singleton__ = __webpack_require__(42);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__app_app_singleton__ = __webpack_require__(37);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -3405,240 +3567,240 @@ CalendarComponent = __decorate([
 
 /***/ }),
 
-/***/ 716:
+/***/ 717:
 /***/ (function(module, exports, __webpack_require__) {
 
 var map = {
-	"./af": 273,
-	"./af.js": 273,
-	"./ar": 274,
-	"./ar-dz": 275,
-	"./ar-dz.js": 275,
-	"./ar-kw": 276,
-	"./ar-kw.js": 276,
-	"./ar-ly": 277,
-	"./ar-ly.js": 277,
-	"./ar-ma": 278,
-	"./ar-ma.js": 278,
-	"./ar-sa": 279,
-	"./ar-sa.js": 279,
-	"./ar-tn": 280,
-	"./ar-tn.js": 280,
-	"./ar.js": 274,
-	"./az": 281,
-	"./az.js": 281,
-	"./be": 282,
-	"./be.js": 282,
-	"./bg": 283,
-	"./bg.js": 283,
-	"./bn": 284,
-	"./bn.js": 284,
-	"./bo": 285,
-	"./bo.js": 285,
-	"./br": 286,
-	"./br.js": 286,
-	"./bs": 287,
-	"./bs.js": 287,
-	"./ca": 288,
-	"./ca.js": 288,
-	"./cs": 289,
-	"./cs.js": 289,
-	"./cv": 290,
-	"./cv.js": 290,
-	"./cy": 291,
-	"./cy.js": 291,
-	"./da": 292,
-	"./da.js": 292,
-	"./de": 293,
-	"./de-at": 294,
-	"./de-at.js": 294,
-	"./de-ch": 295,
-	"./de-ch.js": 295,
-	"./de.js": 293,
-	"./dv": 296,
-	"./dv.js": 296,
-	"./el": 297,
-	"./el.js": 297,
-	"./en-au": 298,
-	"./en-au.js": 298,
-	"./en-ca": 299,
-	"./en-ca.js": 299,
-	"./en-gb": 300,
-	"./en-gb.js": 300,
-	"./en-ie": 301,
-	"./en-ie.js": 301,
-	"./en-nz": 302,
-	"./en-nz.js": 302,
-	"./eo": 303,
-	"./eo.js": 303,
-	"./es": 304,
-	"./es-do": 305,
-	"./es-do.js": 305,
-	"./es.js": 304,
-	"./et": 306,
-	"./et.js": 306,
-	"./eu": 307,
-	"./eu.js": 307,
-	"./fa": 308,
-	"./fa.js": 308,
-	"./fi": 309,
-	"./fi.js": 309,
-	"./fo": 310,
-	"./fo.js": 310,
-	"./fr": 311,
-	"./fr-ca": 312,
-	"./fr-ca.js": 312,
-	"./fr-ch": 313,
-	"./fr-ch.js": 313,
-	"./fr.js": 311,
-	"./fy": 314,
-	"./fy.js": 314,
-	"./gd": 315,
-	"./gd.js": 315,
-	"./gl": 316,
-	"./gl.js": 316,
-	"./gom-latn": 317,
-	"./gom-latn.js": 317,
-	"./he": 318,
-	"./he.js": 318,
-	"./hi": 319,
-	"./hi.js": 319,
-	"./hr": 320,
-	"./hr.js": 320,
-	"./hu": 321,
-	"./hu.js": 321,
-	"./hy-am": 322,
-	"./hy-am.js": 322,
-	"./id": 323,
-	"./id.js": 323,
-	"./is": 324,
-	"./is.js": 324,
-	"./it": 325,
-	"./it.js": 325,
-	"./ja": 326,
-	"./ja.js": 326,
-	"./jv": 327,
-	"./jv.js": 327,
-	"./ka": 328,
-	"./ka.js": 328,
-	"./kk": 329,
-	"./kk.js": 329,
-	"./km": 330,
-	"./km.js": 330,
-	"./kn": 331,
-	"./kn.js": 331,
-	"./ko": 332,
-	"./ko.js": 332,
-	"./ky": 333,
-	"./ky.js": 333,
-	"./lb": 334,
-	"./lb.js": 334,
-	"./lo": 335,
-	"./lo.js": 335,
-	"./lt": 336,
-	"./lt.js": 336,
-	"./lv": 337,
-	"./lv.js": 337,
-	"./me": 338,
-	"./me.js": 338,
-	"./mi": 339,
-	"./mi.js": 339,
-	"./mk": 340,
-	"./mk.js": 340,
-	"./ml": 341,
-	"./ml.js": 341,
-	"./mr": 342,
-	"./mr.js": 342,
-	"./ms": 343,
-	"./ms-my": 344,
-	"./ms-my.js": 344,
-	"./ms.js": 343,
-	"./my": 345,
-	"./my.js": 345,
-	"./nb": 346,
-	"./nb.js": 346,
-	"./ne": 347,
-	"./ne.js": 347,
-	"./nl": 348,
-	"./nl-be": 349,
-	"./nl-be.js": 349,
-	"./nl.js": 348,
-	"./nn": 350,
-	"./nn.js": 350,
-	"./pa-in": 351,
-	"./pa-in.js": 351,
-	"./pl": 352,
-	"./pl.js": 352,
-	"./pt": 353,
-	"./pt-br": 354,
-	"./pt-br.js": 354,
-	"./pt.js": 353,
-	"./ro": 355,
-	"./ro.js": 355,
-	"./ru": 356,
-	"./ru.js": 356,
-	"./sd": 357,
-	"./sd.js": 357,
-	"./se": 358,
-	"./se.js": 358,
-	"./si": 359,
-	"./si.js": 359,
-	"./sk": 360,
-	"./sk.js": 360,
-	"./sl": 361,
-	"./sl.js": 361,
-	"./sq": 362,
-	"./sq.js": 362,
-	"./sr": 363,
-	"./sr-cyrl": 364,
-	"./sr-cyrl.js": 364,
-	"./sr.js": 363,
-	"./ss": 365,
-	"./ss.js": 365,
-	"./sv": 366,
-	"./sv.js": 366,
-	"./sw": 367,
-	"./sw.js": 367,
-	"./ta": 368,
-	"./ta.js": 368,
-	"./te": 369,
-	"./te.js": 369,
-	"./tet": 370,
-	"./tet.js": 370,
-	"./th": 371,
-	"./th.js": 371,
-	"./tl-ph": 372,
-	"./tl-ph.js": 372,
-	"./tlh": 373,
-	"./tlh.js": 373,
-	"./tr": 374,
-	"./tr.js": 374,
-	"./tzl": 375,
-	"./tzl.js": 375,
-	"./tzm": 376,
-	"./tzm-latn": 377,
-	"./tzm-latn.js": 377,
-	"./tzm.js": 376,
-	"./uk": 378,
-	"./uk.js": 378,
-	"./ur": 379,
-	"./ur.js": 379,
-	"./uz": 380,
-	"./uz-latn": 381,
-	"./uz-latn.js": 381,
-	"./uz.js": 380,
-	"./vi": 382,
-	"./vi.js": 382,
-	"./x-pseudo": 383,
-	"./x-pseudo.js": 383,
-	"./yo": 384,
-	"./yo.js": 384,
-	"./zh-cn": 385,
-	"./zh-cn.js": 385,
-	"./zh-hk": 386,
-	"./zh-hk.js": 386,
-	"./zh-tw": 387,
-	"./zh-tw.js": 387
+	"./af": 270,
+	"./af.js": 270,
+	"./ar": 271,
+	"./ar-dz": 272,
+	"./ar-dz.js": 272,
+	"./ar-kw": 273,
+	"./ar-kw.js": 273,
+	"./ar-ly": 274,
+	"./ar-ly.js": 274,
+	"./ar-ma": 275,
+	"./ar-ma.js": 275,
+	"./ar-sa": 276,
+	"./ar-sa.js": 276,
+	"./ar-tn": 277,
+	"./ar-tn.js": 277,
+	"./ar.js": 271,
+	"./az": 278,
+	"./az.js": 278,
+	"./be": 279,
+	"./be.js": 279,
+	"./bg": 280,
+	"./bg.js": 280,
+	"./bn": 281,
+	"./bn.js": 281,
+	"./bo": 282,
+	"./bo.js": 282,
+	"./br": 283,
+	"./br.js": 283,
+	"./bs": 284,
+	"./bs.js": 284,
+	"./ca": 285,
+	"./ca.js": 285,
+	"./cs": 286,
+	"./cs.js": 286,
+	"./cv": 287,
+	"./cv.js": 287,
+	"./cy": 288,
+	"./cy.js": 288,
+	"./da": 289,
+	"./da.js": 289,
+	"./de": 290,
+	"./de-at": 291,
+	"./de-at.js": 291,
+	"./de-ch": 292,
+	"./de-ch.js": 292,
+	"./de.js": 290,
+	"./dv": 293,
+	"./dv.js": 293,
+	"./el": 294,
+	"./el.js": 294,
+	"./en-au": 295,
+	"./en-au.js": 295,
+	"./en-ca": 296,
+	"./en-ca.js": 296,
+	"./en-gb": 297,
+	"./en-gb.js": 297,
+	"./en-ie": 298,
+	"./en-ie.js": 298,
+	"./en-nz": 299,
+	"./en-nz.js": 299,
+	"./eo": 300,
+	"./eo.js": 300,
+	"./es": 301,
+	"./es-do": 302,
+	"./es-do.js": 302,
+	"./es.js": 301,
+	"./et": 303,
+	"./et.js": 303,
+	"./eu": 304,
+	"./eu.js": 304,
+	"./fa": 305,
+	"./fa.js": 305,
+	"./fi": 306,
+	"./fi.js": 306,
+	"./fo": 307,
+	"./fo.js": 307,
+	"./fr": 308,
+	"./fr-ca": 309,
+	"./fr-ca.js": 309,
+	"./fr-ch": 310,
+	"./fr-ch.js": 310,
+	"./fr.js": 308,
+	"./fy": 311,
+	"./fy.js": 311,
+	"./gd": 312,
+	"./gd.js": 312,
+	"./gl": 313,
+	"./gl.js": 313,
+	"./gom-latn": 314,
+	"./gom-latn.js": 314,
+	"./he": 315,
+	"./he.js": 315,
+	"./hi": 316,
+	"./hi.js": 316,
+	"./hr": 317,
+	"./hr.js": 317,
+	"./hu": 318,
+	"./hu.js": 318,
+	"./hy-am": 319,
+	"./hy-am.js": 319,
+	"./id": 320,
+	"./id.js": 320,
+	"./is": 321,
+	"./is.js": 321,
+	"./it": 322,
+	"./it.js": 322,
+	"./ja": 323,
+	"./ja.js": 323,
+	"./jv": 324,
+	"./jv.js": 324,
+	"./ka": 325,
+	"./ka.js": 325,
+	"./kk": 326,
+	"./kk.js": 326,
+	"./km": 327,
+	"./km.js": 327,
+	"./kn": 328,
+	"./kn.js": 328,
+	"./ko": 329,
+	"./ko.js": 329,
+	"./ky": 330,
+	"./ky.js": 330,
+	"./lb": 331,
+	"./lb.js": 331,
+	"./lo": 332,
+	"./lo.js": 332,
+	"./lt": 333,
+	"./lt.js": 333,
+	"./lv": 334,
+	"./lv.js": 334,
+	"./me": 335,
+	"./me.js": 335,
+	"./mi": 336,
+	"./mi.js": 336,
+	"./mk": 337,
+	"./mk.js": 337,
+	"./ml": 338,
+	"./ml.js": 338,
+	"./mr": 339,
+	"./mr.js": 339,
+	"./ms": 340,
+	"./ms-my": 341,
+	"./ms-my.js": 341,
+	"./ms.js": 340,
+	"./my": 342,
+	"./my.js": 342,
+	"./nb": 343,
+	"./nb.js": 343,
+	"./ne": 344,
+	"./ne.js": 344,
+	"./nl": 345,
+	"./nl-be": 346,
+	"./nl-be.js": 346,
+	"./nl.js": 345,
+	"./nn": 347,
+	"./nn.js": 347,
+	"./pa-in": 348,
+	"./pa-in.js": 348,
+	"./pl": 349,
+	"./pl.js": 349,
+	"./pt": 350,
+	"./pt-br": 351,
+	"./pt-br.js": 351,
+	"./pt.js": 350,
+	"./ro": 352,
+	"./ro.js": 352,
+	"./ru": 353,
+	"./ru.js": 353,
+	"./sd": 354,
+	"./sd.js": 354,
+	"./se": 355,
+	"./se.js": 355,
+	"./si": 356,
+	"./si.js": 356,
+	"./sk": 357,
+	"./sk.js": 357,
+	"./sl": 358,
+	"./sl.js": 358,
+	"./sq": 359,
+	"./sq.js": 359,
+	"./sr": 360,
+	"./sr-cyrl": 361,
+	"./sr-cyrl.js": 361,
+	"./sr.js": 360,
+	"./ss": 362,
+	"./ss.js": 362,
+	"./sv": 363,
+	"./sv.js": 363,
+	"./sw": 364,
+	"./sw.js": 364,
+	"./ta": 365,
+	"./ta.js": 365,
+	"./te": 366,
+	"./te.js": 366,
+	"./tet": 367,
+	"./tet.js": 367,
+	"./th": 368,
+	"./th.js": 368,
+	"./tl-ph": 369,
+	"./tl-ph.js": 369,
+	"./tlh": 370,
+	"./tlh.js": 370,
+	"./tr": 371,
+	"./tr.js": 371,
+	"./tzl": 372,
+	"./tzl.js": 372,
+	"./tzm": 373,
+	"./tzm-latn": 374,
+	"./tzm-latn.js": 374,
+	"./tzm.js": 373,
+	"./uk": 375,
+	"./uk.js": 375,
+	"./ur": 376,
+	"./ur.js": 376,
+	"./uz": 377,
+	"./uz-latn": 378,
+	"./uz-latn.js": 378,
+	"./uz.js": 377,
+	"./vi": 379,
+	"./vi.js": 379,
+	"./x-pseudo": 380,
+	"./x-pseudo.js": 380,
+	"./yo": 381,
+	"./yo.js": 381,
+	"./zh-cn": 382,
+	"./zh-cn.js": 382,
+	"./zh-hk": 383,
+	"./zh-hk.js": 383,
+	"./zh-tw": 384,
+	"./zh-tw.js": 384
 };
 function webpackContext(req) {
 	return __webpack_require__(webpackContextResolve(req));
@@ -3654,24 +3816,24 @@ webpackContext.keys = function webpackContextKeys() {
 };
 webpackContext.resolve = webpackContextResolve;
 module.exports = webpackContext;
-webpackContext.id = 716;
+webpackContext.id = 717;
 
 /***/ }),
 
-/***/ 723:
+/***/ 724:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return PipesModule; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(1);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__pipes_delay_delay__ = __webpack_require__(724);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__pipes_year_year__ = __webpack_require__(725);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__pipes_month_month__ = __webpack_require__(726);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__day_day__ = __webpack_require__(727);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__weekay_weekay__ = __webpack_require__(728);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__year_and_month_year_and_month__ = __webpack_require__(729);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__stamp_to_date_stamp_to_date__ = __webpack_require__(730);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__itemlevel_itemlevel__ = __webpack_require__(731);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__pipes_delay_delay__ = __webpack_require__(725);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__pipes_year_year__ = __webpack_require__(726);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__pipes_month_month__ = __webpack_require__(727);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__day_day__ = __webpack_require__(728);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__weekay_weekay__ = __webpack_require__(729);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__year_and_month_year_and_month__ = __webpack_require__(730);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__stamp_to_date_stamp_to_date__ = __webpack_require__(731);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__itemlevel_itemlevel__ = __webpack_require__(732);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -3722,7 +3884,7 @@ PipesModule = __decorate([
 
 /***/ }),
 
-/***/ 724:
+/***/ 725:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -3778,7 +3940,7 @@ DelayPipe = __decorate([
 
 /***/ }),
 
-/***/ 725:
+/***/ 726:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -3840,7 +4002,7 @@ YearPipe = __decorate([
 
 /***/ }),
 
-/***/ 726:
+/***/ 727:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -3902,7 +4064,7 @@ MonthPipe = __decorate([
 
 /***/ }),
 
-/***/ 727:
+/***/ 728:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -3967,7 +4129,7 @@ DayPipe = __decorate([
 
 /***/ }),
 
-/***/ 728:
+/***/ 729:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -4061,7 +4223,7 @@ WeekayPipe = __decorate([
 
 /***/ }),
 
-/***/ 729:
+/***/ 730:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -4113,7 +4275,7 @@ YearAndMonthPipe = __decorate([
 
 /***/ }),
 
-/***/ 730:
+/***/ 731:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -4166,7 +4328,7 @@ StampToDatePipe = __decorate([
 
 /***/ }),
 
-/***/ 731:
+/***/ 732:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -4219,1610 +4381,7 @@ ItemlevelPipe = __decorate([
 
 //# sourceMappingURL=itemlevel.js.map
 
-/***/ }),
-
-/***/ 732:
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return KeycloakServiceProvider; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(1);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_http__ = __webpack_require__(55);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_rxjs_add_operator_map__ = __webpack_require__(114);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_rxjs_add_operator_map___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_rxjs_add_operator_map__);
-var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
-    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
-    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
-    return c > 3 && r && Object.defineProperty(target, key, r), r;
-};
-var __metadata = (this && this.__metadata) || function (k, v) {
-    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
-};
-
-
-
-var keycloakConfig = __webpack_require__(733);
-/*
-  Generated class for the KeycloakServiceProvider provider.
-
-  See https://angular.io/docs/ts/latest/guide/dependency-injection.html
-  for more info on providers and Angular DI.
-*/
-var KeycloakServiceProvider = KeycloakServiceProvider_1 = (function () {
-    function KeycloakServiceProvider(http) {
-        this.http = http;
-    }
-    /**
-     * Initialise the Keycloak Client Adapter
-     */
-    KeycloakServiceProvider.init = function () {
-        // Create a new Keycloak Client Instance
-        var keycloakAuth = new Keycloak(keycloakConfig);
-        return new Promise(function (resolve, reject) {
-            keycloakAuth.init({ onLoad: 'login-required', flow: 'implicit' }).success(function () {
-                KeycloakServiceProvider_1.auth.authz = keycloakAuth;
-                KeycloakServiceProvider_1.auth.logoutUrl = keycloakAuth.authServerUrl + "/realms/keypress/protocol/openid-connect/logout?redirect_uri=/";
-                resolve();
-            }).error(function (err) {
-                reject(err);
-            });
-        });
-    };
-    /**
-     * Redirect to logout
-     */
-    KeycloakServiceProvider.prototype.logout = function () {
-        KeycloakServiceProvider_1.auth.authz.logout();
-    };
-    /**
-     * Redirect to Login
-     */
-    KeycloakServiceProvider.prototype.login = function () {
-        KeycloakServiceProvider_1.auth.authz.login();
-    };
-    /**
-     * Clears Authentication State
-     */
-    KeycloakServiceProvider.prototype.clearToken = function () {
-        KeycloakServiceProvider_1.auth.authz.clearToken();
-    };
-    /**
-     * Return the users realm level roles
-     */
-    KeycloakServiceProvider.prototype.getRealmRoles = function () {
-        return KeycloakServiceProvider_1.auth.authz.realmAccess.roles;
-    };
-    /**
-     * Check if the user has a specified realm role
-     */
-    KeycloakServiceProvider.prototype.hasRealmRole = function (role) {
-        return KeycloakServiceProvider_1.auth.authz.hasRealmRole(role);
-    };
-    /**
-     * Get Server/Open ID Connect specific server info
-     */
-    KeycloakServiceProvider.prototype.getConfiguration = function () {
-        var notAvailable = "N/A";
-        return {
-            "authServerUrl": KeycloakServiceProvider_1.auth.authz.authServerUrl ? KeycloakServiceProvider_1.auth.authz.authServerUrl : notAvailable,
-            "openIdFlow": KeycloakServiceProvider_1.auth.authz.flow ? KeycloakServiceProvider_1.auth.authz.flow : notAvailable,
-            "openIdResponseMode": KeycloakServiceProvider_1.auth.authz.responseMode ? KeycloakServiceProvider_1.auth.authz.responseMode : notAvailable,
-            "openIdResponseType": KeycloakServiceProvider_1.auth.authz.responseType ? KeycloakServiceProvider_1.auth.authz.responseType : notAvailable,
-            "realm": KeycloakServiceProvider_1.auth.authz.realm ? KeycloakServiceProvider_1.auth.authz.realm : notAvailable,
-            "clientId": KeycloakServiceProvider_1.auth.authz.clientId ? KeycloakServiceProvider_1.auth.authz.clientId : notAvailable,
-            "timeSkew": KeycloakServiceProvider_1.auth.authz.timeSkew ? KeycloakServiceProvider_1.auth.authz.timeSkew : notAvailable
-        };
-    };
-    /**
-     * Redirects to the Account Management Console
-     */
-    KeycloakServiceProvider.prototype.accountManagement = function () {
-        KeycloakServiceProvider_1.auth.authz.accountManagement();
-    };
-    /**
-     * Get the users profile
-     */
-    KeycloakServiceProvider.prototype.loadUserProfile = function () {
-        // Retrieve User Profile
-        return new Promise(function (resolve, reject) {
-            KeycloakServiceProvider_1.auth.authz.loadUserProfile().success(function (profile) {
-                resolve(profile);
-            }).error(function () {
-                reject('Failed to retrieve user profile');
-            });
-        });
-    };
-    /**
-     * Check if the user has a given role
-     * @param role The role to check if the user posesses
-     */
-    KeycloakServiceProvider.prototype.viewGuard = function (role) {
-        if (KeycloakServiceProvider_1.auth.authz.hasRealmRole(role)) {
-            return true;
-        }
-        else {
-            //this.alertCtrl.create({title: 'Access Denied', subTitle: "You don't have access to the requested resource."}).present();
-            return false;
-        }
-    };
-    return KeycloakServiceProvider;
-}());
-KeycloakServiceProvider.auth = {};
-KeycloakServiceProvider = KeycloakServiceProvider_1 = __decorate([
-    Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Injectable"])(),
-    __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1__angular_http__["a" /* Http */]])
-], KeycloakServiceProvider);
-
-var KeycloakServiceProvider_1;
-//# sourceMappingURL=keycloak-service.js.map
-
-/***/ }),
-
-/***/ 733:
-/***/ (function(module, exports) {
-
-module.exports = {
-	"realm": "qipai",
-	"url": "http://52.80.11.196:9090/auth",
-	"ssl-required": "external",
-	"clientId": "qipaipm",
-	"public-client": true,
-	"use-resource-role-mappings": true
-};
-
-/***/ }),
-
-/***/ 734:
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return Keycloak2Provider; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(1);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_http__ = __webpack_require__(55);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_rxjs_add_operator_map__ = __webpack_require__(114);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_rxjs_add_operator_map___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_rxjs_add_operator_map__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__keycloak_js__ = __webpack_require__(735);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__keycloak_js___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3__keycloak_js__);
-var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
-    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
-    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
-    return c > 3 && r && Object.defineProperty(target, key, r), r;
-};
-var __metadata = (this && this.__metadata) || function (k, v) {
-    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
-};
-
-
-
-
-/*
-  Generated class for the Keycloak2Provider provider.
-
-  See https://angular.io/docs/ts/latest/guide/dependency-injection.html
-  for more info on providers and Angular DI.
-*/
-var Keycloak2Provider = Keycloak2Provider_1 = (function () {
-    function Keycloak2Provider(http) {
-        this.http = http;
-    }
-    Keycloak2Provider.init = function () {
-        // const keycloakAuth: any = Keycloak({
-        //     "realm": "qipai",
-        //     "url": "http://localhost:8080/auth",
-        //     "clientId": "qipaipm",
-        //     "cors": true,
-        //     "ssl-required" : "external",
-        //     "clientSecret": "affdd342-69ca-4887-acce-0f9114b26195",
-        //     //"sessionId":"1619f21c-0292-4b9d-9e1c-dcd0fdd1a2a8",
-        //     "publicClient":true,
-        //     "use-resource-role-mappings": true,
-        //     "bearer-only": false,
-        //     "redirect_uri": "http://localhost:8100/*",
-        //     "resource": "tutorial-frontend",
-        // });
-        var keycloakAuth = new Keycloak({
-            "realm": "qipai",
-            "auth-server-url": "http://192.168.72.101:8080/auth",
-            "url": "http://192.168.72.101:8080/auth",
-            "ssl-required": "none",
-            "resource": "qipai-web",
-            "clientId": "qipai-web",
-            //"use-resource-role-mappings":true,
-            "credentials": {
-                "secret": "90e55a65-217c-4b87-b698-c95c4e7e0644"
-            },
-        });
-        Keycloak2Provider_1.auth.loggedIn = false;
-        return new Promise(function (resolve, reject) {
-            //adapter : 'cordova', checkLoginIframeInterval:1, checkLoginIframe: true
-            keycloakAuth.init({ onLoad: 'login-required' })
-                .success(function () {
-                console.log(keycloakAuth);
-                Keycloak2Provider_1.auth.loggedIn = true;
-                Keycloak2Provider_1.auth.authz = keycloakAuth;
-                Keycloak2Provider_1.auth.logoutUrl = keycloakAuth.authServerUrl
-                    + +"/realms/" + "qipai" + "/protocol/openid-connect/logout?redirect_uri="
-                    + document.baseURI;
-                resolve();
-            })
-                .error(function () {
-                reject();
-            });
-        });
-    };
-    Keycloak2Provider.prototype.logout = function () {
-        Keycloak2Provider_1.auth.authz.logout();
-        Keycloak2Provider_1.auth.loggedIn = false;
-        Keycloak2Provider_1.auth.authz = null;
-    };
-    Keycloak2Provider.prototype.login = function () {
-        Keycloak2Provider_1.auth.authz.login();
-    };
-    /**
-     * Clears Authentication State
-     */
-    Keycloak2Provider.prototype.clearToken = function () {
-        Keycloak2Provider_1.auth.authz.clearToken();
-    };
-    /**
-     * Return the users realm level roles
-     */
-    Keycloak2Provider.prototype.getRealmRoles = function () {
-        return Keycloak2Provider_1.auth.authz.realmAccess.roles;
-    };
-    Keycloak2Provider.prototype.hasRealmRole = function (role) {
-        return Keycloak2Provider_1.auth.authz.hasRealmRole(role);
-    };
-    /**
-     * Get Server/Open ID Connect specific server info
-     */
-    Keycloak2Provider.prototype.getConfiguration = function () {
-        var notAvailable = "N/A";
-        return {
-            "authServerUrl": Keycloak2Provider_1.auth.authz.authServerUrl ? Keycloak2Provider_1.auth.authz.authServerUrl : notAvailable,
-            "openIdFlow": Keycloak2Provider_1.auth.authz.flow ? Keycloak2Provider_1.auth.authz.flow : notAvailable,
-            "openIdResponseMode": Keycloak2Provider_1.auth.authz.responseMode ? Keycloak2Provider_1.auth.authz.responseMode : notAvailable,
-            "openIdResponseType": Keycloak2Provider_1.auth.authz.responseType ? Keycloak2Provider_1.auth.authz.responseType : notAvailable,
-            "realm": Keycloak2Provider_1.auth.authz.realm ? Keycloak2Provider_1.auth.authz.realm : notAvailable,
-            "clientId": Keycloak2Provider_1.auth.authz.clientId ? Keycloak2Provider_1.auth.authz.clientId : notAvailable,
-            "timeSkew": Keycloak2Provider_1.auth.authz.timeSkew ? Keycloak2Provider_1.auth.authz.timeSkew : notAvailable
-        };
-    };
-    /**
-     * Redirects to the Account Management Console
-     */
-    Keycloak2Provider.prototype.accountManagement = function () {
-        Keycloak2Provider_1.auth.authz.accountManagement();
-    };
-    /**
-     * Get the users profile
-     */
-    Keycloak2Provider.prototype.loadUserProfile = function () {
-        // Retrieve User Profile
-        return new Promise(function (resolve, reject) {
-            Keycloak2Provider_1.auth.authz.loadUserProfile().success(function (profile) {
-                resolve(profile);
-            }).error(function () {
-                reject('Failed to retrieve user profile');
-            });
-        });
-    };
-    Keycloak2Provider.prototype.viewGuard = function (role) {
-        if (Keycloak2Provider_1.auth.authz.hasRealmRole(role)) {
-            return true;
-        }
-        else {
-            //this.alertCtrl.create({title: 'Access Denied', subTitle: "You don't have access to the requested resource."}).present();
-            return false;
-        }
-    };
-    Keycloak2Provider.prototype.getToken = function () {
-        return new Promise(function (resolve, reject) {
-            if (Keycloak2Provider_1.auth.authz.token) {
-                Keycloak2Provider_1.auth.authz
-                    .updateToken(5)
-                    .success(function () {
-                    resolve(Keycloak2Provider_1.auth.authz.token);
-                })
-                    .error(function () {
-                    reject('Failed to refresh token');
-                });
-            }
-            else {
-                reject('Not loggen in');
-            }
-        });
-    };
-    return Keycloak2Provider;
-}());
-Keycloak2Provider.auth = {};
-Keycloak2Provider = Keycloak2Provider_1 = __decorate([
-    Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Injectable"])(),
-    __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1__angular_http__["a" /* Http */]])
-], Keycloak2Provider);
-
-var Keycloak2Provider_1;
-//# sourceMappingURL=keycloak2.js.map
-
-/***/ }),
-
-/***/ 735:
-/***/ (function(module, exports, __webpack_require__) {
-
-/* WEBPACK VAR INJECTION */(function(module) {var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*
- * Copyright 2016 Red Hat, Inc. and/or its affiliates
- * and other contributors as indicated by the @author tags.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- * http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
-(function( window, undefined ) {
-
-    var Keycloak = function (config) {
-        if (!(this instanceof Keycloak)) {
-            return new Keycloak(config);
-        }
-
-        var kc = this;
-        var adapter;
-        var refreshQueue = [];
-        var callbackStorage;
-
-        var loginIframe = {
-            enable: true,
-            callbackList: [],
-            interval: 5
-        };
-
-        kc.init = function (initOptions) {
-            kc.authenticated = false;
-
-            callbackStorage = createCallbackStorage();
-
-            if (initOptions && initOptions.adapter === 'cordova') {
-                adapter = loadAdapter('cordova');
-            } else if (initOptions && initOptions.adapter === 'default') {
-                adapter = loadAdapter();
-            } else {
-                if (window.Cordova) {
-                    adapter = loadAdapter('cordova');
-                } else {
-                    adapter = loadAdapter();
-                }
-            }
-
-            if (initOptions) {
-                if (typeof initOptions.checkLoginIframe !== 'undefined') {
-                    loginIframe.enable = initOptions.checkLoginIframe;
-                }
-
-                if (initOptions.checkLoginIframeInterval) {
-                    loginIframe.interval = initOptions.checkLoginIframeInterval;
-                }
-
-                if (initOptions.onLoad === 'login-required') {
-                    kc.loginRequired = true;
-                }
-
-                if (initOptions.responseMode) {
-                    if (initOptions.responseMode === 'query' || initOptions.responseMode === 'fragment') {
-                        kc.responseMode = initOptions.responseMode;
-                    } else {
-                        throw 'Invalid value for responseMode';
-                    }
-                }
-
-                if (initOptions.flow) {
-                    switch (initOptions.flow) {
-                        case 'standard':
-                            kc.responseType = 'code';
-                            break;
-                        case 'implicit':
-                            kc.responseType = 'id_token token';
-                            break;
-                        case 'hybrid':
-                            kc.responseType = 'code id_token token';
-                            break;
-                        default:
-                            throw 'Invalid value for flow';
-                    }
-                    kc.flow = initOptions.flow;
-                }
-
-                if (initOptions.timeSkew != null) {
-                    kc.timeSkew = initOptions.timeSkew;
-                }
-            }
-
-            if (!kc.responseMode) {
-                kc.responseMode = 'fragment';
-            }
-            if (!kc.responseType) {
-                kc.responseType = 'code';
-                kc.flow = 'standard';
-            }
-
-            var promise = createPromise();
-
-            var initPromise = createPromise();
-            initPromise.promise.success(function() {
-                kc.onReady && kc.onReady(kc.authenticated);
-                promise.setSuccess(kc.authenticated);
-            }).error(function(errorData) {
-                promise.setError(errorData);
-            });
-
-            var configPromise = loadConfig(config);
-
-            function onLoad() {
-                var doLogin = function(prompt) {
-                    if (!prompt) {
-                        options.prompt = 'none';
-                    }
-                    kc.login(options).success(function () {
-                        initPromise.setSuccess();
-                    }).error(function () {
-                        initPromise.setError();
-                    });
-                }
-
-                var options = {};
-                switch (initOptions.onLoad) {
-                    case 'check-sso':
-                        if (loginIframe.enable) {
-                            setupCheckLoginIframe().success(function() {
-                                checkLoginIframe().success(function () {
-                                    doLogin(false);
-                                }).error(function () {
-                                    initPromise.setSuccess();
-                                });
-                            });
-                        } else {
-                            doLogin(false);
-                        }
-                        break;
-                    case 'login-required':
-                        doLogin(true);
-                        break;
-                    default:
-                        throw 'Invalid value for onLoad';
-                }
-            }
-
-            function processInit() {
-                var callback = parseCallback(window.location.href);
-
-                if (callback) {
-                    setupCheckLoginIframe();
-                    window.history.replaceState({}, null, callback.newUrl);
-                    processCallback(callback, initPromise);
-                    return;
-                } else if (initOptions) {
-                    if (initOptions.token && initOptions.refreshToken) {
-                        setToken(initOptions.token, initOptions.refreshToken, initOptions.idToken);
-
-                        if (loginIframe.enable) {
-                            setupCheckLoginIframe().success(function() {
-                                checkLoginIframe().success(function () {
-                                    kc.onAuthSuccess && kc.onAuthSuccess();
-                                    initPromise.setSuccess();
-                                }).error(function () {
-                                    setToken(null, null, null);
-                                    initPromise.setSuccess();
-                                });
-                            });
-                        } else {
-                            kc.updateToken(-1).success(function() {
-                                kc.onAuthSuccess && kc.onAuthSuccess();
-                                initPromise.setSuccess();
-                            }).error(function() {
-                                kc.onAuthError && kc.onAuthError();
-                                if (initOptions.onLoad) {
-                                    onLoad();
-                                } else {
-                                    initPromise.setError();
-                                }
-                            });
-                        }
-                    } else if (initOptions.onLoad) {
-                        onLoad();
-                    } else {
-                        initPromise.setSuccess();
-                    }
-                } else {
-                    initPromise.setSuccess();
-                }
-            }
-
-            configPromise.success(processInit);
-            configPromise.error(function() {
-                promise.setError();
-            });
-
-            return promise.promise;
-        }
-
-        kc.login = function (options) {
-            return adapter.login(options);
-        }
-
-        kc.createLoginUrl = function(options) {
-            var state = createUUID();
-            var nonce = createUUID();
-
-            var redirectUri = adapter.redirectUri(options);
-
-            var callbackState = {
-                state: state,
-                nonce: nonce,
-                redirectUri: encodeURIComponent(redirectUri),
-            }
-
-            if (options && options.prompt) {
-                callbackState.prompt = options.prompt;
-            }
-
-            callbackStorage.add(callbackState);
-
-            var action = 'auth';
-            if (options && options.action == 'register') {
-                action = 'registrations';
-            }
-
-            var scope = (options && options.scope) ? "openid " + options.scope : "openid";
-
-            var url = getRealmUrl()
-                + '/protocol/openid-connect/' + action
-                + '?client_id=' + encodeURIComponent(kc.clientId)
-                + '&redirect_uri=' + encodeURIComponent(redirectUri)
-                + '&state=' + encodeURIComponent(state)
-                + '&nonce=' + encodeURIComponent(nonce)
-                + '&response_mode=' + encodeURIComponent(kc.responseMode)
-                + '&response_type=' + encodeURIComponent(kc.responseType)
-                + '&scope=' + encodeURIComponent(scope);
-
-            if (options && options.prompt) {
-                url += '&prompt=' + encodeURIComponent(options.prompt);
-            }
-
-            if (options && options.maxAge) {
-                url += '&max_age=' + encodeURIComponent(options.maxAge);
-            }
-
-            if (options && options.loginHint) {
-                url += '&login_hint=' + encodeURIComponent(options.loginHint);
-            }
-
-            if (options && options.idpHint) {
-                url += '&kc_idp_hint=' + encodeURIComponent(options.idpHint);
-            }
-
-            if (options && options.locale) {
-                url += '&ui_locales=' + encodeURIComponent(options.locale);
-            }
-
-            return url;
-        }
-
-        kc.logout = function(options) {
-            return adapter.logout(options);
-        }
-
-        kc.createLogoutUrl = function(options) {
-            var url = getRealmUrl()
-                + '/protocol/openid-connect/logout'
-                + '?redirect_uri=' + encodeURIComponent(adapter.redirectUri(options, false));
-
-            return url;
-        }
-
-        kc.register = function (options) {
-            return adapter.register(options);
-        }
-
-        kc.createRegisterUrl = function(options) {
-            if (!options) {
-                options = {};
-            }
-            options.action = 'register';
-            return kc.createLoginUrl(options);
-        }
-
-        kc.createAccountUrl = function(options) {
-            var url = getRealmUrl()
-                + '/account'
-                + '?referrer=' + encodeURIComponent(kc.clientId)
-                + '&referrer_uri=' + encodeURIComponent(adapter.redirectUri(options));
-
-            return url;
-        }
-
-        kc.accountManagement = function() {
-            return adapter.accountManagement();
-        }
-
-        kc.hasRealmRole = function (role) {
-            var access = kc.realmAccess;
-            return !!access && access.roles.indexOf(role) >= 0;
-        }
-
-        kc.hasResourceRole = function(role, resource) {
-            if (!kc.resourceAccess) {
-                return false;
-            }
-
-            var access = kc.resourceAccess[resource || kc.clientId];
-            return !!access && access.roles.indexOf(role) >= 0;
-        }
-
-        kc.loadUserProfile = function() {
-            var url = getRealmUrl() + '/account';
-            var req = new XMLHttpRequest();
-            req.open('GET', url, true);
-            req.setRequestHeader('Accept', 'application/json');
-            req.setRequestHeader('Authorization', 'bearer ' + kc.token);
-
-            var promise = createPromise();
-
-            req.onreadystatechange = function () {
-                if (req.readyState == 4) {
-                    if (req.status == 200) {
-                        kc.profile = JSON.parse(req.responseText);
-                        promise.setSuccess(kc.profile);
-                    } else {
-                        promise.setError();
-                    }
-                }
-            }
-
-            req.send();
-
-            return promise.promise;
-        }
-
-        kc.loadUserInfo = function() {
-            var url = getRealmUrl() + '/protocol/openid-connect/userinfo';
-            var req = new XMLHttpRequest();
-            req.open('GET', url, true);
-            req.setRequestHeader('Accept', 'application/json');
-            req.setRequestHeader('Authorization', 'bearer ' + kc.token);
-
-            var promise = createPromise();
-
-            req.onreadystatechange = function () {
-                if (req.readyState == 4) {
-                    if (req.status == 200) {
-                        kc.userInfo = JSON.parse(req.responseText);
-                        promise.setSuccess(kc.userInfo);
-                    } else {
-                        promise.setError();
-                    }
-                }
-            }
-
-            req.send();
-
-            return promise.promise;
-        }
-
-        kc.isTokenExpired = function(minValidity) {
-            if (!kc.tokenParsed || (!kc.refreshToken && kc.flow != 'implicit' )) {
-                throw 'Not authenticated';
-            }
-
-            if (kc.timeSkew == null) {
-                console.info('[KEYCLOAK] Unable to determine if token is expired as timeskew is not set');
-                return true;
-            }
-
-            var expiresIn = kc.tokenParsed['exp'] - Math.ceil(new Date().getTime() / 1000) + kc.timeSkew;
-            if (minValidity) {
-                expiresIn -= minValidity;
-            }
-            return expiresIn < 0;
-        }
-
-        kc.updateToken = function(minValidity) {
-            var promise = createPromise();
-
-            if (!kc.refreshToken) {
-                promise.setError();
-                return promise.promise;
-            }
-
-            minValidity = minValidity || 5;
-
-            var exec = function() {
-                var refreshToken = false;
-                if (minValidity == -1) {
-                    refreshToken = true;
-                    console.info('[KEYCLOAK] Refreshing token: forced refresh');
-                } else if (!kc.tokenParsed || kc.isTokenExpired(minValidity)) {
-                    refreshToken = true;
-                    console.info('[KEYCLOAK] Refreshing token: token expired');
-                }
-
-                if (!refreshToken) {
-                    promise.setSuccess(false);
-                } else {
-                    var params = 'grant_type=refresh_token&' + 'refresh_token=' + kc.refreshToken;
-                    var url = getRealmUrl() + '/protocol/openid-connect/token';
-
-                    refreshQueue.push(promise);
-
-                    if (refreshQueue.length == 1) {
-                        var req = new XMLHttpRequest();
-                        req.open('POST', url, true);
-                        //req.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
-                        req.setRequestHeader('Content-type', 'application/vnd.google-earth.kml+xml; charset=utf-8')
-                        req.withCredentials = true;
-
-                        if (kc.clientId && kc.clientSecret) {
-                            req.setRequestHeader('Authorization', 'Basic ' + btoa(kc.clientId + ':' + kc.clientSecret));
-                        } else {
-                            params += '&client_id=' + encodeURIComponent(kc.clientId);
-                        }
-
-                        var timeLocal = new Date().getTime();
-
-                        req.onreadystatechange = function () {
-                            if (req.readyState == 4) {
-                                if (req.status == 200) {
-                                    console.info('[KEYCLOAK] Token refreshed');
-
-                                    timeLocal = (timeLocal + new Date().getTime()) / 2;
-
-                                    var tokenResponse = JSON.parse(req.responseText);
-
-                                    setToken(tokenResponse['access_token'], tokenResponse['refresh_token'], tokenResponse['id_token'], timeLocal);
-
-                                    kc.onAuthRefreshSuccess && kc.onAuthRefreshSuccess();
-                                    for (var p = refreshQueue.pop(); p != null; p = refreshQueue.pop()) {
-                                        p.setSuccess(true);
-                                    }
-                                } else {
-                                    console.warn('[KEYCLOAK] Failed to refresh token');
-
-                                    kc.onAuthRefreshError && kc.onAuthRefreshError();
-                                    for (var p = refreshQueue.pop(); p != null; p = refreshQueue.pop()) {
-                                        p.setError(true);
-                                    }
-                                }
-                            }
-                        };
-
-                        req.send(params);
-                    }
-                }
-            }
-
-            if (loginIframe.enable) {
-                var iframePromise = checkLoginIframe();
-                iframePromise.success(function() {
-                    exec();
-                }).error(function() {
-                    promise.setError();
-                });
-            } else {
-                exec();
-            }
-
-            return promise.promise;
-        }
-
-        kc.clearToken = function() {
-            if (kc.token) {
-                setToken(null, null, null);
-                kc.onAuthLogout && kc.onAuthLogout();
-                if (kc.loginRequired) {
-                    kc.login();
-                }
-            }
-        }
-
-        function getRealmUrl() {
-            if (kc.authServerUrl.charAt(kc.authServerUrl.length - 1) == '/') {
-                return kc.authServerUrl + 'realms/' + encodeURIComponent(kc.realm);
-            } else {
-                return kc.authServerUrl + '/realms/' + encodeURIComponent(kc.realm);
-            }
-        }
-
-        function getOrigin() {
-            if (!window.location.origin) {
-                return window.location.protocol + "//" + window.location.hostname + (window.location.port ? ':' + window.location.port: '');
-            } else {
-                return window.location.origin;
-            }
-        }
-
-        function processCallback(oauth, promise) {
-            var code = oauth.code;
-            var error = oauth.error;
-            var prompt = oauth.prompt;
-
-            var timeLocal = new Date().getTime();
-
-            if (error) {
-                if (prompt != 'none') {
-                    var errorData = { error: error, error_description: oauth.error_description };
-                    kc.onAuthError && kc.onAuthError(errorData);
-                    promise && promise.setError(errorData);
-                } else {
-                    promise && promise.setSuccess();
-                }
-                return;
-            } else if ((kc.flow != 'standard') && (oauth.access_token || oauth.id_token)) {
-                authSuccess(oauth.access_token, null, oauth.id_token, true);
-            }
-
-            if ((kc.flow != 'implicit') && code) {
-                var params = 'code=' + code + '&grant_type=authorization_code';
-                var url = getRealmUrl() + '/protocol/openid-connect/token';
-
-                var req = new XMLHttpRequest();
-                req.open('POST', url, true);
-                //req.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
-                req.setRequestHeader('Content-type', 'application/vnd.google-earth.kml+xml; charset=utf-8')
-
-                if (kc.clientId && kc.clientSecret) {
-                    req.setRequestHeader('Authorization', 'Basic ' + btoa(kc.clientId + ':' + kc.clientSecret));
-                } else {
-                    params += '&client_id=' + encodeURIComponent(kc.clientId);
-                }
-
-                params += '&redirect_uri=' + oauth.redirectUri;
-
-                req.withCredentials = true;
-
-                req.onreadystatechange = function() {
-                    if (req.readyState == 4) {
-                        if (req.status == 200) {
-
-                            var tokenResponse = JSON.parse(req.responseText);
-                            authSuccess(tokenResponse['access_token'], tokenResponse['refresh_token'], tokenResponse['id_token'], kc.flow === 'standard');
-                        } else {
-                            kc.onAuthError && kc.onAuthError();
-                            promise && promise.setError();
-                        }
-                    }
-                };
-
-                req.send(params);
-            }
-
-            function authSuccess(accessToken, refreshToken, idToken, fulfillPromise) {
-                timeLocal = (timeLocal + new Date().getTime()) / 2;
-
-                setToken(accessToken, refreshToken, idToken, timeLocal);
-
-                if ((kc.tokenParsed && kc.tokenParsed.nonce != oauth.storedNonce) ||
-                    (kc.refreshTokenParsed && kc.refreshTokenParsed.nonce != oauth.storedNonce) ||
-                    (kc.idTokenParsed && kc.idTokenParsed.nonce != oauth.storedNonce)) {
-
-                    console.info('[KEYCLOAK] Invalid nonce, clearing token');
-                    kc.clearToken();
-                    promise && promise.setError();
-                } else {
-                    if (fulfillPromise) {
-                        kc.onAuthSuccess && kc.onAuthSuccess();
-                        promise && promise.setSuccess();
-                    }
-                }
-            }
-
-        }
-
-        function loadConfig(url) {
-            var promise = createPromise();
-            var configUrl;
-
-            if (!config) {
-                configUrl = 'keycloak.json';
-            } else if (typeof config === 'string') {
-                configUrl = config;
-            }
-
-            if (configUrl) {
-                var req = new XMLHttpRequest();
-                req.open('GET', configUrl, true);
-                req.setRequestHeader('Accept', 'application/json');
-
-                req.onreadystatechange = function () {
-                    if (req.readyState == 4) {
-                        if (req.status == 200 || fileLoaded(req)) {
-                            var config = JSON.parse(req.responseText);
-
-                            kc.authServerUrl = config['auth-server-url'];
-                            kc.realm = config['realm'];
-                            kc.clientId = config['resource'];
-                            kc.clientSecret = (config['credentials'] || {})['secret'];
-
-                            promise.setSuccess();
-                        } else {
-                            promise.setError();
-                        }
-                    }
-                };
-
-                req.send();
-            } else {
-                if (!config['url']) {
-                    var scripts = document.getElementsByTagName('script');
-                    for (var i = 0; i < scripts.length; i++) {
-                        if (scripts[i].src.match(/.*keycloak\.js/)) {
-                            config.url = scripts[i].src.substr(0, scripts[i].src.indexOf('/js/keycloak.js'));
-                            break;
-                        }
-                    }
-                }
-
-                if (!config.realm) {
-                    throw 'realm missing';
-                }
-
-                if (!config.clientId) {
-                    throw 'clientId missing';
-                }
-
-                kc.authServerUrl = config.url;
-                kc.realm = config.realm;
-                kc.clientId = config.clientId;
-                kc.clientSecret = (config.credentials || {}).secret;
-
-                promise.setSuccess();
-            }
-
-            return promise.promise;
-        }
-
-        function fileLoaded(xhr) {
-            return xhr.status == 0 && xhr.responseText && xhr.responseURL.startsWith('file:');
-        }
-
-        function setToken(token, refreshToken, idToken, timeLocal) {
-            if (kc.tokenTimeoutHandle) {
-                clearTimeout(kc.tokenTimeoutHandle);
-                kc.tokenTimeoutHandle = null;
-            }
-
-            if (refreshToken) {
-                kc.refreshToken = refreshToken;
-                kc.refreshTokenParsed = decodeToken(refreshToken);
-            } else {
-                delete kc.refreshToken;
-                delete kc.refreshTokenParsed;
-            }
-
-            if (idToken) {
-                kc.idToken = idToken;
-                kc.idTokenParsed = decodeToken(idToken);
-            } else {
-                delete kc.idToken;
-                delete kc.idTokenParsed;
-            }
-
-            if (token) {
-                kc.token = token;
-                kc.tokenParsed = decodeToken(token);
-                kc.sessionId = kc.tokenParsed.session_state;
-                kc.authenticated = true;
-                kc.subject = kc.tokenParsed.sub;
-                kc.realmAccess = kc.tokenParsed.realm_access;
-                kc.resourceAccess = kc.tokenParsed.resource_access;
-
-                if (timeLocal) {
-                    kc.timeSkew = Math.floor(timeLocal / 1000) - kc.tokenParsed.iat;
-                }
-
-                if (kc.timeSkew != null) {
-                    console.info('[KEYCLOAK] Estimated time difference between browser and server is ' + kc.timeSkew + ' seconds');
-
-                    if (kc.onTokenExpired) {
-                        var expiresIn = (kc.tokenParsed['exp'] - (new Date().getTime() / 1000) + kc.timeSkew) * 1000;
-                        console.info('[KEYCLOAK] Token expires in ' + Math.round(expiresIn / 1000) + ' s');
-                        if (expiresIn <= 0) {
-                            kc.onTokenExpired();
-                        } else {
-                            kc.tokenTimeoutHandle = setTimeout(kc.onTokenExpired, expiresIn);
-                        }
-                    }
-                }
-            } else {
-                delete kc.token;
-                delete kc.tokenParsed;
-                delete kc.subject;
-                delete kc.realmAccess;
-                delete kc.resourceAccess;
-
-                kc.authenticated = false;
-            }
-        }
-
-        function decodeToken(str) {
-            str = str.split('.')[1];
-
-            str = str.replace('/-/g', '+');
-            str = str.replace('/_/g', '/');
-            switch (str.length % 4)
-            {
-                case 0:
-                    break;
-                case 2:
-                    str += '==';
-                    break;
-                case 3:
-                    str += '=';
-                    break;
-                default:
-                    throw 'Invalid token';
-            }
-
-            str = (str + '===').slice(0, str.length + (str.length % 4));
-            str = str.replace(/-/g, '+').replace(/_/g, '/');
-
-            str = decodeURIComponent(escape(atob(str)));
-
-            str = JSON.parse(str);
-            return str;
-        }
-
-        function createUUID() {
-            var s = [];
-            var hexDigits = '0123456789abcdef';
-            for (var i = 0; i < 36; i++) {
-                s[i] = hexDigits.substr(Math.floor(Math.random() * 0x10), 1);
-            }
-            s[14] = '4';
-            s[19] = hexDigits.substr((s[19] & 0x3) | 0x8, 1);
-            s[8] = s[13] = s[18] = s[23] = '-';
-            var uuid = s.join('');
-            return uuid;
-        }
-
-        kc.callback_id = 0;
-
-        function createCallbackId() {
-            var id = '<id: ' + (kc.callback_id++) + (Math.random()) + '>';
-            return id;
-
-        }
-
-        function parseCallback(url) {
-            var oauth = new CallbackParser(url, kc.responseMode).parseUri();
-            var oauthState = callbackStorage.get(oauth.state);
-
-            if (oauthState && (oauth.code || oauth.error || oauth.access_token || oauth.id_token)) {
-                oauth.redirectUri = oauthState.redirectUri;
-                oauth.storedNonce = oauthState.nonce;
-                oauth.prompt = oauthState.prompt;
-
-                if (oauth.fragment) {
-                    oauth.newUrl += '#' + oauth.fragment;
-                }
-
-                return oauth;
-            }
-        }
-
-        function createPromise() {
-            var p = {
-                setSuccess: function(result) {
-                    p.success = true;
-                    p.result = result;
-                    if (p.successCallback) {
-                        p.successCallback(result);
-                    }
-                },
-
-                setError: function(result) {
-                    p.error = true;
-                    p.result = result;
-                    if (p.errorCallback) {
-                        p.errorCallback(result);
-                    }
-                },
-
-                promise: {
-                    success: function(callback) {
-                        if (p.success) {
-                            callback(p.result);
-                        } else if (!p.error) {
-                            p.successCallback = callback;
-                        }
-                        return p.promise;
-                    },
-                    error: function(callback) {
-                        if (p.error) {
-                            callback(p.result);
-                        } else if (!p.success) {
-                            p.errorCallback = callback;
-                        }
-                        return p.promise;
-                    }
-                }
-            }
-            return p;
-        }
-
-        function setupCheckLoginIframe() {
-            var promise = createPromise();
-
-            if (!loginIframe.enable) {
-                promise.setSuccess();
-                return promise.promise;
-            }
-
-            if (loginIframe.iframe) {
-                promise.setSuccess();
-                return promise.promise;
-            }
-
-            var iframe = document.createElement('iframe');
-            loginIframe.iframe = iframe;
-
-            iframe.onload = function() {
-                var realmUrl = getRealmUrl();
-                if (realmUrl.charAt(0) === '/') {
-                    loginIframe.iframeOrigin = getOrigin();
-                } else {
-                    loginIframe.iframeOrigin = realmUrl.substring(0, realmUrl.indexOf('/', 8));
-                }
-                promise.setSuccess();
-
-                setTimeout(check, loginIframe.interval * 1000);
-            }
-
-            var src = getRealmUrl() + '/protocol/openid-connect/login-status-iframe.html';
-            iframe.setAttribute('src', src );
-            iframe.style.display = 'none';
-            document.body.appendChild(iframe);
-
-            var messageCallback = function(event) {
-                if ((event.origin !== loginIframe.iframeOrigin) || (loginIframe.iframe.contentWindow !== event.source)) {
-                    return;
-                }
-
-                if (!(event.data == 'unchanged' || event.data == 'changed' || event.data == 'error')) {
-                    return;
-                }
-
-
-                if (event.data != 'unchanged') {
-                    kc.clearToken();
-                }
-
-                var callbacks = loginIframe.callbackList.splice(0, loginIframe.callbackList.length);
-
-                for (var i = callbacks.length - 1; i >= 0; --i) {
-                    var promise = callbacks[i];
-                    if (event.data == 'unchanged') {
-                        promise.setSuccess();
-                    } else {
-                        promise.setError();
-                    }
-                }
-            };
-
-            window.addEventListener('message', messageCallback, false);
-
-            var check = function() {
-                checkLoginIframe();
-                if (kc.token) {
-                    setTimeout(check, loginIframe.interval * 1000);
-                }
-            };
-
-            return promise.promise;
-        }
-
-        function checkLoginIframe() {
-            var promise = createPromise();
-
-            if (loginIframe.iframe && loginIframe.iframeOrigin ) {
-                var msg = kc.clientId + ' ' + kc.sessionId;
-                loginIframe.callbackList.push(promise);
-                var origin = loginIframe.iframeOrigin;
-                if (loginIframe.callbackList.length == 1) {
-                    loginIframe.iframe.contentWindow.postMessage(msg, origin);
-                }
-            } else {
-                promise.setSuccess();
-            }
-
-            return promise.promise;
-        }
-
-        function loadAdapter(type) {
-            if (!type || type == 'default') {
-                return {
-                    login: function(options) {
-                        window.location.href = kc.createLoginUrl(options);
-                        return createPromise().promise;
-                    },
-
-                    logout: function(options) {
-                        window.location.href = kc.createLogoutUrl(options);
-                        return createPromise().promise;
-                    },
-
-                    register: function(options) {
-                        window.location.href = kc.createRegisterUrl(options);
-                        return createPromise().promise;
-                    },
-
-                    accountManagement : function() {
-                        window.location.href = kc.createAccountUrl();
-                        return createPromise().promise;
-                    },
-
-                    redirectUri: function(options, encodeHash) {
-                        if (arguments.length == 1) {
-                            encodeHash = true;
-                        }
-
-                        if (options && options.redirectUri) {
-                            return options.redirectUri;
-                        } else if (kc.redirectUri) {
-                            return kc.redirectUri;
-                        } else {
-                            var redirectUri = location.href;
-                            if (location.hash && encodeHash) {
-                                redirectUri = redirectUri.substring(0, location.href.indexOf('#'));
-                                redirectUri += (redirectUri.indexOf('?') == -1 ? '?' : '&') + 'redirect_fragment=' + encodeURIComponent(location.hash.substring(1));
-                            }
-                            return redirectUri;
-                        }
-                    }
-                };
-            }
-
-            if (type == 'cordova') {
-                loginIframe.enable = false;
-
-                return {
-                    login: function(options) {
-                        var promise = createPromise();
-
-                        var o = 'location=no';
-                        if (options && options.prompt == 'none') {
-                            o += ',hidden=yes';
-                        }
-
-                        var loginUrl = kc.createLoginUrl(options);
-                        var ref = window.open(loginUrl, '_blank', o);
-
-                        var completed = false;
-
-                        ref.addEventListener('loadstart', function(event) {
-                            if (event.url.indexOf('http://localhost') == 0) {
-                                var callback = parseCallback(event.url);
-                                processCallback(callback, promise);
-                                ref.close();
-                                completed = true;
-                            }
-                        });
-
-                        ref.addEventListener('loaderror', function(event) {
-                            if (!completed) {
-                                if (event.url.indexOf('http://localhost') == 0) {
-                                    var callback = parseCallback(event.url);
-                                    processCallback(callback, promise);
-                                    ref.close();
-                                    completed = true;
-                                } else {
-                                    promise.setError();
-                                    ref.close();
-                                }
-                            }
-                        });
-
-                        return promise.promise;
-                    },
-
-                    logout: function(options) {
-                        var promise = createPromise();
-
-                        var logoutUrl = kc.createLogoutUrl(options);
-                        var ref = window.open(logoutUrl, '_blank', 'location=no,hidden=yes');
-
-                        var error;
-
-                        ref.addEventListener('loadstart', function(event) {
-                            if (event.url.indexOf('http://localhost') == 0) {
-                                ref.close();
-                            }
-                        });
-
-                        ref.addEventListener('loaderror', function(event) {
-                            if (event.url.indexOf('http://localhost') == 0) {
-                                ref.close();
-                            } else {
-                                error = true;
-                                ref.close();
-                            }
-                        });
-
-                        ref.addEventListener('exit', function(event) {
-                            if (error) {
-                                promise.setError();
-                            } else {
-                                kc.clearToken();
-                                promise.setSuccess();
-                            }
-                        });
-
-                        return promise.promise;
-                    },
-
-                    register : function() {
-                        var registerUrl = kc.createRegisterUrl();
-                        var ref = window.open(registerUrl, '_blank', 'location=no');
-                        ref.addEventListener('loadstart', function(event) {
-                            if (event.url.indexOf('http://localhost') == 0) {
-                                ref.close();
-                            }
-                        });
-                    },
-
-                    accountManagement : function() {
-                        var accountUrl = kc.createAccountUrl();
-                        var ref = window.open(accountUrl, '_blank', 'location=no');
-                        ref.addEventListener('loadstart', function(event) {
-                            if (event.url.indexOf('http://localhost') == 0) {
-                                ref.close();
-                            }
-                        });
-                    },
-
-                    redirectUri: function(options) {
-                        return 'http://localhost';
-                    }
-                }
-            }
-
-            throw 'invalid adapter type: ' + type;
-        }
-
-        var LocalStorage = function() {
-            if (!(this instanceof LocalStorage)) {
-                return new LocalStorage();
-            }
-
-            localStorage.setItem('kc-test', 'test');
-            localStorage.removeItem('kc-test');
-
-            var cs = this;
-
-            function clearExpired() {
-                var time = new Date().getTime();
-                for (var i = 0; i < localStorage.length; i++)  {
-                    var key = localStorage.key(i);
-                    if (key && key.indexOf('kc-callback-') == 0) {
-                        var value = localStorage.getItem(key);
-                        if (value) {
-                            try {
-                                var expires = JSON.parse(value).expires;
-                                if (!expires || expires < time) {
-                                    localStorage.removeItem(key);
-                                }
-                            } catch (err) {
-                                localStorage.removeItem(key);
-                            }
-                        }
-                    }
-                }
-            }
-
-            cs.get = function(state) {
-                if (!state) {
-                    return;
-                }
-
-                var key = 'kc-callback-' + state;
-                var value = localStorage.getItem(key);
-                if (value) {
-                    localStorage.removeItem(key);
-                    value = JSON.parse(value);
-                }
-
-                clearExpired();
-                return value;
-            };
-
-            cs.add = function(state) {
-                clearExpired();
-
-                var key = 'kc-callback-' + state.state;
-                state.expires = new Date().getTime() + (60 * 60 * 1000);
-                localStorage.setItem(key, JSON.stringify(state));
-            };
-        };
-
-        var CookieStorage = function() {
-            if (!(this instanceof CookieStorage)) {
-                return new CookieStorage();
-            }
-
-            var cs = this;
-
-            cs.get = function(state) {
-                if (!state) {
-                    return;
-                }
-
-                var value = getCookie('kc-callback-' + state);
-                setCookie('kc-callback-' + state, '', cookieExpiration(-100));
-                if (value) {
-                    return JSON.parse(value);
-                }
-            };
-
-            cs.add = function(state) {
-                setCookie('kc-callback-' + state.state, JSON.stringify(state), cookieExpiration(60));
-            };
-
-            cs.removeItem = function(key) {
-                setCookie(key, '', cookieExpiration(-100));
-            };
-
-            var cookieExpiration = function (minutes) {
-                var exp = new Date();
-                exp.setTime(exp.getTime() + (minutes*60*1000));
-                return exp;
-            };
-
-            var getCookie = function (key) {
-                var name = key + '=';
-                var ca = document.cookie.split(';');
-                for (var i = 0; i < ca.length; i++) {
-                    var c = ca[i];
-                    while (c.charAt(0) == ' ') {
-                        c = c.substring(1);
-                    }
-                    if (c.indexOf(name) == 0) {
-                        return c.substring(name.length, c.length);
-                    }
-                }
-                return '';
-            };
-
-            var setCookie = function (key, value, expirationDate) {
-                var cookie = key + '=' + value + '; '
-                    + 'expires=' + expirationDate.toUTCString() + '; ';
-                document.cookie = cookie;
-            }
-        };
-
-        function createCallbackStorage() {
-            try {
-                return new LocalStorage();
-            } catch (err) {
-            }
-
-            return new CookieStorage();
-        }
-
-        var CallbackParser = function(uriToParse, responseMode) {
-            if (!(this instanceof CallbackParser)) {
-                return new CallbackParser(uriToParse, responseMode);
-            }
-            var parser = this;
-
-            var initialParse = function() {
-                var baseUri = null;
-                var queryString = null;
-                var fragmentString = null;
-
-                var questionMarkIndex = uriToParse.indexOf("?");
-                var fragmentIndex = uriToParse.indexOf("#", questionMarkIndex + 1);
-                if (questionMarkIndex == -1 && fragmentIndex == -1) {
-                    baseUri = uriToParse;
-                } else if (questionMarkIndex != -1) {
-                    baseUri = uriToParse.substring(0, questionMarkIndex);
-                    queryString = uriToParse.substring(questionMarkIndex + 1);
-                    if (fragmentIndex != -1) {
-                        fragmentIndex = queryString.indexOf("#");
-                        fragmentString = queryString.substring(fragmentIndex + 1);
-                        queryString = queryString.substring(0, fragmentIndex);
-                    }
-                } else {
-                    baseUri = uriToParse.substring(0, fragmentIndex);
-                    fragmentString = uriToParse.substring(fragmentIndex + 1);
-                }
-
-                return { baseUri: baseUri, queryString: queryString, fragmentString: fragmentString };
-            }
-
-            var parseParams = function(paramString) {
-                var result = {};
-                var params = paramString.split('&');
-                for (var i = 0; i < params.length; i++) {
-                    var p = params[i].split('=');
-                    var paramName = decodeURIComponent(p[0]);
-                    var paramValue = decodeURIComponent(p[1]);
-                    result[paramName] = paramValue;
-                }
-                return result;
-            }
-
-            var handleQueryParam = function(paramName, paramValue, oauth) {
-                var supportedOAuthParams = [ 'code', 'state', 'error', 'error_description' ];
-
-                for (var i = 0 ; i< supportedOAuthParams.length ; i++) {
-                    if (paramName === supportedOAuthParams[i]) {
-                        oauth[paramName] = paramValue;
-                        return true;
-                    }
-                }
-                return false;
-            }
-
-
-            parser.parseUri = function() {
-                var parsedUri = initialParse();
-
-                var queryParams = {};
-                if (parsedUri.queryString) {
-                    queryParams = parseParams(parsedUri.queryString);
-                }
-
-                var oauth = { newUrl: parsedUri.baseUri };
-                for (var param in queryParams) {
-                    switch (param) {
-                        case 'redirect_fragment':
-                            oauth.fragment = queryParams[param];
-                            break;
-                        default:
-                            if (responseMode != 'query' || !handleQueryParam(param, queryParams[param], oauth)) {
-                                oauth.newUrl += (oauth.newUrl.indexOf('?') == -1 ? '?' : '&') + param + '=' + encodeURIComponent(queryParams[param]);
-                            }
-                            break;
-                    }
-                }
-
-                if (responseMode === 'fragment') {
-                    var fragmentParams = {};
-                    if (parsedUri.fragmentString) {
-                        fragmentParams = parseParams(parsedUri.fragmentString);
-                    }
-                    for (var param in fragmentParams) {
-                        oauth[param] = fragmentParams[param];
-                    }
-                }
-
-                return oauth;
-            }
-        }
-
-    }
-
-    if ( typeof module === "object" && module && typeof module.exports === "object" ) {
-        module.exports = Keycloak;
-    } else {
-        window.Keycloak = Keycloak;
-
-        if ( true ) {
-            !(__WEBPACK_AMD_DEFINE_ARRAY__ = [], __WEBPACK_AMD_DEFINE_RESULT__ = function () { return Keycloak; }.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__),
-				__WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));
-        }
-    }
-})( window );
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(272)(module)))
-
 /***/ })
 
-},[394]);
+},[391]);
 //# sourceMappingURL=main.js.map

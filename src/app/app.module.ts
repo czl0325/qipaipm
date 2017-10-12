@@ -10,6 +10,7 @@ import { Network } from "@ionic-native/network";
 import { AppShare } from "./app.share";
 import { NativeStorage } from '@ionic-native/native-storage';
 import { IonicStorageModule } from '@ionic/storage';
+import { WechatService } from "./wechat.service";
 
 //页面类
 import { MyApp } from './app.component';
@@ -32,8 +33,6 @@ import { MultiPickerModule } from 'ion-multi-picker';
 import { PipesModule } from "../pipes/pipes.module";
 import { AppService } from "./app.service";
 import {LoginPage} from "../pages/login/login";
-import { KeycloakServiceProvider } from '../providers/keycloak-service/keycloak-service';
-import { Keycloak2Provider } from '../providers/keycloak2/keycloak2';
 
 //第三方库
 
@@ -97,9 +96,8 @@ import { Keycloak2Provider } from '../providers/keycloak2/keycloak2';
     Network,
     AppShare,
     NativeStorage,
+    WechatService,
     {provide: ErrorHandler, useClass: IonicErrorHandler},
-    KeycloakServiceProvider,
-    Keycloak2Provider
   ]
 })
 export class AppModule {}

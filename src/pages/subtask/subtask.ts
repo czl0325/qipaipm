@@ -46,8 +46,8 @@ export class SubtaskPage {
   subtask = {
       id:'',              //子任务的id
       subtaskName:'',     //子任务的名称
-      leader:'',   //子任务的负责人
-      leaderEmpNum : '',  //子任务负责人工号
+      itemEndLeader:'',   //子任务的负责人
+      itemEndLeaderNum : '',  //子任务负责人工号
       deliveryTime:new DatePipe('en-US').transform(new Date(), 'yyyy-MM-dd'),    //子任务的交付时间
       deliveryResult:'',  //子任务交付成果
       planTime:new DatePipe('en-US').transform(new Date(), 'yyyy-MM-dd'),        //子任务实际完成时间
@@ -72,7 +72,7 @@ export class SubtaskPage {
     }
     this.tempSubtask = AppConfig.deepCopy(this.subtask);
     if (this.type == 2) {
-        if (this.subtask.leaderEmpNum != AppSingleton.getInstance().currentUserInfo.username) {
+        if (this.subtask.itemEndLeaderNum != AppSingleton.getInstance().currentUserInfo.username) {
             this.canEdit = false;
         }
     }
@@ -80,8 +80,8 @@ export class SubtaskPage {
 
     ionViewDidLoad() {
         this.events.subscribe('onConfirmSubtaskLeader',(leader)=>{
-            this.tempSubtask.leader = leader.name;
-            this.tempSubtask.leaderEmpNum = leader.username;
+            this.tempSubtask.itemEndLeader = leader.name;
+            this.tempSubtask.itemEndLeaderNum = leader.username;
         });
     }
 
@@ -107,7 +107,6 @@ export class SubtaskPage {
     //     });
     // } else {
         param.projectinfo = this.milestone;
-        console.log(param);
         //param.sid = this.tempSubtask.id;
         this.appService.httpPost("item/createSubtask", param, this, function (view, res) {
             if (res.status == 200) {

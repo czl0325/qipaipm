@@ -6,7 +6,7 @@ import { Keyboard } from "@ionic-native/keyboard";
 
 import { HomePage } from '../pages/home/home';
 import { LoginPage } from "../pages/login/login";
-import { NativeStorage } from "@ionic-native/native-storage";
+//import { NativeStorage } from "@ionic-native/native-storage";
 import { Storage } from "@ionic/storage";
 import { AppSingleton } from "./app.singleton";
 
@@ -25,7 +25,7 @@ export class MyApp {
               // public app: App,
               public keyboard: Keyboard,
               // private ionicApp: IonicApp,
-              private nativeStorage: NativeStorage
+              //private nativeStorage: NativeStorage
   ) {
     platform.ready().then(() => {
       // Okay, so the platform is ready and our plugins are available.
@@ -38,12 +38,16 @@ export class MyApp {
     this.keyboard.hideKeyboardAccessoryBar(false);
     this.keyboard.disableScroll(true);//当输入焦点时，防止本机UIScrollView移动。
       this.storage.get('user').then((val) => {
-         if (val.username != null) {
-             AppSingleton.getInstance().currentUserInfo = val;
-             this.rootPage = HomePage;
-         } else {
+          if (val != null) {
+              if (val.username != null) {
+                  AppSingleton.getInstance().currentUserInfo = val;
+                  this.rootPage = HomePage;
+              } else {
+                  this.rootPage = LoginPage;
+              }
+          } else {
               this.rootPage = LoginPage;
-         }
+          }
       });
 
 

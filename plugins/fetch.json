@@ -70,5 +70,15 @@
         },
         "is_top_level": true,
         "variables": {}
+    },
+    "cordova-plugin-wechat": {
+        "source": {
+            "type": "registry",
+            "id": "cordova-plugin-wechat@2.0.0"
+        },
+        "is_top_level": true,
+        "variables": {
+            "WECHATA[BPPID": "wxaf6e253c0f942702"
+        }
     }
 }

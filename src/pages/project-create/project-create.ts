@@ -89,6 +89,7 @@ export class ProjectCreatePage {
     itemLevel : '',             //项目级别
     itemStartResult : '',      //项目启动的交付成果
     itemEndResult : '',        //项目结束的交付成果
+    children : [],              //总的数组
     milestoneVo1 : [],              //项目里程碑
     milestoneVo2: [],         //项目延期里程碑
     itemRaise : '',             //项目提出人
@@ -195,8 +196,8 @@ export class ProjectCreatePage {
     var milestone = {
       id : '',                    //里程碑id
       milestoneName : '里程碑'+(this.project.milestoneVo1.length+1),         //里程碑的名称
-      leader : '',       //里程碑的负责人
-      leaderEmpNum : '',          //里程碑负责人工号
+      itemEndLeader : '',       //里程碑的负责人
+      itemEndLeaderNum : '',          //里程碑负责人工号
       // milestoneDelivery : '',
       deliveryResult: '',         //里程碑的交付成果
       itemProgress : '',          //里程碑的进度
@@ -229,7 +230,7 @@ export class ProjectCreatePage {
     if (this.type == 1) {
       this.deleteOneMile(mile)
     } else {
-      this.appService.httpDelete("item/delete",{"ids":mile.id},this,function (view, res) {
+      this.appService.httpDelete("item/deleteMilestone",{"ids":[mile.id]},this,function (view, res) {
         if (res.status == 200) {
             view.deleteOneMile(mile);
         }
@@ -344,6 +345,7 @@ export class ProjectCreatePage {
         }
         if (!isIn) {
           this.addOneMilestone(milestone);
+          this.project.children.push(milestone);
         }
       } else {
 

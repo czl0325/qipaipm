@@ -5,8 +5,8 @@ import { ProjectDetailPage } from "../project-detail/project-detail";
 import { SearchPage } from "../search/search";
 import { AppService} from "../../app/app.service";
 import { AppConfig} from "../../app/app.config";
-import { Storage } from '@ionic/storage';
 import { AppSingleton } from "../../app/app.singleton";
+//import { WechatService } from "../../app/wechat.service";
 
 @Component({
   selector: 'page-home',
@@ -20,7 +20,7 @@ export class HomePage {
   currentDate:string;
 
   constructor(public navCtrl: NavController, public appService: AppService,
-              public events: Events, private storage: Storage) {
+              public events: Events) {
     this.type = 1;
     this.namevalue = "appname-list";
     this.projects = [];
@@ -31,6 +31,7 @@ export class HomePage {
     this.events.subscribe('homeProjectReload', ()=> {
       this.reloadProjectList(this.currentDate);
     });
+    //this.wechat.share(0, "check-installed");
   }
 
   ionViewWillUnload() {
@@ -60,6 +61,19 @@ export class HomePage {
         var data = res.json();
         if (data.success == true) {
             view.projects = data.data;
+            for (let i=0; i<view.projects.length; i++) {
+                var project = view.projects[i];
+                project.milestoneVo1 = [];
+                project.milestoneVo2 = [];
+                for (let j=0; j<project.children.length; j++) {
+                    var mile = project.children[j];
+                    if (mile.milestoneType == 1) {
+                        project.milestoneVo1.push(mile);
+                    } else if (mile.milestoneType == 2) {
+                        project.milestoneVo2.push(mile);
+                    }
+                }
+            }
             console.log(view.projects);
         }
     } ,true);

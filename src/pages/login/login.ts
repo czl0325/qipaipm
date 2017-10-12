@@ -1,11 +1,11 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, ToastController } from 'ionic-angular';
+import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { FormBuilder, Validators, FormGroup } from '@angular/forms';
 import { ForgetPage } from "../forget/forget";
 import { AppService } from "../../app/app.service";
 import { HomePage } from "../home/home";
-import { Storage } from '@ionic/storage';
 import { AppSingleton } from "../../app/app.singleton";
+import { Storage } from "@ionic/storage";
 
 /**
  * Generated class for the LoginPage page.
@@ -25,7 +25,7 @@ export class LoginPage {
 
   constructor(public navCtrl: NavController, public navParams: NavParams,
               private formBuilder: FormBuilder, private appService: AppService,
-              private storage: Storage, private toastCtrl: ToastController) {
+              private storage: Storage) {
     this.errorText = '手机号码错误';
     this.loginForm = this.formBuilder.group({
           mobile: ['', Validators.compose([Validators.minLength(11), Validators.maxLength(11), Validators.required, Validators.pattern("^(13[0-9]|15[012356789]|17[03678]|18[0-9]|14[57])[0-9]{8}$")])],
@@ -47,7 +47,10 @@ export class LoginPage {
                 view.storage.set('user', data);
                 AppSingleton.getInstance().currentUserInfo = data;
             });
-            view.navCtrl.push(HomePage);
+            view.navCtrl.push(HomePage).then(()=>{
+                //const index = view.navCtrl.getActive().index;
+                //view.navCtrl.remove(0, index);
+            });
         } else {
             let toast = view.toastCtrl.create({
                 message: "登录失败",

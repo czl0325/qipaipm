@@ -42,16 +42,16 @@ export class NewpwPage {
           });
           toast.present();
       } else {
-          this.appService.httpGet("http://192.168.10.118:8888/group/resetByTelPhone",{"telPhone":this.telPhone,"newPassword":value.newpw1},
+          this.appService.httpPost("http://192.168.10.118:8888/uc/user/resetByTelPhone",{"telPhone":this.telPhone,"newPassword":value.newpw1},
               this, function (view, res) {
                   if (res.status == 200) {
-                      let toast = this.toastCtrl.create({
+                      let toast = view.toastCtrl.create({
                           message: "重置密码成功，请用新密码登录",
                           duration: 2000,
                           dismissOnPageChange: false,
                       });
                       toast.present();
-                      this.navCtrl.popToRoot();
+                      view.navCtrl.popToRoot();
                   }
               }, true);
       }

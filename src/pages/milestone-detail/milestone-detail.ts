@@ -45,8 +45,8 @@ export class MilestoneDetailPage {
   milestone = {
     id : '',                    //里程碑id
     milestoneName : '',         //里程碑的名称
-    leader : '',                 //里程碑的负责人
-    leaderEmpNum : '',          //里程碑负责人工号
+    itemEndLeader : '',                 //里程碑的负责人
+    itemEndLeaderNum : '',          //里程碑负责人工号
     deliveryResult : '',        //里程碑的交付成果
     // milestoneSchedule : '',     //里程碑的进度
     itemProgress : '',          //里程碑的进度
@@ -63,6 +63,7 @@ export class MilestoneDetailPage {
   canEdit: boolean = true;
   canFinish: boolean = false;
   mileType: number;
+  minTime: string = new DatePipe('en-US').transform(new Date(), 'yyyy-MM-dd');
 
   constructor(public navCtrl: NavController, public navParams: NavParams, private appService: AppService, private cd: ChangeDetectorRef, public events: Events) {
     var data = this.navParams.get('milestone');
@@ -98,7 +99,7 @@ export class MilestoneDetailPage {
         if (AppSingleton.getInstance().currentUserInfo.username != this.project.founderEmpNum) {
             this.canEdit = false;
         }
-        if (AppSingleton.getInstance().currentUserInfo.username == this.milestone.leaderEmpNum) {
+        if (AppSingleton.getInstance().currentUserInfo.username == this.milestone.itemEndLeaderNum) {
             this.canFinish = true;
         }
     }
@@ -106,8 +107,8 @@ export class MilestoneDetailPage {
 
     ionViewDidLoad() {
         this.events.subscribe('onConfirmMilestoneLeader',(leader)=>{
-            this.tempMilestone.leader = leader.name;
-            this.tempMilestone.leaderEmpNum = leader.username;
+            this.tempMilestone.itemEndLeader = leader.name;
+            this.tempMilestone.itemEndLeaderNum = leader.username;
         });
     }
 
@@ -208,8 +209,8 @@ export class MilestoneDetailPage {
       var subtask = {
           id:'',              //子任务的id
           subtaskName:'子任务'+(this.tempMilestone.children.length+1),     //子任务的名称
-          leader:'',            //子任务的负责人
-          leaderEmpNum : '',  //子任务负责人工号
+          itemEndLeader:'',            //子任务的负责人
+          itemEndLeaderNum : '',  //子任务负责人工号
           deliveryTime:new DatePipe('en-US').transform(new Date(), 'yyyy-MM-dd'),    //子任务的交付时间
           deliveryResult:'',  //子任务交付成果
           planTime: new DatePipe('en-US').transform(new Date(), 'yyyy-MM-dd'),        //子任务计划完成时间

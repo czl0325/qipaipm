@@ -2,7 +2,6 @@ import { LoadingController, AlertController, ToastController } from 'ionic-angul
 import { Injectable } from '@angular/core';
 import { Http/*, Headers*/ } from '@angular/http';
 import 'rxjs/add/operator/toPromise';
-import { Network } from '@ionic-native/network';
 
 @Injectable()
 export class AppGlobal {
@@ -26,7 +25,11 @@ export class AppGlobal {
 @Injectable()
 export class AppService {
 
-  constructor(public http: Http, public loadingCtrl: LoadingController, private alertCtrl: AlertController, private toastCtrl: ToastController, private network: Network) { }
+  constructor(public http: Http, public loadingCtrl: LoadingController,
+              private alertCtrl: AlertController, private toastCtrl: ToastController,
+              ) {
+
+  }
 
   // 对参数进行编码
   encode(params) {
@@ -172,6 +175,7 @@ export class AppService {
       console.error(msg + '，请检查路径是否正确');
     }
     if (error != null) {
+        msg = '异常错误';
       console.log(error);
     }
     if (msg != '') {

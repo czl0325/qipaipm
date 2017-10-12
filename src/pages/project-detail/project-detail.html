@@ -35,7 +35,7 @@
             <div class="item3-1">
                 <div class="text-wrap">
                     <div class="text-left">负责人：</div>
-                    <div class="text-right">{{project.leader}}</div>
+                    <div class="text-right">{{project.itemFounder}}</div>
                     <!--<div style="clear: both"></div>-->
                 </div>
                 <div  class="text-wrap">
@@ -75,7 +75,7 @@
             </div>
             <div class="subtask-css" >
               <ion-label class="subtask-left">负责人:</ion-label>
-              <ion-label class="subtask-right" >{{subtask.leader}}</ion-label>
+              <ion-label class="subtask-right" >{{subtask.itemEndLeader}}</ion-label>
             </div>
           </div>
         </div>
@@ -101,7 +101,7 @@
             <div class="item3-2" (click)="onClickMilestone($event, mile)">
                 <div class="text-wrap">
                     <div class="text-left">负责人：</div>
-                    <div class="text-right">{{mile.leader}}</div>
+                    <div class="text-right">{{mile.itemEndLeader}}</div>
                 </div>
                 <div  class="text-wrap">
                     <div class="text-left">交付成果：</div>
@@ -129,7 +129,7 @@
           <div class="item3-1">
               <div  class="text-wrap">
                   <div no-padding no-margin class="text-left">负责人：</div>
-                  <div no-padding no-margin class="text-right">{{project.leader}}</div>
+                  <div no-padding no-margin class="text-right">{{project.itemEndLeader}}</div>
               </div>
               <div  class="text-wrap">
                   <div no-padding no-margin class="text-left">交付成果：</div>
@@ -160,7 +160,7 @@
           <div class="item3-3" (click)="onClickMilestone($event, dalayMile)">
               <div class="text-wrap">
                   <div class="text-left">负责人：</div>
-                  <div class="text-right">{{dalayMile.leader}}</div>
+                  <div class="text-right">{{dalayMile.itemEndLeader}}</div>
               </div>
               <div  class="text-wrap">
                   <div class="text-left">交付成果：</div>

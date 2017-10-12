@@ -33,7 +33,10 @@
       <ion-item style="border-bottom: solid 1px #ececec;">
         <ion-icon item-start name="appname-time"></ion-icon>
         <ion-label>交付时间</ion-label>
-        <ion-datetime item-end displayFormat="YYYY年MM月DD日" max="2030" min={{minTime}} [(ngModel)]="project.itemStartTime" cancelText="取消" doneText="确认"></ion-datetime>
+        <ion-datetime item-end displayFormat="YYYY年MM月DD日" max="2030" min={{minTime}}
+                      ngModel="{{project.itemStartTime | stampToDate}}"
+                      (ngModelChange)="project.itemStartTime = $event"
+                      cancelText="取消" doneText="确认"></ion-datetime>
       </ion-item>
       <ion-item style="border-bottom: solid 1px #ececec;">
         <ion-icon item-start name="appname-result"></ion-icon>
@@ -64,7 +67,7 @@
         <ion-item style="border-bottom: solid 1px #ececec">
           <ion-icon item-start name="appname-admin"></ion-icon>
           <ion-label>负责人</ion-label>
-          <ion-input item-end text-right [(ngModel)]="mile.leader"></ion-input>
+          <ion-input item-end text-right [(ngModel)]="mile.itemEndLeader"></ion-input>
         </ion-item>
         <ion-item style="border-bottom: solid 1px #ececec">
           <ion-icon item-start name="appname-time"></ion-icon>
@@ -116,7 +119,10 @@
       <ion-item  style="border-bottom: solid 1px #ececec">
         <ion-icon item-start name="appname-time"></ion-icon>
         <ion-label>交付时间</ion-label>
-        <ion-datetime item-end displayFormat="YYYY年MM月DD日" max="2030" min="2015" cancelText="取消" doneText="确认" [(ngModel)]="project.endTime"></ion-datetime>
+        <ion-datetime item-end displayFormat="YYYY年MM月DD日" max="2030" min={{minTime}}
+                      cancelText="取消" doneText="确认"
+                      ngModel="{{project.endTime | stampToDate}}"
+                      (ngModelChange)="project.endTime = $event"></ion-datetime>
       </ion-item>
       <ion-item>
         <ion-icon item-start name="appname-result"></ion-icon>

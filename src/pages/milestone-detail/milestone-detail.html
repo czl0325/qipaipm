@@ -36,7 +36,7 @@
     <button ion-item style="border-bottom: solid 1px #ececec" (click)="onMilestoneLeader($event)" [disabled]="canEdit==false">
       <ion-icon item-start name="appname-admin"></ion-icon>
       <ion-label item-start>负责人:</ion-label>
-      <ion-label item-end text-right>{{tempMilestone.leader}}</ion-label>
+      <ion-label item-end text-right>{{tempMilestone.itemEndLeader}}</ion-label>
     </button>
     <!--<ion-item style="border-bottom: solid 1px #ececec;">-->
       <!--<ion-icon item-start name="appname-admin"></ion-icon>-->
@@ -46,7 +46,7 @@
     <ion-item style="border-bottom: solid 1px #ececec;">
       <ion-icon item-start name="appname-time"></ion-icon>
       <ion-label>交付时间:</ion-label>
-      <ion-datetime text-right displayFormat="YYYY-MM-DD" max="2030" min="2015" cancelText="取消" doneText="确认" required [disabled]="canEdit==false"
+      <ion-datetime text-right displayFormat="YYYY-MM-DD" max="2030" min={{minTime}} cancelText="取消" doneText="确认" required [disabled]="canEdit==false"
                     ngModel="{{tempMilestone.deliveryTime | stampToDate}}"
                     (ngModelChange)="tempMilestone.deliveryTime = $event">
       </ion-datetime>
@@ -102,7 +102,8 @@
       <ion-item style="border-bottom: solid 1px #ececec;">
         <ion-icon item-start name="appname-admin"></ion-icon>
         <ion-label>负责人:</ion-label>
-        <ion-input text-right type="text" [(ngModel)]="subtask.leader" required [disabled]="canEdit==false||type==2"></ion-input>
+        <ion-input text-right type="text" [(ngModel)]="subtask.itemEndLeader"
+                   required [disabled]="type==2"></ion-input>
       </ion-item>
       <ion-item style="border-bottom: solid 1px #ececec;">
         <ion-icon item-start name="appname-time"></ion-icon>
@@ -110,12 +111,13 @@
         <ion-datetime item-end displayFormat="YYYY年MM月DD日" max="2030" min="2015" cancelText="取消" doneText="确认"
                       ngModel="{{subtask.deliveryTime | stampToDate}}"
                       (ngModelChange)="subtask.deliveryTime = $event"
-                      [disabled]="canEdit==false||type==2"></ion-datetime>
+                      [disabled]="type==2"></ion-datetime>
       </ion-item>
       <ion-item style="border-bottom: solid 10px #ececec;">
         <ion-icon item-start name="appname-result"></ion-icon>
         <ion-label no-padding no-margin>交付成果:</ion-label>
-        <ion-input text-right type="text" [(ngModel)]="subtask.deliveryResult" required [disabled]="canEdit==false||type==2"></ion-input>
+        <ion-input text-right type="text" [(ngModel)]="subtask.deliveryResult"
+                   required [disabled]="type==2"></ion-input>
       </ion-item>
     </ion-list>
   </div>

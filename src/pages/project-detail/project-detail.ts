@@ -6,6 +6,7 @@ import { ProjectCreatePage } from "../project-create/project-create";
 import { AppService } from "../../app/app.service";
 import { AppConfig } from "../../app/app.config";
 import { DatePipe } from "@angular/common";
+import {AppSingleton} from "../../app/app.singleton";
 
 /**
  * Generated class for the ProjectDetailPage page.
@@ -18,7 +19,7 @@ import { DatePipe } from "@angular/common";
 @Component({
   template: `
     <ion-list>
-      <ion-item (click)="onClickEdit($event)">
+      <ion-item (click)="onClickEdit($event)" [hidden]="!canShow">
         <ion-icon name="appname-edit" item-start></ion-icon>
         编辑
       </ion-item>
@@ -26,15 +27,15 @@ import { DatePipe } from "@angular/common";
         <ion-icon name="appname-share" item-start></ion-icon>
         分享
       </ion-item>
-      <ion-item (click)="onClickDelete($event)">
+      <ion-item (click)="onClickDelete($event)" [hidden]="!canShow">
         <ion-icon name="appname-delete" item-start></ion-icon>
         删除
       </ion-item>
-      <ion-item (click)="onClickFinish($event)">
+      <ion-item (click)="onClickFinish($event)" [hidden]="!canShow">
         <ion-icon name="appname-finish" item-start></ion-icon>
         结束
       </ion-item>
-      <ion-item (click)="onClickDelay($event)">
+      <ion-item (click)="onClickDelay($event)" [hidden]="!canShow">
         <ion-icon name="appname-delay" item-start></ion-icon>
         延期
       </ion-item>
@@ -44,6 +45,7 @@ import { DatePipe } from "@angular/common";
 
 export class PopoverPage {
   contentEle: any;
+  canShow: boolean;
 
   constructor(public viewCtrl: ViewController ,private navParams: NavParams, public events: Events) {
 
@@ -52,6 +54,7 @@ export class PopoverPage {
   ngOnInit() {
     if (this.navParams.data) {
       this.contentEle = this.navParams.data.contentEle;
+      this.canShow = this.navParams.data.canShow;
     }
   }
 
@@ -222,8 +225,13 @@ export class ProjectDetailPage {
   }
 
   presentPopover($event) {
+    var canShow = true;
+    if (AppSingleton.getInstance().currentUserInfo.username != this.project.founderEmpNum) {
+        canShow = false;
+    }
     let popover = this.popoverCtrl.create(PopoverPage, {
       contentEle: this.content.nativeElement,
+      canShow: canShow,
     });
 
     popover.present({

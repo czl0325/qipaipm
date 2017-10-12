@@ -1,9 +1,9 @@
 import { Component } from '@angular/core';
-import {AlertController, IonicPage, NavController, NavParams, ToastController} from 'ionic-angular';
+import { IonicPage, NavController, NavParams, ToastController} from 'ionic-angular';
 import { FormBuilder, Validators, FormGroup } from '@angular/forms';
 import { Observable, Subscription } from 'rxjs/Rx';
 import { NewpwPage } from "../newpw/newpw";
-import {AppService} from "../../app/app.service";
+import { AppService } from "../../app/app.service";
 
 /**
  * Generated class for the ForgetPage page.
@@ -29,7 +29,7 @@ export class ForgetPage {
 
   constructor(public navCtrl: NavController, public navParams: NavParams,
               private formBuilder: FormBuilder, private appService: AppService,
-              private toastCtrl: ToastController, private alertCtrl: AlertController) {
+              private toastCtrl: ToastController) {
       this.countDownText = this.defCountDownText;
       this.forgetForm = this.formBuilder.group({
           mobile: ['', Validators.compose([Validators.minLength(11), Validators.maxLength(11), Validators.required, Validators.pattern("^(13[0-9]|15[012356789]|17[03678]|18[0-9]|14[57])[0-9]{8}$")])],
@@ -62,30 +62,43 @@ export class ForgetPage {
         });
         toast.present();
     }
-    this.appService.httpGet("http://192.168.10.120:8888/sms/sendSmg/"+this.forgetForm.value.mobile,{},
+    this.appService.httpGet("http://192.168.10.118:8888/uc/user/findPassword",{"telPhone":this.forgetForm.value.mobile},
         this,function (view, res) {
-            if (res.status == 200) {
+            if (res.json().result == "success") {
+                view.appService.httpGet("http://192.168.10.120:8888/sms/sendSmg/"+view.forgetForm.value.mobile,{},
+                    view,function (view1, res) {
+                        if (res.status == 200) {
+                            let alert = view1.alertCtrl.create({
+                                title: '提示',
+                                subTitle: res.json()._return,
+                                buttons: ['确定']
+                            });
+                            alert.present();
+                        }
+                    },true);
+                view.countDownTime = view.defCountDownTime;
+                view.isCountDowning = true;
+                view.sub = view.timer.subscribe(
+                    t => {
+                        view.countDownText = view.countDownTime.toString() + 's';
+                        if (view.countDownTime < 0) {
+                            view.countDownText = view.defCountDownText;
+                            view.sub.unsubscribe();
+                            view.isCountDowning = false;
+                        }
+                        view.countDownTime--;
+                    }
+                );
+            } else {
                 let alert = view.alertCtrl.create({
                     title: '提示',
-                    subTitle: res.json()._return,
+                    subTitle: '该手机号码未注册!',
                     buttons: ['确定']
                 });
                 alert.present();
             }
         },true);
-    this.countDownTime = this.defCountDownTime;
-    this.isCountDowning = true;
-    this.sub = this.timer.subscribe(
-        t => {
-            this.countDownText = this.countDownTime.toString() + 's';
-            if (this.countDownTime < 0) {
-                this.countDownText = this.defCountDownText;
-                this.sub.unsubscribe();
-                this.isCountDowning = false;
-            }
-            this.countDownTime--;
-        }
-    );
+
   }
 
     goNext(value) {
