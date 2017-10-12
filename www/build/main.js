@@ -813,7 +813,7 @@ __decorate([
 ], MilestoneDetailPage.prototype, "content", void 0);
 MilestoneDetailPage = __decorate([
     Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Component"])({
-        selector: 'page-milestone-detail',template:/*ion-inline-start:"/Users/zhaoliangchen/Desktop/qipaipm-company/src/pages/milestone-detail/milestone-detail.html"*/'<!--\n  Generated template for the MilestoneDetailPage page.\n\n  See http://ionicframework.com/docs/components/#navigation for more info on\n  Ionic pages and navigation.\n-->\n<ion-header>\n\n  <ion-navbar>\n    <ion-title>\n      {{this.type==1?"新建里程碑":"里程碑详情"}}\n    </ion-title>\n    <ion-buttons end >\n      <button ion-button (click)="onSaveMilestone($event)" style="color: #fc5c53"\n            [hidden]="(canEdit==false||canFinish==false)&&type!=1">\n        保存\n      </button>\n    </ion-buttons>\n  </ion-navbar>\n\n</ion-header>\n\n\n<ion-content fullscreen>\n  <ion-list no-padding no-lines style="margin-bottom: 0px; border-bottom: solid 1px #ececec">\n    <ion-item >\n      <ion-icon item-start name="appname-pname"></ion-icon>\n      <ion-label>项目名称:</ion-label>\n      <ion-label right text-right>{{this.project.itemName}}</ion-label>\n    </ion-item>\n  </ion-list>\n\n  <ion-label full style="text-align: center">{{tempMilestone.milestoneName}}</ion-label>\n\n  <ion-list no-lines style="border: solid 1px #ececec">\n    <button ion-item style="border-bottom: solid 1px #ececec" (click)="onMilestoneLeader($event)" [disabled]="canEdit==false">\n      <ion-icon item-start name="appname-admin"></ion-icon>\n      <ion-label item-start>负责人:</ion-label>\n      <ion-label item-end text-right>{{tempMilestone.itemEndLeader}}</ion-label>\n    </button>\n    <!--<ion-item style="border-bottom: solid 1px #ececec;">-->\n      <!--<ion-icon item-start name="appname-admin"></ion-icon>-->\n      <!--<ion-label>负责人:</ion-label>-->\n      <!--<ion-input text-right type="text" [(ngModel)]="tempMilestone.milestoneLeader" required [disabled]=""></ion-input>-->\n    <!--</ion-item>-->\n    <ion-item style="border-bottom: solid 1px #ececec;">\n      <ion-icon item-start name="appname-time"></ion-icon>\n      <ion-label>交付时间:</ion-label>\n      <ion-datetime text-right displayFormat="YYYY-MM-DD" max="2030" min={{minTime}} cancelText="取消" doneText="确认" required [disabled]="canEdit==false"\n                    ngModel="{{tempMilestone.deliveryTime | stampToDate}}"\n                    (ngModelChange)="tempMilestone.deliveryTime = $event">\n      </ion-datetime>\n    </ion-item>\n    <ion-item style="border-bottom: solid 1px #ececec"  >\n      <ion-icon item-start name="appname-plan"></ion-icon>\n      <ion-label>项目进度</ion-label>\n      <ion-select interface="action-sheet" [(ngModel)]="tempMilestone.itemProgress" cancelText="取消" doneText="确认" [disabled]="canEdit==false">\n        <ion-option value="10%">10%</ion-option>\n        <ion-option value="20%">20%</ion-option>\n        <ion-option value="30%">30%</ion-option>\n        <ion-option value="40%">40%</ion-option>\n        <ion-option value="50%">50%</ion-option>\n        <ion-option value="60%">60%</ion-option>\n        <ion-option value="70%">70%</ion-option>\n        <ion-option value="80%">80%</ion-option>\n        <ion-option value="90%">90%</ion-option>\n        <ion-option value="100%">100%</ion-option>\n      </ion-select>\n    </ion-item>\n    <ion-item style="border-bottom: solid 1px #ececec;"  >\n      <ion-icon item-start name="appname-result"></ion-icon>\n      <ion-label no-padding no-margin>交付成果:</ion-label>\n      <ion-input text-right type="text" [(ngModel)]="tempMilestone.deliveryResult" required [disabled]="canEdit==false"></ion-input>\n    </ion-item>\n    <ion-item *ngIf="tempMilestone.delay > 0" style="border-bottom: solid 1px #ececec;" >\n      <ion-label >延迟情况:</ion-label>\n      <ion-label text-right item-end></ion-label>\n    </ion-item>\n  </ion-list>\n\n  <ion-list no-lines no-padding no-margin *ngIf="this.tempMilestone.id.length>0">\n    <ion-item style="border-top: solid 1px #ececec;border-bottom: solid 1px #ececec">\n      <div item-start>是否完成</div>\n      <ion-label>完成</ion-label>\n      <ion-checkbox [(ngModel)]="tempMilestone.itemIsEnd" [disabled]="canFinish==false"></ion-checkbox>\n    </ion-item>\n    <ion-item style="border-bottom: solid 10px #ececec; height: 100px;" >\n      <ion-label item-start>备注:</ion-label>\n      <ion-textarea item-end no-padding no-margin [(ngModel)]="tempMilestone.remark" [disabled]="canFinish==false"></ion-textarea>\n    </ion-item>\n  </ion-list>\n\n  <div *ngFor="let subtask of tempMilestone.children; let i = index">\n    <div style="height: 30px; border-bottom: solid 1px #ececec; ">\n      <div style="width: 5px; height: 30px; background-color: #555555; float: left;"></div>\n      <ion-label no-margin no-padding style="line-height: 30px; margin-left: 10px; float: left;">{{subtask.subtaskName}}</ion-label>\n      <div style="float: right; width: 30px; height: 30px;position: relative">\n        <ion-icon name="close" style="position: absolute; top: 50%; right: 0px; -webkit-transform: translateY(-50%); transform: translateY(-50%); margin-right: 10px; " (click)="onRemoveSubtask($event, subtask)"></ion-icon>\n      </div>\n    </div>\n    <ion-list no-lines no-padding no-margin>\n      <ion-item style="border-bottom: solid 1px #ececec;">\n        <ion-icon item-start name="appname-admin"></ion-icon>\n        <ion-label>负责人:</ion-label>\n        <ion-input text-right type="text" [(ngModel)]="subtask.itemEndLeader"\n                   required [disabled]="type==2"></ion-input>\n      </ion-item>\n      <ion-item style="border-bottom: solid 1px #ececec;">\n        <ion-icon item-start name="appname-time"></ion-icon>\n        <ion-label>交付时间</ion-label>\n        <ion-datetime item-end displayFormat="YYYY年MM月DD日" max="2030" min="2015" cancelText="取消" doneText="确认"\n                      ngModel="{{subtask.deliveryTime | stampToDate}}"\n                      (ngModelChange)="subtask.deliveryTime = $event"\n                      [disabled]="type==2"></ion-datetime>\n      </ion-item>\n      <ion-item style="border-bottom: solid 10px #ececec;">\n        <ion-icon item-start name="appname-result"></ion-icon>\n        <ion-label no-padding no-margin>交付成果:</ion-label>\n        <ion-input text-right type="text" [(ngModel)]="subtask.deliveryResult"\n                   required [disabled]="type==2"></ion-input>\n      </ion-item>\n    </ion-list>\n  </div>\n\n  <div style="padding: 10px;" *ngIf="this.tempMilestone.id.length>0&&canEdit==true">\n    <button ion-button (click)="onAddSubtask($event)" block style="background-color: #fc5c53">+ 添加子任务</button>\n  </div>\n</ion-content>\n'/*ion-inline-end:"/Users/zhaoliangchen/Desktop/qipaipm-company/src/pages/milestone-detail/milestone-detail.html"*/,
+        selector: 'page-milestone-detail',template:/*ion-inline-start:"/Users/zhaoliangchen/Desktop/qipaipm-company/src/pages/milestone-detail/milestone-detail.html"*/'<!--\n  Generated template for the MilestoneDetailPage page.\n\n  See http://ionicframework.com/docs/components/#navigation for more info on\n  Ionic pages and navigation.\n-->\n<ion-header>\n\n  <ion-navbar>\n    <ion-title>\n      {{this.type==1?"新建里程碑":"里程碑详情"}}\n    </ion-title>\n    <ion-buttons end >\n      <button ion-button (click)="onSaveMilestone($event)" style="color: #fc5c53"\n            [hidden]="canEdit==false&&canFinish==false&&type==2">\n        保存\n      </button>\n    </ion-buttons>\n  </ion-navbar>\n\n</ion-header>\n\n\n<ion-content fullscreen>\n  <ion-list no-padding no-lines style="margin-bottom: 0px; border-bottom: solid 1px #ececec">\n    <ion-item >\n      <ion-icon item-start name="appname-pname"></ion-icon>\n      <ion-label>项目名称:</ion-label>\n      <ion-label right text-right>{{this.project.itemName}}</ion-label>\n    </ion-item>\n  </ion-list>\n\n  <ion-label full style="text-align: center">{{tempMilestone.milestoneName}}</ion-label>\n\n  <ion-list no-lines style="border: solid 1px #ececec">\n    <button ion-item style="border-bottom: solid 1px #ececec" (click)="onMilestoneLeader($event)" [disabled]="canEdit==false">\n      <ion-icon item-start name="appname-admin"></ion-icon>\n      <ion-label item-start>负责人:</ion-label>\n      <ion-label item-end text-right>{{tempMilestone.itemEndLeader}}</ion-label>\n    </button>\n    <!--<ion-item style="border-bottom: solid 1px #ececec;">-->\n      <!--<ion-icon item-start name="appname-admin"></ion-icon>-->\n      <!--<ion-label>负责人:</ion-label>-->\n      <!--<ion-input text-right type="text" [(ngModel)]="tempMilestone.milestoneLeader" required [disabled]=""></ion-input>-->\n    <!--</ion-item>-->\n    <ion-item style="border-bottom: solid 1px #ececec;">\n      <ion-icon item-start name="appname-time"></ion-icon>\n      <ion-label>交付时间:</ion-label>\n      <ion-datetime text-right displayFormat="YYYY-MM-DD" max="2030" min={{minTime}} cancelText="取消" doneText="确认" required [disabled]="canEdit==false"\n                    ngModel="{{tempMilestone.deliveryTime | stampToDate}}"\n                    (ngModelChange)="tempMilestone.deliveryTime = $event">\n      </ion-datetime>\n    </ion-item>\n    <ion-item style="border-bottom: solid 1px #ececec"  >\n      <ion-icon item-start name="appname-plan"></ion-icon>\n      <ion-label>项目进度</ion-label>\n      <ion-select interface="action-sheet" [(ngModel)]="tempMilestone.itemProgress" cancelText="取消" doneText="确认" [disabled]="canEdit==false">\n        <ion-option value="10%">10%</ion-option>\n        <ion-option value="20%">20%</ion-option>\n        <ion-option value="30%">30%</ion-option>\n        <ion-option value="40%">40%</ion-option>\n        <ion-option value="50%">50%</ion-option>\n        <ion-option value="60%">60%</ion-option>\n        <ion-option value="70%">70%</ion-option>\n        <ion-option value="80%">80%</ion-option>\n        <ion-option value="90%">90%</ion-option>\n        <ion-option value="100%">100%</ion-option>\n      </ion-select>\n    </ion-item>\n    <ion-item style="border-bottom: solid 1px #ececec;"  >\n      <ion-icon item-start name="appname-result"></ion-icon>\n      <ion-label no-padding no-margin>交付成果:</ion-label>\n      <ion-input text-right type="text" [(ngModel)]="tempMilestone.deliveryResult" required [disabled]="canEdit==false"></ion-input>\n    </ion-item>\n    <ion-item *ngIf="tempMilestone.delay > 0" style="border-bottom: solid 1px #ececec;" >\n      <ion-label >延迟情况:</ion-label>\n      <ion-label text-right item-end></ion-label>\n    </ion-item>\n  </ion-list>\n\n  <ion-list no-lines no-padding no-margin *ngIf="this.tempMilestone.id.length>0">\n    <ion-item style="border-top: solid 1px #ececec;border-bottom: solid 1px #ececec">\n      <div item-start>是否完成</div>\n      <ion-label>完成</ion-label>\n      <ion-checkbox [(ngModel)]="tempMilestone.itemIsEnd" [disabled]="canFinish==false"></ion-checkbox>\n    </ion-item>\n    <ion-item style="border-bottom: solid 10px #ececec; height: 100px;" >\n      <ion-label item-start>备注:</ion-label>\n      <ion-textarea item-end no-padding no-margin [(ngModel)]="tempMilestone.remark" [disabled]="canFinish==false"></ion-textarea>\n    </ion-item>\n  </ion-list>\n\n  <div *ngFor="let subtask of tempMilestone.children; let i = index">\n    <div style="height: 30px; border-bottom: solid 1px #ececec; ">\n      <div style="width: 5px; height: 30px; background-color: #555555; float: left;"></div>\n      <ion-label no-margin no-padding style="line-height: 30px; margin-left: 10px; float: left;">{{subtask.subtaskName}}</ion-label>\n      <div style="float: right; width: 30px; height: 30px;position: relative">\n        <ion-icon name="close" style="position: absolute; top: 50%; right: 0px; -webkit-transform: translateY(-50%); transform: translateY(-50%); margin-right: 10px; " (click)="onRemoveSubtask($event, subtask)"></ion-icon>\n      </div>\n    </div>\n    <ion-list no-lines no-padding no-margin>\n      <ion-item style="border-bottom: solid 1px #ececec;">\n        <ion-icon item-start name="appname-admin"></ion-icon>\n        <ion-label>负责人:</ion-label>\n        <ion-input text-right type="text" [(ngModel)]="subtask.itemEndLeader"\n                   required [disabled]="type==2"></ion-input>\n      </ion-item>\n      <ion-item style="border-bottom: solid 1px #ececec;">\n        <ion-icon item-start name="appname-time"></ion-icon>\n        <ion-label>交付时间</ion-label>\n        <ion-datetime item-end displayFormat="YYYY年MM月DD日" max="2030" min="2015" cancelText="取消" doneText="确认"\n                      ngModel="{{subtask.deliveryTime | stampToDate}}"\n                      (ngModelChange)="subtask.deliveryTime = $event"\n                      [disabled]="type==2"></ion-datetime>\n      </ion-item>\n      <ion-item style="border-bottom: solid 10px #ececec;">\n        <ion-icon item-start name="appname-result"></ion-icon>\n        <ion-label no-padding no-margin>交付成果:</ion-label>\n        <ion-input text-right type="text" [(ngModel)]="subtask.deliveryResult"\n                   required [disabled]="type==2"></ion-input>\n      </ion-item>\n    </ion-list>\n  </div>\n\n  <div style="padding: 10px;" *ngIf="this.tempMilestone.id.length>0&&canEdit==true">\n    <button ion-button (click)="onAddSubtask($event)" block style="background-color: #fc5c53">+ 添加子任务</button>\n  </div>\n</ion-content>\n'/*ion-inline-end:"/Users/zhaoliangchen/Desktop/qipaipm-company/src/pages/milestone-detail/milestone-detail.html"*/,
     })
     /*
         @ApiModelProperty(value = "里程碑id")
@@ -2078,40 +2078,45 @@ var AppService = (function () {
     };
     AppService.prototype.handleError = function (error) {
         var msg = '';
-        if (error.status == 400) {
-            msg = '请求无效(code：404)';
-            console.log(error.json());
-            var data1 = error.json();
-            if (data1 != null) {
-                if (data1.msg != null) {
-                    msg = data1.msg;
-                }
-            }
-            console.log('请检查参数类型是否匹配');
-        }
-        if (error.status == 404) {
-            msg = '请求资源不存在(code：404)';
-            var data2 = error.json();
-            if (data2 != null) {
-                if (data2.msg != null) {
-                    msg = data2.msg;
-                }
-            }
-            console.error(msg + '，请检查路径是否正确');
-        }
-        if (error.status == 500) {
-            msg = '服务器发生错误(code：500)';
-            var data3 = error.json();
-            if (data3 != null) {
-                if (data3.msg != null) {
-                    msg = data3.msg;
-                }
-            }
-            console.error(msg + '，请检查路径是否正确');
-        }
         if (error != null) {
-            msg = '异常错误';
-            console.log(error);
+            if (error.status == 400) {
+                msg = '请求无效(code：400)';
+                console.log(error.json());
+                var data1 = error.json();
+                if (data1 != null) {
+                    if (data1.msg != null) {
+                        msg = data1.msg;
+                    }
+                }
+                console.log('请检查参数类型是否匹配');
+            }
+            else if (error.status == 404) {
+                msg = '请求资源不存在(code：404)';
+                var data2 = error.json();
+                if (data2 != null) {
+                    if (data2.msg != null) {
+                        msg = data2.msg;
+                    }
+                }
+                console.error(msg + '，请检查路径是否正确');
+            }
+            else if (error.status == 500) {
+                msg = '服务器发生错误(code：500)';
+                var data3 = error.json();
+                if (data3 != null) {
+                    if (data3.msg != null) {
+                        msg = data3.msg;
+                    }
+                }
+                console.error(msg + '，请检查路径是否正确');
+            }
+            else {
+                msg = '异常错误';
+                console.log(error);
+            }
+        }
+        else {
+            msg = '未知错误';
         }
         if (msg != '') {
             this.toast(msg);
@@ -2119,7 +2124,7 @@ var AppService = (function () {
     };
     AppService.prototype.alert = function (message, callback) {
         if (callback) {
-            var alert_1 = this.alertCtrl.create({
+            var alert = this.alertCtrl.create({
                 title: '提示',
                 message: message,
                 buttons: [{
@@ -2129,15 +2134,15 @@ var AppService = (function () {
                         }
                     }]
             });
-            alert_1.present();
+            alert.present();
         }
         else {
-            var alert_2 = this.alertCtrl.create({
+            var alert = this.alertCtrl.create({
                 title: '提示',
                 message: message,
                 buttons: ["确定"]
             });
-            alert_2.present();
+            alert.present();
         }
     };
     AppService.prototype.toast = function (message, callback) {
@@ -2174,10 +2179,10 @@ var AppService = (function () {
 }());
 AppService = __decorate([
     Object(__WEBPACK_IMPORTED_MODULE_1__angular_core__["Injectable"])(),
-    __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_2__angular_http__["a" /* Http */], __WEBPACK_IMPORTED_MODULE_0_ionic_angular__["LoadingController"],
-        __WEBPACK_IMPORTED_MODULE_0_ionic_angular__["AlertController"], __WEBPACK_IMPORTED_MODULE_0_ionic_angular__["ToastController"]])
+    __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_2__angular_http__["a" /* Http */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_2__angular_http__["a" /* Http */]) === "function" && _a || Object, typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_0_ionic_angular__["LoadingController"] !== "undefined" && __WEBPACK_IMPORTED_MODULE_0_ionic_angular__["LoadingController"]) === "function" && _b || Object, typeof (_c = typeof __WEBPACK_IMPORTED_MODULE_0_ionic_angular__["AlertController"] !== "undefined" && __WEBPACK_IMPORTED_MODULE_0_ionic_angular__["AlertController"]) === "function" && _c || Object, typeof (_d = typeof __WEBPACK_IMPORTED_MODULE_0_ionic_angular__["ToastController"] !== "undefined" && __WEBPACK_IMPORTED_MODULE_0_ionic_angular__["ToastController"]) === "function" && _d || Object])
 ], AppService);
 
+var _a, _b, _c, _d;
 //# sourceMappingURL=app.service.js.map
 
 /***/ }),

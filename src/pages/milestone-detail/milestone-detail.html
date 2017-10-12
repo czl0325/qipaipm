@@ -12,7 +12,7 @@
     </ion-title>
     <ion-buttons end >
       <button ion-button (click)="onSaveMilestone($event)" style="color: #fc5c53"
-            [hidden]="(canEdit==false||canFinish==false)&&type!=1">
+            [hidden]="canEdit==false&&canFinish==false&&type==2">
         保存
       </button>
     </ion-buttons>
