@@ -74,11 +74,17 @@ export class SearchPage {
     } else {
         this.appService.httpGet("item/searchByCondition", {itemName:this.searchValue,"empNum":AppSingleton.getInstance().currentUserInfo.username,page:1,limit:100}, this, function (view, res) {
             var response = res.json();
+            view.array = [];
             if (response.success == true) {
                 var data = response.data;
-                view.array = [];
                 for (let i=0; i<data.length; i++) {
                     var one = data[i];
+                    if (one.itemStartTime == null) {
+                        continue;
+                    }
+                    if (one.itemStartTime.length < 4) {
+                        continue;
+                    }
                     var year = one.itemStartTime.substr(0,4);
                     var isIn = false;
                     for (let j=0; j<view.array.length; j++) {
@@ -94,6 +100,13 @@ export class SearchPage {
                         view.array.push(dd);
                     }
                 }
+            } else {
+                let toast = view.toastCtrl.create({
+                    message: "没有搜索到相关项目!",
+                    duration: 2000,
+                    dismissOnPageChange: true,
+                });
+                toast.present();
             }
         },false);
     }
