@@ -6,15 +6,15 @@
 -->
 
 <ion-content fullscreen>
-  <img class="login_icon" src="../../assets/png/login_logo.png">
+  <img class="login_icon" src="assets/png/login_logo.png">
   <form [formGroup]="loginForm" (ngSubmit)="login(loginForm.value)">
     <div style="margin: 0 30px;">
       <div class="row">
-        <img class="area" src="../../assets/png/icon_tel.png">
+        <img class="area" src="assets/png/icon_tel.png">
         <ion-input no-padding no-margin type="text" placeholder="输入手机号" formControlName="mobile" maxlength="11"></ion-input>
       </div>
       <div class="row">
-        <img class="area" src="../../assets/png/icon_pw.png">
+        <img class="area" src="assets/png/icon_pw.png">
         <ion-input no-padding no-margin type="password" placeholder="输入密码" formControlName="password" maxlength="12"></ion-input>
       </div>
       <!--<input class="login_input" type="text" formControlName="mobile" placeholder="请输入手机号"/>-->
