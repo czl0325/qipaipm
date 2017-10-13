@@ -26,6 +26,17 @@
 		EEB5CAEEBDC149D0890C4E90 /* NativeStorage.m in Sources */ = {isa = PBXBuildFile; fileRef = 32FDF18C8C9145DDA6EAD0E0 /* NativeStorage.m */; };
 		A368E88845614A2D9722D5CE /* SQLitePlugin.m in Sources */ = {isa = PBXBuildFile; fileRef = D612DC49BB81425B875D94C8 /* SQLitePlugin.m */; };
 		134E8537A20F427E870DA15B /* sqlite3.c in Resources */ = {isa = PBXBuildFile; fileRef = 8981AEC290FB4611BD9D68AF /* sqlite3.c */; settings = {COMPILER_FLAGS = "-DSQLITE_THREADSAFE=1 -DSQLITE_DEFAULT_MEMSTATUS=0 -DSQLITE_OMIT_DECLTYPE -DSQLITE_OMIT_DEPRECATED -DSQLITE_OMIT_PROGRESS_CALLBACK -DSQLITE_OMIT_SHARED_CACHE -DSQLITE_TEMP_STORE=2 -DSQLITE_OMIT_LOAD_EXTENSION -DSQLITE_ENABLE_FTS3 -DSQLITE_ENABLE_FTS3_PARENTHESIS -DSQLITE_ENABLE_FTS4 -DSQLITE_ENABLE_RTREE -DSQLITE_DEFAULT_PAGE_SIZE=1024 -DSQLITE_DEFAULT_CACHE_SIZE=2000"; }; };
+		D560FA758C76425BA4B28B97 /* NSString+SSURLEncoding.m in Sources */ = {isa = PBXBuildFile; fileRef = A9A9BCD86156415CBEFCCF4B /* NSString+SSURLEncoding.m */; };
+		A4A4BB3BFF8A4C9799DD2F0A /* SocialSharing.m in Sources */ = {isa = PBXBuildFile; fileRef = E098C677CFD948AFB27C3CC2 /* SocialSharing.m */; };
+		C635AD2C72FF4F4C9AE86C53 /* Social.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5254DBDF7B20486D863ADFD4 /* Social.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
+		819D5A5BE2E54F25981F1001 /* MessageUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7D488A1FDCA541DCAECCD23D /* MessageUI.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
+		C7E2DD0342BA4EAB809FD002 /* CDVWechat.m in Sources */ = {isa = PBXBuildFile; fileRef = D3950ED1D41E4D3383B97F35 /* CDVWechat.m */; };
+		F6435243CEE1405DA0BCCD61 /* libWeChatSDK.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E855348A470E47B5B42B6B05 /* libWeChatSDK.a */; };
+		ACBE25F90A8B40689D6FC380 /* libz.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 67054890C9264779BB0829BE /* libz.tbd */; };
+		8F482A680E494D7E9B2D07D3 /* libsqlite3.0.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = B668E417C2254936BDF4F18A /* libsqlite3.0.tbd */; };
+		93ED85BA96574388BF656843 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 621395D639674F69BB83D732 /* Security.framework */; };
+		AA0E54608F8C4327A4726133 /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 22BFC8E1DC344488AAC28004 /* CFNetwork.framework */; };
+		84F493BB82914A1086655C0F /* libstdc++.6.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = BA589A34A7D24EB0B9832068 /* libstdc++.6.tbd */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -97,6 +108,22 @@
 		8981AEC290FB4611BD9D68AF /* sqlite3.c */ = {isa = PBXFileReference; name = "sqlite3.c"; path = "cordova-sqlite-storage/sqlite3.c"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
 		1508027DB5034848A3402B41 /* SQLitePlugin.h */ = {isa = PBXFileReference; name = "SQLitePlugin.h"; path = "cordova-sqlite-storage/SQLitePlugin.h"; sourceTree = "<group>"; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; explicitFileType = undefined; includeInIndex = 0; };
 		A185E9B688D345F4B53FCAEB /* sqlite3.h */ = {isa = PBXFileReference; name = "sqlite3.h"; path = "cordova-sqlite-storage/sqlite3.h"; sourceTree = "<group>"; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; explicitFileType = undefined; includeInIndex = 0; };
+		A9A9BCD86156415CBEFCCF4B /* NSString+SSURLEncoding.m */ = {isa = PBXFileReference; name = "NSString+SSURLEncoding.m"; path = "cordova-plugin-x-socialsharing/NSString+SSURLEncoding.m"; sourceTree = "<group>"; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; explicitFileType = undefined; includeInIndex = 0; };
+		E098C677CFD948AFB27C3CC2 /* SocialSharing.m */ = {isa = PBXFileReference; name = "SocialSharing.m"; path = "cordova-plugin-x-socialsharing/SocialSharing.m"; sourceTree = "<group>"; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; explicitFileType = undefined; includeInIndex = 0; };
+		5DD6FA5E9CCC4539A811A7FC /* NSString+SSURLEncoding.h */ = {isa = PBXFileReference; name = "NSString+SSURLEncoding.h"; path = "cordova-plugin-x-socialsharing/NSString+SSURLEncoding.h"; sourceTree = "<group>"; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; explicitFileType = undefined; includeInIndex = 0; };
+		D36994AA69584F8B8C1903E6 /* SocialSharing.h */ = {isa = PBXFileReference; name = "SocialSharing.h"; path = "cordova-plugin-x-socialsharing/SocialSharing.h"; sourceTree = "<group>"; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; explicitFileType = undefined; includeInIndex = 0; };
+		5254DBDF7B20486D863ADFD4 /* Social.framework */ = {isa = PBXFileReference; name = "Social.framework"; path = "System/Library/Frameworks/Social.framework"; sourceTree = SDKROOT; fileEncoding = undefined; lastKnownFileType = wrapper.framework; explicitFileType = undefined; includeInIndex = 0; };
+		7D488A1FDCA541DCAECCD23D /* MessageUI.framework */ = {isa = PBXFileReference; name = "MessageUI.framework"; path = "System/Library/Frameworks/MessageUI.framework"; sourceTree = SDKROOT; fileEncoding = undefined; lastKnownFileType = wrapper.framework; explicitFileType = undefined; includeInIndex = 0; };
+		D3950ED1D41E4D3383B97F35 /* CDVWechat.m */ = {isa = PBXFileReference; name = "CDVWechat.m"; path = "cordova-plugin-wechat/CDVWechat.m"; sourceTree = "<group>"; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; explicitFileType = undefined; includeInIndex = 0; };
+		E855348A470E47B5B42B6B05 /* libWeChatSDK.a */ = {isa = PBXFileReference; name = "libWeChatSDK.a"; path = "MyApp/Plugins/cordova-plugin-wechat/libWeChatSDK.a"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = archive.ar; explicitFileType = undefined; includeInIndex = 0; };
+		B90F70EA2B1E4E599F0F14A9 /* CDVWechat.h */ = {isa = PBXFileReference; name = "CDVWechat.h"; path = "cordova-plugin-wechat/CDVWechat.h"; sourceTree = "<group>"; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; explicitFileType = undefined; includeInIndex = 0; };
+		039B5E6F9A4A41A6A435D337 /* WXApi.h */ = {isa = PBXFileReference; name = "WXApi.h"; path = "cordova-plugin-wechat/WXApi.h"; sourceTree = "<group>"; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; explicitFileType = undefined; includeInIndex = 0; };
+		6D1B81DC734749CBA771C596 /* WXApiObject.h */ = {isa = PBXFileReference; name = "WXApiObject.h"; path = "cordova-plugin-wechat/WXApiObject.h"; sourceTree = "<group>"; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; explicitFileType = undefined; includeInIndex = 0; };
+		67054890C9264779BB0829BE /* libz.tbd */ = {isa = PBXFileReference; name = "libz.tbd"; path = "usr/lib/libz.tbd"; sourceTree = SDKROOT; fileEncoding = undefined; lastKnownFileType = sourcecode.text-based-dylib-definition; explicitFileType = undefined; includeInIndex = 0; };
+		B668E417C2254936BDF4F18A /* libsqlite3.0.tbd */ = {isa = PBXFileReference; name = "libsqlite3.0.tbd"; path = "usr/lib/libsqlite3.0.tbd"; sourceTree = SDKROOT; fileEncoding = undefined; lastKnownFileType = sourcecode.text-based-dylib-definition; explicitFileType = undefined; includeInIndex = 0; };
+		621395D639674F69BB83D732 /* Security.framework */ = {isa = PBXFileReference; name = "Security.framework"; path = "System/Library/Frameworks/Security.framework"; sourceTree = SDKROOT; fileEncoding = undefined; lastKnownFileType = wrapper.framework; explicitFileType = undefined; includeInIndex = 0; };
+		22BFC8E1DC344488AAC28004 /* CFNetwork.framework */ = {isa = PBXFileReference; name = "CFNetwork.framework"; path = "System/Library/Frameworks/CFNetwork.framework"; sourceTree = SDKROOT; fileEncoding = undefined; lastKnownFileType = wrapper.framework; explicitFileType = undefined; includeInIndex = 0; };
+		BA589A34A7D24EB0B9832068 /* libstdc++.6.tbd */ = {isa = PBXFileReference; name = "libstdc++.6.tbd"; path = "usr/lib/libstdc++.6.tbd"; sourceTree = SDKROOT; fileEncoding = undefined; lastKnownFileType = sourcecode.text-based-dylib-definition; explicitFileType = undefined; includeInIndex = 0; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -107,6 +134,14 @@
 				301BF552109A68D80062928A /* libCordova.a in Frameworks */,
 				368A8A9F2E4641C3813CFCA3 /* SystemConfiguration.framework in Frameworks */,
 				9F392C57585746BF89E79DCE /* CoreTelephony.framework in Frameworks */,
+				C635AD2C72FF4F4C9AE86C53 /* Social.framework in Frameworks */,
+				819D5A5BE2E54F25981F1001 /* MessageUI.framework in Frameworks */,
+				F6435243CEE1405DA0BCCD61 /* libWeChatSDK.a in Frameworks */,
+				ACBE25F90A8B40689D6FC380 /* libz.tbd in Frameworks */,
+				8F482A680E494D7E9B2D07D3 /* libsqlite3.0.tbd in Frameworks */,
+				93ED85BA96574388BF656843 /* Security.framework in Frameworks */,
+				AA0E54608F8C4327A4726133 /* CFNetwork.framework in Frameworks */,
+				84F493BB82914A1086655C0F /* libstdc++.6.tbd in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -179,6 +214,14 @@
 			children = (
 				5D9FE8AA6A114D63AA6FA490 /* SystemConfiguration.framework */,
 				FCD80A400DED41FDB0F93DE7 /* CoreTelephony.framework */,
+				5254DBDF7B20486D863ADFD4 /* Social.framework */,
+				7D488A1FDCA541DCAECCD23D /* MessageUI.framework */,
+				E855348A470E47B5B42B6B05 /* libWeChatSDK.a */,
+				67054890C9264779BB0829BE /* libz.tbd */,
+				B668E417C2254936BDF4F18A /* libsqlite3.0.tbd */,
+				621395D639674F69BB83D732 /* Security.framework */,
+				22BFC8E1DC344488AAC28004 /* CFNetwork.framework */,
+				BA589A34A7D24EB0B9832068 /* libstdc++.6.tbd */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -227,6 +270,14 @@
 				8981AEC290FB4611BD9D68AF /* sqlite3.c */,
 				1508027DB5034848A3402B41 /* SQLitePlugin.h */,
 				A185E9B688D345F4B53FCAEB /* sqlite3.h */,
+				A9A9BCD86156415CBEFCCF4B /* NSString+SSURLEncoding.m */,
+				E098C677CFD948AFB27C3CC2 /* SocialSharing.m */,
+				5DD6FA5E9CCC4539A811A7FC /* NSString+SSURLEncoding.h */,
+				D36994AA69584F8B8C1903E6 /* SocialSharing.h */,
+				D3950ED1D41E4D3383B97F35 /* CDVWechat.m */,
+				B90F70EA2B1E4E599F0F14A9 /* CDVWechat.h */,
+				039B5E6F9A4A41A6A435D337 /* WXApi.h */,
+				6D1B81DC734749CBA771C596 /* WXApiObject.h */,
 			);
 			name = Plugins;
 			path = MyApp/Plugins;
@@ -365,6 +416,9 @@
 				EEB5CAEEBDC149D0890C4E90 /* NativeStorage.m in Sources */,
 				A368E88845614A2D9722D5CE /* SQLitePlugin.m in Sources */,
 				134E8537A20F427E870DA15B /* sqlite3.c in Resources */,
+				D560FA758C76425BA4B28B97 /* NSString+SSURLEncoding.m in Sources */,
+				A4A4BB3BFF8A4C9799DD2F0A /* SocialSharing.m in Sources */,
+				C7E2DD0342BA4EAB809FD002 /* CDVWechat.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -402,6 +456,10 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.qipai.qipaipn;
 				PRODUCT_NAME = MyApp;
 				TARGETED_DEVICE_FAMILY = 1;
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/MyApp/Plugins/cordova-plugin-wechat\"",
+				);
 			};
 			name = Debug;
 		};
@@ -426,6 +484,10 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.qipai.qipaipn;
 				PRODUCT_NAME = MyApp;
 				TARGETED_DEVICE_FAMILY = 1;
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/MyApp/Plugins/cordova-plugin-wechat\"",
+				);
 			};
 			name = Release;
 		};

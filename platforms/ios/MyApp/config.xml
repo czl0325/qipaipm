@@ -108,4 +108,13 @@
     <feature name="SQLitePlugin">
         <param name="ios-package" value="SQLitePlugin" />
     </feature>
+    <feature name="SocialSharing">
+        <param name="ios-package" value="SocialSharing" />
+        <param name="onload" value="true" />
+    </feature>
+    <feature name="Wechat">
+        <param name="ios-package" value="CDVWechat" />
+        <param name="onload" value="true" />
+    </feature>
+    <preference name="WECHATAPPID" value="wxaf6e253c0f942702" />
 </widget>

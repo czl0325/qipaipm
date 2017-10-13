@@ -75,6 +75,28 @@ module.exports = [
         "clobbers": [
             "SQLitePlugin"
         ]
+    },
+    {
+        "id": "es6-promise-plugin.Promise",
+        "file": "plugins/es6-promise-plugin/www/promise.js",
+        "pluginId": "es6-promise-plugin",
+        "runs": true
+    },
+    {
+        "id": "cordova-plugin-x-socialsharing.SocialSharing",
+        "file": "plugins/cordova-plugin-x-socialsharing/www/SocialSharing.js",
+        "pluginId": "cordova-plugin-x-socialsharing",
+        "clobbers": [
+            "window.plugins.socialsharing"
+        ]
+    },
+    {
+        "id": "cordova-plugin-wechat.Wechat",
+        "file": "plugins/cordova-plugin-wechat/www/wechat.js",
+        "pluginId": "cordova-plugin-wechat",
+        "clobbers": [
+            "Wechat"
+        ]
     }
 ];
 module.exports.metadata = 
@@ -88,7 +110,10 @@ module.exports.metadata =
     "cordova-plugin-whitelist": "1.3.1",
     "cordova-plugin-network-information": "1.3.3",
     "cordova-plugin-nativestorage": "2.2.2",
-    "cordova-sqlite-storage": "2.0.4"
+    "cordova-sqlite-storage": "2.0.4",
+    "es6-promise-plugin": "4.1.0",
+    "cordova-plugin-x-socialsharing": "5.1.8",
+    "cordova-plugin-wechat": "2.0.0"
 };
 // BOTTOM OF METADATA
 });

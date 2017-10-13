@@ -33,7 +33,18 @@
         },
         "cordova-sqlite-storage": {
             "PACKAGE_NAME": "$(PRODUCT_BUNDLE_IDENTIFIER)"
+        },
+        "cordova-plugin-x-socialsharing": {
+            "PACKAGE_NAME": "$(PRODUCT_BUNDLE_IDENTIFIER)"
+        },
+        "cordova-plugin-wechat": {
+            "WECHATAPPID": "wxaf6e253c0f942702",
+            "PACKAGE_NAME": "$(PRODUCT_BUNDLE_IDENTIFIER)"
         }
     },
-    "dependent_plugins": {}
+    "dependent_plugins": {
+        "es6-promise-plugin": {
+            "PACKAGE_NAME": "$(PRODUCT_BUNDLE_IDENTIFIER)"
+        }
+    }
 }

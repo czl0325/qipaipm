@@ -1,4 +1,11 @@
 {
-    "SystemConfiguration.framework": 1,
-    "CoreTelephony.framework": 1
+    "SystemConfiguration.framework": 2,
+    "CoreTelephony.framework": 2,
+    "Social.framework": 1,
+    "MessageUI.framework": 1,
+    "libz.tbd": 1,
+    "libsqlite3.0.tbd": 1,
+    "Security.framework": 1,
+    "CFNetwork.framework": 1,
+    "libstdc++.6.tbd": 1
 }

@@ -64,8 +64,8 @@ export class ContactPage {
       } else {
           if (this.arrayDepartment != null) {
               for (let i1=0; i1<this.arrayDepartment.length; i1++) {
-                  var text = this.arrayDepartment[i1].text;
-                  if(text.indexOf(this.searchValue) > -1 ){
+                  var text1 = this.arrayDepartment[i1].text;
+                  if(text1.indexOf(this.searchValue) > -1 ){
                       this.arrayHidden[i1] = false;
                   } else {
                       this.arrayHidden[i1] = true;
@@ -74,8 +74,8 @@ export class ContactPage {
           } else {
               if (this.arrayStaff != null) {
                   for (let i2=0; i2<this.arrayStaff.length; i2++) {
-                      var text = this.arrayStaff[i2].name;
-                      if(text.indexOf(this.searchValue) > -1 ){
+                      var text2 = this.arrayStaff[i2].name;
+                      if(text2.indexOf(this.searchValue) > -1 ){
                           this.arrayHidden[i2] = false;
                       } else {
                           this.arrayHidden[i2] = true;

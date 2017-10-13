@@ -27,16 +27,8 @@ export class MyApp {
               // private ionicApp: IonicApp,
               //private nativeStorage: NativeStorage
   ) {
-    platform.ready().then(() => {
-      // Okay, so the platform is ready and our plugins are available.
-      // Here you can do any higher level native things you might need.
-      statusBar.styleDefault();
-      splashScreen.hide();
-      //(<any>window).navigator.splashscreen.hide();
-    });
-
-    this.keyboard.hideKeyboardAccessoryBar(false);
-    this.keyboard.disableScroll(true);//当输入焦点时，防止本机UIScrollView移动。
+      this.keyboard.hideKeyboardAccessoryBar(false);
+      this.keyboard.disableScroll(true);//当输入焦点时，防止本机UIScrollView移动。
       this.storage.get('user').then((val) => {
           if (val != null) {
               if (val.username != null) {
@@ -49,6 +41,16 @@ export class MyApp {
               this.rootPage = LoginPage;
           }
       });
+
+        platform.ready().then(() => {
+          // Okay, so the platform is ready and our plugins are available.
+          // Here you can do any higher level native things you might need.
+          statusBar.styleDefault();
+          splashScreen.hide();
+          //(<any>window).navigator.splashscreen.hide();
+        });
+
+
 
 
     // if (platform.is('ios')) {

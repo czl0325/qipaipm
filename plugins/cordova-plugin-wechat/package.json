@@ -1,0 +1,71 @@
+{
+  "_from": "cordova-plugin-wechat@2.0.0",
+  "_id": "cordova-plugin-wechat@2.0.0",
+  "_inBundle": false,
+  "_integrity": "sha1-rySsdKvz0yyjcp/kbEt/mBgWsuU=",
+  "_location": "/cordova-plugin-wechat",
+  "_phantomChildren": {},
+  "_requested": {
+    "type": "version",
+    "registry": true,
+    "raw": "cordova-plugin-wechat@2.0.0",
+    "name": "cordova-plugin-wechat",
+    "escapedName": "cordova-plugin-wechat",
+    "rawSpec": "2.0.0",
+    "saveSpec": null,
+    "fetchSpec": "2.0.0"
+  },
+  "_requiredBy": [
+    "#USER"
+  ],
+  "_resolved": "http://registry.npm.taobao.org/cordova-plugin-wechat/download/cordova-plugin-wechat-2.0.0.tgz",
+  "_shasum": "af24ac74abf3d32ca3729fe46c4b7f981816b2e5",
+  "_spec": "cordova-plugin-wechat@2.0.0",
+  "_where": "/Users/zhaoliangchen/Desktop/qipaipm-company",
+  "author": {
+    "name": "xu.li",
+    "email": "AthenaLightenedMyPath@gmail.com"
+  },
+  "bugs": {
+    "url": "https://github.com/xu-li/cordova-plugin-wechat/issues"
+  },
+  "bundleDependencies": false,
+  "cordova": {
+    "id": "cordova-plugin-wechat",
+    "platforms": [
+      "ios",
+      "android"
+    ]
+  },
+  "deprecated": false,
+  "description": "A cordova plugin, a JS version of Wechat SDK",
+  "engines": {
+    "cordovaDependencies": {
+      "2.0.0": {
+        "cordova": ">=6.1.0",
+        "cordova-android": ">=6.1.0",
+        "cordova-ios": ">=4.3.1"
+      },
+      "<2.0.0": {
+        "cordova": ">=3.5.0"
+      }
+    }
+  },
+  "homepage": "https://github.com/xu-li/cordova-plugin-wechat#readme",
+  "keywords": [
+    "cordova",
+    "wechat",
+    "weixin",
+    "share",
+    "ecosystem:cordova",
+    "cordova-ios",
+    "cordova-android"
+  ],
+  "license": "MIT",
+  "name": "cordova-plugin-wechat",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/xu-li/cordova-plugin-wechat.git"
+  },
+  "version": "2.0.0"
+}

@@ -116,7 +116,7 @@ export class ProjectDetailPage {
       //     shareView.style.bottom = 0+'px';
       //   }
       // }, 16);
-        this.socialSharing.share("项目分享","柒牌项目管理",null,null);
+        this.socialSharing.share(this.project.itemName,"柒牌项目管理",null,this.project.itemUrl);
     });
     this.events.subscribe('onPushProjectDetail',()=>{
       this.navCtrl.push(ProjectCreatePage, {
@@ -141,7 +141,6 @@ export class ProjectDetailPage {
     });
     this.events.subscribe('onDeleteProject',()=> {
         this.appService.httpDelete("item/delete",{"ids":[this.project.id]}, this, function (view, res) {
-            console.log(res._body);
             if (res.status == 200) {
                 view.events.publish('homeProjectReload');
                 view.navCtrl.pop();

@@ -10,8 +10,8 @@ webpackJsonp([4],{
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__project_create_project_create__ = __webpack_require__(114);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__project_detail_project_detail__ = __webpack_require__(117);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__search_search__ = __webpack_require__(227);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__app_app_service__ = __webpack_require__(24);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__app_app_config__ = __webpack_require__(25);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__app_app_service__ = __webpack_require__(25);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__app_app_config__ = __webpack_require__(24);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__app_app_singleton__ = __webpack_require__(37);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -145,9 +145,9 @@ HomePage = __decorate([
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(12);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__angular_common__ = __webpack_require__(29);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__milestone_detail_milestone_detail__ = __webpack_require__(115);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__app_app_service__ = __webpack_require__(24);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__app_app_service__ = __webpack_require__(25);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__contact_contact__ = __webpack_require__(60);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__app_app_config__ = __webpack_require__(25);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__app_app_config__ = __webpack_require__(24);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__app_app_singleton__ = __webpack_require__(37);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -186,6 +186,7 @@ var ProjectCreatePage = (function () {
             itemName: '',
             itemFounder: __WEBPACK_IMPORTED_MODULE_7__app_app_singleton__["a" /* AppSingleton */].getInstance().currentUserInfo.name,
             founderEmpNum: __WEBPACK_IMPORTED_MODULE_7__app_app_singleton__["a" /* AppSingleton */].getInstance().currentUserInfo.username,
+            itemUrl: '',
             itemEndLeader: '',
             itemEndLeaderNum: '',
             // empNum: '',
@@ -525,8 +526,8 @@ ProjectCreatePage = __decorate([
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(12);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__subtask_subtask__ = __webpack_require__(116);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__angular_common__ = __webpack_require__(29);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__app_app_service__ = __webpack_require__(24);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__app_app_config__ = __webpack_require__(25);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__app_app_service__ = __webpack_require__(25);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__app_app_config__ = __webpack_require__(24);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__contact_contact__ = __webpack_require__(60);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__app_app_singleton__ = __webpack_require__(37);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
@@ -846,8 +847,8 @@ MilestoneDetailPage = __decorate([
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return SubtaskPage; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(1);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(12);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__app_app_config__ = __webpack_require__(25);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__app_app_service__ = __webpack_require__(24);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__app_app_config__ = __webpack_require__(24);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__app_app_service__ = __webpack_require__(25);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__contact_contact__ = __webpack_require__(60);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__angular_common__ = __webpack_require__(29);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__app_app_singleton__ = __webpack_require__(37);
@@ -999,8 +1000,8 @@ SubtaskPage = __decorate([
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__subtask_subtask__ = __webpack_require__(116);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__milestone_detail_milestone_detail__ = __webpack_require__(115);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__project_create_project_create__ = __webpack_require__(114);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__app_app_service__ = __webpack_require__(24);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__app_app_config__ = __webpack_require__(25);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__app_app_service__ = __webpack_require__(25);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__app_app_config__ = __webpack_require__(24);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__angular_common__ = __webpack_require__(29);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__app_app_singleton__ = __webpack_require__(37);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__ionic_native_social_sharing__ = __webpack_require__(225);
@@ -1180,7 +1181,7 @@ var ProjectDetailPage = (function () {
             //     shareView.style.bottom = 0+'px';
             //   }
             // }, 16);
-            _this.socialSharing.share("项目分享", "柒牌项目管理", null, null);
+            _this.socialSharing.share(_this.project.itemName, "柒牌项目管理", null, _this.project.itemUrl);
         });
         this.events.subscribe('onPushProjectDetail', function () {
             _this.navCtrl.push(__WEBPACK_IMPORTED_MODULE_4__project_create_project_create__["a" /* ProjectCreatePage */], {
@@ -1205,7 +1206,6 @@ var ProjectDetailPage = (function () {
         });
         this.events.subscribe('onDeleteProject', function () {
             _this.appService.httpDelete("item/delete", { "ids": [_this.project.id] }, _this, function (view, res) {
-                console.log(res._body);
                 if (res.status == 200) {
                     view.events.publish('homeProjectReload');
                     view.navCtrl.pop();
@@ -1437,7 +1437,7 @@ ProjectDetailPage = __decorate([
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(1);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(12);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__angular_forms__ = __webpack_require__(21);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__app_app_service__ = __webpack_require__(24);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__app_app_service__ = __webpack_require__(25);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -1522,7 +1522,7 @@ NewpwPage = __decorate([
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_rxjs_Rx__ = __webpack_require__(417);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_rxjs_Rx___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3_rxjs_Rx__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__newpw_newpw__ = __webpack_require__(142);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__app_app_service__ = __webpack_require__(24);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__app_app_service__ = __webpack_require__(25);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -1658,7 +1658,7 @@ ForgetPage = __decorate([
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(12);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__angular_forms__ = __webpack_require__(21);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__forget_forget__ = __webpack_require__(143);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__app_app_service__ = __webpack_require__(24);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__app_app_service__ = __webpack_require__(25);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__home_home__ = __webpack_require__(113);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__app_app_singleton__ = __webpack_require__(37);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__ionic_storage__ = __webpack_require__(119);
@@ -1804,10 +1804,10 @@ module.exports = webpackAsyncContext;
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return SearchPage; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(1);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(12);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__app_app_service__ = __webpack_require__(24);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__app_app_service__ = __webpack_require__(25);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__project_detail_project_detail__ = __webpack_require__(117);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__app_app_singleton__ = __webpack_require__(37);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__app_app_config__ = __webpack_require__(25);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__app_app_config__ = __webpack_require__(24);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -1945,15 +1945,168 @@ SearchPage = __decorate([
     Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Component"])({
         selector: 'page-search',template:/*ion-inline-start:"/Users/zhaoliangchen/Desktop/qipaipm-company/src/pages/search/search.html"*/'<!--\n  Generated template for the SearchPage page.\n\n  See http://ionicframework.com/docs/components/#navigation for more info on\n  Ionic pages and navigation.\n-->\n<ion-header>\n  <ion-navbar>\n    <form (submit)="onSearch($event)">\n      <ion-searchbar placeholder="搜索项目名称" [(ngModel)]=searchValue\n                     [showCancelButton]="false"\n                     (ionInput)="onSearchInput($event)"\n                     (ionCancel)="onSearchCancel($event)"\n                      name="itemName">\n      </ion-searchbar>\n    </form>\n  </ion-navbar>\n  <!--<div class="head" >-->\n    <!--<div class="icon-left" (click)="goBack()">-->\n      <!--<ion-icon name="arrow-back" ></ion-icon>-->\n    <!--</div>-->\n    <!--<div class="searchcotain">-->\n      <!--<div class="searchmain">-->\n        <!--<div class="searchicon"><ion-icon name="search"></ion-icon></div>-->\n        <!--<div class="searchinput"><input type="text" placeholder="搜索"></div>-->\n      <!--</div>-->\n    <!--</div>-->\n    <!--<div class="icon-rightnew">-->\n      <!--<a>搜索</a>-->\n    <!--</div>-->\n  <!--</div>-->\n</ion-header>\n\n<ion-content fullscreen>\n    <div *ngFor="let dic of array">\n      <div style="background-color: #f5f6f7; height: 30px;padding-left: 5px; position:relative;">\n          <ion-label no-padding no-margin class="vertical_center" style="left: 5px; width: 120px">{{dic.year+"年"}}</ion-label>\n      </div>\n      <div style="height: 50px; border-bottom: solid 1px #f5f6f7; position:relative;" *ngFor="let project of dic.projects" (click)="onClickProject($event,project)">\n        <ion-label no-padding no-margin class="vertical_center" style="left: 5px; width: 120px">{{project.itemStartTime | MonthPipe}}</ion-label>\n        <ion-label no-padding no-margin class="vertical_center" style="left: 140px;">{{project.itemName}}</ion-label>\n      </div>\n    </div>\n</ion-content>\n'/*ion-inline-end:"/Users/zhaoliangchen/Desktop/qipaipm-company/src/pages/search/search.html"*/,
     }),
-    __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["NavController"] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["NavController"]) === "function" && _a || Object, typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["NavParams"] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["NavParams"]) === "function" && _b || Object, typeof (_c = typeof __WEBPACK_IMPORTED_MODULE_2__app_app_service__["a" /* AppService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_2__app_app_service__["a" /* AppService */]) === "function" && _c || Object])
+    __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["NavController"], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["NavParams"], __WEBPACK_IMPORTED_MODULE_2__app_app_service__["a" /* AppService */]])
 ], SearchPage);
 
-var _a, _b, _c;
 //# sourceMappingURL=search.js.map
 
 /***/ }),
 
 /***/ 24:
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return AppConfig; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_common__ = __webpack_require__(29);
+
+var AppConfig = (function () {
+    function AppConfig() {
+    }
+    //测试环境URL
+    AppConfig.getBaseUrl = function () {
+        return "http://192.168.72.224:8080/pm/";
+    };
+    //获取设备高度
+    AppConfig.getWindowHeight = function () {
+        return window.screen.height;
+    };
+    //获取设备宽度
+    AppConfig.getWindowWidth = function () {
+        return window.screen.width;
+    };
+    /**
+     * 日期对象转为日期字符串
+     * @param date 需要格式化的日期对象
+     * @param sFormat 输出格式,默认为yyyy-MM-dd                        年：y，月：M，日：d，时：h，分：m，秒：s
+     * @example  dateFormat(new Date())                               "2017-02-28"
+     * @example  dateFormat(new Date(),'yyyy-MM-dd')                  "2017-02-28"
+     * @example  dateFormat(new Date(),'yyyy-MM-dd HH:mm:ss')         "2017-02-28 13:24:00"   ps:HH:24小时制
+     * @example  dateFormat(new Date(),'yyyy-MM-dd hh:mm:ss')         "2017-02-28 01:24:00"   ps:hh:12小时制
+     * @example  dateFormat(new Date(),'hh:mm')                       "09:24"
+     * @example  dateFormat(new Date(),'yyyy-MM-ddTHH:mm:ss+08:00')   "2017-02-28T13:24:00+08:00"
+     * @example  dateFormat(new Date('2017-02-28 13:24:00'),'yyyy-MM-ddTHH:mm:ss+08:00')   "2017-02-28T13:24:00+08:00"
+     * @returns {string}
+     */
+    AppConfig.dateFormat = function (date, sFormat) {
+        if (sFormat === void 0) { sFormat = 'yyyy-MM-dd'; }
+        var time = {
+            Year: 0,
+            TYear: '0',
+            Month: 0,
+            TMonth: '0',
+            Day: 0,
+            TDay: '0',
+            Hour: 0,
+            THour: '0',
+            hour: 0,
+            Thour: '0',
+            Minute: 0,
+            TMinute: '0',
+            Second: 0,
+            TSecond: '0',
+            Millisecond: 0
+        };
+        time.Year = date.getFullYear();
+        time.TYear = String(time.Year).substr(2);
+        time.Month = date.getMonth() + 1;
+        time.TMonth = time.Month < 10 ? "0" + time.Month : String(time.Month);
+        time.Day = date.getDate();
+        time.TDay = time.Day < 10 ? "0" + time.Day : String(time.Day);
+        time.Hour = date.getHours();
+        time.THour = time.Hour < 10 ? "0" + time.Hour : String(time.Hour);
+        time.hour = time.Hour < 13 ? time.Hour : time.Hour - 12;
+        time.Thour = time.hour < 10 ? "0" + time.hour : String(time.hour);
+        time.Minute = date.getMinutes();
+        time.TMinute = time.Minute < 10 ? "0" + time.Minute : String(time.Minute);
+        time.Second = date.getSeconds();
+        time.TSecond = time.Second < 10 ? "0" + time.Second : String(time.Second);
+        time.Millisecond = date.getMilliseconds();
+        return sFormat.replace(/yyyy/ig, String(time.Year))
+            .replace(/yyy/ig, String(time.Year))
+            .replace(/yy/ig, time.TYear)
+            .replace(/y/ig, time.TYear)
+            .replace(/MM/g, time.TMonth)
+            .replace(/M/g, String(time.Month))
+            .replace(/dd/ig, time.TDay)
+            .replace(/d/ig, String(time.Day))
+            .replace(/HH/g, time.THour)
+            .replace(/H/g, String(time.Hour))
+            .replace(/hh/g, time.Thour)
+            .replace(/h/g, String(time.hour))
+            .replace(/mm/g, time.TMinute)
+            .replace(/m/g, String(time.Minute))
+            .replace(/ss/ig, time.TSecond)
+            .replace(/s/ig, String(time.Second))
+            .replace(/fff/ig, String(time.Millisecond));
+    };
+    AppConfig.stringToDate = function (strTime) {
+        return new Date(Date.parse(strTime.replace(/-/g, "/")));
+    };
+    AppConfig.dateToString = function (date) {
+        return new __WEBPACK_IMPORTED_MODULE_0__angular_common__["c" /* DatePipe */]('en-US').transform(date, 'yyyy-MM-dd');
+    };
+    AppConfig.getDayCountInMonth = function (date) {
+        var m_days = new Array(31, 28 + AppConfig.is_leap(date.getFullYear()), 31, 30, 31, 30, 31, 31, 30, 31, 30, 31);
+        return m_days[date.getMonth()];
+    };
+    AppConfig.is_leap = function (year) {
+        var res;
+        return (year % 100 == 0 ? res = (year % 400 == 0 ? 1 : 0) : res = (year % 4 == 0 ? 1 : 0));
+    };
+    AppConfig.addDate = function (date, days) {
+        var d = new Date(date);
+        d.setDate(d.getDate() + days);
+        var m = d.getMonth() + 1;
+        return d.getFullYear() + '-' + m + '-' + d.getDate();
+    };
+    //时间戳转yyyy-mm-dd
+    AppConfig.timestampToDatestring = function (timestamp) {
+        var date = new Date(timestamp);
+        var y = date.getFullYear();
+        var m = "0" + (date.getMonth() + 1);
+        var d = "0" + date.getDate();
+        return y + "-" + m.substring(m.length - 2, m.length) + "-" + d.substring(d.length - 2, d.length);
+    };
+    //时间戳转date
+    AppConfig.timestampToDate = function (timestamp) {
+        return new Date(timestamp);
+    };
+    AppConfig.isSameDay = function (date1, date2) {
+        return (date1.getFullYear() == date2.getFullYear() && date1.getMonth() == date2.getMonth()
+            && date1.getDate() == date2.getDate());
+    };
+    /**
+     * 深拷贝
+     */
+    AppConfig.deepCopy = function (originObj) {
+        return originObj ? JSON.parse(JSON.stringify(originObj)) : null;
+    };
+    //把字符串里面的数字都提取出来
+    AppConfig.getNum = function (text) {
+        return text.replace(/[^0-9]/ig, "");
+    };
+    AppConfig.prototype.getNowFormatDate = function () {
+        var date = new Date();
+        var seperator1 = "-";
+        var seperator2 = ":";
+        var month = date.getMonth() + 1;
+        var strDate = date.getDate();
+        var currentdate = date.getFullYear() + seperator1
+            + (month >= 1 && month <= 9) ? "0" : ""
+            + month + seperator1
+            + (strDate >= 1 && strDate <= 9) ? "0" : "" + strDate
+            + " " + date.getHours() + seperator2 + date.getMinutes()
+            + seperator2 + date.getSeconds();
+        return currentdate;
+    };
+    return AppConfig;
+}());
+
+//# sourceMappingURL=app.config.js.map
+
+/***/ }),
+
+/***/ 25:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -2229,160 +2382,6 @@ AppService = __decorate([
 
 /***/ }),
 
-/***/ 25:
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return AppConfig; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_common__ = __webpack_require__(29);
-
-var AppConfig = (function () {
-    function AppConfig() {
-    }
-    //测试环境URL
-    AppConfig.getBaseUrl = function () {
-        return "http://192.168.72.224:8080/pm/";
-    };
-    //获取设备高度
-    AppConfig.getWindowHeight = function () {
-        return window.screen.height;
-    };
-    //获取设备宽度
-    AppConfig.getWindowWidth = function () {
-        return window.screen.width;
-    };
-    /**
-     * 日期对象转为日期字符串
-     * @param date 需要格式化的日期对象
-     * @param sFormat 输出格式,默认为yyyy-MM-dd                        年：y，月：M，日：d，时：h，分：m，秒：s
-     * @example  dateFormat(new Date())                               "2017-02-28"
-     * @example  dateFormat(new Date(),'yyyy-MM-dd')                  "2017-02-28"
-     * @example  dateFormat(new Date(),'yyyy-MM-dd HH:mm:ss')         "2017-02-28 13:24:00"   ps:HH:24小时制
-     * @example  dateFormat(new Date(),'yyyy-MM-dd hh:mm:ss')         "2017-02-28 01:24:00"   ps:hh:12小时制
-     * @example  dateFormat(new Date(),'hh:mm')                       "09:24"
-     * @example  dateFormat(new Date(),'yyyy-MM-ddTHH:mm:ss+08:00')   "2017-02-28T13:24:00+08:00"
-     * @example  dateFormat(new Date('2017-02-28 13:24:00'),'yyyy-MM-ddTHH:mm:ss+08:00')   "2017-02-28T13:24:00+08:00"
-     * @returns {string}
-     */
-    AppConfig.dateFormat = function (date, sFormat) {
-        if (sFormat === void 0) { sFormat = 'yyyy-MM-dd'; }
-        var time = {
-            Year: 0,
-            TYear: '0',
-            Month: 0,
-            TMonth: '0',
-            Day: 0,
-            TDay: '0',
-            Hour: 0,
-            THour: '0',
-            hour: 0,
-            Thour: '0',
-            Minute: 0,
-            TMinute: '0',
-            Second: 0,
-            TSecond: '0',
-            Millisecond: 0
-        };
-        time.Year = date.getFullYear();
-        time.TYear = String(time.Year).substr(2);
-        time.Month = date.getMonth() + 1;
-        time.TMonth = time.Month < 10 ? "0" + time.Month : String(time.Month);
-        time.Day = date.getDate();
-        time.TDay = time.Day < 10 ? "0" + time.Day : String(time.Day);
-        time.Hour = date.getHours();
-        time.THour = time.Hour < 10 ? "0" + time.Hour : String(time.Hour);
-        time.hour = time.Hour < 13 ? time.Hour : time.Hour - 12;
-        time.Thour = time.hour < 10 ? "0" + time.hour : String(time.hour);
-        time.Minute = date.getMinutes();
-        time.TMinute = time.Minute < 10 ? "0" + time.Minute : String(time.Minute);
-        time.Second = date.getSeconds();
-        time.TSecond = time.Second < 10 ? "0" + time.Second : String(time.Second);
-        time.Millisecond = date.getMilliseconds();
-        return sFormat.replace(/yyyy/ig, String(time.Year))
-            .replace(/yyy/ig, String(time.Year))
-            .replace(/yy/ig, time.TYear)
-            .replace(/y/ig, time.TYear)
-            .replace(/MM/g, time.TMonth)
-            .replace(/M/g, String(time.Month))
-            .replace(/dd/ig, time.TDay)
-            .replace(/d/ig, String(time.Day))
-            .replace(/HH/g, time.THour)
-            .replace(/H/g, String(time.Hour))
-            .replace(/hh/g, time.Thour)
-            .replace(/h/g, String(time.hour))
-            .replace(/mm/g, time.TMinute)
-            .replace(/m/g, String(time.Minute))
-            .replace(/ss/ig, time.TSecond)
-            .replace(/s/ig, String(time.Second))
-            .replace(/fff/ig, String(time.Millisecond));
-    };
-    AppConfig.stringToDate = function (strTime) {
-        return new Date(Date.parse(strTime.replace(/-/g, "/")));
-    };
-    AppConfig.dateToString = function (date) {
-        return new __WEBPACK_IMPORTED_MODULE_0__angular_common__["c" /* DatePipe */]('en-US').transform(date, 'yyyy-MM-dd');
-    };
-    AppConfig.getDayCountInMonth = function (date) {
-        var m_days = new Array(31, 28 + AppConfig.is_leap(date.getFullYear()), 31, 30, 31, 30, 31, 31, 30, 31, 30, 31);
-        return m_days[date.getMonth()];
-    };
-    AppConfig.is_leap = function (year) {
-        var res;
-        return (year % 100 == 0 ? res = (year % 400 == 0 ? 1 : 0) : res = (year % 4 == 0 ? 1 : 0));
-    };
-    AppConfig.addDate = function (date, days) {
-        var d = new Date(date);
-        d.setDate(d.getDate() + days);
-        var m = d.getMonth() + 1;
-        return d.getFullYear() + '-' + m + '-' + d.getDate();
-    };
-    //时间戳转yyyy-mm-dd
-    AppConfig.timestampToDatestring = function (timestamp) {
-        var date = new Date(timestamp);
-        var y = date.getFullYear();
-        var m = "0" + (date.getMonth() + 1);
-        var d = "0" + date.getDate();
-        return y + "-" + m.substring(m.length - 2, m.length) + "-" + d.substring(d.length - 2, d.length);
-    };
-    //时间戳转date
-    AppConfig.timestampToDate = function (timestamp) {
-        return new Date(timestamp);
-    };
-    AppConfig.isSameDay = function (date1, date2) {
-        return (date1.getFullYear() == date2.getFullYear() && date1.getMonth() == date2.getMonth()
-            && date1.getDate() == date2.getDate());
-    };
-    /**
-     * 深拷贝
-     */
-    AppConfig.deepCopy = function (originObj) {
-        return originObj ? JSON.parse(JSON.stringify(originObj)) : null;
-    };
-    //把字符串里面的数字都提取出来
-    AppConfig.getNum = function (text) {
-        return text.replace(/[^0-9]/ig, "");
-    };
-    AppConfig.prototype.getNowFormatDate = function () {
-        var date = new Date();
-        var seperator1 = "-";
-        var seperator2 = ":";
-        var month = date.getMonth() + 1;
-        var strDate = date.getDate();
-        var currentdate = date.getFullYear() + seperator1
-            + (month >= 1 && month <= 9) ? "0" : ""
-            + month + seperator1
-            + (strDate >= 1 && strDate <= 9) ? "0" : "" + strDate
-            + " " + date.getHours() + seperator2 + date.getMinutes()
-            + seperator2 + date.getSeconds();
-        return currentdate;
-    };
-    return AppConfig;
-}());
-
-//# sourceMappingURL=app.config.js.map
-
-/***/ }),
-
 /***/ 37:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -2462,7 +2461,7 @@ Object(__WEBPACK_IMPORTED_MODULE_0__angular_platform_browser_dynamic__["a" /* pl
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_25_ion_multi_picker__ = __webpack_require__(722);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_25_ion_multi_picker___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_25_ion_multi_picker__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_26__pipes_pipes_module__ = __webpack_require__(725);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_27__app_service__ = __webpack_require__(24);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_27__app_service__ = __webpack_require__(25);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_28__pages_login_login__ = __webpack_require__(144);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -2593,7 +2592,7 @@ AppModule = __decorate([
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return ContactPage; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(1);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(12);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__app_app_service__ = __webpack_require__(24);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__app_app_service__ = __webpack_require__(25);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -2658,8 +2657,8 @@ var ContactPage = ContactPage_1 = (function () {
         else {
             if (this.arrayDepartment != null) {
                 for (var i1 = 0; i1 < this.arrayDepartment.length; i1++) {
-                    var text = this.arrayDepartment[i1].text;
-                    if (text.indexOf(this.searchValue) > -1) {
+                    var text1 = this.arrayDepartment[i1].text;
+                    if (text1.indexOf(this.searchValue) > -1) {
                         this.arrayHidden[i1] = false;
                     }
                     else {
@@ -2670,8 +2669,8 @@ var ContactPage = ContactPage_1 = (function () {
             else {
                 if (this.arrayStaff != null) {
                     for (var i2 = 0; i2 < this.arrayStaff.length; i2++) {
-                        var text = this.arrayStaff[i2].name;
-                        if (text.indexOf(this.searchValue) > -1) {
+                        var text2 = this.arrayStaff[i2].name;
+                        if (text2.indexOf(this.searchValue) > -1) {
                             this.arrayHidden[i2] = false;
                         }
                         else {
@@ -2741,12 +2740,12 @@ var ContactPage = ContactPage_1 = (function () {
                     if (res.status == 200) {
                         var array = res.json();
                         if (array == null) {
-                            var alert = view.alertCtrl.create({
+                            var alert_1 = view.alertCtrl.create({
                                 title: '错误信息',
                                 subTitle: '该组织架构没有成员!',
                                 buttons: ['确定']
                             });
-                            alert.present();
+                            alert_1.present();
                         }
                         else {
                             if (array.length > 0) {
@@ -2758,12 +2757,12 @@ var ContactPage = ContactPage_1 = (function () {
                                 });
                             }
                             else {
-                                var alert = view.alertCtrl.create({
+                                var alert_2 = view.alertCtrl.create({
                                     title: '错误信息',
                                     subTitle: '该组织架构没有成员!',
                                     buttons: ['确定']
                                 });
-                                alert.present();
+                                alert_2.present();
                             }
                         }
                     }
@@ -2787,10 +2786,11 @@ ContactPage = ContactPage_1 = __decorate([
     Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Component"])({
         selector: 'page-contact',template:/*ion-inline-start:"/Users/zhaoliangchen/Desktop/qipaipm-company/src/pages/contact/contact.html"*/'<!--\n  Generated template for the ContactPage page.\n\n  See http://ionicframework.com/docs/components/#navigation for more info on\n  Ionic pages and navigation.\n-->\n<ion-header>\n  <ion-navbar>\n    <ion-title>通讯录</ion-title>\n  </ion-navbar>\n</ion-header>\n\n\n<ion-content fullscreen>\n  <!--<form (submit)="onSearchContact($event)">-->\n    <ion-searchbar\n            placeholder="输入名字搜索"\n            [(ngModel)]=searchValue\n            (ionInput)="onSearchContact($event)"\n            (ionCancel)="onSearchCancel($event)"\n            name="searchValue">\n    </ion-searchbar>\n  <!--</form>-->\n  <div class="organization">\n    <ion-label no-margin no-padding class="vertical_center text">{{organization}}</ion-label>\n  </div>\n  <ion-item tappable *ngFor="let department of arrayDepartment; let i = index"\n            (click)="goNextDepartment($event, department)"\n            [hidden]="arrayHidden[i]==true">\n    <ion-icon item-start name="appname-tree"></ion-icon>\n    <ion-label no-padding no-margin>{{department.text}}</ion-label>\n    <ion-note item-end>{{department.count+"人"}}</ion-note>\n  </ion-item>\n\n  <ion-item tappable *ngFor="let staff of arrayStaff; let i = index"\n            (click)="goNextDepartment($event, staff)"\n            [hidden]="arrayHidden[i]==true">\n    <ion-icon item-start name="appname-head"></ion-icon>\n    <ion-label no-padding no-margin>{{staff.name}}</ion-label>\n    <ion-note item-end>{{staff.telPhone}}</ion-note>\n  </ion-item>\n\n</ion-content>\n'/*ion-inline-end:"/Users/zhaoliangchen/Desktop/qipaipm-company/src/pages/contact/contact.html"*/,
     }),
-    __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["NavController"] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["NavController"]) === "function" && _a || Object, typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["NavParams"] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["NavParams"]) === "function" && _b || Object, typeof (_c = typeof __WEBPACK_IMPORTED_MODULE_2__app_app_service__["a" /* AppService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_2__app_app_service__["a" /* AppService */]) === "function" && _c || Object, typeof (_d = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["AlertController"] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["AlertController"]) === "function" && _d || Object, typeof (_e = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["Events"] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["Events"]) === "function" && _e || Object])
+    __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["NavController"], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["NavParams"], __WEBPACK_IMPORTED_MODULE_2__app_app_service__["a" /* AppService */],
+        __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["AlertController"], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["Events"]])
 ], ContactPage);
 
-var ContactPage_1, _a, _b, _c, _d, _e;
+var ContactPage_1;
 //# sourceMappingURL=contact.js.map
 
 /***/ }),
@@ -3097,13 +3097,6 @@ var MyApp = (function () {
         this.storage = storage;
         this._config = _config;
         this.keyboard = keyboard;
-        platform.ready().then(function () {
-            // Okay, so the platform is ready and our plugins are available.
-            // Here you can do any higher level native things you might need.
-            statusBar.styleDefault();
-            splashScreen.hide();
-            //(<any>window).navigator.splashscreen.hide();
-        });
         this.keyboard.hideKeyboardAccessoryBar(false);
         this.keyboard.disableScroll(true); //当输入焦点时，防止本机UIScrollView移动。
         this.storage.get('user').then(function (val) {
@@ -3119,6 +3112,13 @@ var MyApp = (function () {
             else {
                 _this.rootPage = __WEBPACK_IMPORTED_MODULE_6__pages_login_login__["a" /* LoginPage */];
             }
+        });
+        platform.ready().then(function () {
+            // Okay, so the platform is ready and our plugins are available.
+            // Here you can do any higher level native things you might need.
+            statusBar.styleDefault();
+            splashScreen.hide();
+            //(<any>window).navigator.splashscreen.hide();
         });
         // if (platform.is('ios')) {
         //   this.config = {
@@ -3258,8 +3258,8 @@ TestComponent = __decorate([
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return CalendarComponent; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(1);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_common__ = __webpack_require__(29);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__app_app_service__ = __webpack_require__(24);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__app_app_config__ = __webpack_require__(25);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__app_app_service__ = __webpack_require__(25);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__app_app_config__ = __webpack_require__(24);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_ionic_angular__ = __webpack_require__(12);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__app_app_singleton__ = __webpack_require__(37);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
@@ -4047,7 +4047,7 @@ DelayPipe = __decorate([
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return YearPipe; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(1);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__app_app_config__ = __webpack_require__(25);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__app_app_config__ = __webpack_require__(24);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -4109,7 +4109,7 @@ YearPipe = __decorate([
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return MonthPipe; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(1);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__app_app_config__ = __webpack_require__(25);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__app_app_config__ = __webpack_require__(24);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -4171,7 +4171,7 @@ MonthPipe = __decorate([
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return DayPipe; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(1);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__app_app_config__ = __webpack_require__(25);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__app_app_config__ = __webpack_require__(24);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -4236,7 +4236,7 @@ DayPipe = __decorate([
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return WeekayPipe; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(1);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__app_app_config__ = __webpack_require__(25);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__app_app_config__ = __webpack_require__(24);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -4330,7 +4330,7 @@ WeekayPipe = __decorate([
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return YearAndMonthPipe; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(1);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__app_app_config__ = __webpack_require__(25);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__app_app_config__ = __webpack_require__(24);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -4382,7 +4382,7 @@ YearAndMonthPipe = __decorate([
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return StampToDatePipe; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(1);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__app_app_config__ = __webpack_require__(25);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__app_app_config__ = __webpack_require__(24);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);

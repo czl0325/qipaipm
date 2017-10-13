@@ -76,6 +76,7 @@ export class ProjectCreatePage {
     itemName : '',              //项目的名称
     itemFounder : AppSingleton.getInstance().currentUserInfo.name,      //项目的创建人
     founderEmpNum : AppSingleton.getInstance().currentUserInfo.username,   //项目创建人工号
+    itemUrl: '',                //项目分享的网址
     itemEndLeader : '',             //项目结束负责人
     itemEndLeaderNum :'',        //项目结束负责人工号
     // empNum: '',
