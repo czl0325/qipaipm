@@ -20,6 +20,7 @@ export class ContactPage {
   arrayDepartment:any[];
   arrayStaff:any[];
   type:number;//1是新建工程 2是新建里程碑 3是新建子任务
+  arrayHidden:boolean[];
 
   constructor(public navCtrl: NavController, public navParams: NavParams, private appService: AppService,
               public alertCtrl: AlertController, public events: Events) {
@@ -27,6 +28,18 @@ export class ContactPage {
     this.arrayDepartment = this.navParams.get('department');
     this.arrayStaff = this.navParams.get('staff');
     this.type = this.navParams.get('type');
+    this.arrayHidden = [];
+    if (this.arrayDepartment != null) {
+        for (let i1=0; i1<this.arrayDepartment.length; i1++) {
+            this.arrayHidden.push(false);
+        }
+    } else {
+        if (this.arrayStaff != null) {
+            for (let i2=0; i2<this.arrayStaff.length; i2++) {
+                this.arrayHidden.push(false);
+            }
+        }
+    }
   }
 
   ionViewDidLoad() {
@@ -36,12 +49,48 @@ export class ContactPage {
           var data = res.json();
           if (data.id == null && data.children.length > 0) {
             view.arrayDepartment = data.children;
-            console.log(view.arrayDepartment);
           }
         }
       },true);
     }
   }
+
+
+    onSearchContact($event) {
+      if (this.searchValue.length == 0) {
+          for (let i=0; i<this.arrayHidden.length; i++) {
+              this.arrayHidden[i]=false;
+          }
+      } else {
+          if (this.arrayDepartment != null) {
+              for (let i1=0; i1<this.arrayDepartment.length; i1++) {
+                  var text = this.arrayDepartment[i1].text;
+                  if(text.indexOf(this.searchValue) > -1 ){
+                      this.arrayHidden[i1] = false;
+                  } else {
+                      this.arrayHidden[i1] = true;
+                  }
+              }
+          } else {
+              if (this.arrayStaff != null) {
+                  for (let i2=0; i2<this.arrayStaff.length; i2++) {
+                      var text = this.arrayStaff[i2].name;
+                      if(text.indexOf(this.searchValue) > -1 ){
+                          this.arrayHidden[i2] = false;
+                      } else {
+                          this.arrayHidden[i2] = true;
+                      }
+                  }
+              }
+          }
+      }
+    }
+
+    onSearchCancel($event) {
+        for (let i=0; i<this.arrayHidden.length; i++) {
+            this.arrayHidden[i]=false;
+        }
+    }
 
     goNextDepartment($event, value) {
       if (value.children == null) {

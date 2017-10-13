@@ -1807,6 +1807,7 @@ module.exports = webpackAsyncContext;
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__app_app_service__ = __webpack_require__(24);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__project_detail_project_detail__ = __webpack_require__(117);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__app_app_singleton__ = __webpack_require__(37);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__app_app_config__ = __webpack_require__(25);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -1816,6 +1817,7 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
+
 
 
 
@@ -1883,28 +1885,47 @@ var SearchPage = (function () {
                 view.array = [];
                 if (response.success == true) {
                     var data = response.data;
-                    for (var i = 0; i < data.length; i++) {
-                        var one = data[i];
-                        if (one.itemStartTime == null) {
-                            continue;
-                        }
-                        if (one.itemStartTime.length < 4) {
-                            continue;
-                        }
-                        var year = one.itemStartTime.substr(0, 4);
-                        var isIn = false;
-                        for (var j = 0; j < view.array.length; j++) {
-                            var d = view.array[j];
-                            if (d.year == year) {
-                                isIn = true;
-                                d.projects.push(one);
-                                break;
+                    if (data.length > 0) {
+                        for (var i = 0; i < data.length; i++) {
+                            var one = data[i];
+                            if (one.itemStartTime == null) {
+                                continue;
+                            }
+                            var startTime = one.itemStartTime;
+                            if (typeof (one.itemStartTime) == 'number') {
+                                startTime = __WEBPACK_IMPORTED_MODULE_5__app_app_config__["a" /* AppConfig */].timestampToDatestring(one.itemStartTime);
+                            }
+                            var year = startTime.substr(0, 4);
+                            var isIn = false;
+                            for (var j = 0; j < view.array.length; j++) {
+                                var d = view.array[j];
+                                if (d.year == year) {
+                                    isIn = true;
+                                    d.projects.push(one);
+                                    break;
+                                }
+                            }
+                            if (isIn == false) {
+                                var dd = { year: year, projects: [one] };
+                                view.array.push(dd);
                             }
                         }
-                        if (isIn == false) {
-                            var dd = { year: year, projects: [one] };
-                            view.array.push(dd);
+                        if (view.array.length < 1) {
+                            var toast = view.toastCtrl.create({
+                                message: "没有搜索到相关项目!",
+                                duration: 2000,
+                                dismissOnPageChange: true,
+                            });
+                            toast.present();
                         }
+                    }
+                    else {
+                        var toast = view.toastCtrl.create({
+                            message: "没有搜索到相关项目!",
+                            duration: 2000,
+                            dismissOnPageChange: true,
+                        });
+                        toast.present();
                     }
                 }
                 else {
@@ -2602,6 +2623,19 @@ var ContactPage = ContactPage_1 = (function () {
         this.arrayDepartment = this.navParams.get('department');
         this.arrayStaff = this.navParams.get('staff');
         this.type = this.navParams.get('type');
+        this.arrayHidden = [];
+        if (this.arrayDepartment != null) {
+            for (var i1 = 0; i1 < this.arrayDepartment.length; i1++) {
+                this.arrayHidden.push(false);
+            }
+        }
+        else {
+            if (this.arrayStaff != null) {
+                for (var i2 = 0; i2 < this.arrayStaff.length; i2++) {
+                    this.arrayHidden.push(false);
+                }
+            }
+        }
     }
     ContactPage.prototype.ionViewDidLoad = function () {
         if (typeof (this.arrayDepartment) == 'undefined') {
@@ -2610,10 +2644,47 @@ var ContactPage = ContactPage_1 = (function () {
                     var data = res.json();
                     if (data.id == null && data.children.length > 0) {
                         view.arrayDepartment = data.children;
-                        console.log(view.arrayDepartment);
                     }
                 }
             }, true);
+        }
+    };
+    ContactPage.prototype.onSearchContact = function ($event) {
+        if (this.searchValue.length == 0) {
+            for (var i = 0; i < this.arrayHidden.length; i++) {
+                this.arrayHidden[i] = false;
+            }
+        }
+        else {
+            if (this.arrayDepartment != null) {
+                for (var i1 = 0; i1 < this.arrayDepartment.length; i1++) {
+                    var text = this.arrayDepartment[i1].text;
+                    if (text.indexOf(this.searchValue) > -1) {
+                        this.arrayHidden[i1] = false;
+                    }
+                    else {
+                        this.arrayHidden[i1] = true;
+                    }
+                }
+            }
+            else {
+                if (this.arrayStaff != null) {
+                    for (var i2 = 0; i2 < this.arrayStaff.length; i2++) {
+                        var text = this.arrayStaff[i2].name;
+                        if (text.indexOf(this.searchValue) > -1) {
+                            this.arrayHidden[i2] = false;
+                        }
+                        else {
+                            this.arrayHidden[i2] = true;
+                        }
+                    }
+                }
+            }
+        }
+    };
+    ContactPage.prototype.onSearchCancel = function ($event) {
+        for (var i = 0; i < this.arrayHidden.length; i++) {
+            this.arrayHidden[i] = false;
         }
     };
     ContactPage.prototype.goNextDepartment = function ($event, value) {
@@ -2670,12 +2741,12 @@ var ContactPage = ContactPage_1 = (function () {
                     if (res.status == 200) {
                         var array = res.json();
                         if (array == null) {
-                            var alert_1 = view.alertCtrl.create({
+                            var alert = view.alertCtrl.create({
                                 title: '错误信息',
                                 subTitle: '该组织架构没有成员!',
                                 buttons: ['确定']
                             });
-                            alert_1.present();
+                            alert.present();
                         }
                         else {
                             if (array.length > 0) {
@@ -2687,12 +2758,12 @@ var ContactPage = ContactPage_1 = (function () {
                                 });
                             }
                             else {
-                                var alert_2 = view.alertCtrl.create({
+                                var alert = view.alertCtrl.create({
                                     title: '错误信息',
                                     subTitle: '该组织架构没有成员!',
                                     buttons: ['确定']
                                 });
-                                alert_2.present();
+                                alert.present();
                             }
                         }
                     }
@@ -2714,13 +2785,12 @@ var ContactPage = ContactPage_1 = (function () {
 ContactPage = ContactPage_1 = __decorate([
     Object(__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["IonicPage"])(),
     Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Component"])({
-        selector: 'page-contact',template:/*ion-inline-start:"/Users/zhaoliangchen/Desktop/qipaipm-company/src/pages/contact/contact.html"*/'<!--\n  Generated template for the ContactPage page.\n\n  See http://ionicframework.com/docs/components/#navigation for more info on\n  Ionic pages and navigation.\n-->\n<ion-header>\n  <ion-navbar>\n    <ion-title>通讯录</ion-title>\n  </ion-navbar>\n</ion-header>\n\n\n<ion-content fullscreen>\n  <form (submit)="onSearchContact($event)">\n    <ion-searchbar\n            placeholder="输入名字搜索" [(ngModel)]=searchValue\n            name="searchValue">\n    </ion-searchbar>\n  </form>\n  <div class="organization">\n    <ion-label no-margin no-padding class="vertical_center text">{{organization}}</ion-label>\n  </div>\n  <ion-item tappable *ngFor="let department of arrayDepartment" (click)="goNextDepartment($event, department)">\n    <ion-icon item-start name="appname-tree"></ion-icon>\n    <ion-label no-padding no-margin>{{department.text}}</ion-label>\n    <ion-note item-end>{{department.count+"人"}}</ion-note>\n  </ion-item>\n\n  <ion-item tappable *ngFor="let staff of arrayStaff" (click)="goNextDepartment($event, staff)">\n    <ion-icon item-start name="appname-head"></ion-icon>\n    <ion-label no-padding no-margin>{{staff.name}}</ion-label>\n    <ion-note item-end>{{staff.telPhone}}</ion-note>\n  </ion-item>\n\n</ion-content>\n'/*ion-inline-end:"/Users/zhaoliangchen/Desktop/qipaipm-company/src/pages/contact/contact.html"*/,
+        selector: 'page-contact',template:/*ion-inline-start:"/Users/zhaoliangchen/Desktop/qipaipm-company/src/pages/contact/contact.html"*/'<!--\n  Generated template for the ContactPage page.\n\n  See http://ionicframework.com/docs/components/#navigation for more info on\n  Ionic pages and navigation.\n-->\n<ion-header>\n  <ion-navbar>\n    <ion-title>通讯录</ion-title>\n  </ion-navbar>\n</ion-header>\n\n\n<ion-content fullscreen>\n  <!--<form (submit)="onSearchContact($event)">-->\n    <ion-searchbar\n            placeholder="输入名字搜索"\n            [(ngModel)]=searchValue\n            (ionInput)="onSearchContact($event)"\n            (ionCancel)="onSearchCancel($event)"\n            name="searchValue">\n    </ion-searchbar>\n  <!--</form>-->\n  <div class="organization">\n    <ion-label no-margin no-padding class="vertical_center text">{{organization}}</ion-label>\n  </div>\n  <ion-item tappable *ngFor="let department of arrayDepartment; let i = index"\n            (click)="goNextDepartment($event, department)"\n            [hidden]="arrayHidden[i]==true">\n    <ion-icon item-start name="appname-tree"></ion-icon>\n    <ion-label no-padding no-margin>{{department.text}}</ion-label>\n    <ion-note item-end>{{department.count+"人"}}</ion-note>\n  </ion-item>\n\n  <ion-item tappable *ngFor="let staff of arrayStaff; let i = index"\n            (click)="goNextDepartment($event, staff)"\n            [hidden]="arrayHidden[i]==true">\n    <ion-icon item-start name="appname-head"></ion-icon>\n    <ion-label no-padding no-margin>{{staff.name}}</ion-label>\n    <ion-note item-end>{{staff.telPhone}}</ion-note>\n  </ion-item>\n\n</ion-content>\n'/*ion-inline-end:"/Users/zhaoliangchen/Desktop/qipaipm-company/src/pages/contact/contact.html"*/,
     }),
-    __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["NavController"], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["NavParams"], __WEBPACK_IMPORTED_MODULE_2__app_app_service__["a" /* AppService */],
-        __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["AlertController"], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["Events"]])
+    __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["NavController"] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["NavController"]) === "function" && _a || Object, typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["NavParams"] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["NavParams"]) === "function" && _b || Object, typeof (_c = typeof __WEBPACK_IMPORTED_MODULE_2__app_app_service__["a" /* AppService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_2__app_app_service__["a" /* AppService */]) === "function" && _c || Object, typeof (_d = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["AlertController"] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["AlertController"]) === "function" && _d || Object, typeof (_e = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["Events"] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["Events"]) === "function" && _e || Object])
 ], ContactPage);
 
-var ContactPage_1;
+var ContactPage_1, _a, _b, _c, _d, _e;
 //# sourceMappingURL=contact.js.map
 
 /***/ }),

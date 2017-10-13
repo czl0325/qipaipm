@@ -12,22 +12,29 @@
 
 
 <ion-content fullscreen>
-  <form (submit)="onSearchContact($event)">
+  <!--<form (submit)="onSearchContact($event)">-->
     <ion-searchbar
-            placeholder="输入名字搜索" [(ngModel)]=searchValue
+            placeholder="输入名字搜索"
+            [(ngModel)]=searchValue
+            (ionInput)="onSearchContact($event)"
+            (ionCancel)="onSearchCancel($event)"
             name="searchValue">
     </ion-searchbar>
-  </form>
+  <!--</form>-->
   <div class="organization">
     <ion-label no-margin no-padding class="vertical_center text">{{organization}}</ion-label>
   </div>
-  <ion-item tappable *ngFor="let department of arrayDepartment" (click)="goNextDepartment($event, department)">
+  <ion-item tappable *ngFor="let department of arrayDepartment; let i = index"
+            (click)="goNextDepartment($event, department)"
+            [hidden]="arrayHidden[i]==true">
     <ion-icon item-start name="appname-tree"></ion-icon>
     <ion-label no-padding no-margin>{{department.text}}</ion-label>
     <ion-note item-end>{{department.count+"人"}}</ion-note>
   </ion-item>
 
-  <ion-item tappable *ngFor="let staff of arrayStaff" (click)="goNextDepartment($event, staff)">
+  <ion-item tappable *ngFor="let staff of arrayStaff; let i = index"
+            (click)="goNextDepartment($event, staff)"
+            [hidden]="arrayHidden[i]==true">
     <ion-icon item-start name="appname-head"></ion-icon>
     <ion-label no-padding no-margin>{{staff.name}}</ion-label>
     <ion-note item-end>{{staff.telPhone}}</ion-note>
