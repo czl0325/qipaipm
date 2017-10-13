@@ -11,6 +11,7 @@ import { AppConfig } from "../../app/app.config";
 import { DatePipe } from "@angular/common";
 import { AppSingleton } from "../../app/app.singleton";
 import { SocialSharing } from '@ionic-native/social-sharing';
+import { ProjectEndPage } from "../project-end/project-end";
 
 /**
  * Generated class for the ProjectDetailPage page.
@@ -177,17 +178,20 @@ export class ProjectDetailPage {
         prompt.present();
     });
     this.events.subscribe('onEndProject',()=>{
-       this.project.itemIsEnd = true;
-       this.project.itemState = '07010040';
-        this.appService.httpPost("item/createItem", this.project, this, function (view ,res){
-            //var data = res.json();
-            view.events.publish('homeProjectReload');
-            let toast = view.toastCtrl.create({
-                message: '项目已结束!',
-                duration: 3000
-            });
-            toast.present();
-        } ,true);
+        this.navCtrl.push(ProjectEndPage, {
+           project: this.project,
+        });
+       // this.project.itemIsEnd = true;
+       // this.project.itemState = '07010040';
+       //  this.appService.httpPost("item/createItem", this.project, this, function (view ,res){
+       //      //var data = res.json();
+       //      view.events.publish('homeProjectReload');
+       //      let toast = view.toastCtrl.create({
+       //          message: '项目已结束!',
+       //          duration: 3000
+       //      });
+       //      toast.present();
+       //  } ,true);
     });
     this.events.subscribe('onDelayProject',()=>{
         var milestone = {

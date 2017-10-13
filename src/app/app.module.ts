@@ -24,6 +24,7 @@ import { SearchPage } from "../pages/search/search";
 import { ContactPage } from "../pages/contact/contact";
 import { ForgetPage } from "../pages/forget/forget";
 import { NewpwPage } from "../pages/newpw/newpw";
+import { ProjectEndPage } from "../pages/project-end/project-end";
 
 //组件类
 import { ComponentsModule } from "../components/components.module";
@@ -50,6 +51,7 @@ import {LoginPage} from "../pages/login/login";
     LoginPage,
     ForgetPage,
     NewpwPage,
+    ProjectEndPage,
 
     PopoverPage,
   ],
@@ -86,6 +88,7 @@ import {LoginPage} from "../pages/login/login";
     LoginPage,
     ForgetPage,
     NewpwPage,
+    ProjectEndPage,
 
     PopoverPage,
   ],
