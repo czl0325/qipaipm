@@ -227,6 +227,20 @@ export class ProjectCreatePage {
     });
   }
 
+    onClickMilestone($event, mile) {
+      if (this.type == 1) {
+          return;
+      }
+        this.navCtrl.push(MilestoneDetailPage, {
+            milestone : mile,
+            mileType : 1,
+            isExpand : this.isExpand,
+            project : this.project,
+            callback : this.milestoneCallback,
+            type : 2,
+        });
+    }
+
   onClickRemoveMilestone($event, mile) {
     if (this.type == 1) {
       this.deleteOneMile(mile)
@@ -338,7 +352,7 @@ export class ProjectCreatePage {
         var isIn = false;
         for (let i=0; i<this.project.milestoneVo1.length; i++) {
           var tempMile = this.project.milestoneVo1[i];
-          if (tempMile.id == milestone.id) {
+          if (tempMile.id == milestone.id && tempMile.id != '') {
             isIn = true;
             this.project.milestoneVo1.splice(i, 1, milestone);
             break;

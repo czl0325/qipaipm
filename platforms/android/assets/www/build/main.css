@@ -27783,6 +27783,7 @@ page-project-detail .mile-bottom .text-wrap {
 page-project-detail .mile-bottom .text-wrap .text-left {
   margin-left: 5px;
   min-width: 90px;
+  color: white;
 }
 
 page-project-detail .mile-bottom .text-wrap .text-right {
@@ -27792,6 +27793,7 @@ page-project-detail .mile-bottom .text-wrap .text-right {
   flex-grow: 1;
   float: right;
   margin-right: 5px;
+  color: white;
 }
 
 page-project-detail .share-css {

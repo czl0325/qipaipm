@@ -1,5 +1,8 @@
 import { Component, ViewChild, ElementRef } from '@angular/core';
-import { NavController, NavParams, PopoverController, ViewController, Events, ToastController } from 'ionic-angular';
+import {
+    NavController, NavParams, PopoverController, ViewController, Events, ToastController,
+    AlertController
+} from 'ionic-angular';
 import { SubtaskPage } from "../subtask/subtask";
 import { MilestoneDetailPage } from "../milestone-detail/milestone-detail";
 import { ProjectCreatePage } from "../project-create/project-create";
@@ -98,7 +101,8 @@ export class ProjectDetailPage {
   isExpand;
 
   constructor(public navCtrl: NavController, private navParams: NavParams, private popoverCtrl: PopoverController,
-              public events: Events, public appService: AppService, public toastCtrl: ToastController, private socialSharing: SocialSharing) {
+              public events: Events, public appService: AppService, public toastCtrl: ToastController,
+              private socialSharing: SocialSharing, private alertCtrl: AlertController) {
     this.project = this.navParams.get('project');
     this.isExpand = [];
     this.reloadArray();
@@ -116,7 +120,7 @@ export class ProjectDetailPage {
       //     shareView.style.bottom = 0+'px';
       //   }
       // }, 16);
-        this.socialSharing.share(this.project.itemName,"柒牌项目管理",null,this.project.itemUrl);
+        this.socialSharing.share(this.project.itemName,"柒牌项目管理",null,"https://www.baidu.com");
     });
     this.events.subscribe('onPushProjectDetail',()=>{
       this.navCtrl.push(ProjectCreatePage, {
@@ -140,19 +144,37 @@ export class ProjectDetailPage {
       }
     });
     this.events.subscribe('onDeleteProject',()=> {
-        this.appService.httpDelete("item/delete",{"ids":[this.project.id]}, this, function (view, res) {
-            if (res.status == 200) {
-                view.events.publish('homeProjectReload');
-                view.navCtrl.pop();
-            } else {
-                var data = res.json()._body.msg;
-                let toast = view.toastCtrl.create({
-                    message: data.msg,
-                    duration: 3000
-                });
-                toast.present();
-            }
-        },true);
+        let prompt = this.alertCtrl.create({
+            title: '提示',
+            message: "确定删除项目?",
+            buttons: [
+                {
+                    text: '确定',
+                    handler: data => {
+                        this.appService.httpDelete("item/delete",{"ids":[this.project.id]}, this, function (view, res) {
+                            if (res.status == 200) {
+                                view.events.publish('homeProjectReload');
+                                view.navCtrl.pop();
+                            } else {
+                                var data = res.json()._body.msg;
+                                let toast = view.toastCtrl.create({
+                                    message: data.msg,
+                                    duration: 3000
+                                });
+                                toast.present();
+                            }
+                        },true);
+                    }
+                },
+                {
+                    text: '取消',
+                    handler: data => {
+
+                    }
+                }
+            ]
+        });
+        prompt.present();
     });
     this.events.subscribe('onEndProject',()=>{
        this.project.itemIsEnd = true;

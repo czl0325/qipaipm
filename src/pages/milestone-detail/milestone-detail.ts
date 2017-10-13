@@ -264,7 +264,7 @@ export class MilestoneDetailPage {
                 var isIn = false;
                 for (let i=0; i<this.tempMilestone.children.length; i++) {
                     var tempSubtask = this.tempMilestone.children[i];
-                    if (tempSubtask.id == subtask.id) {
+                    if (tempSubtask.id == subtask.id && subtask.id != '') {
                         isIn = true;
                         this.tempMilestone.children.splice(i, 1, subtask);
                         this.cd.detectChanges();

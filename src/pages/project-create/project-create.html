@@ -55,7 +55,7 @@
       </ion-item>
     </ion-list>
 
-    <div style="border-bottom: solid 10px #f5f6f7;" *ngFor="let mile of project.milestoneVo1">
+    <div style="border-bottom: solid 10px #f5f6f7;" *ngFor="let mile of project.milestoneVo1" >
       <div style="height: 30px; border-bottom: solid 1px #ececec; ">
         <div style="width: 5px; height: 30px; background-color: orange; float: left;"></div>
         <ion-label no-margin no-padding style="line-height: 30px; margin-left: 10px; float: left;">{{mile.milestoneName}}</ion-label>
@@ -63,23 +63,24 @@
           <ion-icon name="close" style="position: absolute; top: 50%; right: 0px; -webkit-transform: translateY(-50%); transform: translateY(-50%); margin-right: 10px; " (click)="onClickRemoveMilestone($event, mile)"></ion-icon>
         </div>
       </div>
-      <ion-list no-lines no-margin no-padding>
+      <ion-list no-lines no-margin no-padding (click)="onClickMilestone($event, mile)">
         <ion-item style="border-bottom: solid 1px #ececec">
           <ion-icon item-start name="appname-admin"></ion-icon>
           <ion-label>负责人</ion-label>
-          <ion-input item-end text-right [(ngModel)]="mile.itemEndLeader"></ion-input>
+          <ion-input item-end text-right [(ngModel)]="mile.itemEndLeader" [disabled]="type==2"></ion-input>
         </ion-item>
         <ion-item style="border-bottom: solid 1px #ececec">
           <ion-icon item-start name="appname-time"></ion-icon>
           <ion-label>交付时间</ion-label>
           <ion-datetime item-end displayFormat="YYYY年MM月DD日" max="2030" min={{minTime}} cancelText="取消" doneText="确认"
                         ngModel="{{mile.deliveryTime | stampToDate}}"
-                        (ngModelChange)="mile.deliveryTime = $event"></ion-datetime>
+                        (ngModelChange)="mile.deliveryTime = $event"
+                        [disabled]="type==2"></ion-datetime>
         </ion-item>
         <ion-item style="border-bottom: solid 1px #ececec">
           <ion-icon item-start name="appname-plan"></ion-icon>
           <ion-label>项目进度</ion-label>
-          <ion-select interface="action-sheet" [(ngModel)]="mile.itemProgress" cancelText="取消" doneText="确认">
+          <ion-select interface="action-sheet" [(ngModel)]="mile.itemProgress" cancelText="取消" doneText="确认" [disabled]="type==2">
             <ion-option value="10%">10%</ion-option>
             <ion-option value="20%">20%</ion-option>
             <ion-option value="30%">30%</ion-option>
@@ -95,7 +96,7 @@
         <ion-item>
           <ion-icon item-start name="appname-result"></ion-icon>
           <ion-label>交付成果</ion-label>
-          <ion-textarea item-end text-right [(ngModel)]="mile.deliveryResult"></ion-textarea>
+          <ion-textarea item-end text-right [(ngModel)]="mile.deliveryResult" [disabled]="type==2"></ion-textarea>
         </ion-item>
       </ion-list>
     </div>
