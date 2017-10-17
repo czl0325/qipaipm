@@ -41,15 +41,14 @@ export class LoginPage {
     this.appService.httpGet("http://192.168.10.118:8888/uc/user/login",
         {"telPhone":value.mobile, "password":value.password},this,function (view, res) {
         var data = res.json();
-        console.log(data);
         if (data != null) {
             view.storage.ready().then(()=> {
                 view.storage.set('user', data);
                 AppSingleton.getInstance().currentUserInfo = data;
             });
             view.navCtrl.push(HomePage).then(()=>{
-                //const index = view.navCtrl.getActive().index;
-                //view.navCtrl.remove(0, index);
+                const index = view.navCtrl.getActive().index;
+                view.navCtrl.remove(0, index);
             });
         } else {
             let toast = view.toastCtrl.create({

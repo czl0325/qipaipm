@@ -1,5 +1,5 @@
 import { Component, ChangeDetectorRef, ViewChild } from '@angular/core';
-import { NavController, NavParams, Events, Content } from 'ionic-angular';
+import {NavController, NavParams, Events, Content, AlertController} from 'ionic-angular';
 import { SubtaskPage } from "../subtask/subtask";
 import { DatePipe } from "@angular/common";
 import { AppService } from "../../app/app.service";
@@ -65,7 +65,9 @@ export class MilestoneDetailPage {
   mileType: number;
   minTime: string = new DatePipe('en-US').transform(new Date(), 'yyyy-MM-dd');
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, private appService: AppService, private cd: ChangeDetectorRef, public events: Events) {
+  constructor(public navCtrl: NavController, public navParams: NavParams,
+              private appService: AppService, private cd: ChangeDetectorRef,
+              private events: Events, private alertCtrl: AlertController) {
     var data = this.navParams.get('milestone');
     this.project = this.navParams.get('project');
     this.callback = this.navParams.get('callback');
@@ -127,25 +129,24 @@ export class MilestoneDetailPage {
   }
 
   onSaveMilestone($event) {
-    // if (this.tempMilestone.leader.length < 1) {
-    //   let alert = this.alertCtrl.create({
-    //     title: '错误信息',
-    //     subTitle: '里程碑负责人为必填项!',
-    //     buttons: ['确定']
-    //   });
-    //   alert.present();
-    //   return;
-    // }
-    // if (this.tempMilestone.deliveryResult.length < 1) {
-    //   let alert = this.alertCtrl.create({
-    //     title: '错误信息',
-    //     subTitle: '里程碑交付成果为必填项!',
-    //     buttons: ['确定']
-    //   });
-    //   alert.present();
-    //   return;
-    // }
-
+    if (this.tempMilestone.itemEndLeader.length < 1) {
+      let alert = this.alertCtrl.create({
+        title: '错误信息',
+        subTitle: '里程碑负责人为必填项!',
+        buttons: ['确定']
+      });
+      alert.present();
+      return;
+    }
+    if (this.tempMilestone.deliveryResult.length < 1) {
+      let alert = this.alertCtrl.create({
+        title: '错误信息',
+        subTitle: '里程碑交付成果为必填项!',
+        buttons: ['确定']
+      });
+      alert.present();
+      return;
+    }
 
     var param = AppConfig.deepCopy(this.tempMilestone);
     if (this.mileType == 1) {

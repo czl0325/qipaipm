@@ -1,3 +1,19 @@
 page-project-end {
-
+  .first_title {
+    left: 10px;
+    width: 100px;
+    display: inline-block;
+  }
+  .check {
+    display: inline-block;
+    left: 120px;
+    width: 15px;
+    height: 15px;
+  }
+  .reason {
+    flex-grow: 1;
+    display: inline-block;
+    left: 150px;
+    width: 100px;
+  }
 }

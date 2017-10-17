@@ -90,6 +90,7 @@ export class ProjectCreatePage {
     itemLevel : '',             //项目级别
     itemStartResult : '',      //项目启动的交付成果
     itemEndResult : '',        //项目结束的交付成果
+    multipleItemEndWhy : '',    //项目结束原因
     children : [],              //总的数组
     milestoneVo1 : [],              //项目里程碑
     milestoneVo2: [],         //项目延期里程碑
@@ -130,18 +131,18 @@ export class ProjectCreatePage {
   }
 
   onPublish() {
-    // if (this.project.itemName.length < 1) {
-    //   let alert = this.alertCtrl.create({
-    //     title: '错误信息',
-    //     subTitle: '请先输入项目名称!',
-    //     buttons: ['确定']
-    //   });
-    //   alert.present();
-    //   return;
-    // }
+    if (this.project.itemName.length < 1) {
+      let alert = this.alertCtrl.create({
+        title: '错误信息',
+        subTitle: '请先输入项目名称!',
+        buttons: ['确定']
+      });
+      alert.present();
+      return;
+    }
     // if (this.project.children.length > 0) {
     //   var lastMile = this.project.children[this.project.children.length-1];
-    //   if (lastMile.leader.length < 1 || lastMile.deliveryResult.length < 1 || lastMile.itemProgress.length < 1 || lastMile.planTime.length < 1) {
+    //   if (lastMile.itemEndLeader.length < 1 || lastMile.deliveryResult.length < 1 || lastMile.itemProgress.length < 1 || lastMile.planTime.length < 1) {
     //     let alert = this.alertCtrl.create({
     //       title: '错误信息',
     //       subTitle: '请先完善里程碑!',
@@ -157,9 +158,27 @@ export class ProjectCreatePage {
         subTitle: '请选择项目紧急程度!',
         buttons: ['确定']
       });
-    alert.present();
-    return;
-  }
+        alert.present();
+        return;
+    }
+      if (this.project.itemEndLeader.length < 1) {
+          let alert = this.alertCtrl.create({
+              title: '错误信息',
+              subTitle: '请选择项目结束负责人!',
+              buttons: ['确定']
+          });
+          alert.present();
+          return;
+      }
+      if (this.project.itemEndResult.length < 1) {
+          let alert = this.alertCtrl.create({
+              title: '错误信息',
+              subTitle: '请填写项目结束交付成果!',
+              buttons: ['确定']
+          });
+          alert.present();
+          return;
+      }
     this.appService.httpPost("item/createItem", this.project, this, function (view ,res){
       // var data = res.json().data;
       view.events.publish('homeProjectReload');
@@ -338,10 +357,10 @@ export class ProjectCreatePage {
                     this.isExpand.push(false);
                 }
             }
-            for (let i=0; i<this.project.milestoneVo1.length; i++) {
-              var mm = this.project.milestoneVo1[i];
-              mm.milestoneName = '里程碑'+(i+1);
-            }
+        }
+        for (let i=0; i<this.project.milestoneVo1.length; i++) {
+            var mm = this.project.milestoneVo1[i];
+            mm.milestoneName = '里程碑'+(i+1);
         }
     }
 

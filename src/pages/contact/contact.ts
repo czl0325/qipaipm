@@ -20,7 +20,8 @@ export class ContactPage {
   arrayDepartment:any[];
   arrayStaff:any[];
   type:number;//1是新建工程 2是新建里程碑 3是新建子任务
-  arrayHidden:boolean[];
+  hideDepartment:boolean = false;
+  tempStaff:any[];
 
   constructor(public navCtrl: NavController, public navParams: NavParams, private appService: AppService,
               public alertCtrl: AlertController, public events: Events) {
@@ -28,18 +29,8 @@ export class ContactPage {
     this.arrayDepartment = this.navParams.get('department');
     this.arrayStaff = this.navParams.get('staff');
     this.type = this.navParams.get('type');
-    this.arrayHidden = [];
-    if (this.arrayDepartment != null) {
-        for (let i1=0; i1<this.arrayDepartment.length; i1++) {
-            this.arrayHidden.push(false);
-        }
-    } else {
-        if (this.arrayStaff != null) {
-            for (let i2=0; i2<this.arrayStaff.length; i2++) {
-                this.arrayHidden.push(false);
-            }
-        }
-    }
+    this.tempStaff = [];
+    this.tempStaff = this.tempStaff.concat(this.arrayStaff);
   }
 
   ionViewDidLoad() {
@@ -58,37 +49,67 @@ export class ContactPage {
 
     onSearchContact($event) {
       if (this.searchValue.length == 0) {
-          for (let i=0; i<this.arrayHidden.length; i++) {
-              this.arrayHidden[i]=false;
+          if (this.arrayDepartment != null) {
+              this.hideDepartment = false;
+          } else if (this.arrayStaff != null) {
+
           }
       } else {
           if (this.arrayDepartment != null) {
-              for (let i1=0; i1<this.arrayDepartment.length; i1++) {
-                  var text1 = this.arrayDepartment[i1].text;
-                  if(text1.indexOf(this.searchValue) > -1 ){
-                      this.arrayHidden[i1] = false;
-                  } else {
-                      this.arrayHidden[i1] = true;
-                  }
-              }
-          } else {
-              if (this.arrayStaff != null) {
-                  for (let i2=0; i2<this.arrayStaff.length; i2++) {
-                      var text2 = this.arrayStaff[i2].name;
-                      if(text2.indexOf(this.searchValue) > -1 ){
-                          this.arrayHidden[i2] = false;
-                      } else {
-                          this.arrayHidden[i2] = true;
-                      }
-                  }
-              }
+              this.hideDepartment = true;
+          } else if (this.arrayStaff != null) {
+              this.tempStaff = [];
+              this.tempStaff = this.tempStaff.concat(this.arrayStaff);
           }
+          this.appService.httpGet("http://192.168.10.118:8888/uc/group/searchUsersByGroupAndKey",{"sKeyName":this.searchValue},this, function (view, res) {
+              if (res.status == 200) {
+                  if (res.json() != null) {
+                      var array = res.json();
+                      view.arrayStaff = [];
+                      if (array != null && array.length > 0) {
+                          view.arrayStaff = view.arrayStaff.concat(array);
+                      } else {
+                          let alert = view.alertCtrl.create({
+                              title: '错误信息',
+                              subTitle: '未搜索到相关人员!',
+                              buttons: ['确定']
+                          });
+                          alert.present();
+                      }
+                  } else {
+                      let alert = view.alertCtrl.create({
+                          title: '错误信息',
+                          subTitle: '未搜索到相关人员!',
+                          buttons: ['确定']
+                      });
+                      alert.present();
+                  }
+              }
+          },true);
       }
     }
 
+    onSearchInput($event) {
+        if (this.searchValue.length == 0) {
+            if (this.arrayDepartment != null) {
+                this.hideDepartment = false;
+                this.arrayStaff = [];
+                this.tempStaff = [];
+            } else if (this.arrayStaff != null) {
+                this.arrayStaff = [];
+                this.arrayStaff = this.arrayStaff.concat(this.tempStaff);
+                this.tempStaff = [];
+            }
+        }
+    }
+
     onSearchCancel($event) {
-        for (let i=0; i<this.arrayHidden.length; i++) {
-            this.arrayHidden[i]=false;
+        if (this.arrayDepartment != null) {
+            this.hideDepartment = false;
+        } else if (this.arrayStaff != null) {
+            this.arrayStaff = [];
+            this.arrayStaff = this.arrayStaff.concat(this.tempStaff);
+            this.tempStaff = [];
         }
     }
 

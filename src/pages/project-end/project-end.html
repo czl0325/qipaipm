@@ -8,12 +8,12 @@
 
   <ion-navbar>
     <ion-title>结束项目</ion-title>
+    <ion-buttons end >
+      <button ion-button (click)="onEndSave($event)" color="danger">
+        保存
+      </button>
+    </ion-buttons>
   </ion-navbar>
-  <ion-buttons end >
-    <button ion-button (click)="onEndSave($event)" color="danger">
-      保存
-    </button>
-  </ion-buttons>
 </ion-header>
 
 
@@ -25,4 +25,42 @@
       <ion-label right text-right>{{this.project.itemName}}</ion-label>
     </ion-item>
   </ion-list>
+
+  <div style="border-top: solid 10px #ececec;border-bottom: solid 1px #ececec; position: relative; height: 60px; display: flex">
+    <div class="first_title vertical_center">结束原因</div>
+    <ion-checkbox
+            ngModel="{{arrayCheckboxs[0]}}"
+            (ngModelChange)="onClickCheck($event, 0)"
+            class="check vertical_center">
+    </ion-checkbox>
+    <ion-label no-margin no-padding class="reason vertical_center">业务改变</ion-label>
+  </div>
+  <div style="border-bottom: solid 1px #ececec; position: relative; height: 50px; display: flex">
+    <div class="first_title vertical_center"></div>
+    <ion-checkbox
+            ngModel="{{arrayCheckboxs[1]}}"
+            (ngModelChange)="onClickCheck($event, 1)"
+            class="check vertical_center">
+    </ion-checkbox>
+    <ion-label no-margin no-padding class="reason vertical_center">资源不够</ion-label>
+  </div>
+  <div style="border-bottom: solid 1px #ececec; position: relative; height: 50px; display: flex">
+    <div class="first_title vertical_center"></div>
+    <ion-checkbox
+            ngModel="{{arrayCheckboxs[2]}}"
+            (ngModelChange)="onClickCheck($event, 2)"
+            class="check vertical_center">
+    </ion-checkbox>
+    <ion-label no-margin no-padding class="reason vertical_center">合作方退出</ion-label>
+  </div>
+  <div style="border-bottom: solid 1px #ececec; position: relative; height: 50px; display: flex">
+    <div class="first_title vertical_center"></div>
+    <ion-checkbox
+            ngModel="{{arrayCheckboxs[3]}}"
+            (ngModelChange)="onClickCheck($event, 3)"
+            class="check vertical_center">
+    </ion-checkbox>
+    <ion-input no-margin no-padding placeholder="其他原因" class="reason vertical_center"
+               [disabled]="arrayCheckboxs[3]==false" [(ngModel)]="otherReason"></ion-input>
+  </div>
 </ion-content>

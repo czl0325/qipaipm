@@ -121,7 +121,13 @@ export class ProjectDetailPage {
       //     shareView.style.bottom = 0+'px';
       //   }
       // }, 16);
-        this.socialSharing.share(this.project.itemName,"柒牌项目管理",null,"https://www.baidu.com");
+        var dateString = '';
+        if (typeof (this.project.itemStartTime) == "number"){
+            dateString = AppConfig.timestampToDatestring(this.project.itemStartTime);
+        } else if (typeof (this.project.itemStartTime) == "string") {
+            dateString = this.project.itemStartTime;
+        }
+        this.socialSharing.share("您有一个项目任务"+this.project.itemName+"于"+dateString+"启动，请前往柒牌项目管理应用查看详情","柒牌项目管理",null,null);
     });
     this.events.subscribe('onPushProjectDetail',()=>{
       this.navCtrl.push(ProjectCreatePage, {
