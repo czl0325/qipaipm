@@ -6,7 +6,6 @@ import { AppService } from "../../app/app.service";
 import { ContactPage } from "../contact/contact";
 import { AppConfig } from "../../app/app.config";
 import { AppSingleton} from "../../app/app.singleton";
-import { Keyboard } from "@ionic-native/keyboard";
 
 /**
  * Generated class for the ProjectCreatePage page.
@@ -105,11 +104,11 @@ export class ProjectCreatePage {
     itemIsEnd : false,          //是否结束项目
   };
   minTime: string = new DatePipe('en-US').transform(new Date(), 'yyyy-MM-dd');
+  changeIndex: number = -1;
 
   constructor(public navCtrl: NavController, public navParams: NavParams,
               public appService : AppService, public toastCtrl: ToastController,
-              public events: Events, private alertCtrl: AlertController,
-              private Keyboard: Keyboard) {
+              public events: Events, private alertCtrl: AlertController) {
     var data = this.navParams.get('project');
     this.type = this.navParams.get('type');
     this.isExpand = this.navParams.get('isExpand');
@@ -173,7 +172,7 @@ export class ProjectCreatePage {
       // var data = res.json().data;
       view.events.publish('homeProjectReload');
       let toast = view.toastCtrl.create({
-        message: '创建项目成功!',
+        message: view.project.id.length>0?'保存项目成功!':'创建项目成功!',
         duration: 3000
       });
       toast.present();
@@ -215,9 +214,27 @@ export class ProjectCreatePage {
     });
   }
 
-    onClickMilestone($event, mile) {
+    onFocusInput($event, mile, i) {
+      var textarea = document.getElementById('miletext');
+      if (textarea != null) {
+          textarea.blur();
+      }
+        if (this.type == 1) {
+            this.changeIndex = i;
+        }
+        this.navCtrl.push(MilestoneDetailPage, {
+            milestone : mile,
+            mileType : 1,
+            isExpand : this.isExpand,
+            project : this.project,
+            callback : this.milestoneCallback,
+            type : 2,
+        });
+    }
+
+    onClickMilestone($event, mile, i) {
       if (this.type == 1) {
-          return;
+          this.changeIndex = i;
       }
         this.navCtrl.push(MilestoneDetailPage, {
             milestone : mile,
@@ -240,6 +257,12 @@ export class ProjectCreatePage {
       },true);
     }
   }
+
+    onMilestoneLeader($event) {
+        this.navCtrl.push(ContactPage, {
+            type: 2,
+        });
+    }
 
   deleteOneMile(mile) {
       var deleteId = mile.id;
@@ -266,7 +289,7 @@ export class ProjectCreatePage {
     });
   }
 
-  //this.content.enableJsScroll();
+  //
 
     addOneMilestone(milestone) {
         if (this.project.milestoneVo1.length == 0) {
@@ -339,18 +362,29 @@ export class ProjectCreatePage {
   {
     return new Promise((resolve, reject) => {
       if (typeof (milestone) != 'undefined') {
-        var isIn = false;
-        for (let i=0; i<this.project.milestoneVo1.length; i++) {
-          var tempMile = this.project.milestoneVo1[i];
-          if (tempMile.id == milestone.id && tempMile.id != '') {
-            isIn = true;
-            this.project.milestoneVo1.splice(i, 1, milestone);
-            break;
-          }
-        }
-        if (!isIn) {
-          this.addOneMilestone(milestone);
-          this.project.children.push(milestone);
+        if (milestone.id.length > 0) {
+            var isIn = false;
+            for (let i=0; i<this.project.milestoneVo1.length; i++) {
+                var tempMile = this.project.milestoneVo1[i];
+                if (tempMile.id == milestone.id && tempMile.id != '') {
+                    isIn = true;
+                    this.project.milestoneVo1.splice(i, 1, milestone);
+                    break;
+                }
+            }
+            if (!isIn) {
+                this.addOneMilestone(milestone);
+                this.project.children.push(milestone);
+            }
+        } else {
+            if (this.changeIndex > -1) {
+                this.project.milestoneVo1.splice(this.changeIndex, 1, milestone);
+                this.project.children.splice(this.changeIndex, 1, milestone);
+                this.changeIndex = -1;
+            } else {
+                this.addOneMilestone(milestone);
+                this.project.children.push(milestone);
+            }
         }
       } else {
 

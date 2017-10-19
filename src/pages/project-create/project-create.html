@@ -55,7 +55,7 @@
       </ion-item>
     </ion-list>
 
-    <div style="border-bottom: solid 10px #f5f6f7;" *ngFor="let mile of project.milestoneVo1" >
+    <div style="border-bottom: solid 10px #f5f6f7;" *ngFor="let mile of project.milestoneVo1; let i = index" >
       <div style="height: 30px; border-bottom: solid 1px #ececec; ">
         <div style="width: 5px; height: 30px; background-color: orange; float: left;"></div>
         <ion-label no-margin no-padding style="line-height: 30px; margin-left: 10px; float: left;">{{mile.milestoneName}}</ion-label>
@@ -63,25 +63,30 @@
           <ion-icon name="close" style="position: absolute; top: 50%; right: 0px; -webkit-transform: translateY(-50%); transform: translateY(-50%); margin-right: 10px; " (click)="onClickRemoveMilestone($event, mile)"></ion-icon>
         </div>
       </div>
-      <ion-list no-lines no-margin no-padding (click)="onClickMilestone($event, mile)">
-        <ion-item style="border-bottom: solid 1px #ececec">
+      <ion-list no-lines no-margin no-padding (click)="onClickMilestone($event, mile, i)">
+        <!--<ion-item style="border-bottom: solid 1px #ececec">-->
+          <!--<ion-icon item-start name="appname-admin"></ion-icon>-->
+          <!--<ion-label>负责人</ion-label>-->
+          <!--&lt;!&ndash;<ion-label no-margin no-padding float-end text-right [hidden]="type==1">{{mile.itemEndLeader}}</ion-label>&ndash;&gt;-->
+          <!--<ion-input item-end text-right [readonly]="type==2" unselectable="on" (ionFocus)="onFocusInput($event)" [(ngModel)]="mile.itemEndLeader"></ion-input>-->
+        <!--</ion-item>-->
+        <button ion-item style="border-bottom: solid 1px #ececec" disabled>
           <ion-icon item-start name="appname-admin"></ion-icon>
-          <ion-label>负责人</ion-label>
-          <!--<ion-label no-margin no-padding float-end text-right [hidden]="type==1">{{mile.itemEndLeader}}</ion-label>-->
-          <ion-input item-end text-right [readonly]="type==2" unselectable="on" (ionFocus)="onFocusInput($event)" [(ngModel)]="mile.itemEndLeader"></ion-input>
-        </ion-item>
+          <ion-label item-start>负责人:</ion-label>
+          <ion-label item-end text-right>{{mile.itemEndLeader}}</ion-label>
+        </button>
         <ion-item style="border-bottom: solid 1px #ececec">
           <ion-icon item-start name="appname-time"></ion-icon>
           <ion-label>交付时间</ion-label>
           <ion-datetime item-end displayFormat="YYYY年MM月DD日" max="2030" min={{minTime}} cancelText="取消" doneText="确认"
                         ngModel="{{mile.deliveryTime | stampToDate}}"
                         (ngModelChange)="mile.deliveryTime = $event"
-                        [disabled]="type==2"></ion-datetime>
+                        disabled></ion-datetime>
         </ion-item>
         <ion-item style="border-bottom: solid 1px #ececec">
           <ion-icon item-start name="appname-plan"></ion-icon>
           <ion-label>项目进度</ion-label>
-          <ion-select interface="action-sheet" [(ngModel)]="mile.itemProgress" cancelText="取消" doneText="确认" [disabled]="type==2">
+          <ion-select interface="action-sheet" [(ngModel)]="mile.itemProgress" cancelText="取消" doneText="确认" disabled>
             <ion-option value="10%">10%</ion-option>
             <ion-option value="20%">20%</ion-option>
             <ion-option value="30%">30%</ion-option>
@@ -97,7 +102,7 @@
         <ion-item>
           <ion-icon item-start name="appname-result"></ion-icon>
           <ion-label>交付成果</ion-label>
-          <ion-textarea item-end text-right [(ngModel)]="mile.deliveryResult" readonly="{{type==2}}" (ionFocus)="onFocusInput($event)"></ion-textarea>
+          <ion-textarea item-end text-right id="miletext" [(ngModel)]="mile.deliveryResult" readonly  (ionFocus)="onFocusInput($event, mile, i)"></ion-textarea>
         </ion-item>
       </ion-list>
     </div>
