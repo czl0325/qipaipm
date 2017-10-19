@@ -27825,6 +27825,7 @@ page-project-end .reason {
   flex-grow: 1;
   display: inline-block;
   left: 150px;
+  border: none;
 }
 
 page-search .head .icon-rightnew {

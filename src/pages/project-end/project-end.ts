@@ -50,7 +50,7 @@ export class ProjectEndPage {
   ngAfterViewInit() {
       var input2 = document.getElementById('input2');
       if (input2 != null) {
-
+          input2.setAttribute("readOnly", "readOnly");
       }
   }
 
@@ -58,6 +58,12 @@ export class ProjectEndPage {
     if (value == false) {
       this.arrayCheckboxs[index] = false;
       this.project.multipleItemEndWhy = '';
+      if (index == 3) {
+          var input2 = document.getElementById('input2');
+          if (input2 != null) {
+              input2.setAttribute("readOnly", "readOnly");
+          }
+      }
     } else {
         for (let i=0; i<this.arrayCheckboxs.length; i++) {
             this.arrayCheckboxs[i] = false;
@@ -66,29 +72,38 @@ export class ProjectEndPage {
         switch (index) {
             case 0:
                 this.project.multipleItemEndWhy = '业务改变';
+                var input2 = document.getElementById('input2');
+                if (input2 != null) {
+                    input2.setAttribute("readOnly", "readOnly");
+                }
                 break;
             case 1:
                 this.project.multipleItemEndWhy = '资源不够';
+                var input2 = document.getElementById('input2');
+                if (input2 != null) {
+                    input2.setAttribute("readOnly", "readOnly");
+                }
                 break;
             case 2:
                 this.project.multipleItemEndWhy = '合作方退出';
+                var input2 = document.getElementById('input2');
+                if (input2 != null) {
+                    input2.setAttribute("readOnly", "readOnly");
+                }
                 break;
             case 3:
-                var input = document.getElementById('input2');
-                if (input != null) {
+                var input2 = document.getElementById('input2');
+                if (input2 != null) {
+                    input2.removeAttribute("readOnly");
                     setTimeout(function(){
-                        input.focus();
-                    }, 1000);
+                        input2.focus();
+                    }, 100);
                 }
                 // this.ngZone.runOutsideAngular(() => {
                 //     setTimeout(() => {
                 //         this.renderer.selectRootElement('#box').focus();
                 //     }, 100);
                 // });
-                // var input = document.getElementById('input2');
-                // if (input != null) {
-                //     input.focus();
-                // }
                 break;
             default:
                 break;

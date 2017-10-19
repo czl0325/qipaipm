@@ -1547,12 +1547,19 @@ var ProjectEndPage = (function () {
     ProjectEndPage.prototype.ngAfterViewInit = function () {
         var input2 = document.getElementById('input2');
         if (input2 != null) {
+            input2.setAttribute("readOnly", "readOnly");
         }
     };
     ProjectEndPage.prototype.onClickCheck = function (value, index) {
         if (value == false) {
             this.arrayCheckboxs[index] = false;
             this.project.multipleItemEndWhy = '';
+            if (index == 3) {
+                var input2 = document.getElementById('input2');
+                if (input2 != null) {
+                    input2.setAttribute("readOnly", "readOnly");
+                }
+            }
         }
         else {
             for (var i = 0; i < this.arrayCheckboxs.length; i++) {
@@ -1562,29 +1569,38 @@ var ProjectEndPage = (function () {
             switch (index) {
                 case 0:
                     this.project.multipleItemEndWhy = '业务改变';
+                    var input2 = document.getElementById('input2');
+                    if (input2 != null) {
+                        input2.setAttribute("readOnly", "readOnly");
+                    }
                     break;
                 case 1:
                     this.project.multipleItemEndWhy = '资源不够';
+                    var input2 = document.getElementById('input2');
+                    if (input2 != null) {
+                        input2.setAttribute("readOnly", "readOnly");
+                    }
                     break;
                 case 2:
                     this.project.multipleItemEndWhy = '合作方退出';
+                    var input2 = document.getElementById('input2');
+                    if (input2 != null) {
+                        input2.setAttribute("readOnly", "readOnly");
+                    }
                     break;
                 case 3:
-                    var input = document.getElementById('input2');
-                    if (input != null) {
+                    var input2 = document.getElementById('input2');
+                    if (input2 != null) {
+                        input2.removeAttribute("readOnly");
                         setTimeout(function () {
-                            input.focus();
-                        }, 1000);
+                            input2.focus();
+                        }, 100);
                     }
                     // this.ngZone.runOutsideAngular(() => {
                     //     setTimeout(() => {
                     //         this.renderer.selectRootElement('#box').focus();
                     //     }, 100);
                     // });
-                    // var input = document.getElementById('input2');
-                    // if (input != null) {
-                    //     input.focus();
-                    // }
                     break;
                 default:
                     break;
@@ -1626,7 +1642,7 @@ __decorate([
 ProjectEndPage = __decorate([
     Object(__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["IonicPage"])(),
     Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Component"])({
-        selector: 'page-project-end',template:/*ion-inline-start:"/Users/zhaoliangchen/Desktop/qipaipm-company/src/pages/project-end/project-end.html"*/'<!--\n  Generated template for the ProjectEndPage page.\n\n  See http://ionicframework.com/docs/components/#navigation for more info on\n  Ionic pages and navigation.\n-->\n<ion-header>\n\n  <ion-navbar>\n    <ion-title>结束项目</ion-title>\n    <ion-buttons end >\n      <button ion-button (click)="onEndSave($event)" color="danger">\n        保存\n      </button>\n    </ion-buttons>\n  </ion-navbar>\n</ion-header>\n\n\n<ion-content fullscreen>\n  <ion-list no-padding no-lines style="margin-bottom: 0px; border-bottom: solid 1px #ececec">\n    <ion-item >\n      <ion-icon item-start name="appname-pname"></ion-icon>\n      <ion-label>项目名称:</ion-label>\n      <ion-label right text-right>{{this.project.itemName}}</ion-label>\n    </ion-item>\n  </ion-list>\n\n  <div style="border-top: solid 10px #ececec;border-bottom: solid 1px #ececec; position: relative; height: 60px; display: flex">\n    <div class="first_title vertical_center">结束原因</div>\n    <ion-checkbox\n            ngModel="{{arrayCheckboxs[0]}}"\n            (ngModelChange)="onClickCheck($event, 0)"\n            class="check vertical_center">\n    </ion-checkbox>\n    <ion-label no-margin no-padding class="reason vertical_center">业务改变</ion-label>\n  </div>\n  <div style="border-bottom: solid 1px #ececec; position: relative; height: 50px; display: flex">\n    <div class="first_title vertical_center"></div>\n    <ion-checkbox\n            ngModel="{{arrayCheckboxs[1]}}"\n            (ngModelChange)="onClickCheck($event, 1)"\n            class="check vertical_center">\n    </ion-checkbox>\n    <ion-label no-margin no-padding class="reason vertical_center">资源不够</ion-label>\n  </div>\n  <div style="border-bottom: solid 1px #ececec; position: relative; height: 50px; display: flex">\n    <div class="first_title vertical_center"></div>\n    <ion-checkbox\n            ngModel="{{arrayCheckboxs[2]}}"\n            (ngModelChange)="onClickCheck($event, 2)"\n            class="check vertical_center">\n    </ion-checkbox>\n    <ion-label no-margin no-padding class="reason vertical_center">合作方退出</ion-label>\n  </div>\n  <div style="border-bottom: solid 1px #ececec; position: relative; height: 50px; display: flex">\n    <div class="first_title vertical_center"></div>\n    <ion-checkbox\n            ngModel="{{arrayCheckboxs[3]}}"\n            (ngModelChange)="onClickCheck($event, 3)"\n            class="check vertical_center">\n    </ion-checkbox>\n    <!--<ion-input #input1 id="input1" tappable no-margin no-padding placeholder="其他原因" class="reason vertical_center"-->\n               <!--[(ngModel)]="otherReason" focuser></ion-input>-->\n    <input id="input2" placeholder="其他原因" class="reason vertical_center" [(ngModel)]="otherReason">\n  </div>\n</ion-content>\n'/*ion-inline-end:"/Users/zhaoliangchen/Desktop/qipaipm-company/src/pages/project-end/project-end.html"*/,
+        selector: 'page-project-end',template:/*ion-inline-start:"/Users/zhaoliangchen/Desktop/qipaipm-company/src/pages/project-end/project-end.html"*/'<!--\n  Generated template for the ProjectEndPage page.\n\n  See http://ionicframework.com/docs/components/#navigation for more info on\n  Ionic pages and navigation.\n-->\n<ion-header>\n\n  <ion-navbar>\n    <ion-title>结束项目</ion-title>\n    <ion-buttons end >\n      <button ion-button (click)="onEndSave($event)" color="danger">\n        保存\n      </button>\n    </ion-buttons>\n  </ion-navbar>\n</ion-header>\n\n\n<ion-content fullscreen>\n  <ion-list no-padding no-lines style="margin-bottom: 0px; border-bottom: solid 1px #ececec">\n    <ion-item >\n      <ion-icon item-start name="appname-pname"></ion-icon>\n      <ion-label>项目名称:</ion-label>\n      <ion-label right text-right>{{this.project.itemName}}</ion-label>\n    </ion-item>\n  </ion-list>\n\n  <div style="border-top: solid 10px #ececec;border-bottom: solid 1px #ececec; position: relative; height: 60px; display: flex">\n    <div class="first_title vertical_center">结束原因</div>\n    <ion-checkbox\n            ngModel="{{arrayCheckboxs[0]}}"\n            (ngModelChange)="onClickCheck($event, 0)"\n            class="check vertical_center">\n    </ion-checkbox>\n    <ion-label no-margin no-padding class="reason vertical_center">业务改变</ion-label>\n  </div>\n  <div style="border-bottom: solid 1px #ececec; position: relative; height: 50px; display: flex">\n    <div class="first_title vertical_center"></div>\n    <ion-checkbox\n            ngModel="{{arrayCheckboxs[1]}}"\n            (ngModelChange)="onClickCheck($event, 1)"\n            class="check vertical_center">\n    </ion-checkbox>\n    <ion-label no-margin no-padding class="reason vertical_center">资源不够</ion-label>\n  </div>\n  <div style="border-bottom: solid 1px #ececec; position: relative; height: 50px; display: flex">\n    <div class="first_title vertical_center"></div>\n    <ion-checkbox\n            ngModel="{{arrayCheckboxs[2]}}"\n            (ngModelChange)="onClickCheck($event, 2)"\n            class="check vertical_center">\n    </ion-checkbox>\n    <ion-label no-margin no-padding class="reason vertical_center">合作方退出</ion-label>\n  </div>\n  <div style="border-bottom: solid 1px #ececec; position: relative; height: 50px;padding-right: 10px">\n    <div class="first_title vertical_center"></div>\n    <ion-checkbox\n            ngModel="{{arrayCheckboxs[3]}}"\n            (ngModelChange)="onClickCheck($event, 3)"\n            class="check vertical_center">\n    </ion-checkbox>\n    <!--<ion-input #input1 id="input1" tappable no-margin no-padding placeholder="其他原因" class="reason vertical_center"-->\n               <!--[(ngModel)]="otherReason" focuser></ion-input>-->\n    <div style="position: relative; height: 100%; margin-left: 150px">\n        <input id="input2" placeholder="其他原因" style="width: 100%;" class="vertical_center" [(ngModel)]="otherReason">\n    </div>\n  </div>\n</ion-content>\n'/*ion-inline-end:"/Users/zhaoliangchen/Desktop/qipaipm-company/src/pages/project-end/project-end.html"*/,
     }),
     __metadata("design:paramtypes", [typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["NavController"] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["NavController"]) === "function" && _b || Object, typeof (_c = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["NavParams"] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["NavParams"]) === "function" && _c || Object, typeof (_d = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["AlertController"] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["AlertController"]) === "function" && _d || Object, typeof (_e = typeof __WEBPACK_IMPORTED_MODULE_2__app_app_service__["a" /* AppService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_2__app_app_service__["a" /* AppService */]) === "function" && _e || Object, typeof (_f = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["Events"] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["Events"]) === "function" && _f || Object, typeof (_g = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["ToastController"] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["ToastController"]) === "function" && _g || Object, typeof (_h = typeof __WEBPACK_IMPORTED_MODULE_3__ionic_native_keyboard__["a" /* Keyboard */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_3__ionic_native_keyboard__["a" /* Keyboard */]) === "function" && _h || Object, typeof (_j = typeof __WEBPACK_IMPORTED_MODULE_0__angular_core__["ElementRef"] !== "undefined" && __WEBPACK_IMPORTED_MODULE_0__angular_core__["ElementRef"]) === "function" && _j || Object, typeof (_k = typeof __WEBPACK_IMPORTED_MODULE_0__angular_core__["NgZone"] !== "undefined" && __WEBPACK_IMPORTED_MODULE_0__angular_core__["NgZone"]) === "function" && _k || Object, typeof (_l = typeof __WEBPACK_IMPORTED_MODULE_0__angular_core__["Renderer"] !== "undefined" && __WEBPACK_IMPORTED_MODULE_0__angular_core__["Renderer"]) === "function" && _l || Object])
 ], ProjectEndPage);

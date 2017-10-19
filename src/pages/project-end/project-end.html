@@ -53,7 +53,7 @@
     </ion-checkbox>
     <ion-label no-margin no-padding class="reason vertical_center">合作方退出</ion-label>
   </div>
-  <div style="border-bottom: solid 1px #ececec; position: relative; height: 50px; display: flex">
+  <div style="border-bottom: solid 1px #ececec; position: relative; height: 50px;padding-right: 10px">
     <div class="first_title vertical_center"></div>
     <ion-checkbox
             ngModel="{{arrayCheckboxs[3]}}"
@@ -62,6 +62,8 @@
     </ion-checkbox>
     <!--<ion-input #input1 id="input1" tappable no-margin no-padding placeholder="其他原因" class="reason vertical_center"-->
                <!--[(ngModel)]="otherReason" focuser></ion-input>-->
-    <input id="input2" placeholder="其他原因" class="reason vertical_center" [(ngModel)]="otherReason">
+    <div style="position: relative; height: 100%; margin-left: 150px">
+        <input id="input2" placeholder="其他原因" style="width: 100%;" class="vertical_center" [(ngModel)]="otherReason">
+    </div>
   </div>
 </ion-content>
