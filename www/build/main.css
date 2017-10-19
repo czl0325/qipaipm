@@ -27285,6 +27285,32 @@ calendar .selectedDatetime {
   opacity: 0;
 }
 
+person-info .info_css {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  width: 85%;
+  margin: 0 auto;
+  margin-top: 15px;
+}
+
+person-info .button_warp {
+  position: absolute;
+  bottom: 15px;
+  width: 100%;
+  height: 50px;
+  left: 0px;
+}
+
+person-info .button_warp .button_inline {
+  margin: 0 auto;
+  background-color: #fc5c53;
+  width: 100px;
+  height: 50px;
+  border-radius: 25px;
+}
+
 page-contact .input-search {
   border-radius: 4px;
   width: 70%;

@@ -1,11 +1,48 @@
 <!-- Generated template for the PersonInfoComponent component -->
-<div>
-  <div style="height: 100px;">
-    <ion-icon name="ios-contact-outline"></ion-icon>
-    <div>{{currentUser.name}}</div>
-  </div>
+<div style="width: 100%; height: 100%; ">
+    <div style="height: 100%; width: 80%; top: 0px; left: 0px; float: left;
+                background-color: white; border-right: solid 1px #ececec;
+                position: relative" (swipeleft)="onHidePerson($event)">
+        <div style="height: 100px; background-color: #fc5c53; position: relative;">
+            <div class="vertical_center" style="left: 15px; height: 30px; width: 80%">
+                <ion-icon name="ios-contact-outline" style="font-size: 30px; float: left"></ion-icon>
+                <div style="float: left; margin-left: 10px; line-height: 30px">{{currentUser.name}}</div>
+            </div>
+        </div>
 
-  <div>
+        <div class="info_css">
+            <div style="width: 30%; text-align: left">工号</div>
+            <div style="width: 70%; text-align: right">{{currentUser.username}}</div>
+        </div>
 
-  </div>
+        <div class="info_css">
+            <div style="width: 30%; text-align: left">电话</div>
+            <div style="width: 70%; text-align: right">{{currentUser.telPhone}}</div>
+        </div>
+
+
+        <div class="info_css">
+            <div style="width: 30%; text-align: left">职位</div>
+            <div style="width: 70%; text-align: right">{{currentUser.post}}</div>
+        </div>
+
+        <div class="info_css">
+            <div style="width: 30%; text-align: left">所属公司</div>
+            <div style="width: 70%; text-align: right">{{currentUser.company}}</div>
+        </div>
+
+        <div class="info_css">
+            <div style="width: 30%; text-align: left">部门</div>
+            <div style="width: 70%; text-align: right">{{currentUser.department}}</div>
+        </div>
+
+        <div class="button_warp">
+            <button ion-button block class="button_inline" (click)="onClickLogOut($event)">退出登录</button>
+        </div>
+
+    </div>
+    <div style="height: 100%; width: 20%;background-color: transparent; float: left"
+            (click)="onHidePerson($event)">
+
+    </div>
 </div>

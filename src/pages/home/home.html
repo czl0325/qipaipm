@@ -1,83 +1,109 @@
 <ion-header>
-  <ion-navbar hideBackButton="true">
-    <ion-buttons>
-      <button ion-button clear (click)="onClickPerson($event)">
-        <ion-icon large style="color: #fc5c53; margin-left: 10px" name="contact">
-        </ion-icon>
-      </button>
-    </ion-buttons>
-    <ion-title [hidden]="type==1">
-        {{currentDate | YearAndMonthPipe}}
-    </ion-title>
-    <ion-buttons end >
-      <button ion-button (click)="onChangeType($event)" id="btMode">
-        <ion-icon style="color: #fc5c53; margin-right: 10px" name={{namevalue}} >
-        </ion-icon>
-      </button>
-      <button ion-button (click)="onClickSearch()">
-        <ion-icon style="color: #fc5c53; margin-right: 10px" name="appname-search" >
-        </ion-icon>
-      </button>
-      <button ion-button (click)="onCreateProject()">
-        <ion-icon style="color: #fc5c53; margin-right: 5px" name="appname-add" >
-        </ion-icon>
-      </button>
-    </ion-buttons>
-  </ion-navbar>
+    <ion-navbar hideBackButton="true">
+        <ion-buttons>
+            <button ion-button clear (click)="onClickPerson($event)">
+                <ion-icon large style="color: #fc5c53; margin-left: 10px;font-size: 25px" name="contact">
+                </ion-icon>
+            </button>
+        </ion-buttons>
+        <ion-title [hidden]="type==1">
+            {{currentDate | YearAndMonthPipe}}
+        </ion-title>
+        <ion-buttons end>
+            <button ion-button (click)="onChangeType($event)" id="btMode">
+                <ion-icon style="color: #fc5c53; margin-right: 10px;font-size: 25px" name={{namevalue}}>
+                </ion-icon>
+            </button>
+            <button ion-button (click)="onClickSearch()">
+                <ion-icon style="color: #fc5c53; margin-right: 10px;font-size: 25px" name="appname-search">
+                </ion-icon>
+            </button>
+            <button ion-button (click)="onCreateProject()">
+                <ion-icon style="color: #fc5c53; margin-right: 5px;font-size: 25px" name="appname-add">
+                </ion-icon>
+            </button>
+        </ion-buttons>
+    </ion-navbar>
 </ion-header>
 
 <ion-content fullscreen>
-  <div [hidden]="type==2" no-padding no-margin>
-    <calendar id="calendar" (onChange)="onSelectDate($event)" (onChangeMonth)="onChangeMonthProject($event)">
+    <div>
+        <div [hidden]="type==2" no-padding no-margin>
+            <calendar id="calendar" (onChange)="onSelectDate($event)" (onChangeMonth)="onChangeMonthProject($event)">
 
-    </calendar>
+            </calendar>
 
-    <div style="margin-top: 10px; height: 1px; background-color: #c5c6c7; width: 100%"></div>
-    <ion-item (click)="onClickProject(project)" *ngFor="let project of projects">
-      <ion-label no-padding no-margin text-center float-left
-                 [ngClass]="{'circle_home':1===1,'nostart':project.itemState=='07010010','ing':project.itemState=='07010020'|| project.itemState=='07010030','end':project.itemState=='07010040'}">{{project.itemLevel}}</ion-label>
-          <!--<div [ngClass]="{'circle_nostart':project.itemState=='未启动','circle_ing':project.itemState=='进行中','circle_end':project.itemState=='已结束'}"></div>-->
-        <ion-label no-padding no-margin float-left class="pj-name" [ngStyle]="{'color':project.itemState=='07010030'?'#fc780e':'black'}">{{project.itemName}}</ion-label>
-        </ion-item>
-      </div>
-    <div [hidden]="type==1" no-padding no-margin>
-      <div no-margin no-padding style="background-color: #ececec; height: 50px">
-        <ion-label no-margin no-padding float-left style="margin-left: 10px; line-height: 50px">开始日期</ion-label>
-        <ion-label no-margin no-padding float-left style="margin-left: 50px; line-height: 50px">项目名称</ion-label>
-        <div float-end style="position: relative; width: 120px; height: 100%">
-          <div no-margin no-padding style="position:absolute; top: 8px; right: 10px; height: 40%; width: 100%">
-            <div style="float: left">
-              <div style="width: 10px; height: 10px; background-color: #fc780e; float: left"></div>
-              <ion-label float-left no-margin no-padding style="margin-left:2px;height:12px;line-height:12px;font-size:10px">进行中</ion-label>
-            </div>
-            <div style="float: right">
-              <div style="width: 10px; height: 10px; background-color: #10c619; float: left"></div>
-              <ion-label float-left no-margin no-padding style="margin-left:2px;height:12px;line-height:12px;font-size:10px">未开始</ion-label>
-            </div>
-          </div>
-          <div no-margin no-padding style="position:absolute; bottom: 0px; right: 10px; height: 40%; width: 100%">
-            <div style="float: left">
-              <div style="width: 10px; height: 10px; background-color: #fc780e; float: left"></div>
-              <ion-label float-left no-margin no-padding style="margin-left:2px;height:12px;line-height:12px;font-size:10px;color: #fc780e">延期中</ion-label>
-            </div>
-           <div style="float: right">
-            <div style="width: 10px; height: 10px; background-color: #c1c8d2; float: left"></div>
-            <ion-label float-left no-margin no-padding style="margin-left:2px;height:12px;line-height:12px;font-size:10px">已完成</ion-label>
-          </div>
+            <div style="margin-top: 10px; height: 1px; background-color: #c5c6c7; width: 100%"></div>
+            <ion-item (click)="onClickProject(project)" *ngFor="let project of projects">
+                <ion-label no-padding no-margin text-center float-left
+                           [ngClass]="{'circle_home':1===1,'nostart':project.itemState=='07010010','ing':project.itemState=='07010020'|| project.itemState=='07010030','end':project.itemState=='07010040'}">
+                    {{project.itemLevel}}
+                </ion-label>
+                <!--<div [ngClass]="{'circle_nostart':project.itemState=='未启动','circle_ing':project.itemState=='进行中','circle_end':project.itemState=='已结束'}"></div>-->
+                <ion-label no-padding no-margin float-left class="pj-name"
+                           [ngStyle]="{'color':project.itemState=='07010030'?'#fc780e':'black'}">{{project.itemName}}
+                </ion-label>
+            </ion-item>
         </div>
-      </div>
+        <div [hidden]="type==1" no-padding no-margin>
+            <div no-margin no-padding style="background-color: #ececec; height: 50px">
+                <ion-label no-margin no-padding float-left style="margin-left: 10px; line-height: 50px">开始日期</ion-label>
+                <ion-label no-margin no-padding float-left style="margin-left: 50px; line-height: 50px">项目名称</ion-label>
+                <div float-end style="position: relative; width: 120px; height: 100%">
+                    <div no-margin no-padding style="position:absolute; top: 8px; right: 10px; height: 40%; width: 100%">
+                        <div style="float: left">
+                            <div style="width: 10px; height: 10px; background-color: #fc780e; float: left"></div>
+                            <ion-label float-left no-margin no-padding
+                                       style="margin-left:2px;height:12px;line-height:12px;font-size:10px">进行中
+                            </ion-label>
+                        </div>
+                        <div style="float: right">
+                            <div style="width: 10px; height: 10px; background-color: #10c619; float: left"></div>
+                            <ion-label float-left no-margin no-padding
+                                       style="margin-left:2px;height:12px;line-height:12px;font-size:10px">未开始
+                            </ion-label>
+                        </div>
+                    </div>
+                    <div no-margin no-padding style="position:absolute; bottom: 0px; right: 10px; height: 40%; width: 100%">
+                        <div style="float: left">
+                            <div style="width: 10px; height: 10px; background-color: #fc780e; float: left"></div>
+                            <ion-label float-left no-margin no-padding
+                                       style="margin-left:2px;height:12px;line-height:12px;font-size:10px;color: #fc780e">
+                                延期中
+                            </ion-label>
+                        </div>
+                        <div style="float: right">
+                            <div style="width: 10px; height: 10px; background-color: #c1c8d2; float: left"></div>
+                            <ion-label float-left no-margin no-padding
+                                       style="margin-left:2px;height:12px;line-height:12px;font-size:10px">已完成
+                            </ion-label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div *ngFor="let project of projectsOnMonth"
+                 style="position: relative; height: 50px; border-bottom: solid 1px #ececec"
+                 (click)="onClickProject(project)">
+                <ion-label float-left no-margin no-padding class="list_day">{{project.itemStartTime | DayPipe}}</ion-label>
+                <ion-label float-left no-margin no-padding class="list_weekday">{{project.itemStartTime | WeekayPipe}}
+                </ion-label>
+                <ion-label float-left no-margin no-padding text-center
+                           [ngClass]="{'list_circle':1===1,'nostart':project.itemState=='07010010','ing':project.itemState=='07010020'|| project.itemState=='07010030','end':project.itemState=='07010040'}">
+                    {{project.itemLevel}}
+                </ion-label>
+                <ion-label float-left no-margin no-padding class="list_itemname"
+                           [ngStyle]="{'color':project.itemState=='07010030'?'#fc780e':'black'}">{{project.itemName}}
+                </ion-label>
+            </div>
+        </div>
     </div>
-    <div *ngFor="let project of projectsOnMonth" style="position: relative; height: 50px; border-bottom: solid 1px #ececec" (click)="onClickProject(project)">
-      <ion-label float-left no-margin no-padding class="list_day">{{project.itemStartTime | DayPipe}}</ion-label>
-      <ion-label float-left no-margin no-padding class="list_weekday">{{project.itemStartTime | WeekayPipe}}</ion-label>
-      <ion-label float-left no-margin no-padding text-center
-          [ngClass]="{'list_circle':1===1,'nostart':project.itemState=='07010010','ing':project.itemState=='07010020'|| project.itemState=='07010030','end':project.itemState=='07010040'}">{{project.itemLevel}}</ion-label>
-      <ion-label float-left no-margin no-padding class="list_itemname" [ngStyle]="{'color':project.itemState=='07010030'?'#fc780e':'black'}">{{project.itemName}}</ion-label>
-    </div>
-  </div>
-
-  <div style="width: 100%; height: 100%;">
-
-  </div>
 
 </ion-content>
+
+<div [hidden]="hideMaskView" style="position:fixed; z-index: 1000; width: 100%; height: 100%;left: 0px;top: 0px;
+            background-color: black; opacity: 0.3"></div>
+<person-info id="person-info"
+             style="position:fixed; z-index: 1001; width: 100%; height: 100%;left: -100%;top: 0px;"
+             (onLogOut)="onLogOut()" (onHideMask)="onHideMask()">
+
+</person-info>
