@@ -1,5 +1,11 @@
 <ion-header>
   <ion-navbar hideBackButton="true">
+    <ion-buttons>
+      <button ion-button clear (click)="onClickPerson($event)">
+        <ion-icon large style="color: #fc5c53; margin-left: 10px" name="contact">
+        </ion-icon>
+      </button>
+    </ion-buttons>
     <ion-title [hidden]="type==1">
         {{currentDate | YearAndMonthPipe}}
     </ion-title>
@@ -69,4 +75,9 @@
       <ion-label float-left no-margin no-padding class="list_itemname" [ngStyle]="{'color':project.itemState=='07010030'?'#fc780e':'black'}">{{project.itemName}}</ion-label>
     </div>
   </div>
+
+  <div style="width: 100%; height: 100%;">
+
+  </div>
+
 </ion-content>

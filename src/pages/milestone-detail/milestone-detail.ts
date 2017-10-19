@@ -98,7 +98,7 @@ export class MilestoneDetailPage {
     }
     this.tempMilestone = AppConfig.deepCopy(this.milestone);
     if (this.type == 2) {
-        if (AppSingleton.getInstance().currentUserInfo.username != this.project.founderEmpNum) {
+        if (AppSingleton.getInstance().currentUserInfo.username != this.milestone.itemEndLeader) {
             this.canEdit = false;
         }
         if (AppSingleton.getInstance().currentUserInfo.username == this.milestone.itemEndLeaderNum) {

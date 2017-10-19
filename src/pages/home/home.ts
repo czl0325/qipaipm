@@ -18,6 +18,7 @@ export class HomePage {
   projects;
   projectsOnMonth;
   currentDate:string;
+  timer;
 
   constructor(public navCtrl: NavController, public appService: AppService,
               public events: Events) {
@@ -114,5 +115,21 @@ export class HomePage {
     this.navCtrl.push(ProjectDetailPage, {
       project:project,
     });
+  }
+
+  onClickPerson($event) {
+      clearInterval(this.timer);
+      var personView = document.getElementById('person-info');
+      if (personView != null) {
+          var left = parseInt(window.getComputedStyle(personView).left) ;
+          this.timer = setInterval(()=> {
+              left = left + 10;
+              personView.style.left = left+'px';
+              if (left >= 0) {
+                  clearInterval(this.timer);
+                  personView.style.left = 0+'px';
+              }
+        }, 16);
+    }
   }
 }

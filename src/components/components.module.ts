@@ -2,11 +2,13 @@ import { NgModule } from '@angular/core';
 import { IonicPageModule } from "ionic-angular";
 import { TestComponent } from './test/test';
 import { CalendarComponent } from './calendar/calendar';
+import { PersonInfoComponent } from './person-info/person-info';
 
 @NgModule({
 	declarations: [
 	  TestComponent,
-    CalendarComponent
+    CalendarComponent,
+    PersonInfoComponent
 
   ],
 	imports: [
@@ -14,7 +16,8 @@ import { CalendarComponent } from './calendar/calendar';
   ],
 	exports: [
 	  TestComponent,
-    CalendarComponent
+    CalendarComponent,
+    PersonInfoComponent
 
   ]
 })
