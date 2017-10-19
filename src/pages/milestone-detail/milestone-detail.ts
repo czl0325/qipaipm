@@ -60,8 +60,9 @@ export class MilestoneDetailPage {
         milestoneType: 1,          //1是普通里程碑，2是延期里程碑
     };
     tempMilestone;
-    canEdit: boolean = true;
+    canEdit: boolean = false;
     canFinish: boolean = false;
+    canAddSubtask: boolean = false;
     mileType: number;
     minTime: string = new DatePipe('en-US').transform(new Date(), 'yyyy-MM-dd');
 
@@ -97,9 +98,18 @@ export class MilestoneDetailPage {
             }
         }
         this.tempMilestone = AppConfig.deepCopy(this.milestone);
-        if (this.type == 2) {
-            if (AppSingleton.getInstance().currentUserInfo.username != this.milestone.itemEndLeader) {
-                this.canEdit = false;
+        if (this.type == 1) {
+            this.canEdit = true;
+        } else if (this.type == 2) {
+            console.log(AppSingleton.getInstance().currentUserInfo.username);
+            if (AppSingleton.getInstance().currentUserInfo.username == this.milestone.itemEndLeaderNum) {
+                this.canEdit = true;
+                if (this.milestone.id.length > 0) {
+                    this.canAddSubtask = true;
+                }
+            }
+            if (AppSingleton.getInstance().currentUserInfo.username == this.project.founderEmpNum) {
+                this.canEdit = true;
             }
             if (AppSingleton.getInstance().currentUserInfo.username == this.milestone.itemEndLeaderNum) {
                 this.canFinish = true;
