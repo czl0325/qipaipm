@@ -122,7 +122,7 @@
     </ion-list>
   </div>
 
-  <div style="padding: 10px;" *ngIf="this.tempMilestone.id.length>0&&canEdit==true">
+  <div style="padding: 10px;" [hidden]="canAddSubtask==false">
     <button ion-button (click)="onAddSubtask($event)" block style="background-color: #fc5c53">+ 添加子任务</button>
   </div>
 </ion-content>
