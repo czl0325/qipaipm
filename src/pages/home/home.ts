@@ -23,7 +23,7 @@ export class HomePage {
     projectsOnMonth;
     currentDate: string;
     timer;
-    hideMaskView:boolean = true;
+    hideMaskView: boolean = true;
 
     constructor(public navCtrl: NavController, public appService: AppService,
                 public events: Events, private storage: Storage) {

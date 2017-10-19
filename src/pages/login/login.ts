@@ -34,7 +34,9 @@ export class LoginPage {
     }
 
     ionViewDidLoad() {
-
+        if (this.storage.get('user') != null) {
+            this.storage.remove('user');
+        }
     }
 
     login(value) {
