@@ -1,6 +1,7 @@
-import { Component } from '@angular/core';
-import {AlertController, Events, IonicPage, NavController, NavParams, ToastController} from 'ionic-angular';
+import { Component, ElementRef, ViewChild, NgZone, Renderer } from '@angular/core';
+import { AlertController, Events, IonicPage, NavController, NavParams, ToastController } from 'ionic-angular';
 import { AppService} from "../../app/app.service";
+import { Keyboard } from "@ionic-native/keyboard";
 
 /**
  * Generated class for the ProjectEndPage page.
@@ -9,19 +10,26 @@ import { AppService} from "../../app/app.service";
  * on Ionic pages and navigation.
  */
 
+
+
 @IonicPage()
 @Component({
   selector: 'page-project-end',
   templateUrl: 'project-end.html',
 })
 export class ProjectEndPage {
-  project:any;
-  arrayCheckboxs:boolean[] = [];
-  otherReason:string;
+    project:any;
+    arrayCheckboxs:boolean[] = [];
+    otherReason:string;
+
+    @ViewChild('input1') input1: ElementRef;
+
 
   constructor(public navCtrl: NavController, public navParams: NavParams,
               private alertCtrl: AlertController, private appService: AppService,
-              private events: Events, private toastCtrl: ToastController) {
+              private events: Events, private toastCtrl: ToastController,
+              private keyboard: Keyboard, private el: ElementRef,
+              private ngZone: NgZone, private renderer: Renderer) {
     this.project = this.navParams.get('project');
     this.otherReason = '';
     for (let i=0; i<4; i++) {
@@ -30,7 +38,20 @@ export class ProjectEndPage {
   }
 
   ionViewDidLoad() {
+      // var input = document.getElementById('input2');
+      // if (input != null) {
+      //     setTimeout(function(){
+      //         input.focus();
+      //         console.log("获取焦点的控件"+document.activeElement.id);
+      //     }, 1000);
+      // }
+  }
 
+  ngAfterViewInit() {
+      var input2 = document.getElementById('input2');
+      if (input2 != null) {
+
+      }
   }
 
   onClickCheck(value, index) {
@@ -51,6 +72,23 @@ export class ProjectEndPage {
                 break;
             case 2:
                 this.project.multipleItemEndWhy = '合作方退出';
+                break;
+            case 3:
+                var input = document.getElementById('input2');
+                if (input != null) {
+                    setTimeout(function(){
+                        input.focus();
+                    }, 1000);
+                }
+                // this.ngZone.runOutsideAngular(() => {
+                //     setTimeout(() => {
+                //         this.renderer.selectRootElement('#box').focus();
+                //     }, 100);
+                // });
+                // var input = document.getElementById('input2');
+                // if (input != null) {
+                //     input.focus();
+                // }
                 break;
             default:
                 break;

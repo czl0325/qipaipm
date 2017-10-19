@@ -130,11 +130,19 @@ export class ProjectDetailPage {
         this.socialSharing.share("您有一个项目任务"+this.project.itemName+"于"+dateString+"启动，请前往柒牌项目管理应用查看详情","柒牌项目管理",null,null);
     });
     this.events.subscribe('onPushProjectDetail',()=>{
-      this.navCtrl.push(ProjectCreatePage, {
-        project:this.project,
-        isExpand:this.isExpand,
-        type:2,
-      });
+        if (this.project.itemIsEnd == true) {
+            let toast = this.toastCtrl.create({
+                message: "已结束项目不能编辑!",
+                duration: 3000
+            });
+            toast.present();
+            return;
+        }
+        this.navCtrl.push(ProjectCreatePage, {
+            project:this.project,
+            isExpand:this.isExpand,
+            type:2,
+        });
     });
     this.events.subscribe('reloadMilestone',(milestone)=>{
       var isIn = false;
@@ -239,9 +247,11 @@ export class ProjectDetailPage {
   ionViewWillLeave(){
 
   }
+
   ionViewDidLeave(){
 
   }
+
   ionViewWillUnload(){
     this.events.unsubscribe('showShareView');
     this.events.unsubscribe('onPushProjectDetail');
@@ -274,23 +284,29 @@ export class ProjectDetailPage {
   }
 
   onClickMilestone($event, mile) {
-    this.navCtrl.push(MilestoneDetailPage, {
-      milestone : mile,
-      mileType : 1,
-      isExpand : this.isExpand,
-      project : this.project,
-      callback : this.milestoneCallback,
-      type : 2,
-    });
+      if (this.project.itemIsEnd == true) {
+          return;
+      }
+      this.navCtrl.push(MilestoneDetailPage, {
+        milestone : mile,
+        mileType : 1,
+        isExpand : this.isExpand,
+        project : this.project,
+        callback : this.milestoneCallback,
+        type : 2,
+      });
   }
 
   onClickSubtask($event, subtask, mile) {
-    this.navCtrl.push(SubtaskPage, {
-      subtask: subtask,
-      projectname : this.project.itemName,
-      callback: this.subtaskCallback,
-      milestone: mile,
-    });
+      if (this.project.itemIsEnd == true) {
+          return;
+      }
+      this.navCtrl.push(SubtaskPage, {
+        subtask: subtask,
+        projectname : this.project.itemName,
+        callback: this.subtaskCallback,
+        milestone: mile,
+      });
   }
 
   onClickExpand($event, index) {

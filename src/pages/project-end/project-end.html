@@ -60,7 +60,8 @@
             (ngModelChange)="onClickCheck($event, 3)"
             class="check vertical_center">
     </ion-checkbox>
-    <ion-input no-margin no-padding placeholder="其他原因" class="reason vertical_center"
-               [disabled]="arrayCheckboxs[3]==false" [(ngModel)]="otherReason"></ion-input>
+    <!--<ion-input #input1 id="input1" tappable no-margin no-padding placeholder="其他原因" class="reason vertical_center"-->
+               <!--[(ngModel)]="otherReason" focuser></ion-input>-->
+    <input id="input2" placeholder="其他原因" class="reason vertical_center" [(ngModel)]="otherReason">
   </div>
 </ion-content>

@@ -1,11 +1,12 @@
 import { Component } from '@angular/core';
-import {NavController, NavParams, ToastController, Events, AlertController} from 'ionic-angular';
+import { NavController, NavParams, ToastController, Events, AlertController } from 'ionic-angular';
 import { DatePipe } from "@angular/common";
 import { MilestoneDetailPage } from "../milestone-detail/milestone-detail";
 import { AppService } from "../../app/app.service";
 import { ContactPage } from "../contact/contact";
 import { AppConfig } from "../../app/app.config";
-import {AppSingleton} from "../../app/app.singleton";
+import { AppSingleton} from "../../app/app.singleton";
+import { Keyboard } from "@ionic-native/keyboard";
 
 /**
  * Generated class for the ProjectCreatePage page.
@@ -107,7 +108,8 @@ export class ProjectCreatePage {
 
   constructor(public navCtrl: NavController, public navParams: NavParams,
               public appService : AppService, public toastCtrl: ToastController,
-              public events: Events, private alertCtrl: AlertController) {
+              public events: Events, private alertCtrl: AlertController,
+              private Keyboard: Keyboard) {
     var data = this.navParams.get('project');
     this.type = this.navParams.get('type');
     this.isExpand = this.navParams.get('isExpand');
@@ -140,18 +142,6 @@ export class ProjectCreatePage {
       alert.present();
       return;
     }
-    // if (this.project.children.length > 0) {
-    //   var lastMile = this.project.children[this.project.children.length-1];
-    //   if (lastMile.itemEndLeader.length < 1 || lastMile.deliveryResult.length < 1 || lastMile.itemProgress.length < 1 || lastMile.planTime.length < 1) {
-    //     let alert = this.alertCtrl.create({
-    //       title: '错误信息',
-    //       subTitle: '请先完善里程碑!',
-    //       buttons: ['确定']
-    //     });
-    //     alert.present();
-    //     return;
-    //   }
-    // }
     if (this.project.itemLevel.length < 1) {
       let alert = this.alertCtrl.create({
         title: '错误信息',
@@ -192,27 +182,6 @@ export class ProjectCreatePage {
   }
 
   onAddMilestone() {
-    // if (this.project.children.length > 0) {
-    //   var lastMile = this.project.children[this.project.children.length-1];
-    //   if (lastMile.leader == null || lastMile.deliveryResult == null || lastMile.itemProgress == null || lastMile.planTime  == null) {
-    //     let alert = this.alertCtrl.create({
-    //         title: '错误信息',
-    //         subTitle: '请先完善上一个里程碑内容!',
-    //         buttons: ['确定']
-    //     });
-    //     alert.present();
-    //     return;
-    //   }
-    //   if (lastMile.leader.length < 1 || lastMile.deliveryResult.length < 1 || lastMile.itemProgress.length < 1 || lastMile.planTime.length < 1) {
-    //     let alert = this.alertCtrl.create({
-    //       title: '错误信息',
-    //       subTitle: '请先完善上一个里程碑内容!',
-    //       buttons: ['确定']
-    //     });
-    //     alert.present();
-    //     return;
-    //   }
-    // }
     var milestone = {
       id : '',                    //里程碑id
       milestoneName : '里程碑'+(this.project.milestoneVo1.length+1),         //里程碑的名称
@@ -296,6 +265,8 @@ export class ProjectCreatePage {
         type: 1,
     });
   }
+
+  //this.content.enableJsScroll();
 
     addOneMilestone(milestone) {
         if (this.project.milestoneVo1.length == 0) {

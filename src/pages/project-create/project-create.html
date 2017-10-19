@@ -67,7 +67,8 @@
         <ion-item style="border-bottom: solid 1px #ececec">
           <ion-icon item-start name="appname-admin"></ion-icon>
           <ion-label>负责人</ion-label>
-          <ion-input item-end text-right [(ngModel)]="mile.itemEndLeader" [disabled]="type==2"></ion-input>
+          <!--<ion-label no-margin no-padding float-end text-right [hidden]="type==1">{{mile.itemEndLeader}}</ion-label>-->
+          <ion-input item-end text-right [readonly]="type==2" unselectable="on" (ionFocus)="onFocusInput($event)" [(ngModel)]="mile.itemEndLeader"></ion-input>
         </ion-item>
         <ion-item style="border-bottom: solid 1px #ececec">
           <ion-icon item-start name="appname-time"></ion-icon>
@@ -96,7 +97,7 @@
         <ion-item>
           <ion-icon item-start name="appname-result"></ion-icon>
           <ion-label>交付成果</ion-label>
-          <ion-textarea item-end text-right [(ngModel)]="mile.deliveryResult" [disabled]="type==2"></ion-textarea>
+          <ion-textarea item-end text-right [(ngModel)]="mile.deliveryResult" readonly="{{type==2}}" (ionFocus)="onFocusInput($event)"></ion-textarea>
         </ion-item>
       </ion-list>
     </div>

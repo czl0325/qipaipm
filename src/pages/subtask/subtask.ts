@@ -59,6 +59,7 @@ export class SubtaskPage {
   tempSubtask: any;
   canEdit: boolean = true;
   minTime: string = new DatePipe('en-US').transform(new Date(), 'yyyy-MM-dd');
+  maxTime: string = "2030-12-31";
 
 
   constructor(public navCtrl: NavController, private navParams: NavParams, private appService: AppService, public events: Events) {
@@ -75,6 +76,11 @@ export class SubtaskPage {
         if (this.subtask.itemEndLeaderNum != AppSingleton.getInstance().currentUserInfo.username) {
             this.canEdit = false;
         }
+    }
+    if (typeof (this.milestone.deliveryTime) == 'number') {
+        this.maxTime = new DatePipe('en-US').transform(AppConfig.timestampToDate(this.milestone.deliveryTime), 'yyyy-MM-dd');
+    } else if (typeof (this.milestone.deliveryTime) == 'string') {
+        this.maxTime = this.milestone.deliveryTime;
     }
   }
 
