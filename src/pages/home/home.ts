@@ -142,7 +142,7 @@ export class HomePage {
                     clearInterval(this.timer);
                     personView.style.left = 0 + 'px';
                 }
-            }, 2);
+            }, 1);
         }
     }
 
@@ -163,7 +163,7 @@ export class HomePage {
                     this.navCtrl.insert(0, LoginPage);
                     this.navCtrl.popToRoot();
                 }
-            }, 2);
+            }, 1);
         }
     }
 

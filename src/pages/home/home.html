@@ -6,7 +6,7 @@
                 </ion-icon>
             </button>
         </ion-buttons>
-        <ion-title [hidden]="type==1">
+        <ion-title float-left [hidden]="type==1">
             {{currentDate | YearAndMonthPipe}}
         </ion-title>
         <ion-buttons end>
@@ -24,6 +24,20 @@
             </button>
         </ion-buttons>
     </ion-navbar>
+    <!--<ion-toolbar no-border-top>-->
+        <!--<ion-buttons start>-->
+            <!--<button  ion-button icon-only solid>-->
+                <!--<ion-icon name="contact"></ion-icon>-->
+            <!--</button>-->
+        <!--</ion-buttons>-->
+        <!--<ion-title>Solid</ion-title>-->
+        <!--<ion-buttons end>-->
+            <!--<button  ion-button icon-end solid color="secondary">-->
+                <!--Help-->
+                <!--<ion-icon name="help-circle"></ion-icon>-->
+            <!--</button>-->
+        <!--</ion-buttons>-->
+    <!--</ion-toolbar>-->
 </ion-header>
 
 <ion-content fullscreen>

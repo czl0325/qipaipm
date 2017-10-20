@@ -171,10 +171,14 @@ export class MilestoneDetailPage {
                 this.appService.httpPost("item/createMilestone", param, this, function (view, res) {
                     if (res.status == 200) {
                         view.tempMilestone = res.json().data;
-                        if (typeof (view.project.children != 'undefined')) {
-                            view.tempMilestone.milestoneName = '里程碑' + (view.project.children.length + 1);
+                        if (view.milestone.milestoneName || '') {
+                            view.tempMilestone.milestoneName = view.milestone.milestoneName;
                         } else {
-                            view.tempMilestone.milestoneName = '里程碑1';
+                            if (typeof (view.project.children != 'undefined')) {
+                                view.tempMilestone.milestoneName = '里程碑' + (view.project.children.length + 1);
+                            } else {
+                                view.tempMilestone.milestoneName = '里程碑1';
+                            }
                         }
                         view.milestone = view.tempMilestone;
                         view.callback(view.milestone).then(() => {

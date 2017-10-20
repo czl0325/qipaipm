@@ -60,10 +60,13 @@
             (ngModelChange)="onClickCheck($event, 3)"
             class="check vertical_center">
     </ion-checkbox>
+    <ion-label no-margin no-padding class="reason vertical_center">其他原因</ion-label>
     <!--<ion-input #input1 id="input1" tappable no-margin no-padding placeholder="其他原因" class="reason vertical_center"-->
                <!--[(ngModel)]="otherReason" focuser></ion-input>-->
-    <div style="position: relative; height: 100%; margin-left: 150px">
-        <input id="input2" placeholder="其他原因" style="width: 100%;" class="vertical_center" [(ngModel)]="otherReason">
-    </div>
+
+  </div>
+
+  <div style="background-color: #1e82d2; height: 200px; margin: 20px 20px">
+    <textarea id="input2" maxlength="100" placeholder="请输入原因。字数最多100字" [(ngModel)]="otherReason" style="width: 100%; height: 100%"></textarea>
   </div>
 </ion-content>

@@ -37,7 +37,7 @@ export class PersonInfoComponent {
                     clearInterval(this.timer);
                     personView.style.left = '-100%';
                 }
-            }, 2);
+            }, 1);
         }
     }
 

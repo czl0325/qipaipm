@@ -57,7 +57,8 @@ export class SubtaskPage {
         itemIsEnd: false, //子任务是否完成
     };
     tempSubtask: any;
-    canEdit: boolean = true;
+    canEdit: boolean = false;
+    canFinish: boolean = false;
     minTime: string = new DatePipe('en-US').transform(new Date(), 'yyyy-MM-dd');
     maxTime: string = "2030-12-31";
 
@@ -72,9 +73,14 @@ export class SubtaskPage {
             this.subtask = data;
         }
         this.tempSubtask = AppConfig.deepCopy(this.subtask);
-        if (this.type == 2) {
-            if (this.subtask.itemEndLeaderNum != AppSingleton.getInstance().currentUserInfo.username) {
-                this.canEdit = false;
+        if (this.type == 1) {
+            this.canEdit = true;
+        } else {
+            if (this.subtask.itemEndLeaderNum == AppSingleton.getInstance().currentUserInfo.username) {
+                this.canFinish = true;
+            }
+            if (this.milestone.itemEndLeaderNum == AppSingleton.getInstance().currentUserInfo.username) {
+                this.canEdit = true;
             }
         }
         if (typeof (this.milestone.deliveryTime) == 'number') {

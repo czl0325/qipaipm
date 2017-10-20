@@ -375,6 +375,7 @@ export class ProjectCreatePage {
                         this.addOneMilestone(milestone);
                         this.project.children.push(milestone);
                     }
+
                 } else {
                     if (this.changeIndex > -1) {
                         this.project.milestoneVo1.splice(this.changeIndex, 1, milestone);

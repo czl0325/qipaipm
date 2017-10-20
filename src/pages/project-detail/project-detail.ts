@@ -216,6 +216,14 @@ export class ProjectDetailPage {
             prompt.present();
         });
         this.events.subscribe('onEndProject', () => {
+            if (this.project.itemIsEnd == true) {
+                let toast = this.toastCtrl.create({
+                    message: "该项目已结束!",
+                    duration: 3000
+                });
+                toast.present();
+                return;
+            }
             this.navCtrl.push(ProjectEndPage, {
                 project: this.project,
             });
@@ -280,6 +288,7 @@ export class ProjectDetailPage {
         this.events.unsubscribe('showShareView');
         this.events.unsubscribe('onPushProjectDetail');
         this.events.unsubscribe('reloadMilestone');
+        this.events.unsubscribe('onDeleteProject');
         this.events.unsubscribe('onEndProject');
         this.events.unsubscribe('onDelayProject');
     }

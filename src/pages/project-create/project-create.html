@@ -72,7 +72,7 @@
         <!--</ion-item>-->
         <button ion-item style="border-bottom: solid 1px #ececec" disabled>
           <ion-icon item-start name="appname-admin"></ion-icon>
-          <ion-label item-start>负责人:</ion-label>
+          <ion-label item-start style="margin-left: 20px">负责人:</ion-label>
           <ion-label item-end text-right>{{mile.itemEndLeader}}</ion-label>
         </button>
         <ion-item style="border-bottom: solid 1px #ececec">
@@ -119,7 +119,7 @@
     <ion-list no-lines no-margin no-padding>
       <button ion-item style="border-bottom: solid 1px #ececec" (click)="onEndDirector($event)">
         <ion-icon item-start name="appname-admin"></ion-icon>
-        <ion-label item-start>负责人</ion-label>
+        <ion-label item-start style="margin-left: 20px">负责人</ion-label>
         <!--<ion-input item-end text-right placeholder="请输入负责人" [(ngModel)]="project.itemLeader"></ion-input>-->
         <ion-label item-end text-right>{{project.itemEndLeader}}</ion-label>
       </button>
