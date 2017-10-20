@@ -1,12 +1,12 @@
 <ion-header>
     <ion-navbar hideBackButton="true">
-        <ion-buttons>
+        <ion-buttons float-left>
             <button ion-button clear (click)="onClickPerson($event)">
                 <ion-icon large style="color: #fc5c53; margin-left: 10px;font-size: 25px" name="appname-my">
                 </ion-icon>
             </button>
         </ion-buttons>
-        <ion-title float-left [hidden]="type==1">
+        <ion-title float-left [hidden]="type==1" style="line-height: 35px">
             {{currentDate | YearAndMonthPipe}}
         </ion-title>
         <ion-buttons end>

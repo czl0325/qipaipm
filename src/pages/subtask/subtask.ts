@@ -1,5 +1,5 @@
 import {Component} from '@angular/core';
-import {Events, NavController, NavParams} from 'ionic-angular';
+import {Events, NavController, NavParams, ToastController} from 'ionic-angular';
 import {AppConfig} from "../../app/app.config";
 import {AppService} from "../../app/app.service";
 import {ContactPage} from "../contact/contact";
@@ -63,7 +63,9 @@ export class SubtaskPage {
     maxTime: string = "2030-12-31";
 
 
-    constructor(public navCtrl: NavController, private navParams: NavParams, private appService: AppService, public events: Events) {
+    constructor(public navCtrl: NavController, private navParams: NavParams,
+                private appService: AppService, public events: Events,
+                private toastCtrl: ToastController) {
         var data = this.navParams.get('subtask');
         this.projectname = this.navParams.get('projectname');
         this.callback = this.navParams.get('callback');
@@ -112,6 +114,22 @@ export class SubtaskPage {
     }
 
     onSaveSubtask() {
+        if (!(this.tempSubtask.itemEndLeader || '')) {
+            let toast = this.toastCtrl.create({
+                message: '子任务负责人为必填项!',
+                duration: 3000
+            });
+            toast.present();
+            return;
+        }
+        if (!(this.tempSubtask.deliveryResult || '')) {
+            let toast = this.toastCtrl.create({
+                message: '子任务交付成果为必填项!',
+                duration: 3000
+            });
+            toast.present();
+            return;
+        }
         var param = this.tempSubtask;
         // if (this.type == 1) {
         //     this.callback(this.tempSubtask).then(()=>{
