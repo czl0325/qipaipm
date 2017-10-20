@@ -130,7 +130,7 @@ export class ProjectDetailPage {
             } else if (typeof (this.project.itemStartTime) == "string") {
                 dateString = this.project.itemStartTime;
             }
-            this.socialSharing.share("您有一个项目任务" + this.project.itemName + "于" + dateString + "启动，请前往柒牌项目管理应用查看详情", "柒牌项目管理", null, null);
+            this.socialSharing.share("您有一个项目任务《" + this.project.itemName + "》于" + dateString + "启动，请前往柒牌项目管理应用查看详情", "柒牌项目管理", null, null);
         });
         this.events.subscribe('onPushProjectDetail', () => {
             if (this.project.itemIsEnd == true) {

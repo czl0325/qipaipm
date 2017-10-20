@@ -27495,6 +27495,7 @@ page-home .list_circle {
 page-login .login_icon {
   display: block;
   margin: 30px auto 50px;
+  width: 80%;
 }
 
 page-login .login_input {

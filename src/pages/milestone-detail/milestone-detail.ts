@@ -40,6 +40,8 @@ export class MilestoneDetailPage {
     project: any;
     callback;
     type: number;
+    canChooses: boolean[] = [];
+    test = ['10%', '20%'];
     @ViewChild(Content) content: Content;
 
     milestone = {
@@ -75,6 +77,34 @@ export class MilestoneDetailPage {
         this.type = this.navParams.get('type');
         this.mileType = this.navParams.get('mileType');
         this.milestone = data;
+        for (let i=0; i<10; i++) {
+            this.canChooses.push(false);
+        }
+        /*******判断前后里程碑的进度*******/
+        if (this.mileType == 1) {
+            var isIn1 = false;
+            for (let i=0; i<this.project.milestoneVo1.length; i++) {
+                var mile1 = this.project.milestoneVo1[i];
+                if (mile1.id == this.milestone.id && mile1.id != '') {
+                    isIn1 = true;
+                    break;
+                }
+            }
+            if (isIn1 == false) {
+                if (this.project.milestoneVo1.length == 0) {
+                    for (let i=0; i<10; i++) {
+                        this.canChooses[i] = true;
+                    }
+                } else {
+                    var mm1 = this.project.milestoneVo1[this.project.milestoneVo1.length-1];
+                    var min1 = parseInt(mm1.itemProgresss.replace(/%/, ""))/10-1;
+                    for (let i=min1; i < 10; i++) {
+                        this.canChooses[i] = true;
+                    }
+                }
+            }
+        }
+        /**************/
         if (this.milestone.id.length < 1) {
             if (this.mileType == 1) {
                 if (typeof (this.project.children) != 'undefined') {
@@ -90,6 +120,7 @@ export class MilestoneDetailPage {
                 }
             }
         }
+
         if (typeof (this.milestone.children) != 'undefined') {
             for (let i = 0; i < this.milestone.children.length; i++) {
                 var subtask = this.milestone.children[i];
@@ -100,7 +131,6 @@ export class MilestoneDetailPage {
         if (this.type == 1) {
             this.canEdit = true;
         } else if (this.type == 2) {
-            console.log(AppSingleton.getInstance().currentUserInfo.username);
             if (AppSingleton.getInstance().currentUserInfo.username == this.milestone.itemEndLeaderNum) {
                 this.canEdit = true;
                 if (this.milestone.id.length > 0) {

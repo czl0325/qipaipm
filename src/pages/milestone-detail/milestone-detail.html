@@ -54,17 +54,20 @@
     <ion-item style="border-bottom: solid 1px #ececec"  >
       <ion-icon item-start name="appname-plan"></ion-icon>
       <ion-label>项目进度</ion-label>
-      <ion-select interface="action-sheet" [(ngModel)]="tempMilestone.itemProgress" cancelText="取消" doneText="确认" [disabled]="canEdit==false">
-        <ion-option value="10%">10%</ion-option>
-        <ion-option value="20%">20%</ion-option>
-        <ion-option value="30%">30%</ion-option>
-        <ion-option value="40%">40%</ion-option>
-        <ion-option value="50%">50%</ion-option>
-        <ion-option value="60%">60%</ion-option>
-        <ion-option value="70%">70%</ion-option>
-        <ion-option value="80%">80%</ion-option>
-        <ion-option value="90%">90%</ion-option>
-        <ion-option value="100%">100%</ion-option>
+      <ion-select interface="action-sheet" [(ngModel)]="tempMilestone.itemProgress"
+                  cancelText="取消" okText="确认" [disabled]="canEdit==false">
+          <!--<ion-option value="{{test}}">{{test}}</ion-option>-->
+          <ion-item-options ">{{test}} </ion-item-options>
+        <!--<ion-option value="10%" [disabled]="canChooses[0]==false">10%</ion-option>-->
+        <!--<ion-option value="20%" [disabled]="canChooses[1]==false">20%</ion-option>-->
+        <!--<ion-option value="30%" [disabled]="canChooses[2]==false">30%</ion-option>-->
+        <!--<ion-option value="40%" [disabled]="canChooses[3]==false">40%</ion-option>-->
+        <!--<ion-option value="50%" [disabled]="canChooses[4]==false">50%</ion-option>-->
+        <!--<ion-option value="60%" [disabled]="canChooses[5]==false">60%</ion-option>-->
+        <!--<ion-option value="70%" [disabled]="canChooses[6]==false">70%</ion-option>-->
+        <!--<ion-option value="80%" [disabled]="canChooses[7]==false">80%</ion-option>-->
+        <!--<ion-option value="90%" [disabled]="canChooses[8]==false">90%</ion-option>-->
+        <!--<ion-option value="100%" [disabled]="canChooses[9]==false">100%</ion-option>-->
       </ion-select>
     </ion-item>
     <ion-item style="border-bottom: solid 1px #ececec;"  >

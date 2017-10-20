@@ -54,11 +54,11 @@
     <ion-item style="border-top: solid 1px #ececec;border-bottom: solid 1px #ececec">
       <div item-start>是否完成</div>
       <ion-label>完成</ion-label>
-      <ion-checkbox [(ngModel)]=tempSubtask.itemIsEnd [disabled]="canEdit==false"></ion-checkbox>
+      <ion-checkbox [(ngModel)]=tempSubtask.itemIsEnd [disabled]="canFinish==false"></ion-checkbox>
     </ion-item>
     <ion-item style="border-bottom: solid 1px #ececec; height: 100px;">
       <ion-label item-start>备注:</ion-label>
-      <ion-textarea item-end [(ngModel)]=tempSubtask.remark [disabled]="canEdit==false"></ion-textarea>
+      <ion-textarea item-end [(ngModel)]=tempSubtask.remark [disabled]="canFinish==false"></ion-textarea>
     </ion-item>
   </ion-list>
 </ion-content>
