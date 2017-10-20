@@ -66,6 +66,12 @@ ion-icon {
     width: 1.5rem;
     height: 1.5rem;
   }
+  &[class*="appname-my"] {
+    -webkit-mask-image: url(../assets/svg/icon_my.svg);
+    background-color: #fc5c53;
+    width: 1.5rem;
+    height: 1.5rem;
+  }
   &[class*="appname-arrow"] {
     -webkit-mask-image: url(../assets/svg/icon-arrow.svg);
   }

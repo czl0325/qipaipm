@@ -1,7 +1,6 @@
-import {Component, ElementRef, ViewChild, NgZone, Renderer} from '@angular/core';
-import {AlertController, Events, IonicPage, NavController, NavParams, ToastController} from 'ionic-angular';
+import {Component, ElementRef, ViewChild} from '@angular/core';
+import {AlertController, IonicPage, NavController, NavParams} from 'ionic-angular';
 import {AppService} from "../../app/app.service";
-import {Keyboard} from "@ionic-native/keyboard";
 
 /**
  * Generated class for the ProjectEndPage page.
@@ -25,10 +24,7 @@ export class ProjectEndPage {
 
 
     constructor(public navCtrl: NavController, public navParams: NavParams,
-                private alertCtrl: AlertController, private appService: AppService,
-                private events: Events, private toastCtrl: ToastController,
-                private keyboard: Keyboard, private el: ElementRef,
-                private ngZone: NgZone, private renderer: Renderer) {
+                private alertCtrl: AlertController, private appService: AppService) {
         this.project = this.navParams.get('project');
         this.otherReason = '';
         for (let i = 0; i < 4; i++) {
@@ -58,9 +54,9 @@ export class ProjectEndPage {
             this.arrayCheckboxs[index] = false;
             this.project.multipleItemEndWhy = '';
             if (index == 3) {
-                var input2 = document.getElementById('input2');
-                if (input2 != null) {
-                    input2.setAttribute("readOnly", "readOnly");
+                var input2_1 = document.getElementById('input2');
+                if (input2_1 != null) {
+                    input2_1.setAttribute("readOnly", "readOnly");
                 }
             }
         } else {
@@ -71,33 +67,14 @@ export class ProjectEndPage {
             switch (index) {
                 case 0:
                     this.project.multipleItemEndWhy = '业务改变';
-                    var input2 = document.getElementById('input2');
-                    if (input2 != null) {
-                        input2.setAttribute("readOnly", "readOnly");
-                    }
                     break;
                 case 1:
                     this.project.multipleItemEndWhy = '资源不够';
-                    var input2 = document.getElementById('input2');
-                    if (input2 != null) {
-                        input2.setAttribute("readOnly", "readOnly");
-                    }
                     break;
                 case 2:
                     this.project.multipleItemEndWhy = '合作方退出';
-                    var input2 = document.getElementById('input2');
-                    if (input2 != null) {
-                        input2.setAttribute("readOnly", "readOnly");
-                    }
                     break;
                 case 3:
-                    var input2 = document.getElementById('input2');
-                    if (input2 != null) {
-                        input2.removeAttribute("readOnly");
-                        setTimeout(function () {
-                            input2.focus();
-                        }, 100);
-                    }
                     // this.ngZone.runOutsideAngular(() => {
                     //     setTimeout(() => {
                     //         this.renderer.selectRootElement('#box').focus();
@@ -106,6 +83,17 @@ export class ProjectEndPage {
                     break;
                 default:
                     break;
+            }
+            var input2_2 = document.getElementById('input2');
+            if (index < 3) {
+                if (input2_2 != null) {
+                    input2_2.setAttribute("readOnly", "readOnly");
+                }
+            } else {
+                input2_2.removeAttribute("readOnly");
+                setTimeout(function () {
+                    input2_2.focus();
+                }, 100);
             }
         }
     }

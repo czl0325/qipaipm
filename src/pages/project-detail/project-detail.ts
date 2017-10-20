@@ -149,34 +149,34 @@ export class ProjectDetailPage {
         });
         this.events.subscribe('reloadMilestone', (milestone) => {
             if (milestone.milestoneType == 1) {
-                var isIn = false;
+                var isIn1 = false;
                 for (let i = 0; i < this.project.milestoneVo1.length; i++) {
                     var mile1 = this.project.milestoneVo1[i];
                     if (milestone.id == mile1.id && mile1.id != '') {
                         //this.project.children.splice(i, 1, milestone);
                         this.project.milestoneVo1.splice(i, 1, milestone);
-                        isIn = true;
+                        isIn1 = true;
                         this.cd.detectChanges();
                         break;
                     }
                 }
-                if (isIn == false) {
+                if (isIn1 == false) {
                     this.project.milestoneVo1.push(milestone);
                     this.cd.detectChanges();
                 }
             } else if (milestone.milestoneType == 2) {
-                var isIn = false;
+                var isIn2 = false;
                 for (let i = 0; i < this.project.milestoneVo2.length; i++) {
                     var mile2 = this.project.milestoneVo2[i];
                     if (milestone.id == mile2.id && mile2.id != '') {
                         //this.project.children.splice(i, 1, milestone);
                         this.project.milestoneVo2.splice(i, 1, milestone);
-                        isIn = true;
+                        isIn2 = true;
                         this.cd.detectChanges();
                         break;
                     }
                 }
-                if (isIn == false) {
+                if (isIn2 == false) {
                     this.project.milestoneVo2.push(milestone);
                     this.cd.detectChanges();
                 }
@@ -234,7 +234,7 @@ export class ProjectDetailPage {
         this.events.subscribe('onDelayProject', () => {
             var milestone = {
                 id: '',                    //里程碑id
-                milestoneName: '里程碑' + (this.project.children.length + 1),         //里程碑的名称
+                milestoneName: '延期' + (this.project.milestoneVo2.length + 1),         //里程碑的名称
                 leader: '',       //里程碑的负责人
                 leaderEmpNum: '',          //里程碑负责人工号
                 // milestoneDelivery : '',
@@ -309,6 +309,11 @@ export class ProjectDetailPage {
 
     onClickMilestone($event, mile) {
         if (this.project.itemIsEnd == true) {
+            let toast = this.toastCtrl.create({
+                message: "已结束项目不能编辑!",
+                duration: 3000
+            });
+            toast.present();
             return;
         }
         this.navCtrl.push(MilestoneDetailPage, {
@@ -323,10 +328,16 @@ export class ProjectDetailPage {
 
     onClickSubtask($event, subtask, mile) {
         if (this.project.itemIsEnd == true) {
+            let toast = this.toastCtrl.create({
+                message: "已结束项目不能编辑!",
+                duration: 3000
+            });
+            toast.present();
             return;
         }
         this.navCtrl.push(SubtaskPage, {
             subtask: subtask,
+            type: 2,
             projectname: this.project.itemName,
             callback: this.subtaskCallback,
             milestone: mile,
@@ -413,10 +424,10 @@ export class ProjectDetailPage {
                 this.project.milestoneVo1.push(milestone);
                 this.isExpand1.push(false);
             } else if (this.project.milestoneVo1.length == 1) {
-                var p1 = this.project.milestoneVo1[0];
-                var d1 = AppConfig.timestampToDate(p1.deliveryTime);
-                var d2 = AppConfig.timestampToDate(milestone.deliveryTime);
-                if (d1 <= d2) {
+                var p1_1 = this.project.milestoneVo1[0];
+                var d1_1 = AppConfig.timestampToDate(p1_1.deliveryTime);
+                var d2_1 = AppConfig.timestampToDate(milestone.deliveryTime);
+                if (d1_1 <= d2_1) {
                     this.project.milestoneVo1.push(milestone);
                     this.isExpand1.push(false);
                 } else {
@@ -424,33 +435,33 @@ export class ProjectDetailPage {
                     this.isExpand1.splice(0, 0, false);
                 }
             } else {
-                var isInsert = false;
+                var isInsert1 = false;
                 for (let i = 0; i < this.project.milestoneVo1.length - 1; i++) {
-                    var pp1 = this.project.milestoneVo1[i];
-                    var pp2 = this.project.milestoneVo1[i + 1];
-                    var dd1 = AppConfig.timestampToDate(pp1.deliveryTime);
-                    var dd2 = AppConfig.timestampToDate(pp2.deliveryTime);
-                    var dd3 = AppConfig.timestampToDate(milestone.deliveryTime);
-                    if (i == 0 && dd3 < dd1) {
-                        isInsert = true;
+                    var pp1_1 = this.project.milestoneVo1[i];
+                    var pp2_1 = this.project.milestoneVo1[i + 1];
+                    var dd1_1 = AppConfig.timestampToDate(pp1_1.deliveryTime);
+                    var dd2_1 = AppConfig.timestampToDate(pp2_1.deliveryTime);
+                    var dd3_1 = AppConfig.timestampToDate(milestone.deliveryTime);
+                    if (i == 0 && dd3_1 < dd1_1) {
+                        isInsert1 = true;
                         this.project.milestoneVo1.splice(0, 0, milestone);
                         this.isExpand1.splice(0, 0, false);
                         break;
                     }
-                    if (dd3 > dd1 && dd3 < dd2) {
-                        isInsert = true;
+                    if (dd3_1 > dd1_1 && dd3_1 < dd2_1) {
+                        isInsert1 = true;
                         this.project.milestoneVo1.splice(i + 1, 0, milestone);
                         this.isExpand1.splice(i + 1, 0, false);
                         break;
                     }
-                    if (i == this.project.milestoneVo1.length - 2 && dd3 > dd2) {
-                        isInsert = true;
+                    if (i == this.project.milestoneVo1.length - 2 && dd3_1 > dd2_1) {
+                        isInsert1 = true;
                         this.project.milestoneVo1.push(milestone);
                         this.isExpand1.push(false);
                         break;
                     }
                 }
-                if (isInsert == false) {
+                if (isInsert1 == false) {
                     this.project.milestoneVo1.push(milestone);
                     this.isExpand1.push(false);
                 }
@@ -460,10 +471,10 @@ export class ProjectDetailPage {
                 this.project.milestoneVo2.push(milestone);
                 this.isExpand2.push(false);
             } else if (this.project.milestoneVo2.length == 1) {
-                var p1 = this.project.milestoneVo2[0];
-                var d1 = AppConfig.timestampToDate(p1.deliveryTime);
-                var d2 = AppConfig.timestampToDate(milestone.deliveryTime);
-                if (d1 <= d2) {
+                var p1_2 = this.project.milestoneVo2[0];
+                var d1_2 = AppConfig.timestampToDate(p1_2.deliveryTime);
+                var d2_2 = AppConfig.timestampToDate(milestone.deliveryTime);
+                if (d1_2 <= d2_2) {
                     this.project.milestoneVo2.push(milestone);
                     this.isExpand2.push(false);
                 } else {
@@ -471,33 +482,33 @@ export class ProjectDetailPage {
                     this.isExpand2.splice(0, 0, false);
                 }
             } else {
-                var isInsert = false;
+                var isInsert2 = false;
                 for (let i = 0; i < this.project.milestoneVo2.length - 1; i++) {
-                    var pp1 = this.project.milestoneVo2[i];
-                    var pp2 = this.project.milestoneVo2[i + 1];
-                    var dd1 = AppConfig.timestampToDate(pp1.deliveryTime);
-                    var dd2 = AppConfig.timestampToDate(pp2.deliveryTime);
-                    var dd3 = AppConfig.timestampToDate(milestone.deliveryTime);
-                    if (i == 0 && dd3 < dd1) {
-                        isInsert = true;
+                    var pp1_2 = this.project.milestoneVo2[i];
+                    var pp2_2 = this.project.milestoneVo2[i + 1];
+                    var dd1_2 = AppConfig.timestampToDate(pp1_2.deliveryTime);
+                    var dd2_2 = AppConfig.timestampToDate(pp2_2.deliveryTime);
+                    var dd3_2 = AppConfig.timestampToDate(milestone.deliveryTime);
+                    if (i == 0 && dd3_2 < dd1_2) {
+                        isInsert2 = true;
                         this.project.milestoneVo2.splice(0, 0, milestone);
                         this.isExpand2.splice(0, 0, false);
                         break;
                     }
-                    if (dd3 > dd1 && dd3 < dd2) {
-                        isInsert = true;
+                    if (dd3_2 > dd1_2 && dd3_2 < dd2_2) {
+                        isInsert2 = true;
                         this.project.milestoneVo2.splice(i + 1, 0, milestone);
                         this.isExpand2.splice(i + 1, 0, false);
                         break;
                     }
-                    if (i == this.project.milestoneVo2.length - 2 && dd3 > dd2) {
-                        isInsert = true;
+                    if (i == this.project.milestoneVo2.length - 2 && dd3_2 > dd2_2) {
+                        isInsert2 = true;
                         this.project.milestoneVo2.push(milestone);
                         this.isExpand2.push(false);
                         break;
                     }
                 }
-                if (isInsert == false) {
+                if (isInsert2 == false) {
                     this.project.milestoneVo2.push(milestone);
                     this.isExpand2.push(false);
                 }
@@ -511,29 +522,29 @@ export class ProjectDetailPage {
         return new Promise((resolve, reject) => {
             if (typeof (milestone) != 'undefined') {
                 if (milestone.milestoneType == 1) {
-                    var isIn = false;
+                    var isIn1 = false;
                     for (let i = 0; i < this.project.milestoneVo1.length; i++) {
-                        var tempMile = this.project.milestoneVo1[i];
-                        if (tempMile.id == milestone.id) {
-                            isIn = true;
+                        var tempMile1 = this.project.milestoneVo1[i];
+                        if (tempMile1.id == milestone.id) {
+                            isIn1 = true;
                             this.project.milestoneVo1.splice(i, 1, milestone);
                             break;
                         }
                     }
-                    if (!isIn) {
+                    if (!isIn1) {
                         this.addOneMilestone(milestone);
                     }
                 } else if (milestone.milestoneType == 2) {
-                    var isIn = false;
+                    var isIn2 = false;
                     for (let i = 0; i < this.project.milestoneVo2.length; i++) {
-                        var tempMile = this.project.milestoneVo2[i];
-                        if (tempMile.id == milestone.id) {
-                            isIn = true;
+                        var tempMile2 = this.project.milestoneVo2[i];
+                        if (tempMile2.id == milestone.id) {
+                            isIn2 = true;
                             this.project.milestoneVo2.splice(i, 1, milestone);
                             break;
                         }
                     }
-                    if (!isIn) {
+                    if (!isIn2) {
                         this.addOneMilestone(milestone);
                     }
                 }

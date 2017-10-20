@@ -78,14 +78,13 @@ export class MilestoneDetailPage {
         if (this.milestone.id.length < 1) {
             if (this.mileType == 1) {
                 if (typeof (this.project.children) != 'undefined') {
-                    this.milestone.milestoneName = '里程碑' + (this.project.children.length + 1);
+                    this.milestone.milestoneName = '里程碑' + (this.project.milestoneVo1.length + 1);
                 } else {
                     this.milestone.milestoneName = '里程碑' + '1';
                 }
             } else {
-                console.log();
-                if (typeof (this.project.delayMilestone) != 'undefined') {
-                    this.milestone.milestoneName = '延期' + (this.project.delayMilestone.length + 1);
+                if (typeof (this.project.milestoneVo2) != 'undefined') {
+                    this.milestone.milestoneName = '延期' + (this.project.milestoneVo2.length + 1);
                 } else {
                     this.milestone.milestoneName = '延期' + '1';
                 }
