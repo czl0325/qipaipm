@@ -83,10 +83,12 @@ export class MilestoneDetailPage {
         /*******判断前后里程碑的进度*******/
         if (this.mileType == 1) {
             var isIn1 = false;
+            var index1 = -1;
             for (let i=0; i<this.project.milestoneVo1.length; i++) {
                 var mile1 = this.project.milestoneVo1[i];
                 if (mile1.id == this.milestone.id && mile1.id != '') {
                     isIn1 = true;
+                    index1 = i;
                     break;
                 }
             }
@@ -94,13 +96,81 @@ export class MilestoneDetailPage {
                 if (this.project.milestoneVo1.length == 0) {
                     for (let i=0; i<10; i++) {
                         this.canChooses[i] = true;
-                    }
+                    }//itemProgress
                 } else {
                     var mm1 = this.project.milestoneVo1[this.project.milestoneVo1.length-1];
-                    var min1 = parseInt(mm1.itemProgresss.replace(/%/, ""))/10-1;
-                    for (let i=min1; i < 10; i++) {
+                    var min1_1 = parseInt(mm1.itemProgress.replace(/%/, ""))/10-1;
+                    for (let i=min1_1+1; i < 10; i++) {
                         this.canChooses[i] = true;
                     }
+                }
+            } else {
+                var mmm1 = null;
+                var mmm2 = null;
+                var min1_2 = -1;
+                var min1_3 = -1;
+                if (index1 > 0) {
+                    mmm1 = this.project.milestoneVo1[index1-1];
+                    min1_2 = parseInt(mmm1.itemProgress.replace(/%/, ""))/10-1;
+                }
+                if (index1 < this.project.milestoneVo1.length-1) {
+                    mmm2 = this.project.milestoneVo1[index1+1];
+                    min1_3 = parseInt(mmm2.itemProgress.replace(/%/, ""))/10-1;
+                }
+                if (min1_2 == -1) {
+                    min1_2 = 0;
+                }
+                if (min1_3 == -1) {
+                    min1_3 = 10;
+                }
+                for (let i=min1_2+1; i < min1_3; i++) {
+                    this.canChooses[i] = true;
+                }
+            }
+        } else {
+            var isIn2 = false;
+            var index2 = -1;
+            for (let i=0; i<this.project.milestoneVo2.length; i++) {
+                var mile2 = this.project.milestoneVo2[i];
+                if (mile2.id == this.milestone.id && mile2.id != '') {
+                    isIn2 = true;
+                    index2 = i;
+                    break;
+                }
+            }
+            if (isIn2 == false) {
+                if (this.project.milestoneVo2.length == 0) {
+                    for (let i=0; i<10; i++) {
+                        this.canChooses[i] = true;
+                    }//itemProgress
+                } else {
+                    var mm2 = this.project.milestoneVo2[this.project.milestoneVo2.length-1];
+                    var min2_1 = parseInt(mm2.itemProgress.replace(/%/, ""))/10-1;
+                    for (let i=min2_1+1; i < 10; i++) {
+                        this.canChooses[i] = true;
+                    }
+                }
+            } else {
+                var mmm2_1 = null;
+                var mmm2_2 = null;
+                var min2_2 = -1;
+                var min2_3 = -1;
+                if (index2 > 0) {
+                    mmm2_1 = this.project.milestoneVo2[index2-1];
+                    min2_2 = parseInt(mmm2_1.itemProgress.replace(/%/, ""))/10-1;
+                }
+                if (index2 < this.project.milestoneVo1.length-1) {
+                    mmm2_2 = this.project.milestoneVo2[index2+1];
+                    min2_3 = parseInt(mmm2_2.itemProgress.replace(/%/, ""))/10-1;
+                }
+                if (min2_2 == -1) {
+                    min2_2 = 0;
+                }
+                if (min2_3 == -1) {
+                    min2_3 = 10;
+                }
+                for (let i=min2_2+1; i < min2_3; i++) {
+                    this.canChooses[i] = true;
                 }
             }
         }

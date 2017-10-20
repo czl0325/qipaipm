@@ -1,5 +1,5 @@
 import {Component} from '@angular/core';
-import {NavController, NavParams, ToastController, Events, AlertController} from 'ionic-angular';
+import {NavController, NavParams, ToastController, Events, AlertController, App} from 'ionic-angular';
 import {DatePipe} from "@angular/common";
 import {MilestoneDetailPage} from "../milestone-detail/milestone-detail";
 import {AppService} from "../../app/app.service";
@@ -168,8 +168,18 @@ export class ProjectCreatePage {
             alert.present();
             return;
         }
+        if (AppConfig.stringToDate(this.project.endTime) < AppConfig.stringToDate(this.project.itemStartTime)) {
+            let alert = this.alertCtrl.create({
+                title: '错误信息',
+                subTitle: '项目结束时间不得小于项目开始时间!',
+                buttons: ['确定']
+            });
+            alert.present();
+            return;
+        }
         this.appService.httpPost("item/createItem", this.project, this, function (view, res) {
-            // var data = res.json().data;
+            var data = res.json().data;
+            view.project.version = data.version;
             view.events.publish('homeProjectReload');
             let toast = view.toastCtrl.create({
                 message: view.project.id.length > 0 ? '保存项目成功!' : '创建项目成功!',
