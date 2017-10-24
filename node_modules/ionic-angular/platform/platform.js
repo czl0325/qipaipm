@@ -19,7 +19,7 @@ import { removeArrayItem } from '../util/util';
  *
  * \@Component({...})
  * export MyPage {
- *   constructor(public plt: Platform) {
+ *   constructor(public platform: Platform) {
  *
  *   }
  * }
@@ -134,8 +134,8 @@ var Platform = (function () {
      *
      * \@Component({...})
      * export MyPage {
-     *   constructor(public plt: Platform) {
-     *     if (this.plt.is('ios')) {
+     *   constructor(public platform: Platform) {
+     *     if (this.platform.is('ios')) {
      *       // This will only print when on iOS
      *       console.log('I am an iOS device!');
      *     }
@@ -174,9 +174,9 @@ var Platform = (function () {
      *
      * \@Component({...})
      * export MyPage {
-     *   constructor(public plt: Platform) {
+     *   constructor(public platform: Platform) {
      *     // This will print an array of the current platforms
-     *     console.log(this.plt.platforms());
+     *     console.log(this.platform.platforms());
      *   }
      * }
      * ```
@@ -195,10 +195,10 @@ var Platform = (function () {
      *
      * \@Component({...})
      * export MyPage {
-     *   constructor(public plt: Platform) {
+     *   constructor(public platform: Platform) {
      *     // This will print an object containing
      *     // all of the platforms and their versions
-     *     console.log(plt.versions());
+     *     console.log(platform.versions());
      *   }
      * }
      * ```
@@ -241,8 +241,8 @@ var Platform = (function () {
      *
      * \@Component({...})
      * export MyApp {
-     *   constructor(public plt: Platform) {
-     *     this.plt.ready().then((readySource) => {
+     *   constructor(public platform: Platform) {
+     *     this.platform.ready().then((readySource) => {
      *       console.log('Platform ready from', readySource);
      *       // Platform now ready, execute any required native code
      *     });

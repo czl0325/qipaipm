@@ -1,7 +1,7 @@
 import { ComponentFactory, ComponentFactoryResolver } from '@angular/core';
 import { Location } from '@angular/common';
 import { App } from '../components/app/app';
-import { NavLink, NavSegment } from './nav-util';
+import { NavLink, NavSegment, TransitionDoneFn } from './nav-util';
 import { ModuleLoader } from '../util/module-loader';
 import { Tab } from './nav-interfaces';
 import { NavigationContainer } from './navigation-container';
@@ -95,7 +95,7 @@ export declare class DeepLinker {
      *
      * @internal
      */
-    _loadViewForSegment(navContainer: NavigationContainer, segment: NavSegment, done: Function): any;
+    _loadViewForSegment(navContainer: NavigationContainer, segment: NavSegment, done: TransitionDoneFn): void | Promise<any>;
 }
 export declare function setupDeepLinker(app: App, serializer: UrlSerializer, location: Location, moduleLoader: ModuleLoader, cfr: ComponentFactoryResolver): DeepLinker;
 export declare function normalizeUrl(browserUrl: string): string;

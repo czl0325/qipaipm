@@ -36,12 +36,10 @@ import { Toast } from './toast';
  * ```ts
  * import { ToastController } from 'ionic-angular';
  *
- * constructor(private toastCtrl: ToastController) {
- *
- * }
+ * constructor(public toastCtrl: ToastController) { }
  *
  * presentToast() {
- *   let toast = this.toastCtrl.create({
+ *   const toast = this.toastCtrl.create({
  *     message: 'User was added successfully',
  *     duration: 3000,
  *     position: 'top'

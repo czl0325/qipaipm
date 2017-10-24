@@ -20,9 +20,9 @@
         <ion-input no-padding no-margin type="text" placeholder="输入验证码" formControlName="code" maxlength="8"></ion-input>
         <a id="btn_code" (click)="sendCodeBtnEvent($event)" class="sendcode" [class.active]="isCountDowning" >{{countDownText}}</a>
       </div>
-      <div class="row">
-        <button ion-button clear no-margin no-padding type="submit" [disabled]="!forgetForm.valid">确认</button>
-      </div>
+      <!--<div class="row">-->
+        <button ion-button clear no-margin no-padding type="submit" class="row" [disabled]="!forgetForm.valid">确认</button>
+      <!--</div>-->
     </div>
   </form>
 

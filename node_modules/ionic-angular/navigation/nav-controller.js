@@ -412,12 +412,11 @@ var NavController = (function () {
      *
      * @abstract
      * @param {?} page
-     * @param {?=} params
      * @param {?=} opts
      * @param {?=} done
      * @return {?}
      */
-    NavController.prototype.popTo = function (page, params, opts, done) { };
+    NavController.prototype.popTo = function (page, opts, done) { };
     /**
      * @hidden
      * Pop sequently all the pages in the stack.

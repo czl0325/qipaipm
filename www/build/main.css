@@ -3816,1825 +3816,6 @@ ion-icon::before {
   src: local("Noto Sans Bold"), local("Noto-Sans-Bold"), url("../assets/fonts/noto-sans-bold.woff") format("woff"), url("../assets/fonts/noto-sans-bold.ttf") format("truetype");
 }
 
-ion-multi-picker {
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
-  overflow: hidden;
-}
-
-.multi-picker-text, .multi-picker-placeholder {
-  overflow: hidden;
-  -webkit-box-flex: 1;
-  -webkit-flex: 1;
-  -ms-flex: 1;
-  flex: 1;
-  min-width: 16px;
-  min-height: 1.2em;
-  font-size: inherit;
-  line-height: 1.2;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-}
-
-.multi-picker-placeholder {
-  color: #999999;
-}
-
-.multi-picker-disabled,
-.item-multi-picker-disabled ion-label {
-  opacity: .4;
-  pointer-events: none;
-}
-
-.item-label-stacked ion-multi-picker,
-.item-label-floating ion-multi-picker {
-  padding-left: 0;
-  width: 100%;
-}
-
-ion-multi-picker {
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
-  overflow: hidden;
-}
-
-.multi-picker-text, .multi-picker-placeholder {
-  overflow: hidden;
-  -webkit-box-flex: 1;
-  -webkit-flex: 1;
-  -ms-flex: 1;
-  flex: 1;
-  min-width: 16px;
-  min-height: 1.2em;
-  font-size: inherit;
-  line-height: 1.2;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-}
-
-.multi-picker-placeholder {
-  color: #999999;
-}
-
-.multi-picker-disabled,
-.item-multi-picker-disabled ion-label {
-  opacity: .4;
-  pointer-events: none;
-}
-
-.item-label-stacked ion-multi-picker,
-.item-label-floating ion-multi-picker {
-  padding-left: 0;
-  width: 100%;
-}
-
-.ios ion-multi-picker {
-  padding: 11px 8px 11px 16px;
-}
-
-.ios .picker-toolbar-multi-picker-cancel {
-  -webkit-box-flex: 0;
-  -webkit-flex: 0;
-  -ms-flex: 0;
-  flex: 0;
-  text-align: start;
-}
-
-.ios .picker-toolbar-multi-picker-reset {
-  text-align: start;
-}
-
-.item-multi-picker .label-ios-primary {
-  color: #488aff;
-}
-
-.item-multi-picker .label-ios-secondary {
-  color: #32db64;
-}
-
-.item-multi-picker .label-ios-danger {
-  color: #f53d3d;
-}
-
-.item-multi-picker .label-ios-light {
-  color: #f4f4f4;
-}
-
-.item-multi-picker .label-ios-dark {
-  color: #222;
-}
-
-.item-md {
-  padding-left: 16px;
-  padding-right: 0;
-  position: relative;
-  font-size: 1.6rem;
-  font-weight: normal;
-  text-transform: none;
-  color: #000;
-  background-color: #fff;
-  -webkit-box-shadow: none;
-  box-shadow: none;
-  -webkit-transition: background-color 300ms cubic-bezier(0.4, 0, 0.2, 1);
-  transition: background-color 300ms cubic-bezier(0.4, 0, 0.2, 1);
-}
-
-.item-md.activated {
-  background-color: #f1f1f1;
-}
-
-.item-md[no-lines] {
-  border-width: 0;
-}
-
-.item-md h1 {
-  margin: 0 0 2px;
-  font-size: 2.4rem;
-  font-weight: normal;
-}
-
-.item-md h2 {
-  margin: 2px 0;
-  font-size: 1.6rem;
-  font-weight: normal;
-}
-
-.item-md h3,
-.item-md h4,
-.item-md h5,
-.item-md h6 {
-  margin: 2px 0;
-  font-size: 1.4rem;
-  font-weight: normal;
-  line-height: normal;
-}
-
-.item-md p {
-  margin: 0 0 2px;
-  overflow: inherit;
-  font-size: 1.4rem;
-  line-height: normal;
-  text-overflow: inherit;
-  color: #666;
-}
-
-.item-md.item-block .item-inner {
-  padding-right: 8px;
-  border-bottom: 1px solid #dedede;
-}
-
-.item-md [item-left],
-.item-md [item-right],
-.item-md [item-start],
-.item-md [item-end] {
-  margin: 9px 8px 9px 0;
-}
-
-.item-md ion-icon[item-left],
-.item-md ion-icon[item-right],
-.item-md ion-icon[item-start],
-.item-md ion-icon[item-end] {
-  margin-left: 0;
-  margin-top: 11px;
-  margin-bottom: 10px;
-}
-
-.item-md .item-button {
-  padding: 0 0.6em;
-  height: 25px;
-  font-size: 1.2rem;
-}
-
-.item-md .item-button[icon-only] ion-icon,
-.item-md .item-button[icon-only] {
-  padding: 0 1px;
-}
-
-.item-md ion-icon[item-left] + .item-inner,
-.item-md ion-icon[item-left] + .item-input,
-.item-md ion-icon[item-start] + .item-inner,
-.item-md ion-icon[item-start] + .item-input {
-  margin-left: 24px;
-}
-
-.item-md ion-avatar[item-left],
-.item-md ion-thumbnail[item-left],
-.item-md ion-avatar[item-start],
-.item-md ion-thumbnail[item-start] {
-  margin: 8px 16px 8px 0;
-}
-
-.item-md ion-avatar[item-right],
-.item-md ion-thumbnail[item-right],
-.item-md ion-avatar[item-end],
-.item-md ion-thumbnail[item-end] {
-  margin: 8px;
-}
-
-.item-md ion-avatar {
-  min-width: 40px;
-  min-height: 40px;
-}
-
-.item-md ion-avatar ion-img,
-.item-md ion-avatar img {
-  border-radius: 50%;
-  overflow: hidden;
-  width: 40px;
-  height: 40px;
-}
-
-.item-md ion-thumbnail {
-  min-width: 80px;
-  min-height: 80px;
-}
-
-.item-md ion-thumbnail ion-img,
-.item-md ion-thumbnail img {
-  width: 80px;
-  height: 80px;
-}
-
-ion-item-group .item-md:first-child .item-inner {
-  border-top-width: 0;
-}
-
-ion-item-group .item-md:last-child .item-inner,
-ion-item-group .item-md .item-wrapper:last-child .item-inner {
-  border: 0;
-}
-
-.item-divider-md {
-  padding-left: 16px;
-  border-bottom: 1px solid #dedede;
-  font-size: 1.4rem;
-  color: #858585;
-  background-color: #fff;
-}
-
-.item-md .text-md-primary {
-  color: #488aff;
-}
-
-.item-md-primary,
-.item-divider-md-primary {
-  color: #fff;
-  background-color: #488aff;
-}
-
-.item-md-primary p,
-.item-divider-md-primary p {
-  color: #fff;
-}
-
-.item-md-primary.activated,
-.item-divider-md-primary.activated {
-  background-color: #427feb;
-}
-
-.item-md .text-md-secondary {
-  color: #32db64;
-}
-
-.item-md-secondary,
-.item-divider-md-secondary {
-  color: #fff;
-  background-color: #32db64;
-}
-
-.item-md-secondary p,
-.item-divider-md-secondary p {
-  color: #fff;
-}
-
-.item-md-secondary.activated,
-.item-divider-md-secondary.activated {
-  background-color: #2ec95c;
-}
-
-.item-md .text-md-danger {
-  color: #f53d3d;
-}
-
-.item-md-danger,
-.item-divider-md-danger {
-  color: #fff;
-  background-color: #f53d3d;
-}
-
-.item-md-danger p,
-.item-divider-md-danger p {
-  color: #fff;
-}
-
-.item-md-danger.activated,
-.item-divider-md-danger.activated {
-  background-color: #e13838;
-}
-
-.item-md .text-md-light {
-  color: #f4f4f4;
-}
-
-.item-md-light,
-.item-divider-md-light {
-  color: #000;
-  background-color: #f4f4f4;
-}
-
-.item-md-light p,
-.item-divider-md-light p {
-  color: #000;
-}
-
-.item-md-light.activated,
-.item-divider-md-light.activated {
-  background-color: #e0e0e0;
-}
-
-.item-md .text-md-dark {
-  color: #222;
-}
-
-.item-md-dark,
-.item-divider-md-dark {
-  color: #fff;
-  background-color: #222;
-}
-
-.item-md-dark p,
-.item-divider-md-dark p {
-  color: #fff;
-}
-
-.item-md-dark.activated,
-.item-divider-md-dark.activated {
-  background-color: #343434;
-}
-
-.list-md ion-item-sliding {
-  background-color: #fff;
-}
-
-.item-md ion-reorder {
-  font-size: 1.5em;
-  opacity: .3;
-}
-
-.label-md {
-  margin: 13px 8px 13px 0;
-}
-
-[text-wrap] .label-md {
-  font-size: 1.4rem;
-  line-height: 1.5;
-}
-
-.item-input .label-md,
-.item-select .label-md,
-.item-datetime .label-md {
-  color: #999;
-}
-
-.label-md[stacked] {
-  font-size: 1.2rem;
-}
-
-.label-md[floating] {
-  -webkit-transform: translate3d(0,  27px,  0);
-  transform: translate3d(0,  27px,  0);
-  -webkit-transform-origin: left top;
-  transform-origin: left top;
-  -webkit-transition: -webkit-transform 150ms ease-in-out;
-  transition: -webkit-transform 150ms ease-in-out;
-  transition: transform 150ms ease-in-out;
-  transition: transform 150ms ease-in-out, -webkit-transform 150ms ease-in-out;
-}
-
-.label-md[stacked],
-.label-md[floating] {
-  margin-left: 0;
-  margin-bottom: 0;
-}
-
-.item-input-has-focus .label-md[stacked],
-.input-has-focus .label-md[stacked],
-.item-input-has-focus .label-md[floating],
-.input-has-focus .label-md[floating] {
-  color: #488aff;
-}
-
-.item-input-has-focus .label-md[floating],
-.input-has-focus .label-md[floating],
-.item-input-has-value .label-md[floating],
-.input-has-value .label-md[floating] {
-  -webkit-transform: translate3d(0,  0,  0) scale(0.8);
-  transform: translate3d(0,  0,  0) scale(0.8);
-}
-
-.item-md.item-label-stacked [item-right],
-.item-md.item-label-floating [item-right],
-.item-md.item-label-stacked [item-end],
-.item-md.item-label-floating [item-end] {
-  margin-top: 7px;
-  margin-bottom: 7px;
-}
-
-.label-md-primary,
-.item-input .label-md-primary,
-.item-select .label-md-primary,
-.item-datetime .label-md-primary {
-  color: #488aff;
-}
-
-.label-md-secondary,
-.item-input .label-md-secondary,
-.item-select .label-md-secondary,
-.item-datetime .label-md-secondary {
-  color: #32db64;
-}
-
-.label-md-danger,
-.item-input .label-md-danger,
-.item-select .label-md-danger,
-.item-datetime .label-md-danger {
-  color: #f53d3d;
-}
-
-.label-md-light,
-.item-input .label-md-light,
-.item-select .label-md-light,
-.item-datetime .label-md-light {
-  color: #f4f4f4;
-}
-
-.label-md-dark,
-.item-input .label-md-dark,
-.item-select .label-md-dark,
-.item-datetime .label-md-dark {
-  color: #222;
-}
-
-ion-multi-picker {
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
-  overflow: hidden;
-}
-
-.multi-picker-text, .multi-picker-placeholder {
-  overflow: hidden;
-  -webkit-box-flex: 1;
-  -webkit-flex: 1;
-  -ms-flex: 1;
-  flex: 1;
-  min-width: 16px;
-  min-height: 1.2em;
-  font-size: inherit;
-  line-height: 1.2;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-}
-
-.multi-picker-placeholder {
-  color: #999999;
-}
-
-.multi-picker-disabled,
-.item-multi-picker-disabled ion-label {
-  opacity: .4;
-  pointer-events: none;
-}
-
-.item-label-stacked ion-multi-picker,
-.item-label-floating ion-multi-picker {
-  padding-left: 0;
-  width: 100%;
-}
-
-.md ion-multi-picker {
-  padding: 13px 8px 13px 16px;
-}
-
-.item-multi-picker .label-md {
-  color: #999;
-}
-
-.item-multi-picker .label-md-primary {
-  color: #488aff;
-}
-
-.item-multi-picker .label-md-secondary {
-  color: #32db64;
-}
-
-.item-multi-picker .label-md-danger {
-  color: #f53d3d;
-}
-
-.item-multi-picker .label-md-light {
-  color: #f4f4f4;
-}
-
-.item-multi-picker .label-md-dark {
-  color: #222;
-}
-
-.item-wp {
-  padding-left: 16px;
-  padding-right: 0;
-  position: relative;
-  font-size: 1.6rem;
-  font-weight: normal;
-  text-transform: none;
-  color: #000;
-  background-color: #fff;
-  -webkit-box-shadow: none;
-  box-shadow: none;
-}
-
-.item-wp.activated {
-  background-color: #aaa;
-}
-
-.item-wp[no-lines] {
-  border-width: 0;
-}
-
-.item-wp h1 {
-  margin: 0 0 2px;
-  font-size: 2.4rem;
-  font-weight: normal;
-}
-
-.item-wp h2 {
-  margin: 2px 0;
-  font-size: 1.6rem;
-  font-weight: normal;
-}
-
-.item-wp h3,
-.item-wp h4,
-.item-wp h5,
-.item-wp h6 {
-  margin: 2px 0;
-  font-size: 1.4rem;
-  font-weight: normal;
-  line-height: normal;
-}
-
-.item-wp p {
-  margin: 0 0 2px;
-  overflow: inherit;
-  font-size: 1.4rem;
-  line-height: normal;
-  text-overflow: inherit;
-  color: #666;
-}
-
-.item-wp.item-block .item-inner {
-  padding-right: 8px;
-  border-bottom: 1px solid transparent;
-}
-
-.item-wp [item-left],
-.item-wp [item-right],
-.item-wp [item-start],
-.item-wp [item-end] {
-  margin: 9px 8px 9px 0;
-}
-
-.item-wp ion-icon[item-left],
-.item-wp ion-icon[item-right],
-.item-wp ion-icon[item-start],
-.item-wp ion-icon[item-end] {
-  margin-left: 0;
-  margin-top: 11px;
-  margin-bottom: 10px;
-}
-
-.item-wp .item-button {
-  padding: 0 0.6em;
-  height: 25px;
-  font-size: 1.2rem;
-}
-
-.item-wp .item-button[icon-only] ion-icon,
-.item-wp .item-button[icon-only] {
-  padding: 0 1px;
-}
-
-.item-wp[text-wrap] ion-label {
-  font-size: 1.4rem;
-  line-height: 1.5;
-}
-
-.item-wp ion-icon[item-left] + .item-inner,
-.item-wp ion-icon[item-left] + .item-input,
-.item-wp ion-icon[item-start] + .item-inner,
-.item-wp ion-icon[item-start] + .item-input {
-  margin-left: 8px;
-}
-
-.item-wp ion-avatar[item-left],
-.item-wp ion-thumbnail[item-left],
-.item-wp ion-avatar[item-start],
-.item-wp ion-thumbnail[item-start] {
-  margin: 8px 16px 8px 0;
-}
-
-.item-wp ion-avatar[item-right],
-.item-wp ion-thumbnail[item-right],
-.item-wp ion-avatar[item-end],
-.item-wp ion-thumbnail[item-end] {
-  margin: 8px;
-}
-
-.item-wp ion-avatar {
-  min-width: 40px;
-  min-height: 40px;
-}
-
-.item-wp ion-avatar ion-img,
-.item-wp ion-avatar img {
-  border-radius: 50%;
-  overflow: hidden;
-  width: 40px;
-  height: 40px;
-}
-
-.item-wp ion-thumbnail {
-  min-width: 80px;
-  min-height: 80px;
-}
-
-.item-wp ion-thumbnail ion-img,
-.item-wp ion-thumbnail img {
-  width: 80px;
-  height: 80px;
-}
-
-.item-divider-wp {
-  padding-left: 16px;
-  border-bottom: 1px solid transparent;
-  font-size: 2rem;
-  color: #000;
-  background-color: #fff;
-}
-
-.item-wp .text-wp-primary {
-  color: #488aff;
-}
-
-.item-wp-primary,
-.item-divider-wp-primary {
-  color: #fff;
-  background-color: #488aff;
-}
-
-.item-wp-primary p,
-.item-divider-wp-primary p {
-  color: #fff;
-}
-
-.item-wp-primary.activated,
-.item-divider-wp-primary.activated {
-  background-color: #427feb;
-}
-
-.item-wp .text-wp-secondary {
-  color: #32db64;
-}
-
-.item-wp-secondary,
-.item-divider-wp-secondary {
-  color: #fff;
-  background-color: #32db64;
-}
-
-.item-wp-secondary p,
-.item-divider-wp-secondary p {
-  color: #fff;
-}
-
-.item-wp-secondary.activated,
-.item-divider-wp-secondary.activated {
-  background-color: #2ec95c;
-}
-
-.item-wp .text-wp-danger {
-  color: #f53d3d;
-}
-
-.item-wp-danger,
-.item-divider-wp-danger {
-  color: #fff;
-  background-color: #f53d3d;
-}
-
-.item-wp-danger p,
-.item-divider-wp-danger p {
-  color: #fff;
-}
-
-.item-wp-danger.activated,
-.item-divider-wp-danger.activated {
-  background-color: #e13838;
-}
-
-.item-wp .text-wp-light {
-  color: #f4f4f4;
-}
-
-.item-wp-light,
-.item-divider-wp-light {
-  color: #000;
-  background-color: #f4f4f4;
-}
-
-.item-wp-light p,
-.item-divider-wp-light p {
-  color: #000;
-}
-
-.item-wp-light.activated,
-.item-divider-wp-light.activated {
-  background-color: #e0e0e0;
-}
-
-.item-wp .text-wp-dark {
-  color: #222;
-}
-
-.item-wp-dark,
-.item-divider-wp-dark {
-  color: #fff;
-  background-color: #222;
-}
-
-.item-wp-dark p,
-.item-divider-wp-dark p {
-  color: #fff;
-}
-
-.item-wp-dark.activated,
-.item-divider-wp-dark.activated {
-  background-color: #343434;
-}
-
-.list-wp ion-item-sliding {
-  background-color: #fff;
-}
-
-.label-wp {
-  margin: 13px 8px 13px 0;
-}
-
-.item-input .label-wp,
-.item-select .label-wp,
-.item-datetime .label-wp {
-  color: #999;
-}
-
-.label-wp[stacked] {
-  font-size: 1.2rem;
-}
-
-.label-wp[floating] {
-  -webkit-transform: translate3d(8px,  34px,  0);
-  transform: translate3d(8px,  34px,  0);
-  -webkit-transform-origin: left top;
-  transform-origin: left top;
-}
-
-.label-wp[stacked],
-.label-wp[floating] {
-  margin-left: 0;
-  margin-bottom: 0;
-}
-
-.item-input-has-focus .label-wp[stacked],
-.input-has-focus .label-wp[stacked],
-.item-input-has-focus .label-wp[floating],
-.input-has-focus .label-wp[floating] {
-  color: #488aff;
-}
-
-.item-input-has-focus .label-wp[floating],
-.input-has-focus .label-wp[floating],
-.item-input-has-value .label-wp[floating],
-.input-has-value .label-wp[floating] {
-  -webkit-transform: translate3d(0,  0,  0) scale(0.8);
-  transform: translate3d(0,  0,  0) scale(0.8);
-}
-
-.item-wp.item-label-stacked [item-right],
-.item-wp.item-label-floating [item-right],
-.item-wp.item-label-stacked [item-end],
-.item-wp.item-label-floating [item-end] {
-  margin-top: 13px;
-  margin-bottom: 13px;
-}
-
-.label-wp-primary,
-.item-input .label-wp-primary,
-.item-select .label-wp-primary,
-.item-datetime .label-wp-primary {
-  color: #488aff;
-}
-
-.label-wp-secondary,
-.item-input .label-wp-secondary,
-.item-select .label-wp-secondary,
-.item-datetime .label-wp-secondary {
-  color: #32db64;
-}
-
-.label-wp-danger,
-.item-input .label-wp-danger,
-.item-select .label-wp-danger,
-.item-datetime .label-wp-danger {
-  color: #f53d3d;
-}
-
-.label-wp-light,
-.item-input .label-wp-light,
-.item-select .label-wp-light,
-.item-datetime .label-wp-light {
-  color: #f4f4f4;
-}
-
-.label-wp-dark,
-.item-input .label-wp-dark,
-.item-select .label-wp-dark,
-.item-datetime .label-wp-dark {
-  color: #222;
-}
-
-ion-multi-picker {
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
-  overflow: hidden;
-}
-
-.multi-picker-text, .multi-picker-placeholder {
-  overflow: hidden;
-  -webkit-box-flex: 1;
-  -webkit-flex: 1;
-  -ms-flex: 1;
-  flex: 1;
-  min-width: 16px;
-  min-height: 1.2em;
-  font-size: inherit;
-  line-height: 1.2;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-}
-
-.multi-picker-placeholder {
-  color: #999999;
-}
-
-.multi-picker-disabled,
-.item-multi-picker-disabled ion-label {
-  opacity: .4;
-  pointer-events: none;
-}
-
-.item-label-stacked ion-multi-picker,
-.item-label-floating ion-multi-picker {
-  padding-left: 0;
-  width: 100%;
-}
-
-.wp ion-multi-picker {
-  padding: 13px 8px 13px 16px;
-  min-width: 45%;
-}
-
-.wp .multi-picker-text {
-  padding: 0 8px;
-  min-height: 3.4rem;
-  border: 2px solid rgba(0, 0, 0, 0.5);
-  line-height: 3rem;
-}
-
-.wp .item-multi-picker ion-label[floating] {
-  -webkit-transform: translate3d(8px, 41px, 0);
-  transform: translate3d(8px, 41px, 0);
-}
-
-.item-datetime .label-wp {
-  color: #999;
-}
-
-.item-multi-picker .label-wp-primary {
-  color: #488aff;
-}
-
-.item-multi-picker .label-wp-secondary {
-  color: #32db64;
-}
-
-.item-multi-picker .label-wp-danger {
-  color: #f53d3d;
-}
-
-.item-multi-picker .label-wp-light {
-  color: #f4f4f4;
-}
-
-.item-multi-picker .label-wp-dark {
-  color: #222;
-}
-
-ion-calendar {
-  padding: 10px 20px;
-  -webkit-box-sizing: border-box;
-  box-sizing: border-box;
-  display: inline-block;
-  background-color: #fff;
-  width: 100%;
-}
-
-ion-calendar .title {
-  padding: 0 40px 0 40px;
-  overflow: hidden;
-}
-
-ion-calendar .title .back, ion-calendar .title .forward, ion-calendar .title .switch-btn {
-  display: block;
-  position: relative;
-  float: left;
-  min-height: 32px;
-  margin: 0;
-  padding: 0;
-  font-size: 15px;
-}
-
-ion-calendar .title .back, ion-calendar .title .forward {
-  color: #757575;
-}
-
-ion-calendar .title .back {
-  margin-left: -100%;
-  left: -40px;
-  width: 40px;
-}
-
-ion-calendar .title .forward {
-  margin-left: -40px;
-  right: -40px;
-  width: 40px;
-}
-
-ion-calendar .title .switch-btn {
-  width: 100%;
-  text-align: center;
-  line-height: 32px;
-  color: #757575;
-}
-
-ion-calendar .title .switch-btn .arrow-dropdown {
-  margin-left: 5px;
-}
-
-ion-calendar-modal ion-select {
-  max-width: unset;
-}
-
-ion-calendar-modal ion-select .select-icon > .select-icon-inner, ion-calendar-modal ion-select .select-text {
-  color: #fff !important;
-}
-
-ion-calendar-modal ion-select.select-ios {
-  max-width: unset;
-}
-
-ion-calendar-modal .calendar-page {
-  background-color: #fbfbfb;
-}
-
-ion-calendar-modal .month-box {
-  display: inline-block;
-  padding-bottom: 1em;
-  border-bottom: 1px solid #f1f1f1;
-}
-
-ion-calendar-modal h4 {
-  font-weight: 400;
-  font-size: 1.8rem;
-  display: block;
-  text-align: center;
-  margin: 1rem 0 0;
-  color: #929292;
-}
-
-ion-calendar-month .days-box {
-  padding: 0.5rem;
-}
-
-ion-calendar-month .days:nth-of-type(7n), ion-calendar-month .days:nth-of-type(7n+1) {
-  width: 15%;
-}
-
-ion-calendar-month .days {
-  width: 14%;
-  float: left;
-  text-align: center;
-  height: 36px;
-  margin-bottom: 5px;
-}
-
-ion-calendar-month .days .marked p {
-  font-weight: 500;
-}
-
-ion-calendar-month .days .on-selected {
-  border: none;
-}
-
-ion-calendar-month .days .on-selected p {
-  font-size: 1.3em;
-}
-
-ion-calendar-month button.days-btn {
-  border-radius: 36px;
-  width: 36px;
-  display: block;
-  margin: 0 auto;
-  padding: 0;
-  height: 36px;
-  background-color: transparent;
-  position: relative;
-  z-index: 2;
-}
-
-ion-calendar-month button.days-btn p {
-  margin: 0;
-  font-size: 1.2em;
-  color: #333;
-}
-
-ion-calendar-month button.days-btn.on-selected small {
-  -webkit-transition: bottom .3s;
-  transition: bottom .3s;
-  bottom: -14px;
-}
-
-ion-calendar-month button.days-btn small {
-  overflow: hidden;
-  display: block;
-  left: 0;
-  right: 0;
-  bottom: -5px;
-  position: absolute;
-  z-index: 1;
-  text-align: center;
-  font-weight: 200;
-}
-
-ion-calendar-month .primary button.days-btn small,
-ion-calendar-month .primary .days .marked p,
-ion-calendar-month .primary .days .today p {
-  color: #488aff;
-}
-
-ion-calendar-month .primary .days .today p {
-  font-weight: 700;
-}
-
-ion-calendar-month .primary .days .today.on-selected p, ion-calendar-month .primary .days .marked.on-selected p {
-  color: #fff;
-}
-
-ion-calendar-month .primary .days .on-selected,
-ion-calendar-month .primary .startSelection button.days-btn,
-ion-calendar-month .primary .endSelection button.days-btn {
-  background-color: #488aff;
-  color: #fff;
-}
-
-ion-calendar-month .primary .startSelection {
-  position: relative;
-}
-
-ion-calendar-month .primary .startSelection:after {
-  height: 36px;
-  width: 50%;
-  content: '';
-  position: absolute;
-  top: 0;
-  right: 0;
-  display: block;
-  background-color: #85b1ff;
-}
-
-ion-calendar-month .primary .endSelection {
-  position: relative;
-}
-
-ion-calendar-month .primary .endSelection:after {
-  height: 36px;
-  width: 50%;
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  display: block;
-  background-color: #85b1ff;
-}
-
-ion-calendar-month .primary .startSelection button.days-btn {
-  border-radius: 50%;
-}
-
-ion-calendar-month .primary .between button.days-btn {
-  background-color: #85b1ff;
-  width: 100%;
-  border-radius: 0;
-}
-
-ion-calendar-month .primary .between button.days-btn p {
-  color: #fff;
-}
-
-ion-calendar-month .primary .endSelection button.days-btn {
-  border-radius: 50%;
-}
-
-ion-calendar-month .primary .endSelection button.days-btn p {
-  color: #fff;
-}
-
-ion-calendar-month .primary .days.between {
-  background-color: #85b1ff;
-}
-
-ion-calendar-month .primary .days .on-selected p {
-  color: #fff;
-}
-
-ion-calendar-month .primary .startSelection button.days-btn,
-ion-calendar-month .primary .endSelection button.days-btn,
-ion-calendar-month .primary .between button.days-btn {
-  -webkit-transition-property: background-color;
-  transition-property: background-color;
-  -webkit-transition-duration: 180ms;
-  transition-duration: 180ms;
-  -webkit-transition-timing-function: ease-out;
-  transition-timing-function: ease-out;
-}
-
-ion-calendar-month .secondary button.days-btn small,
-ion-calendar-month .secondary .days .marked p,
-ion-calendar-month .secondary .days .today p {
-  color: #32db64;
-}
-
-ion-calendar-month .secondary .days .today p {
-  font-weight: 700;
-}
-
-ion-calendar-month .secondary .days .today.on-selected p, ion-calendar-month .secondary .days .marked.on-selected p {
-  color: #fff;
-}
-
-ion-calendar-month .secondary .days .on-selected,
-ion-calendar-month .secondary .startSelection button.days-btn,
-ion-calendar-month .secondary .endSelection button.days-btn {
-  background-color: #32db64;
-  color: #fff;
-}
-
-ion-calendar-month .secondary .startSelection {
-  position: relative;
-}
-
-ion-calendar-month .secondary .startSelection:after {
-  height: 36px;
-  width: 50%;
-  content: '';
-  position: absolute;
-  top: 0;
-  right: 0;
-  display: block;
-  background-color: #66e48b;
-}
-
-ion-calendar-month .secondary .endSelection {
-  position: relative;
-}
-
-ion-calendar-month .secondary .endSelection:after {
-  height: 36px;
-  width: 50%;
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  display: block;
-  background-color: #66e48b;
-}
-
-ion-calendar-month .secondary .startSelection button.days-btn {
-  border-radius: 50%;
-}
-
-ion-calendar-month .secondary .between button.days-btn {
-  background-color: #66e48b;
-  width: 100%;
-  border-radius: 0;
-}
-
-ion-calendar-month .secondary .between button.days-btn p {
-  color: #fff;
-}
-
-ion-calendar-month .secondary .endSelection button.days-btn {
-  border-radius: 50%;
-}
-
-ion-calendar-month .secondary .endSelection button.days-btn p {
-  color: #fff;
-}
-
-ion-calendar-month .secondary .days.between {
-  background-color: #66e48b;
-}
-
-ion-calendar-month .secondary .days .on-selected p {
-  color: #fff;
-}
-
-ion-calendar-month .secondary .startSelection button.days-btn,
-ion-calendar-month .secondary .endSelection button.days-btn,
-ion-calendar-month .secondary .between button.days-btn {
-  -webkit-transition-property: background-color;
-  transition-property: background-color;
-  -webkit-transition-duration: 180ms;
-  transition-duration: 180ms;
-  -webkit-transition-timing-function: ease-out;
-  transition-timing-function: ease-out;
-}
-
-ion-calendar-month .danger button.days-btn small,
-ion-calendar-month .danger .days .marked p,
-ion-calendar-month .danger .days .today p {
-  color: #f53d3d;
-}
-
-ion-calendar-month .danger .days .today p {
-  font-weight: 700;
-}
-
-ion-calendar-month .danger .days .today.on-selected p, ion-calendar-month .danger .days .marked.on-selected p {
-  color: #fff;
-}
-
-ion-calendar-month .danger .days .on-selected,
-ion-calendar-month .danger .startSelection button.days-btn,
-ion-calendar-month .danger .endSelection button.days-btn {
-  background-color: #f53d3d;
-  color: #fff;
-}
-
-ion-calendar-month .danger .startSelection {
-  position: relative;
-}
-
-ion-calendar-month .danger .startSelection:after {
-  height: 36px;
-  width: 50%;
-  content: '';
-  position: absolute;
-  top: 0;
-  right: 0;
-  display: block;
-  background-color: #f87777;
-}
-
-ion-calendar-month .danger .endSelection {
-  position: relative;
-}
-
-ion-calendar-month .danger .endSelection:after {
-  height: 36px;
-  width: 50%;
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  display: block;
-  background-color: #f87777;
-}
-
-ion-calendar-month .danger .startSelection button.days-btn {
-  border-radius: 50%;
-}
-
-ion-calendar-month .danger .between button.days-btn {
-  background-color: #f87777;
-  width: 100%;
-  border-radius: 0;
-}
-
-ion-calendar-month .danger .between button.days-btn p {
-  color: #fff;
-}
-
-ion-calendar-month .danger .endSelection button.days-btn {
-  border-radius: 50%;
-}
-
-ion-calendar-month .danger .endSelection button.days-btn p {
-  color: #fff;
-}
-
-ion-calendar-month .danger .days.between {
-  background-color: #f87777;
-}
-
-ion-calendar-month .danger .days .on-selected p {
-  color: #fff;
-}
-
-ion-calendar-month .danger .startSelection button.days-btn,
-ion-calendar-month .danger .endSelection button.days-btn,
-ion-calendar-month .danger .between button.days-btn {
-  -webkit-transition-property: background-color;
-  transition-property: background-color;
-  -webkit-transition-duration: 180ms;
-  transition-duration: 180ms;
-  -webkit-transition-timing-function: ease-out;
-  transition-timing-function: ease-out;
-}
-
-ion-calendar-month .dark button.days-btn small,
-ion-calendar-month .dark .days .marked p,
-ion-calendar-month .dark .days .today p {
-  color: #222;
-}
-
-ion-calendar-month .dark .days .today p {
-  font-weight: 700;
-}
-
-ion-calendar-month .dark .days .today.on-selected p, ion-calendar-month .dark .days .marked.on-selected p {
-  color: #fff;
-}
-
-ion-calendar-month .dark .days .on-selected,
-ion-calendar-month .dark .startSelection button.days-btn,
-ion-calendar-month .dark .endSelection button.days-btn {
-  background-color: #222;
-  color: #fff;
-}
-
-ion-calendar-month .dark .startSelection {
-  position: relative;
-}
-
-ion-calendar-month .dark .startSelection:after {
-  height: 36px;
-  width: 50%;
-  content: '';
-  position: absolute;
-  top: 0;
-  right: 0;
-  display: block;
-  background-color: #414141;
-}
-
-ion-calendar-month .dark .endSelection {
-  position: relative;
-}
-
-ion-calendar-month .dark .endSelection:after {
-  height: 36px;
-  width: 50%;
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  display: block;
-  background-color: #414141;
-}
-
-ion-calendar-month .dark .startSelection button.days-btn {
-  border-radius: 50%;
-}
-
-ion-calendar-month .dark .between button.days-btn {
-  background-color: #414141;
-  width: 100%;
-  border-radius: 0;
-}
-
-ion-calendar-month .dark .between button.days-btn p {
-  color: #fff;
-}
-
-ion-calendar-month .dark .endSelection button.days-btn {
-  border-radius: 50%;
-}
-
-ion-calendar-month .dark .endSelection button.days-btn p {
-  color: #fff;
-}
-
-ion-calendar-month .dark .days.between {
-  background-color: #414141;
-}
-
-ion-calendar-month .dark .days .on-selected p {
-  color: #fff;
-}
-
-ion-calendar-month .dark .startSelection button.days-btn,
-ion-calendar-month .dark .endSelection button.days-btn,
-ion-calendar-month .dark .between button.days-btn {
-  -webkit-transition-property: background-color;
-  transition-property: background-color;
-  -webkit-transition-duration: 180ms;
-  transition-duration: 180ms;
-  -webkit-transition-timing-function: ease-out;
-  transition-timing-function: ease-out;
-}
-
-ion-calendar-month .light button.days-btn small,
-ion-calendar-month .light .days .marked p,
-ion-calendar-month .light .days .today p {
-  color: #f4f4f4;
-}
-
-ion-calendar-month .light .days .today p {
-  font-weight: 700;
-}
-
-ion-calendar-month .light .days .today.on-selected p, ion-calendar-month .light .days .marked.on-selected p {
-  color: #a0a0a0;
-}
-
-ion-calendar-month .light .days .on-selected,
-ion-calendar-month .light .startSelection button.days-btn,
-ion-calendar-month .light .endSelection button.days-btn {
-  background-color: #f4f4f4;
-  color: #a0a0a0;
-}
-
-ion-calendar-month .light .startSelection {
-  position: relative;
-}
-
-ion-calendar-month .light .startSelection:after {
-  height: 36px;
-  width: 50%;
-  content: '';
-  position: absolute;
-  top: 0;
-  right: 0;
-  display: block;
-  background-color: white;
-}
-
-ion-calendar-month .light .endSelection {
-  position: relative;
-}
-
-ion-calendar-month .light .endSelection:after {
-  height: 36px;
-  width: 50%;
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  display: block;
-  background-color: white;
-}
-
-ion-calendar-month .light .startSelection button.days-btn {
-  border-radius: 50%;
-}
-
-ion-calendar-month .light .between button.days-btn {
-  background-color: white;
-  width: 100%;
-  border-radius: 0;
-}
-
-ion-calendar-month .light .between button.days-btn p {
-  color: #a0a0a0;
-}
-
-ion-calendar-month .light .endSelection button.days-btn {
-  border-radius: 50%;
-}
-
-ion-calendar-month .light .endSelection button.days-btn p {
-  color: #a0a0a0;
-}
-
-ion-calendar-month .light .days.between {
-  background-color: white;
-}
-
-ion-calendar-month .light .days .on-selected p {
-  color: #a0a0a0;
-}
-
-ion-calendar-month .light .startSelection button.days-btn,
-ion-calendar-month .light .endSelection button.days-btn,
-ion-calendar-month .light .between button.days-btn {
-  -webkit-transition-property: background-color;
-  transition-property: background-color;
-  -webkit-transition-duration: 180ms;
-  transition-duration: 180ms;
-  -webkit-transition-timing-function: ease-out;
-  transition-timing-function: ease-out;
-}
-
-ion-calendar-month .light .days .today p {
-  color: #565656;
-}
-
-ion-calendar-month .cal-color button.days-btn small,
-ion-calendar-month .cal-color .days .marked p,
-ion-calendar-month .cal-color .days .today p {
-  color: #488aff;
-}
-
-ion-calendar-month .cal-color .days .today p {
-  font-weight: 700;
-}
-
-ion-calendar-month .cal-color .days .today.on-selected p, ion-calendar-month .cal-color .days .marked.on-selected p {
-  color: #fff;
-}
-
-ion-calendar-month .cal-color .days .on-selected,
-ion-calendar-month .cal-color .startSelection button.days-btn,
-ion-calendar-month .cal-color .endSelection button.days-btn {
-  background-color: #488aff;
-  color: #fff;
-}
-
-ion-calendar-month .cal-color .startSelection {
-  position: relative;
-}
-
-ion-calendar-month .cal-color .startSelection:after {
-  height: 36px;
-  width: 50%;
-  content: '';
-  position: absolute;
-  top: 0;
-  right: 0;
-  display: block;
-  background-color: #85b1ff;
-}
-
-ion-calendar-month .cal-color .endSelection {
-  position: relative;
-}
-
-ion-calendar-month .cal-color .endSelection:after {
-  height: 36px;
-  width: 50%;
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  display: block;
-  background-color: #85b1ff;
-}
-
-ion-calendar-month .cal-color .startSelection button.days-btn {
-  border-radius: 50%;
-}
-
-ion-calendar-month .cal-color .between button.days-btn {
-  background-color: #85b1ff;
-  width: 100%;
-  border-radius: 0;
-}
-
-ion-calendar-month .cal-color .between button.days-btn p {
-  color: #fff;
-}
-
-ion-calendar-month .cal-color .endSelection button.days-btn {
-  border-radius: 50%;
-}
-
-ion-calendar-month .cal-color .endSelection button.days-btn p {
-  color: #fff;
-}
-
-ion-calendar-month .cal-color .days.between {
-  background-color: #85b1ff;
-}
-
-ion-calendar-month .cal-color .days .on-selected p {
-  color: #fff;
-}
-
-ion-calendar-month .cal-color .startSelection button.days-btn,
-ion-calendar-month .cal-color .endSelection button.days-btn,
-ion-calendar-month .cal-color .between button.days-btn {
-  -webkit-transition-property: background-color;
-  transition-property: background-color;
-  -webkit-transition-duration: 180ms;
-  transition-duration: 180ms;
-  -webkit-transition-timing-function: ease-out;
-  transition-timing-function: ease-out;
-}
-
-ion-calendar-week .toolbar-background-md, ion-calendar-week .toolbar-background-ios {
-  background: transparent;
-}
-
-ion-calendar-week .week-toolbar {
-  padding: 0;
-}
-
-ion-calendar-week .week-toolbar.toolbar-md {
-  min-height: 44px;
-}
-
-ion-calendar-week .week-title.primary {
-  margin: 0;
-  color: #fff;
-  height: 44px;
-  width: 100%;
-  background-color: #488aff;
-  padding: 15px 0;
-}
-
-ion-calendar-week .week-title.secondary {
-  margin: 0;
-  color: #fff;
-  height: 44px;
-  width: 100%;
-  background-color: #32db64;
-  padding: 15px 0;
-}
-
-ion-calendar-week .week-title.danger {
-  margin: 0;
-  color: #fff;
-  height: 44px;
-  width: 100%;
-  background-color: #f53d3d;
-  padding: 15px 0;
-}
-
-ion-calendar-week .week-title.dark {
-  margin: 0;
-  color: #fff;
-  height: 44px;
-  width: 100%;
-  background-color: #222;
-  padding: 15px 0;
-}
-
-ion-calendar-week .week-title.light {
-  margin: 0;
-  color: #9e9e9e;
-  height: 44px;
-  width: 100%;
-  background-color: #f4f4f4;
-  padding: 15px 0;
-}
-
-ion-calendar-week .week-title.transparent {
-  margin: 0;
-  color: #9e9e9e;
-  height: 44px;
-  width: 100%;
-  background-color: #f4f4f4;
-  padding: 15px 0;
-  background-color: transparent;
-}
-
-ion-calendar-week .week-title.cal-color {
-  margin: 0;
-  color: #fff;
-  height: 44px;
-  width: 100%;
-  background-color: #488aff;
-  padding: 15px 0;
-}
-
-ion-calendar-week .week-title li {
-  list-style-type: none;
-  display: block;
-  float: left;
-  width: 14%;
-  text-align: center;
-}
-
-ion-calendar-week .week-title li:nth-of-type(7n), ion-calendar-week .week-title li:nth-of-type(7n+1) {
-  width: 15%;
-}
-
-ion-calendar-month-picker .month-picker {
-  margin: 20px 0;
-  display: inline-block;
-  width: 100%;
-}
-
-ion-calendar-month-picker .month-packer-item {
-  width: 25%;
-  -webkit-box-sizing: border-box;
-  box-sizing: border-box;
-  float: left;
-  height: 50px;
-  padding: 5px;
-}
-
-ion-calendar-month-picker .month-packer-item button {
-  border-radius: 32px;
-  width: 100%;
-  height: 100%;
-  font-size: 1em;
-  background-color: transparent;
-}
-
-ion-calendar-month-picker .month-picker.primary .month-packer-item.this-month button {
-  border: 1px solid #488aff;
-}
-
-ion-calendar-month-picker .month-picker.primary .month-packer-item.active button {
-  background-color: #488aff;
-  color: #fff;
-}
-
-ion-calendar-month-picker .month-picker.secondary .month-packer-item.this-month button {
-  border: 1px solid #32db64;
-}
-
-ion-calendar-month-picker .month-picker.secondary .month-packer-item.active button {
-  background-color: #32db64;
-  color: #fff;
-}
-
-ion-calendar-month-picker .month-picker.danger .month-packer-item.this-month button {
-  border: 1px solid #f53d3d;
-}
-
-ion-calendar-month-picker .month-picker.danger .month-packer-item.active button {
-  background-color: #f53d3d;
-  color: #fff;
-}
-
-ion-calendar-month-picker .month-picker.dark .month-packer-item.this-month button {
-  border: 1px solid #222;
-}
-
-ion-calendar-month-picker .month-picker.dark .month-packer-item.active button {
-  background-color: #222;
-  color: #fff;
-}
-
-ion-calendar-month-picker .month-picker.light .month-packer-item.this-month button {
-  border: 1px solid #f4f4f4;
-}
-
-ion-calendar-month-picker .month-picker.light .month-packer-item.active button {
-  background-color: #f4f4f4;
-  color: #9e9e9e;
-}
-
-ion-calendar-month-picker .month-picker.transparent {
-  background-color: transparent;
-}
-
-ion-calendar-month-picker .month-picker.transparent .month-packer-item.this-month button {
-  border: 1px solid #f4f4f4;
-}
-
-ion-calendar-month-picker .month-picker.transparent .month-packer-item.active button {
-  background-color: #f4f4f4;
-  color: #9e9e9e;
-}
-
-ion-calendar-month-picker .month-picker.cal-color .month-packer-item.this-month button {
-  border: 1px solid #488aff;
-}
-
-ion-calendar-month-picker .month-picker.cal-color .month-packer-item.active button {
-  background-color: #488aff;
-  color: #fff;
-}
-
 ion-action-sheet {
   left: 0;
   top: 0;
@@ -5665,6 +3846,10 @@ ion-action-sheet {
 
 .action-sheet-ios {
   text-align: center;
+}
+
+.action-sheet-ios .action-sheet-wrapper {
+  margin: auto auto constant(safe-area-inset-bottom);
 }
 
 .action-sheet-ios .action-sheet-container {
@@ -10325,41 +8510,114 @@ ion-app [no-margin] .scroll-content {
   pointer-events: none;
 }
 
-ion-app.ios [padding],
+ion-app.ios [padding] {
+  padding: 16px;
+}
+
+ion-app.ios [padding-top] {
+  padding-top: 16px;
+}
+
+ion-app.ios [padding-left] {
+  padding-left: 16px;
+}
+
+ion-app.ios [padding-right] {
+  padding-right: 16px;
+}
+
+ion-app.ios [padding-bottom] {
+  padding-bottom: 16px;
+}
+
+ion-app.ios [padding-vertical] {
+  padding-top: 16px;
+  padding-bottom: 16px;
+}
+
+ion-app.ios [padding-horizontal] {
+  padding-left: 16px;
+  padding-right: 16px;
+}
+
 ion-app.ios [padding] .scroll-content {
   padding: 16px;
 }
 
-ion-app.ios [padding-top],
+@media screen and (orientation: landscape) {
+  ion-app.ios [padding] .scroll-content {
+    padding: 16px 16px 16px calc(constant(safe-area-inset-left) + 16px);
+  }
+}
+
+@media screen and (orientation: landscape) {
+  ion-app.ios .scroll-content {
+    padding-left: calc(constant(safe-area-inset-left) + 16px);
+  }
+}
+
 ion-app.ios [padding-top] .scroll-content {
   padding-top: 16px;
 }
 
-ion-app.ios [padding-left],
+@media screen and (orientation: landscape) {
+  ion-app.ios [padding-top] .scroll-content {
+    padding-top: 16px;
+  }
+}
+
 ion-app.ios [padding-left] .scroll-content {
   padding-left: 16px;
 }
 
-ion-app.ios [padding-right],
+@media screen and (orientation: landscape) {
+  ion-app.ios [padding-left] .scroll-content {
+    padding-left: calc(constant(safe-area-inset-left) + 16px);
+  }
+}
+
 ion-app.ios [padding-right] .scroll-content {
   padding-right: 16px;
 }
 
-ion-app.ios [padding-bottom],
+@media screen and (orientation: landscape) {
+  ion-app.ios [padding-right] .scroll-content {
+    padding-right: calc(constant(safe-area-inset-right) + 16px);
+  }
+}
+
 ion-app.ios [padding-bottom] .scroll-content {
   padding-bottom: 16px;
 }
 
-ion-app.ios [padding-vertical],
+@media screen and (orientation: landscape) {
+  ion-app.ios [padding-bottom] .scroll-content {
+    padding-bottom: 16px;
+  }
+}
+
 ion-app.ios [padding-vertical] .scroll-content {
   padding-top: 16px;
   padding-bottom: 16px;
 }
 
-ion-app.ios [padding-horizontal],
+@media screen and (orientation: landscape) {
+  ion-app.ios [padding-vertical] .scroll-content {
+    padding-top: 16px;
+    padding-bottom: 16px;
+  }
+}
+
 ion-app.ios [padding-horizontal] .scroll-content {
   padding-left: 16px;
   padding-right: 16px;
+}
+
+@media screen and (orientation: landscape) {
+  ion-app.ios [padding-horizontal] .scroll-content {
+    padding-left: calc(constant(safe-area-inset-left) + 16px);
+    padding-right: calc(constant(safe-area-inset-right) + 16px);
+  }
 }
 
 ion-app.ios [margin],
@@ -10443,41 +8701,114 @@ ion-app.ios [margin-horizontal] .scroll-content {
   background-color: rgba(0, 0, 0, 0.08);
 }
 
-ion-app.md [padding],
+ion-app.md [padding] {
+  padding: 16px;
+}
+
+ion-app.md [padding-top] {
+  padding-top: 16px;
+}
+
+ion-app.md [padding-left] {
+  padding-left: 16px;
+}
+
+ion-app.md [padding-right] {
+  padding-right: 16px;
+}
+
+ion-app.md [padding-bottom] {
+  padding-bottom: 16px;
+}
+
+ion-app.md [padding-vertical] {
+  padding-top: 16px;
+  padding-bottom: 16px;
+}
+
+ion-app.md [padding-horizontal] {
+  padding-left: 16px;
+  padding-right: 16px;
+}
+
 ion-app.md [padding] .scroll-content {
   padding: 16px;
 }
 
-ion-app.md [padding-top],
+@media screen and (orientation: landscape) {
+  ion-app.md [padding] .scroll-content {
+    padding: 16px 16px 16px calc(constant(safe-area-inset-left) + 16px);
+  }
+}
+
+@media screen and (orientation: landscape) {
+  ion-app.md .scroll-content {
+    padding-left: calc(constant(safe-area-inset-left) + 16px);
+  }
+}
+
 ion-app.md [padding-top] .scroll-content {
   padding-top: 16px;
 }
 
-ion-app.md [padding-left],
+@media screen and (orientation: landscape) {
+  ion-app.md [padding-top] .scroll-content {
+    padding-top: 16px;
+  }
+}
+
 ion-app.md [padding-left] .scroll-content {
   padding-left: 16px;
 }
 
-ion-app.md [padding-right],
+@media screen and (orientation: landscape) {
+  ion-app.md [padding-left] .scroll-content {
+    padding-left: calc(constant(safe-area-inset-left) + 16px);
+  }
+}
+
 ion-app.md [padding-right] .scroll-content {
   padding-right: 16px;
 }
 
-ion-app.md [padding-bottom],
+@media screen and (orientation: landscape) {
+  ion-app.md [padding-right] .scroll-content {
+    padding-right: calc(constant(safe-area-inset-right) + 16px);
+  }
+}
+
 ion-app.md [padding-bottom] .scroll-content {
   padding-bottom: 16px;
 }
 
-ion-app.md [padding-vertical],
+@media screen and (orientation: landscape) {
+  ion-app.md [padding-bottom] .scroll-content {
+    padding-bottom: 16px;
+  }
+}
+
 ion-app.md [padding-vertical] .scroll-content {
   padding-top: 16px;
   padding-bottom: 16px;
 }
 
-ion-app.md [padding-horizontal],
+@media screen and (orientation: landscape) {
+  ion-app.md [padding-vertical] .scroll-content {
+    padding-top: 16px;
+    padding-bottom: 16px;
+  }
+}
+
 ion-app.md [padding-horizontal] .scroll-content {
   padding-left: 16px;
   padding-right: 16px;
+}
+
+@media screen and (orientation: landscape) {
+  ion-app.md [padding-horizontal] .scroll-content {
+    padding-left: calc(constant(safe-area-inset-left) + 16px);
+    padding-right: calc(constant(safe-area-inset-right) + 16px);
+  }
 }
 
 ion-app.md [margin],
@@ -10536,41 +8867,114 @@ ion-app.md [margin-horizontal] .scroll-content {
   background-color: rgba(0, 0, 0, 0.08);
 }
 
-ion-app.wp [padding],
+ion-app.wp [padding] {
+  padding: 16px;
+}
+
+ion-app.wp [padding-top] {
+  padding-top: 16px;
+}
+
+ion-app.wp [padding-left] {
+  padding-left: 16px;
+}
+
+ion-app.wp [padding-right] {
+  padding-right: 16px;
+}
+
+ion-app.wp [padding-bottom] {
+  padding-bottom: 16px;
+}
+
+ion-app.wp [padding-vertical] {
+  padding-top: 16px;
+  padding-bottom: 16px;
+}
+
+ion-app.wp [padding-horizontal] {
+  padding-left: 16px;
+  padding-right: 16px;
+}
+
 ion-app.wp [padding] .scroll-content {
   padding: 16px;
 }
 
-ion-app.wp [padding-top],
+@media screen and (orientation: landscape) {
+  ion-app.wp [padding] .scroll-content {
+    padding: 16px 16px 16px calc(constant(safe-area-inset-left) + 16px);
+  }
+}
+
+@media screen and (orientation: landscape) {
+  ion-app.wp .scroll-content {
+    padding-left: calc(constant(safe-area-inset-left) + 16px);
+  }
+}
+
 ion-app.wp [padding-top] .scroll-content {
   padding-top: 16px;
 }
 
-ion-app.wp [padding-left],
+@media screen and (orientation: landscape) {
+  ion-app.wp [padding-top] .scroll-content {
+    padding-top: 16px;
+  }
+}
+
 ion-app.wp [padding-left] .scroll-content {
   padding-left: 16px;
 }
 
-ion-app.wp [padding-right],
+@media screen and (orientation: landscape) {
+  ion-app.wp [padding-left] .scroll-content {
+    padding-left: calc(constant(safe-area-inset-left) + 16px);
+  }
+}
+
 ion-app.wp [padding-right] .scroll-content {
   padding-right: 16px;
 }
 
-ion-app.wp [padding-bottom],
+@media screen and (orientation: landscape) {
+  ion-app.wp [padding-right] .scroll-content {
+    padding-right: calc(constant(safe-area-inset-right) + 16px);
+  }
+}
+
 ion-app.wp [padding-bottom] .scroll-content {
   padding-bottom: 16px;
 }
 
-ion-app.wp [padding-vertical],
+@media screen and (orientation: landscape) {
+  ion-app.wp [padding-bottom] .scroll-content {
+    padding-bottom: 16px;
+  }
+}
+
 ion-app.wp [padding-vertical] .scroll-content {
   padding-top: 16px;
   padding-bottom: 16px;
 }
 
-ion-app.wp [padding-horizontal],
+@media screen and (orientation: landscape) {
+  ion-app.wp [padding-vertical] .scroll-content {
+    padding-top: 16px;
+    padding-bottom: 16px;
+  }
+}
+
 ion-app.wp [padding-horizontal] .scroll-content {
   padding-left: 16px;
   padding-right: 16px;
+}
+
+@media screen and (orientation: landscape) {
+  ion-app.wp [padding-horizontal] .scroll-content {
+    padding-left: calc(constant(safe-area-inset-left) + 16px);
+    padding-right: calc(constant(safe-area-inset-right) + 16px);
+  }
 }
 
 ion-app.wp [margin],
@@ -17176,6 +15580,7 @@ ion-picker-cmp {
 }
 
 .picker-columns {
+  margin-bottom: constant(safe-area-inset-bottom);
   position: relative;
   display: -webkit-box;
   display: -webkit-flex;
@@ -21315,17 +19720,18 @@ ion-spinner.spinner-paused svg {
   max-width: 240px;
   min-height: 49px;
   font-size: 10px;
-  color: #5e616d;
+  font-weight: 500;
+  color: #8c8c8c;
   padding: 0 2px;
 }
 
 .tabs-ios .tab-button:hover:not(.disable-hover),
 .tabs-ios .tab-button[aria-selected=true] {
-  color: #1e82d2;
+  color: #488aff;
 }
 
 .tabs-ios .tab-button[aria-selected=true] .tab-button-icon {
-  color: #1e82d2;
+  color: #488aff;
 }
 
 .tabs-ios .tab-button-text {
@@ -21344,7 +19750,7 @@ ion-spinner.spinner-paused svg {
   min-width: 35px;
   height: 30px;
   font-size: 30px;
-  color: #5e616d;
+  color: #8c8c8c;
 }
 
 .tabs-ios .tab-button-icon::before {
@@ -21477,12 +19883,12 @@ ion-spinner.spinner-paused svg {
 .tabs-md .tab-button {
   min-height: 5.6rem;
   font-weight: normal;
-  color: #5e616d;
+  color: rgba(60, 60, 60, 0.7);
   padding: 0;
 }
 
 .tabs-md .tab-button[aria-selected=true] {
-  color: #1e82d2;
+  color: #488aff;
   padding: 0;
 }
 
@@ -21520,7 +19926,7 @@ ion-spinner.spinner-paused svg {
   margin-top: 1px;
   min-width: 2.4rem;
   font-size: 2.4rem;
-  color: #5e616d;
+  color: rgba(60, 60, 60, 0.7);
   -webkit-transition: -webkit-transform 0.3s ease-in-out;
   transition: -webkit-transform 0.3s ease-in-out;
   transition: transform 0.3s ease-in-out;
@@ -21530,7 +19936,7 @@ ion-spinner.spinner-paused svg {
 }
 
 .tabs-md .tab-button[aria-selected=true] .tab-button-icon {
-  color: #1e82d2;
+  color: #488aff;
   -webkit-transform: translate3d(0,  -2px,  0);
   transform: translate3d(0,  -2px,  0);
 }
@@ -21889,12 +20295,14 @@ ion-toast {
 .toast-ios .toast-wrapper.toast-top {
   -webkit-transform: translate3d(0,  -100%,  0);
   transform: translate3d(0,  -100%,  0);
+  margin: constant(safe-area-inset-top) auto auto;
   top: 0;
 }
 
 .toast-ios .toast-wrapper.toast-bottom {
   -webkit-transform: translate3d(0,  100%,  0);
   transform: translate3d(0,  100%,  0);
+  margin: auto auto constant(safe-area-inset-bottom);
   bottom: 0;
 }
 
@@ -26854,27 +25262,36 @@ ion-navbar.toolbar {
 
 .ios ion-nav > .ion-page > .toolbar.statusbar-padding:first-child,
 .ios ion-nav > .ion-page > ion-header > .toolbar.statusbar-padding:first-child,
+.ios ion-tab > .ion-page > .toolbar.statusbar-padding:first-child,
 .ios ion-tab > .ion-page > ion-header > .toolbar.statusbar-padding:first-child,
 .ios ion-tabs > .ion-page.tab-subpage > ion-header > .toolbar.statusbar-padding:first-child,
 .ios ion-menu > .menu-inner > .toolbar.statusbar-padding:first-child,
 .ios ion-menu > .menu-inner > ion-header > .toolbar.statusbar-padding:first-child {
   padding-top: calc(20px + 4px);
+  padding-left: calc(constant(safe-area-inset-left) + 4px);
+  padding-right: calc(constant(safe-area-inset-right) + 4px);
+  padding-top: calc(constant(safe-area-inset-top) + 4px);
   min-height: calc(44px + 20px);
+  min-height: calc(44px + constant(safe-area-inset-top));
 }
 
 .ios ion-nav > .ion-page > ion-content.statusbar-padding:first-child .scroll-content,
 .ios ion-nav > .ion-page > ion-header > ion-content.statusbar-padding:first-child .scroll-content,
+.ios ion-tab > .ion-page > ion-content.statusbar-padding:first-child .scroll-content,
 .ios ion-tab > .ion-page > ion-header > ion-content.statusbar-padding:first-child .scroll-content,
 .ios ion-tabs > .ion-page.tab-subpage > ion-header > ion-content.statusbar-padding:first-child .scroll-content,
 .ios ion-menu > .menu-inner > ion-content.statusbar-padding:first-child .scroll-content,
 .ios ion-menu > .menu-inner > ion-header > ion-content.statusbar-padding:first-child .scroll-content {
   padding-top: 20px;
+  padding-top: calc(20px + constant(safe-area-inset-top));
 }
 
 .ios ion-nav > .ion-page > ion-content.statusbar-padding:first-child[padding] .scroll-content,
 .ios ion-nav > .ion-page > ion-content.statusbar-padding:first-child[padding-top] .scroll-content,
 .ios ion-nav > .ion-page > ion-header > ion-content.statusbar-padding:first-child[padding] .scroll-content,
 .ios ion-nav > .ion-page > ion-header > ion-content.statusbar-padding:first-child[padding-top] .scroll-content,
+.ios ion-tab > .ion-page > ion-content.statusbar-padding:first-child[padding] .scroll-content,
+.ios ion-tab > .ion-page > ion-content.statusbar-padding:first-child[padding-top] .scroll-content,
 .ios ion-tab > .ion-page > ion-header > ion-content.statusbar-padding:first-child[padding] .scroll-content,
 .ios ion-tab > .ion-page > ion-header > ion-content.statusbar-padding:first-child[padding-top] .scroll-content,
 .ios ion-tabs > .ion-page.tab-subpage > ion-header > ion-content.statusbar-padding:first-child[padding] .scroll-content,
@@ -26884,12 +25301,15 @@ ion-navbar.toolbar {
 .ios ion-menu > .menu-inner > ion-header > ion-content.statusbar-padding:first-child[padding] .scroll-content,
 .ios ion-menu > .menu-inner > ion-header > ion-content.statusbar-padding:first-child[padding-top] .scroll-content {
   padding-top: calc(16px + 20px);
+  padding-top: calc(16px + constant(safe-area-inset-top));
 }
 
 .ios ion-nav > .ion-page > .toolbar.statusbar-padding:first-child ion-segment,
 .ios ion-nav > .ion-page > .toolbar.statusbar-padding:first-child ion-title,
 .ios ion-nav > .ion-page > ion-header > .toolbar.statusbar-padding:first-child ion-segment,
 .ios ion-nav > .ion-page > ion-header > .toolbar.statusbar-padding:first-child ion-title,
+.ios ion-tab > .ion-page > .toolbar.statusbar-padding:first-child ion-segment,
+.ios ion-tab > .ion-page > .toolbar.statusbar-padding:first-child ion-title,
 .ios ion-tab > .ion-page > ion-header > .toolbar.statusbar-padding:first-child ion-segment,
 .ios ion-tab > .ion-page > ion-header > .toolbar.statusbar-padding:first-child ion-title,
 .ios ion-tabs > .ion-page.tab-subpage > ion-header > .toolbar.statusbar-padding:first-child ion-segment,
@@ -26899,53 +25319,84 @@ ion-navbar.toolbar {
 .ios ion-menu > .menu-inner > ion-header > .toolbar.statusbar-padding:first-child ion-segment,
 .ios ion-menu > .menu-inner > ion-header > .toolbar.statusbar-padding:first-child ion-title {
   padding-top: 20px;
+  padding-top: calc(constant(safe-area-inset-top) + 4px);
   height: calc(44px + 20px);
+  height: calc(44px + constant(safe-area-inset-top));
   min-height: calc(44px + 20px);
+  min-height: calc(44px + constant(safe-area-inset-top));
 }
 
 @media only screen and (max-width: 767px) {
   .ios .modal-wrapper > .ion-page > ion-header > .toolbar.statusbar-padding:first-child {
     padding-top: calc(20px + 4px);
+    padding-left: calc(constant(safe-area-inset-left) + 4px);
+    padding-right: calc(constant(safe-area-inset-right) + 4px);
+    padding-top: calc(constant(safe-area-inset-top) + 4px);
     min-height: calc(44px + 20px);
+    min-height: calc(44px + constant(safe-area-inset-top));
   }
   .ios .modal-wrapper > .ion-page > ion-header > ion-content.statusbar-padding:first-child .scroll-content {
     padding-top: 20px;
+    padding-top: calc(20px + constant(safe-area-inset-top));
   }
   .ios .modal-wrapper > .ion-page > ion-header > ion-content.statusbar-padding:first-child[padding] .scroll-content,
   .ios .modal-wrapper > .ion-page > ion-header > ion-content.statusbar-padding:first-child[padding-top] .scroll-content {
     padding-top: calc(16px + 20px);
+    padding-top: calc(16px + constant(safe-area-inset-top));
   }
   .ios .modal-wrapper > .ion-page > ion-header > .toolbar.statusbar-padding:first-child ion-segment,
   .ios .modal-wrapper > .ion-page > ion-header > .toolbar.statusbar-padding:first-child ion-title {
     padding-top: 20px;
+    padding-top: calc(constant(safe-area-inset-top) + 4px);
     height: calc(44px + 20px);
+    height: calc(44px + constant(safe-area-inset-top));
     min-height: calc(44px + 20px);
+    min-height: calc(44px + constant(safe-area-inset-top));
   }
+}
+
+.ios .tabs .tabbar {
+  padding-bottom: constant(safe-area-inset-bottom);
+}
+
+.ios ion-footer .toolbar:last-child {
+  padding-bottom: calc(constant(safe-area-inset-top) + 4px);
+  height: calc(44px + constant(safe-area-inset-top));
+  min-height: calc(44px + constant(safe-area-inset-top));
 }
 
 .md ion-nav > .ion-page > .toolbar.statusbar-padding:first-child,
 .md ion-nav > .ion-page > ion-header > .toolbar.statusbar-padding:first-child,
+.md ion-tab > .ion-page > .toolbar.statusbar-padding:first-child,
 .md ion-tab > .ion-page > ion-header > .toolbar.statusbar-padding:first-child,
 .md ion-tabs > .ion-page.tab-subpage > ion-header > .toolbar.statusbar-padding:first-child,
 .md ion-menu > .menu-inner > .toolbar.statusbar-padding:first-child,
 .md ion-menu > .menu-inner > ion-header > .toolbar.statusbar-padding:first-child {
   padding-top: calc(20px + 4px);
+  padding-left: calc(constant(safe-area-inset-left) + 4px);
+  padding-right: calc(constant(safe-area-inset-right) + 4px);
+  padding-top: calc(constant(safe-area-inset-top) + 4px);
   min-height: calc(56px + 20px);
+  min-height: calc(56px + constant(safe-area-inset-top));
 }
 
 .md ion-nav > .ion-page > ion-content.statusbar-padding:first-child .scroll-content,
 .md ion-nav > .ion-page > ion-header > ion-content.statusbar-padding:first-child .scroll-content,
+.md ion-tab > .ion-page > ion-content.statusbar-padding:first-child .scroll-content,
 .md ion-tab > .ion-page > ion-header > ion-content.statusbar-padding:first-child .scroll-content,
 .md ion-tabs > .ion-page.tab-subpage > ion-header > ion-content.statusbar-padding:first-child .scroll-content,
 .md ion-menu > .menu-inner > ion-content.statusbar-padding:first-child .scroll-content,
 .md ion-menu > .menu-inner > ion-header > ion-content.statusbar-padding:first-child .scroll-content {
   padding-top: 20px;
+  padding-top: calc(20px + constant(safe-area-inset-top));
 }
 
 .md ion-nav > .ion-page > ion-content.statusbar-padding:first-child[padding] .scroll-content,
 .md ion-nav > .ion-page > ion-content.statusbar-padding:first-child[padding-top] .scroll-content,
 .md ion-nav > .ion-page > ion-header > ion-content.statusbar-padding:first-child[padding] .scroll-content,
 .md ion-nav > .ion-page > ion-header > ion-content.statusbar-padding:first-child[padding-top] .scroll-content,
+.md ion-tab > .ion-page > ion-content.statusbar-padding:first-child[padding] .scroll-content,
+.md ion-tab > .ion-page > ion-content.statusbar-padding:first-child[padding-top] .scroll-content,
 .md ion-tab > .ion-page > ion-header > ion-content.statusbar-padding:first-child[padding] .scroll-content,
 .md ion-tab > .ion-page > ion-header > ion-content.statusbar-padding:first-child[padding-top] .scroll-content,
 .md ion-tabs > .ion-page.tab-subpage > ion-header > ion-content.statusbar-padding:first-child[padding] .scroll-content,
@@ -26955,45 +25406,71 @@ ion-navbar.toolbar {
 .md ion-menu > .menu-inner > ion-header > ion-content.statusbar-padding:first-child[padding] .scroll-content,
 .md ion-menu > .menu-inner > ion-header > ion-content.statusbar-padding:first-child[padding-top] .scroll-content {
   padding-top: calc(16px + 20px);
+  padding-top: calc(16px + constant(safe-area-inset-top));
 }
 
 @media only screen and (max-width: 767px) {
   .md .modal-wrapper > .ion-page > ion-header > .toolbar.statusbar-padding:first-child {
     padding-top: calc(20px + 4px);
+    padding-left: calc(constant(safe-area-inset-left) + 4px);
+    padding-right: calc(constant(safe-area-inset-right) + 4px);
+    padding-top: calc(constant(safe-area-inset-top) + 4px);
     min-height: calc(56px + 20px);
+    min-height: calc(56px + constant(safe-area-inset-top));
   }
   .md .modal-wrapper > .ion-page > ion-header > ion-content.statusbar-padding:first-child .scroll-content {
     padding-top: 20px;
+    padding-top: calc(20px + constant(safe-area-inset-top));
   }
   .md .modal-wrapper > .ion-page > ion-header > ion-content.statusbar-padding:first-child[padding] .scroll-content,
   .md .modal-wrapper > .ion-page > ion-header > ion-content.statusbar-padding:first-child[padding-top] .scroll-content {
     padding-top: calc(16px + 20px);
+    padding-top: calc(16px + constant(safe-area-inset-top));
   }
+}
+
+.md .tabs .tabbar {
+  padding-bottom: constant(safe-area-inset-bottom);
+}
+
+.md ion-footer .toolbar:last-child {
+  padding-bottom: calc(constant(safe-area-inset-top) + 4px);
+  height: calc(56px + constant(safe-area-inset-top));
+  min-height: calc(56px + constant(safe-area-inset-top));
 }
 
 .wp ion-nav > .ion-page > .toolbar.statusbar-padding:first-child,
 .wp ion-nav > .ion-page > ion-header > .toolbar.statusbar-padding:first-child,
+.wp ion-tab > .ion-page > .toolbar.statusbar-padding:first-child,
 .wp ion-tab > .ion-page > ion-header > .toolbar.statusbar-padding:first-child,
 .wp ion-tabs > .ion-page.tab-subpage > ion-header > .toolbar.statusbar-padding:first-child,
 .wp ion-menu > .menu-inner > .toolbar.statusbar-padding:first-child,
 .wp ion-menu > .menu-inner > ion-header > .toolbar.statusbar-padding:first-child {
   padding-top: calc(20px + 4px);
+  padding-left: calc(constant(safe-area-inset-left) + 4px);
+  padding-right: calc(constant(safe-area-inset-right) + 4px);
+  padding-top: calc(constant(safe-area-inset-top) + 4px);
   min-height: calc(46px + 20px);
+  min-height: calc(46px + constant(safe-area-inset-top));
 }
 
 .wp ion-nav > .ion-page > ion-content.statusbar-padding:first-child .scroll-content,
 .wp ion-nav > .ion-page > ion-header > ion-content.statusbar-padding:first-child .scroll-content,
+.wp ion-tab > .ion-page > ion-content.statusbar-padding:first-child .scroll-content,
 .wp ion-tab > .ion-page > ion-header > ion-content.statusbar-padding:first-child .scroll-content,
 .wp ion-tabs > .ion-page.tab-subpage > ion-header > ion-content.statusbar-padding:first-child .scroll-content,
 .wp ion-menu > .menu-inner > ion-content.statusbar-padding:first-child .scroll-content,
 .wp ion-menu > .menu-inner > ion-header > ion-content.statusbar-padding:first-child .scroll-content {
   padding-top: 20px;
+  padding-top: calc(20px + constant(safe-area-inset-top));
 }
 
 .wp ion-nav > .ion-page > ion-content.statusbar-padding:first-child[padding] .scroll-content,
 .wp ion-nav > .ion-page > ion-content.statusbar-padding:first-child[padding-top] .scroll-content,
 .wp ion-nav > .ion-page > ion-header > ion-content.statusbar-padding:first-child[padding] .scroll-content,
 .wp ion-nav > .ion-page > ion-header > ion-content.statusbar-padding:first-child[padding-top] .scroll-content,
+.wp ion-tab > .ion-page > ion-content.statusbar-padding:first-child[padding] .scroll-content,
+.wp ion-tab > .ion-page > ion-content.statusbar-padding:first-child[padding-top] .scroll-content,
 .wp ion-tab > .ion-page > ion-header > ion-content.statusbar-padding:first-child[padding] .scroll-content,
 .wp ion-tab > .ion-page > ion-header > ion-content.statusbar-padding:first-child[padding-top] .scroll-content,
 .wp ion-tabs > .ion-page.tab-subpage > ion-header > ion-content.statusbar-padding:first-child[padding] .scroll-content,
@@ -27003,20 +25480,37 @@ ion-navbar.toolbar {
 .wp ion-menu > .menu-inner > ion-header > ion-content.statusbar-padding:first-child[padding] .scroll-content,
 .wp ion-menu > .menu-inner > ion-header > ion-content.statusbar-padding:first-child[padding-top] .scroll-content {
   padding-top: calc(16px + 20px);
+  padding-top: calc(16px + constant(safe-area-inset-top));
 }
 
 @media only screen and (max-width: 767px) {
   .wp .modal-wrapper > .ion-page > ion-header > .toolbar.statusbar-padding:first-child {
     padding-top: calc(20px + 4px);
+    padding-left: calc(constant(safe-area-inset-left) + 4px);
+    padding-right: calc(constant(safe-area-inset-right) + 4px);
+    padding-top: calc(constant(safe-area-inset-top) + 4px);
     min-height: calc(46px + 20px);
+    min-height: calc(46px + constant(safe-area-inset-top));
   }
   .wp .modal-wrapper > .ion-page > ion-header > ion-content.statusbar-padding:first-child .scroll-content {
     padding-top: 20px;
+    padding-top: calc(20px + constant(safe-area-inset-top));
   }
   .wp .modal-wrapper > .ion-page > ion-header > ion-content.statusbar-padding:first-child[padding] .scroll-content,
   .wp .modal-wrapper > .ion-page > ion-header > ion-content.statusbar-padding:first-child[padding-top] .scroll-content {
     padding-top: calc(16px + 20px);
+    padding-top: calc(16px + constant(safe-area-inset-top));
   }
+}
+
+.wp .tabs .tabbar {
+  padding-bottom: constant(safe-area-inset-bottom);
+}
+
+.wp ion-footer .toolbar:last-child {
+  padding-bottom: calc(constant(safe-area-inset-top) + 4px);
+  height: calc(46px + constant(safe-area-inset-top));
+  min-height: calc(46px + constant(safe-area-inset-top));
 }
 
 ion-icon[class*="appname-"] {
@@ -27175,6 +25669,14 @@ ion-icon[class*="appname-head"] {
   -webkit-mask-image: url(../assets/svg/icon_head.svg);
 }
 
+ion-icon[class*="appname-calendar-left"] {
+  -webkit-mask-image: url(../assets/svg/icon_calendar_left.svg);
+}
+
+ion-icon[class*="appname-calendar-right"] {
+  -webkit-mask-image: url(../assets/svg/icon_calendar_right.svg);
+}
+
 ::-webkit-scrollbar {
   display: none !important;
   color: #c8c8c8;
@@ -27226,6 +25728,21 @@ ion-icon[class*="appname-head"] {
 
 ion-content {
   background-color: #f5f6f7;
+}
+
+calendar .titleCol {
+  background-color: #32db64;
+}
+
+calendar .btn_today {
+  background-color: #fc5c53;
+  width: 22px;
+  height: 22px;
+  right: 10px;
+  position: absolute;
+  top: 50%;
+  -webkit-transform: translateY(-50%);
+  transform: translateY(-50%);
 }
 
 calendar .calendar-row {
@@ -27343,7 +25860,7 @@ page-contact .organization .text {
 }
 
 page-forget .wrap {
-  margin: 30px 30px;
+  margin: 60px 60px;
 }
 
 page-forget .wrap .row {
@@ -27351,7 +25868,7 @@ page-forget .wrap .row {
   background-color: #ddd;
   height: 50px;
   border-radius: 25px;
-  margin: 30px auto;
+  margin: 17px auto;
 }
 
 page-forget .wrap .row input[type="text"] {
@@ -27376,26 +25893,25 @@ page-forget .wrap .row button[type="submit"] {
   width: 100%;
   height: 100%;
   font-size: 16px;
-  color: #fff;
+  color: white;
+  margin-top: 32px;
 }
 
 page-forget .wrap .row:last-child {
   background-color: #fc5c53;
+  color: white;
 }
 
 page-home .circle_home {
-  width: 16px;
-  height: 16px;
-  border-radius: 8px;
+  width: 22px;
+  height: 22px;
+  border-radius: 11px;
   font-size: 16px;
   background-color: black;
-  line-height: 16px;
+  line-height: 22px;
   color: white;
-  left: 10px;
-  top: 50%;
-  -webkit-transform: translateY(-50%);
-  transform: translateY(-50%);
-  position: absolute;
+  margin-left: 13px;
+  top: 14px;
 }
 
 page-home .nostart {
@@ -27412,7 +25928,7 @@ page-home .end {
 
 page-home .pj-name {
   color: black;
-  margin-left: 20px;
+  margin-left: 30px;
   font-size: 18px;
 }
 
@@ -27493,15 +26009,12 @@ page-home .list_circle {
 }
 
 page-login .login_icon {
-  display: block;
-  margin: 30px auto 50px;
-  width: 80%;
+  width: 100%;
 }
 
 page-login .login_input {
-  margin: 30px auto;
+  margin: 60px auto;
   display: block;
-  width: 80%;
   height: 30px;
   font-size: 16px;
   border-radius: 15px;
@@ -27515,27 +26028,30 @@ page-login .login_btn {
   border-radius: 25px;
   background-color: #ffb4b0;
   color: white;
-  margin: 30px auto;
+  margin-top: 35px;
 }
 
 page-login .row {
   width: 100%;
   border-bottom: 1px solid #c1c1c1;
   height: 50px;
+  margin-top: 17px;
 }
 
 page-login .row input[type="text"], page-login .row input[type="password"] {
   letter-spacing: 1px;
   height: 50px;
   margin-left: 10px;
+  margin-top: 5px;
+  color: #111111;
 }
 
 page-login .row .area {
-  margin-top: 10px;
+  margin-top: 20px;
   padding-right: 20px;
   border-right: 2px solid #c1c1c1;
   display: inline-block;
-  height: 30px;
+  height: 18px;
 }
 
 page-login .forget {
@@ -27547,12 +26063,12 @@ page-login .forget {
 }
 
 page-newpw .wrap {
-  margin: 30px 30px;
+  margin: 30px 60px;
 }
 
 page-newpw .wrap .row {
   width: 100%;
-  background-color: #ddd;
+  background-color: #f2f2f2;
   height: 50px;
   border-radius: 25px;
   margin: 30px auto;

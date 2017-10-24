@@ -99,7 +99,10 @@ var __extends = (this && this.__extends) || (function () {
             var _this = this;
             this._initialize();
             this._buttons.forEach(function (button) {
-                button.ionSelect.subscribe(function (selectedButton) { return _this.value = selectedButton.value; });
+                button.ionSelect.subscribe(function (selectedButton) {
+                    _this.value = selectedButton.value;
+                    _this._fireTouched();
+                });
             });
         };
         /**

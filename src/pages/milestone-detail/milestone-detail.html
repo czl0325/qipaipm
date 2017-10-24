@@ -23,7 +23,7 @@
 
 <ion-content fullscreen>
   <ion-list no-padding no-lines style="margin-bottom: 0px; border-bottom: solid 1px #ececec">
-    <ion-item >
+    <ion-item style="height: 50px">
       <ion-icon item-start name="appname-pname"></ion-icon>
       <ion-label>项目名称:</ion-label>
       <ion-label right text-right>{{this.project.itemName}}</ion-label>
@@ -33,7 +33,7 @@
   <ion-label full style="text-align: center">{{tempMilestone.milestoneName}}</ion-label>
 
   <ion-list no-lines style="border: solid 1px #ececec">
-    <button ion-item style="border-bottom: solid 1px #ececec" (click)="onMilestoneLeader($event)" [disabled]="canEdit==false">
+    <button ion-item style="border-bottom: solid 1px #ececec; height: 50px" (click)="onMilestoneLeader($event)" [disabled]="canEdit==false">
       <ion-icon item-start name="appname-admin"></ion-icon>
       <ion-label item-start style="margin-left: 20px">负责人:</ion-label>
       <ion-label item-end text-right>{{tempMilestone.itemEndLeader}}</ion-label>
@@ -43,15 +43,15 @@
       <!--<ion-label>负责人:</ion-label>-->
       <!--<ion-input text-right type="text" [(ngModel)]="tempMilestone.milestoneLeader" required [disabled]=""></ion-input>-->
     <!--</ion-item>-->
-    <ion-item style="border-bottom: solid 1px #ececec;">
+    <ion-item style="border-bottom: solid 1px #ececec; height: 50px">
       <ion-icon item-start name="appname-time"></ion-icon>
       <ion-label>交付时间:</ion-label>
-      <ion-datetime text-right displayFormat="YYYY-MM-DD" max="2030" min={{minTime}} cancelText="取消" doneText="确认" required [disabled]="canEdit==false"
+      <ion-datetime text-right displayFormat="YYYY-MM-DD" max={{maxTime|stampToDate}} min={{minTime|stampToDate}} cancelText="取消" doneText="确认" required [disabled]="canEdit==false"
                     ngModel="{{tempMilestone.deliveryTime | stampToDate}}"
                     (ngModelChange)="tempMilestone.deliveryTime = $event">
       </ion-datetime>
     </ion-item>
-    <ion-item style="border-bottom: solid 1px #ececec"  >
+    <ion-item style="border-bottom: solid 1px #ececec; height: 50px">
       <ion-icon item-start name="appname-plan"></ion-icon>
       <ion-label>项目进度</ion-label>
       <ion-select interface="action-sheet" [(ngModel)]="tempMilestone.itemProgress"
@@ -68,26 +68,26 @@
         <ion-option value="100%" [disabled]="canChooses[9]==false">100%</ion-option>
       </ion-select>
     </ion-item>
-    <ion-item style="border-bottom: solid 1px #ececec;"  >
+    <ion-item style="border-bottom: solid 1px #ececec;height: 50px">
       <ion-icon item-start name="appname-result"></ion-icon>
       <ion-label no-padding no-margin>交付成果:</ion-label>
       <ion-input text-right type="text" [(ngModel)]="tempMilestone.deliveryResult" required [disabled]="canEdit==false"></ion-input>
     </ion-item>
-    <ion-item *ngIf="tempMilestone.delay > 0" style="border-bottom: solid 1px #ececec;" >
+    <ion-item *ngIf="tempMilestone.delay > 0" style="border-bottom: solid 1px #ececec; height: 50px" >
       <ion-label >延迟情况:</ion-label>
       <ion-label text-right item-end></ion-label>
     </ion-item>
   </ion-list>
 
   <ion-list no-lines no-padding no-margin *ngIf="this.tempMilestone.id.length>0">
-    <ion-item style="border-top: solid 1px #ececec;border-bottom: solid 1px #ececec">
+    <ion-item style="border-top: solid 1px #ececec;border-bottom: solid 1px #ececec; height: 50px">
       <div item-start>是否完成</div>
       <ion-label>完成</ion-label>
       <ion-checkbox [(ngModel)]="tempMilestone.itemIsEnd" [disabled]="canFinish==false"></ion-checkbox>
     </ion-item>
-    <ion-item style="border-bottom: solid 10px #ececec; height: 100px;" >
+    <ion-item style="border-bottom: solid 10px #ececec; height: 50px;" >
       <ion-label item-start>备注:</ion-label>
-      <ion-textarea item-end no-padding no-margin [(ngModel)]="tempMilestone.remark" [disabled]="canFinish==false"></ion-textarea>
+      <ion-input item-end no-padding no-margin [(ngModel)]="tempMilestone.remark" [disabled]="canFinish==false"></ion-input>
     </ion-item>
   </ion-list>
 
@@ -95,18 +95,19 @@
     <div style="height: 30px; border-bottom: solid 1px #ececec; ">
       <div style="width: 5px; height: 30px; background-color: #555555; float: left;"></div>
       <ion-label no-margin no-padding style="line-height: 30px; margin-left: 10px; float: left;">{{subtask.subtaskName}}</ion-label>
-      <div style="float: right; width: 30px; height: 30px;position: relative">
-        <ion-icon name="close" style="position: absolute; top: 50%; right: 0px; -webkit-transform: translateY(-50%); transform: translateY(-50%); margin-right: 10px; " (click)="onRemoveSubtask($event, subtask)"></ion-icon>
+      <div style="float: right; width: 30px; height: 30px;position: relative" >
+        <ion-icon name="close" style="position: absolute; top: 50%; right: 0px; -webkit-transform: translateY(-50%); transform: translateY(-50%); margin-right: 10px; "
+                  (click)="onRemoveSubtask($event, subtask)" [isActive]="canEdit==true"></ion-icon>
       </div>
     </div>
     <ion-list no-lines no-padding no-margin>
-      <ion-item style="border-bottom: solid 1px #ececec;">
+      <ion-item style="border-bottom: solid 1px #ececec; height: 50px">
         <ion-icon item-start name="appname-admin"></ion-icon>
         <ion-label>负责人:</ion-label>
         <ion-input text-right type="text" [(ngModel)]="subtask.itemEndLeader"
                    required [disabled]="type==2"></ion-input>
       </ion-item>
-      <ion-item style="border-bottom: solid 1px #ececec;">
+      <ion-item style="border-bottom: solid 1px #ececec; height: 50px">
         <ion-icon item-start name="appname-time"></ion-icon>
         <ion-label>交付时间</ion-label>
         <ion-datetime item-end displayFormat="YYYY年MM月DD日" max="2030" min="2015" cancelText="取消" doneText="确认"
@@ -114,7 +115,7 @@
                       (ngModelChange)="subtask.deliveryTime = $event"
                       [disabled]="type==2"></ion-datetime>
       </ion-item>
-      <ion-item style="border-bottom: solid 10px #ececec;">
+      <ion-item style="border-bottom: solid 10px #ececec; height: 50px">
         <ion-icon item-start name="appname-result"></ion-icon>
         <ion-label no-padding no-margin>交付成果:</ion-label>
         <ion-input text-right type="text" [(ngModel)]="subtask.deliveryResult"

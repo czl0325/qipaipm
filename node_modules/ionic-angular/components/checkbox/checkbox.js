@@ -120,6 +120,7 @@ var Checkbox = (function (_super) {
         ev.preventDefault();
         ev.stopPropagation();
         this.value = !this.value;
+        this._fireTouched();
     };
     /**
      * @hidden

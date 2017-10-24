@@ -1,8 +1,0 @@
-{
-  "realm": "qipai",
-  "url": "http://52.80.11.196:9090/auth",
-  "ssl-required": "external",
-  "clientId": "qipaipm",
-  "public-client": true,
-  "use-resource-role-mappings": true
-}

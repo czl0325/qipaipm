@@ -655,7 +655,8 @@ export function mockTab(parentTabs, overrideLoad = true) {
     let /** @type {?} */ tab = new Tab(parentTabs, app, config, platform, elementRef, zone, renderer, compiler, changeDetectorRef, gestureCtrl, null, linker, dom, null);
     if (overrideLoad) {
         tab.load = (_opts, cb) => {
-            cb();
+            cb(false, false);
+            return Promise.resolve();
         };
     }
     return tab;

@@ -1,17 +1,18 @@
 page-home {
   .circle_home {
-    width: 16px;
-    height: 16px;
-    border-radius: 8px;
+    width: 22px;
+    height: 22px;
+    border-radius: 11px;
     font-size: 16px;
     background-color: black;
-    line-height: 16px;
+    line-height: 22px;
     color: white;
-    left: 10px;
-    top: 50%;
-    -webkit-transform: translateY(-50%);
-    transform: translateY(-50%);
-    position: absolute;
+    margin-left: 13px;
+    top: 14px;
+    //top: 50%;
+    //-webkit-transform: translateY(-50%);
+    //transform: translateY(-50%);
+    //position: absolute;
   }
   .nostart {
     background: #10c619 !important;
@@ -22,9 +23,10 @@ page-home {
   .end {
     background: #c1c8d2 !important;
   }
+
   .pj-name {
     color: black;
-    margin-left: 20px;
+    margin-left: 30px;
     font-size: 18px;
   }
   .weektop {

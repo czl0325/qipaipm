@@ -27,7 +27,7 @@ var __extends = (this && this.__extends) || (function () {
      * \@name Header
      * \@description
      * Header is a parent component that holds the navbar and toolbar component.
-     * It's important to note that `ion-header` needs to be the one of the three root elements of a page
+     * It's important to note that `ion-header` needs to be one of the three root elements of a page
      *
      * \@usage
      *

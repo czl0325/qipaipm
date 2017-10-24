@@ -18,7 +18,7 @@
 
 <ion-content fullscreen>
     <ion-list no-margin no-lines no-padding style="border-top: solid 10px #f5f6f7; border-bottom: solid 10px #f5f6f7;">
-      <ion-item>
+      <ion-item style="height: 50px">
         <ion-icon item-start name="appname-pname"></ion-icon>
         <ion-label>项目名称</ion-label>
         <ion-input item-end text-right placeholder="请输入项目名称" [(ngModel)]="project.itemName"></ion-input>
@@ -30,7 +30,7 @@
       <ion-label no-margin no-padding style="line-height: 30px; margin-left: 10px; float: left;">项目启动</ion-label>
     </div>
     <ion-list no-lines no-padding no-margin style="border-bottom: solid 10px #f5f6f7;">
-      <ion-item style="border-bottom: solid 1px #ececec;">
+      <ion-item style="border-bottom: solid 1px #ececec; height: 50px">
         <ion-icon item-start name="appname-time"></ion-icon>
         <ion-label>交付时间</ion-label>
         <ion-datetime item-end displayFormat="YYYY年MM月DD日" max="2030" min={{minTime}}
@@ -38,12 +38,12 @@
                       (ngModelChange)="project.itemStartTime = $event"
                       cancelText="取消" doneText="确认"></ion-datetime>
       </ion-item>
-      <ion-item style="border-bottom: solid 1px #ececec;">
+      <ion-item style="border-bottom: solid 1px #ececec; height: 50px">
         <ion-icon item-start name="appname-result"></ion-icon>
         <ion-label>交付成果</ion-label>
         <ion-input item-end text-right placeholder="请输入交付成果" [(ngModel)]="project.itemStartResult" required></ion-input>
       </ion-item>
-      <ion-item >
+      <ion-item style="height: 50px">
         <ion-icon item-start name="appname-plan"></ion-icon>
         <ion-label>项目级别</ion-label>
         <ion-select interface="action-sheet" [(ngModel)]="project.itemLevel" cancelText="取消" doneText="确认">
@@ -70,12 +70,12 @@
           <!--&lt;!&ndash;<ion-label no-margin no-padding float-end text-right [hidden]="type==1">{{mile.itemEndLeader}}</ion-label>&ndash;&gt;-->
           <!--<ion-input item-end text-right [readonly]="type==2" unselectable="on" (ionFocus)="onFocusInput($event)" [(ngModel)]="mile.itemEndLeader"></ion-input>-->
         <!--</ion-item>-->
-        <button ion-item style="border-bottom: solid 1px #ececec" disabled>
+        <button ion-item style="border-bottom: solid 1px #ececec; height: 50px" disabled>
           <ion-icon item-start name="appname-admin"></ion-icon>
           <ion-label item-start style="margin-left: 20px">负责人:</ion-label>
           <ion-label item-end text-right>{{mile.itemEndLeader}}</ion-label>
         </button>
-        <ion-item style="border-bottom: solid 1px #ececec">
+        <ion-item style="border-bottom: solid 1px #ececec; height: 50px">
           <ion-icon item-start name="appname-time"></ion-icon>
           <ion-label>交付时间</ion-label>
           <ion-datetime item-end displayFormat="YYYY年MM月DD日" max="2030" min={{minTime}} cancelText="取消" doneText="确认"
@@ -83,7 +83,7 @@
                         (ngModelChange)="mile.deliveryTime = $event"
                         disabled></ion-datetime>
         </ion-item>
-        <ion-item style="border-bottom: solid 1px #ececec">
+        <ion-item style="border-bottom: solid 1px #ececec; height: 50px">
           <ion-icon item-start name="appname-plan"></ion-icon>
           <ion-label>项目进度</ion-label>
           <ion-select interface="action-sheet" [(ngModel)]="mile.itemProgress" cancelText="取消" doneText="确认" disabled>
@@ -99,10 +99,10 @@
             <ion-option value="100%">100%</ion-option>
           </ion-select>
         </ion-item>
-        <ion-item>
+        <ion-item style="height: 50px">
           <ion-icon item-start name="appname-result"></ion-icon>
           <ion-label>交付成果</ion-label>
-          <ion-textarea item-end text-right id="miletext" [(ngModel)]="mile.deliveryResult" readonly  (ionFocus)="onFocusInput($event, mile, i)"></ion-textarea>
+          <ion-input item-end text-right id="miletext" [(ngModel)]="mile.deliveryResult" readonly  (ionFocus)="onFocusInput($event, mile, i)"></ion-input>
         </ion-item>
       </ion-list>
     </div>
@@ -117,13 +117,13 @@
       <ion-label no-margin no-padding style="line-height: 30px; margin-left: 10px; float: left;">项目结束</ion-label>
     </div>
     <ion-list no-lines no-margin no-padding>
-      <button ion-item style="border-bottom: solid 1px #ececec" (click)="onEndDirector($event)">
+      <button ion-item style="border-bottom: solid 1px #ececec; height: 50px" (click)="onEndDirector($event)">
         <ion-icon item-start name="appname-admin"></ion-icon>
         <ion-label item-start style="margin-left: 20px">负责人</ion-label>
         <!--<ion-input item-end text-right placeholder="请输入负责人" [(ngModel)]="project.itemLeader"></ion-input>-->
         <ion-label item-end text-right>{{project.itemEndLeader}}</ion-label>
       </button>
-      <ion-item  style="border-bottom: solid 1px #ececec">
+      <ion-item  style="border-bottom: solid 1px #ececec; height: 50px">
         <ion-icon item-start name="appname-time"></ion-icon>
         <ion-label>交付时间</ion-label>
         <ion-datetime item-end displayFormat="YYYY年MM月DD日" max="2030" min={{minTime}}
@@ -131,10 +131,10 @@
                       ngModel="{{project.endTime | stampToDate}}"
                       (ngModelChange)="project.endTime = $event"></ion-datetime>
       </ion-item>
-      <ion-item>
+      <ion-item style="border-bottom: solid 1px #ececec; height: 50px">
         <ion-icon item-start name="appname-result"></ion-icon>
         <ion-label>交付成果</ion-label>
-        <ion-textarea item-end text-right placeholder="请输入交付成果" [(ngModel)]="project.itemEndResult"></ion-textarea>
+        <ion-input item-end text-right placeholder="请输入交付成果" [(ngModel)]="project.itemEndResult"></ion-input>
       </ion-item>
     </ion-list>
   </ion-content>

@@ -47,17 +47,17 @@
 
             </calendar>
 
-            <div style="margin-top: 10px; height: 1px; background-color: #c5c6c7; width: 100%"></div>
-            <ion-item (click)="onClickProject(project)" *ngFor="let project of projects">
-                <ion-label no-padding no-margin text-center float-left
+            <div style="height: 7px; background-color: #f5f6f7; width: 100%"></div>
+            <div (click)="onClickProject(project)" *ngFor="let project of projects" style="border-bottom: solid 0.5px #ececec; height: 50px">
+                <div no-padding no-margin float-left text-center
                            [ngClass]="{'circle_home':1===1,'nostart':project.itemState=='07010010','ing':project.itemState=='07010020'|| project.itemState=='07010030','end':project.itemState=='07010040'}">
                     {{project.itemLevel}}
-                </ion-label>
+                </div>
                 <!--<div [ngClass]="{'circle_nostart':project.itemState=='未启动','circle_ing':project.itemState=='进行中','circle_end':project.itemState=='已结束'}"></div>-->
-                <ion-label no-padding no-margin float-left class="pj-name"
+                <div no-padding no-margin float-left class="pj-name"
                            [ngStyle]="{'color':project.itemState=='07010030'?'#fc780e':'black'}">{{project.itemName}}
-                </ion-label>
-            </ion-item>
+                </div>
+            </div>
         </div>
         <div [hidden]="type==1" no-padding no-margin>
             <div no-margin no-padding style="background-color: #ececec; height: 50px">

@@ -17,7 +17,7 @@
 </ion-header>
 
 
-<ion-content fullscreen>
+<ion-content fullscreen #projectEndContent id="projectEndContent">
   <ion-list no-padding no-lines style="margin-bottom: 0px; border-bottom: solid 1px #ececec">
     <ion-item >
       <ion-icon item-start name="appname-pname"></ion-icon>
@@ -66,7 +66,8 @@
 
   </div>
 
-  <div style="background-color: #1e82d2; height: 200px; margin: 20px 20px">
-    <textarea id="input2" maxlength="100" placeholder="请输入结束原因，100个字符以内。" [(ngModel)]="otherReason" style="width: 100%; height: 100%"></textarea>
+  <div style="height: 200px; margin: 20px 20px">
+    <textarea id="input2" maxlength="100" placeholder="请输入结束原因，100个字符以内。" [(ngModel)]="otherReason"
+              style="width: 100%; height: 100%"></textarea>
   </div>
 </ion-content>

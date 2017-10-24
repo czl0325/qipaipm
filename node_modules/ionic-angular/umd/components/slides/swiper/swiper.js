@@ -684,8 +684,10 @@
         swiper_utils_1.eachChild(s._wrapper, '.' + swiper_utils_1.CLS.slide + '.' + swiper_utils_1.CLS.slideDuplicate, function (ele) {
             ele.parentElement.removeChild(ele);
         });
-        for (var /** @type {?} */ i = 0; i < s._slides.length; i++) {
-            s._slides[i].removeAttribute('data-swiper-slide-index');
+        if (s._slides) {
+            for (var /** @type {?} */ i = 0; i < s._slides.length; i++) {
+                s._slides[i].removeAttribute('data-swiper-slide-index');
+            }
         }
     }
     /**

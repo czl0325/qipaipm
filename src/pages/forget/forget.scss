@@ -1,13 +1,13 @@
 page-forget {
   .wrap {
-    margin: 30px 30px;
+    margin: 60px 60px;
 
     .row {
       width: 100%;
       background-color: #ddd;
       height: 50px;
       border-radius: 25px;
-      margin: 30px auto;
+      margin: 17px auto;
 
       input[type="text"] {
         letter-spacing: 1px;
@@ -29,12 +29,14 @@ page-forget {
         height: 100%;
         //border-radius: 25px;
         font-size: 16px;
-        color: #fff;
+        color: white;
+        margin-top: 32px;
         //font-weight: 100;
       }
     }
     .row:last-child {
       background-color: #fc5c53;
+      color: white;
     }
   }
 }

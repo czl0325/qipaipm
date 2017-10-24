@@ -29,8 +29,8 @@ import { NavController } from '../../navigation/nav-controller';
  *   template: `<button ion-button [navPush]="pushPage" [navParams]="params">Go</button>`
  * })
  * class MyPage {
- *   params: Object;
  *   pushPage: any;
+ *   params: Object;
  *   constructor(){
  *     this.pushPage = LoginPage;
  *     this.params = { id: 42 };

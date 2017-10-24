@@ -1,5 +1,5 @@
 import {Component, ElementRef, ViewChild} from '@angular/core';
-import {AlertController, IonicPage, NavController, NavParams} from 'ionic-angular';
+import {AlertController, Events, IonicPage, NavController, NavParams, ToastController} from 'ionic-angular';
 import {AppService} from "../../app/app.service";
 
 /**
@@ -21,10 +21,11 @@ export class ProjectEndPage {
     otherReason: string;
 
     @ViewChild('input1') input1: ElementRef;
-
+    @ViewChild('projectEndContent') projectEndContent:ElementRef;
 
     constructor(public navCtrl: NavController, public navParams: NavParams,
-                private alertCtrl: AlertController, private appService: AppService) {
+                private alertCtrl: AlertController, private appService: AppService,
+                private events: Events, private toastCtrl: ToastController) {
         this.project = this.navParams.get('project');
         this.otherReason = '';
         for (let i = 0; i < 4; i++) {
@@ -46,6 +47,9 @@ export class ProjectEndPage {
         var input2 = document.getElementById('input2');
         if (input2 != null) {
             input2.setAttribute("readOnly", "readOnly");
+            //input2.style.display="none";
+            input2.style.visibility="hidden";
+            //input2.style.opacity="0";
         }
     }
 
@@ -57,6 +61,7 @@ export class ProjectEndPage {
                 var input2_1 = document.getElementById('input2');
                 if (input2_1 != null) {
                     input2_1.setAttribute("readOnly", "readOnly");
+                    input2_1.style.visibility="hidden";
                 }
             }
         } else {
@@ -88,8 +93,11 @@ export class ProjectEndPage {
             if (index < 3) {
                 if (input2_2 != null) {
                     input2_2.setAttribute("readOnly", "readOnly");
+                    input2_2.style.visibility="hidden";
+
                 }
             } else {
+                input2_2.style.visibility="visible";
                 input2_2.removeAttribute("readOnly");
                 setTimeout(function () {
                     input2_2.focus();

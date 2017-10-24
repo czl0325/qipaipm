@@ -14,16 +14,6 @@
 // To declare rules for a specific mode, create a child rule
 // for the .md, .ios, or .wp mode classes. The mode class is
 // automatically applied to the <body> element in the app.
-
-//$baseFontSize: 75px !default; //基于视觉稿横屏尺寸/100得出的基准font-size
-//@function pxToRem($px) {
-//  @return $px / $baseFontSize * 1rem;
-//}
-
-//@mixin radius10{
-//  border-radius: pxToRem(10px);
-//}
-
 ion-icon {
   &[class*="appname-"] {
     // Instead of using the font-based icons
@@ -159,6 +149,12 @@ ion-icon {
   }
   &[class*="appname-head"] {
     -webkit-mask-image: url(../assets/svg/icon_head.svg);
+  }
+  &[class*="appname-calendar-left"] {
+    -webkit-mask-image: url(../assets/svg/icon_calendar_left.svg);
+  }
+  &[class*="appname-calendar-right"] {
+    -webkit-mask-image: url(../assets/svg/icon_calendar_right.svg);
   }
 }
 ::-webkit-scrollbar {

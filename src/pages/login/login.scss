@@ -1,13 +1,12 @@
 page-login {
   .login_icon {
-    display: block;
-    margin: 30px auto 50px;
-    width: 80%;
+    //display: block;
+    width: 100%;
   }
   .login_input {
-    margin: 30px auto;
+    margin: 60px auto;
     display: block;
-    width: 80%;
+    //width: 100%;
     height: 30px;
     font-size: 16px;
     border-radius: 15px;
@@ -20,27 +19,31 @@ page-login {
     border-radius: 25px;
     background-color: #ffb4b0;
     color: white;
-    margin: 30px auto;
+    margin-top: 35px;
   }
   .row {
     width: 100%;
     border-bottom: 1px solid #c1c1c1;
     height: 50px;
+    margin-top: 17px;
 
     input[type="text"], input[type="password"]{
       letter-spacing: 1px;
       height: 50px;
       margin-left: 10px;
+      margin-top: 5px;
+      color: #111111;
     }
     //&:last-child {
     //  border: none;
     //}
     .area {
-      margin-top: 10px;
+      margin-top: 20px;
       padding-right: 20px;
       border-right: 2px solid #c1c1c1;
       display: inline-block;
-      height: 30px;
+      height: 18px;
+      //width: 12px;
     }
     //&:first-child {
     //  input {

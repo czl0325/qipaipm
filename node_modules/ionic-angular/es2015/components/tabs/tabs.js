@@ -576,11 +576,11 @@ export class Tabs extends Ion {
         return '';
     }
     /**
-     * @param {?} secondaryId
+     * @param {?=} secondaryId
      * @param {?=} fallbackIndex
      * @return {?}
      */
-    _getSelectedTabIndex(secondaryId, fallbackIndex = 0) {
+    _getSelectedTabIndex(secondaryId = '', fallbackIndex = 0) {
         // we found a segment which probably represents which tab to select
         const /** @type {?} */ indexMatch = secondaryId.match(/tab-(\d+)/);
         if (indexMatch) {

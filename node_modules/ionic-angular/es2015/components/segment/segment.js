@@ -76,7 +76,10 @@ export class Segment extends BaseInput {
     ngAfterContentInit() {
         this._initialize();
         this._buttons.forEach(button => {
-            button.ionSelect.subscribe((selectedButton) => this.value = selectedButton.value);
+            button.ionSelect.subscribe((selectedButton) => {
+                this.value = selectedButton.value;
+                this._fireTouched();
+            });
         });
     }
     /**

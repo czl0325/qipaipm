@@ -664,8 +664,10 @@ function destroyLoop(s) {
     eachChild(s._wrapper, '.' + CLS.slide + '.' + CLS.slideDuplicate, ele => {
         ele.parentElement.removeChild(ele);
     });
-    for (var /** @type {?} */ i = 0; i < s._slides.length; i++) {
-        s._slides[i].removeAttribute('data-swiper-slide-index');
+    if (s._slides) {
+        for (var /** @type {?} */ i = 0; i < s._slides.length; i++) {
+            s._slides[i].removeAttribute('data-swiper-slide-index');
+        }
     }
 }
 /**

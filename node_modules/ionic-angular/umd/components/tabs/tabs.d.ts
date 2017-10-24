@@ -299,5 +299,5 @@ export declare class Tabs extends Ion implements AfterViewInit, RootNode, ITabs,
     /**
      * @private
      */
-    _getSelectedTabIndex(secondaryId: string, fallbackIndex?: number): number;
+    _getSelectedTabIndex(secondaryId?: string, fallbackIndex?: number): number;
 }

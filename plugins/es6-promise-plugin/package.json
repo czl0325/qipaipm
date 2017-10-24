@@ -22,7 +22,7 @@
   "_resolved": "http://registry.npm.taobao.org/es6-promise-plugin/download/es6-promise-plugin-4.1.0.tgz",
   "_shasum": "f06107399844509eaaba8ed07077d288a5ca697e",
   "_spec": "es6-promise-plugin@4.1.0",
-  "_where": "/Users/zhaoliangchen/Desktop/qipaipm-company/node_modules",
+  "_where": "/Users/zhaoliangchen/Documents/qipaipm-ionic3/qipaipm-company",
   "author": "",
   "bugs": {
     "url": "https://github.com/vstirbu/PromisesPlugin/issues"

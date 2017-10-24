@@ -7,10 +7,26 @@
     "is_top_level": true,
     "variables": {}
   },
-  "cordova-plugin-console": {
+  "cordova-plugin-x-socialsharing": {
     "source": {
       "type": "registry",
-      "id": "cordova-plugin-console@1.0.5"
+      "id": "cordova-plugin-x-socialsharing"
+    },
+    "is_top_level": true,
+    "variables": {}
+  },
+  "es6-promise-plugin": {
+    "source": {
+      "type": "registry",
+      "id": "es6-promise-plugin@4.1.0"
+    },
+    "is_top_level": false,
+    "variables": {}
+  },
+  "cordova-plugin-whitelist": {
+    "source": {
+      "type": "registry",
+      "id": "cordova-plugin-whitelist@1.3.1"
     },
     "is_top_level": true,
     "variables": {}
@@ -31,70 +47,12 @@
     "is_top_level": true,
     "variables": {}
   },
-  "cordova-plugin-statusbar": {
+  "cordova-plugin-ionic-webview": {
     "source": {
       "type": "registry",
-      "id": "cordova-plugin-statusbar@2.2.2"
+      "id": "cordova-plugin-ionic-webview@^1.1.11"
     },
     "is_top_level": true,
-    "variables": {}
-  },
-  "cordova-plugin-whitelist": {
-    "source": {
-      "type": "registry",
-      "id": "cordova-plugin-whitelist@1.3.1"
-    },
-    "is_top_level": true,
-    "variables": {}
-  },
-  "cordova-plugin-network-information": {
-    "source": {
-      "type": "registry",
-      "id": "cordova-plugin-network-information"
-    },
-    "is_top_level": true,
-    "variables": {}
-  },
-  "cordova-plugin-nativestorage": {
-    "source": {
-      "type": "registry",
-      "id": "cordova-plugin-nativestorage"
-    },
-    "is_top_level": true,
-    "variables": {}
-  },
-  "cordova-sqlite-storage": {
-    "source": {
-      "type": "registry",
-      "id": "cordova-sqlite-storage"
-    },
-    "is_top_level": true,
-    "variables": {}
-  },
-  "cordova-plugin-wechat": {
-    "source": {
-      "type": "registry",
-      "id": "cordova-plugin-wechat@2.0.0"
-    },
-    "is_top_level": true,
-    "variables": {
-      "WECHATAPPID": "wxaf6e253c0f942702"
-    }
-  },
-  "cordova-plugin-x-socialsharing": {
-    "source": {
-      "type": "registry",
-      "id": "cordova-plugin-x-socialsharing@^5.2.0"
-    },
-    "is_top_level": true,
-    "variables": {}
-  },
-  "es6-promise-plugin": {
-    "source": {
-      "type": "registry",
-      "id": "es6-promise-plugin@4.1.0"
-    },
-    "is_top_level": false,
     "variables": {}
   }
 }

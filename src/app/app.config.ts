@@ -1,17 +1,19 @@
-import { DatePipe } from "@angular/common";
+import {DatePipe} from "@angular/common";
 
 export class AppConfig {
     //测试环境URL
     public static getBaseUrl() {
-      return "http://192.168.72.224:8080/pm/";
+        return "http://192.168.72.224:8080/pm/";
     }
+
     //获取设备高度
     public static getWindowHeight() {
-      return window.screen.height;
+        return window.screen.height;
     }
+
     //获取设备宽度
     public static getWindowWidth() {
-      return window.screen.width;
+        return window.screen.width;
     }
 
     /**
@@ -28,112 +30,115 @@ export class AppConfig {
      * @returns {string}
      */
     public static dateFormat(date: Date, sFormat: String = 'yyyy-MM-dd'): string {
-      let time = {
-        Year: 0,
-        TYear: '0',
-        Month: 0,
-        TMonth: '0',
-        Day: 0,
-        TDay: '0',
-        Hour: 0,
-        THour: '0',
-        hour: 0,
-        Thour: '0',
-        Minute: 0,
-        TMinute: '0',
-        Second: 0,
-        TSecond: '0',
-        Millisecond: 0
-      };
-      time.Year = date.getFullYear();
-      time.TYear = String(time.Year).substr(2);
-      time.Month = date.getMonth() + 1;
-      time.TMonth = time.Month < 10 ? "0" + time.Month : String(time.Month);
-      time.Day = date.getDate();
-      time.TDay = time.Day < 10 ? "0" + time.Day : String(time.Day);
-      time.Hour = date.getHours();
-      time.THour = time.Hour < 10 ? "0" + time.Hour : String(time.Hour);
-      time.hour = time.Hour < 13 ? time.Hour : time.Hour - 12;
-      time.Thour = time.hour < 10 ? "0" + time.hour : String(time.hour);
-      time.Minute = date.getMinutes();
-      time.TMinute = time.Minute < 10 ? "0" + time.Minute : String(time.Minute);
-      time.Second = date.getSeconds();
-      time.TSecond = time.Second < 10 ? "0" + time.Second : String(time.Second);
-      time.Millisecond = date.getMilliseconds();
+        let time = {
+            Year: 0,
+            TYear: '0',
+            Month: 0,
+            TMonth: '0',
+            Day: 0,
+            TDay: '0',
+            Hour: 0,
+            THour: '0',
+            hour: 0,
+            Thour: '0',
+            Minute: 0,
+            TMinute: '0',
+            Second: 0,
+            TSecond: '0',
+            Millisecond: 0
+        };
+        time.Year = date.getFullYear();
+        time.TYear = String(time.Year).substr(2);
+        time.Month = date.getMonth() + 1;
+        time.TMonth = time.Month < 10 ? "0" + time.Month : String(time.Month);
+        time.Day = date.getDate();
+        time.TDay = time.Day < 10 ? "0" + time.Day : String(time.Day);
+        time.Hour = date.getHours();
+        time.THour = time.Hour < 10 ? "0" + time.Hour : String(time.Hour);
+        time.hour = time.Hour < 13 ? time.Hour : time.Hour - 12;
+        time.Thour = time.hour < 10 ? "0" + time.hour : String(time.hour);
+        time.Minute = date.getMinutes();
+        time.TMinute = time.Minute < 10 ? "0" + time.Minute : String(time.Minute);
+        time.Second = date.getSeconds();
+        time.TSecond = time.Second < 10 ? "0" + time.Second : String(time.Second);
+        time.Millisecond = date.getMilliseconds();
 
-      return sFormat.replace(/yyyy/ig, String(time.Year))
-        .replace(/yyy/ig, String(time.Year))
-        .replace(/yy/ig, time.TYear)
-        .replace(/y/ig, time.TYear)
-        .replace(/MM/g, time.TMonth)
-        .replace(/M/g, String(time.Month))
-        .replace(/dd/ig, time.TDay)
-        .replace(/d/ig, String(time.Day))
-        .replace(/HH/g, time.THour)
-        .replace(/H/g, String(time.Hour))
-        .replace(/hh/g, time.Thour)
-        .replace(/h/g, String(time.hour))
-        .replace(/mm/g, time.TMinute)
-        .replace(/m/g, String(time.Minute))
-        .replace(/ss/ig, time.TSecond)
-        .replace(/s/ig, String(time.Second))
-        .replace(/fff/ig, String(time.Millisecond))
+        return sFormat.replace(/yyyy/ig, String(time.Year))
+            .replace(/yyy/ig, String(time.Year))
+            .replace(/yy/ig, time.TYear)
+            .replace(/y/ig, time.TYear)
+            .replace(/MM/g, time.TMonth)
+            .replace(/M/g, String(time.Month))
+            .replace(/dd/ig, time.TDay)
+            .replace(/d/ig, String(time.Day))
+            .replace(/HH/g, time.THour)
+            .replace(/H/g, String(time.Hour))
+            .replace(/hh/g, time.Thour)
+            .replace(/h/g, String(time.hour))
+            .replace(/mm/g, time.TMinute)
+            .replace(/m/g, String(time.Minute))
+            .replace(/ss/ig, time.TSecond)
+            .replace(/s/ig, String(time.Second))
+            .replace(/fff/ig, String(time.Millisecond))
     }
 
     public static stringToDate(strTime): Date {
-      return new Date(Date.parse(strTime.replace(/-/g,   "/")));
+        if (typeof (strTime) == 'number') {
+            return this.timestampToDate(strTime);
+        }
+        return new Date(Date.parse(strTime.replace(/-/g, "/")));
     }
 
     public static dateToString(date): string {
-      return new DatePipe('en-US').transform(date, 'yyyy-MM-dd');
+        return new DatePipe('en-US').transform(date, 'yyyy-MM-dd');
     }
 
     public static getDayCountInMonth(date): number {
-      let m_days = new Array(31,28+AppConfig.is_leap(date.getFullYear()),31,30,31,30,31,31,30,31,30,31);
-      return m_days[date.getMonth()];
+        let m_days = new Array(31, 28 + AppConfig.is_leap(date.getFullYear()), 31, 30, 31, 30, 31, 31, 30, 31, 30, 31);
+        return m_days[date.getMonth()];
     }
 
     public static is_leap(year) {
-      var res;
-      return (year%100==0?res=(year%400==0?1:0):res=(year%4==0?1:0));
+        var res;
+        return (year % 100 == 0 ? res = (year % 400 == 0 ? 1 : 0) : res = (year % 4 == 0 ? 1 : 0));
     }
 
-    public static addDate(date, days){
-      var d = new Date(date)
-      d.setDate(d.getDate()+days);
-      var m=d.getMonth()+1;
-      return d.getFullYear()+'-'+m+'-'+d.getDate();
+    public static addDate(date, days) {
+        var d = new Date(date)
+        d.setDate(d.getDate() + days);
+        var m = d.getMonth() + 1;
+        return d.getFullYear() + '-' + m + '-' + d.getDate();
     }
 
     //时间戳转yyyy-mm-dd
-    public static timestampToDatestring(timestamp) : string {
-      var date =  new Date(timestamp);
-      var y = date.getFullYear();
-      var m = "0"+(date.getMonth()+1);
-      var d = "0"+date.getDate();
-      return y+"-"+m.substring(m.length-2,m.length)+"-"+d.substring(d.length-2,d.length);
+    public static timestampToDatestring(timestamp): string {
+        var date = new Date(timestamp);
+        var y = date.getFullYear();
+        var m = "0" + (date.getMonth() + 1);
+        var d = "0" + date.getDate();
+        return y + "-" + m.substring(m.length - 2, m.length) + "-" + d.substring(d.length - 2, d.length);
     }
 
     //时间戳转date
-    public static timestampToDate(timestamp) : Date {
-      return new Date(timestamp);
+    public static timestampToDate(timestamp): Date {
+        return new Date(timestamp);
     }
 
     public static isSameDay(date1: Date, date2: Date) {
         return (date1.getFullYear() == date2.getFullYear() && date1.getMonth() == date2.getMonth()
-                  && date1.getDate() == date2.getDate());
+            && date1.getDate() == date2.getDate());
     }
 
     /**
      * 深拷贝
      */
-    public static deepCopy(originObj: any): any{
+    public static deepCopy(originObj: any): any {
         return originObj ? JSON.parse(JSON.stringify(originObj)) : null;
     }
 
     //把字符串里面的数字都提取出来
-    public static  getNum(text){
-        return text.replace(/[^0-9]/ig,"");
+    public static getNum(text) {
+        return text.replace(/[^0-9]/ig, "");
     }
 
     getNowFormatDate() {
@@ -143,15 +148,15 @@ export class AppConfig {
         var month = date.getMonth() + 1;
         var strDate = date.getDate();
         var currentdate = date.getFullYear() + seperator1
-        + (month >= 1 && month <= 9)?"0":""
+        + (month >= 1 && month <= 9) ? "0" : ""
         + month + seperator1
-        + (strDate >= 1 && strDate <= 9)?"0":"" + strDate
-        + " " + date.getHours() + seperator2 + date.getMinutes()
-        + seperator2 + date.getSeconds();
+        + (strDate >= 1 && strDate <= 9) ? "0" : "" + strDate
+            + " " + date.getHours() + seperator2 + date.getMinutes()
+            + seperator2 + date.getSeconds();
         return currentdate;
     }
 
-    public static isJson(obj){
+    public static isJson(obj) {
         var isjson = typeof(obj) == "object" && Object.prototype.toString.call(obj).toLowerCase() == "[object object]" && !obj.length;
         return isjson;
     }

@@ -727,7 +727,8 @@ var __extends = (this && this.__extends) || (function () {
         var /** @type {?} */ tab = new tab_1.Tab(parentTabs, app, config, platform, elementRef, zone, renderer, compiler, changeDetectorRef, gestureCtrl, null, linker, dom, null);
         if (overrideLoad) {
             tab.load = function (_opts, cb) {
-                cb();
+                cb(false, false);
+                return Promise.resolve();
             };
         }
         return tab;

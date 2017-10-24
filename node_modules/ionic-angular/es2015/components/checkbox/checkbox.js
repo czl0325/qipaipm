@@ -105,6 +105,7 @@ export class Checkbox extends BaseInput {
         ev.preventDefault();
         ev.stopPropagation();
         this.value = !this.value;
+        this._fireTouched();
     }
     /**
      * @hidden

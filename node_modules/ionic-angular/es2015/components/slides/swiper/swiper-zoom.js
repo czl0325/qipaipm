@@ -416,7 +416,7 @@ export function resetZoomEvents(s, plt) {
     let /** @type {?} */ slide;
     // Scale image
     if (s._supportGestures) {
-        for (var /** @type {?} */ i = 0; i < slides.length; i++) {
+        for (let /** @type {?} */ i = 0; i < slides.length; i++) {
             slide = slides[i];
             // gesturestart
             plt.registerListener(slide, 'gesturestart', (ev) => {

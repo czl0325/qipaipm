@@ -67,6 +67,7 @@ export class MilestoneDetailPage {
     canAddSubtask: boolean = false;
     mileType: number;
     minTime: string = new DatePipe('en-US').transform(new Date(), 'yyyy-MM-dd');
+    maxTime: string = new DatePipe('en-US').transform(new Date(2030,12,31,0,0,0),'yyyy-MM-dd');
 
     constructor(public navCtrl: NavController, public navParams: NavParams,
                 private appService: AppService, private cd: ChangeDetectorRef,
@@ -79,6 +80,9 @@ export class MilestoneDetailPage {
         this.milestone = data;
         for (let i=0; i<10; i++) {
             this.canChooses.push(false);
+        }
+        if (this.project.endTime.length > 0) {
+            this.maxTime = this.project.endTime;
         }
         /*******判断前后里程碑的进度*******/
         if (this.mileType == 1) {
@@ -103,6 +107,7 @@ export class MilestoneDetailPage {
                     for (let i=min1_1+1; i < 10; i++) {
                         this.canChooses[i] = true;
                     }
+                    this.minTime = mm1.deliveryTime;
                 }
             } else {
                 var mmm1 = null;
@@ -112,10 +117,12 @@ export class MilestoneDetailPage {
                 if (index1 > 0) {
                     mmm1 = this.project.milestoneVo1[index1-1];
                     min1_2 = parseInt(mmm1.itemProgress.replace(/%/, ""))/10-1;
+                    this.minTime = mmm1.deliveryTime;
                 }
                 if (index1 < this.project.milestoneVo1.length-1) {
                     mmm2 = this.project.milestoneVo1[index1+1];
                     min1_3 = parseInt(mmm2.itemProgress.replace(/%/, ""))/10-1;
+                    this.maxTime = mmm2.deliveryTime;
                 }
                 if (min1_2 == -1) {
                     min1_2 = 0;
@@ -149,6 +156,7 @@ export class MilestoneDetailPage {
                     for (let i=min2_1+1; i < 10; i++) {
                         this.canChooses[i] = true;
                     }
+                    this.minTime = mm2.deliveryTime;
                 }
             } else {
                 var mmm2_1 = null;
@@ -158,10 +166,12 @@ export class MilestoneDetailPage {
                 if (index2 > 0) {
                     mmm2_1 = this.project.milestoneVo2[index2-1];
                     min2_2 = parseInt(mmm2_1.itemProgress.replace(/%/, ""))/10-1;
+                    this.minTime = mmm2_1.deliveryTime;
                 }
                 if (index2 < this.project.milestoneVo1.length-1) {
                     mmm2_2 = this.project.milestoneVo2[index2+1];
                     min2_3 = parseInt(mmm2_2.itemProgress.replace(/%/, ""))/10-1;
+                    this.maxTime = mmm2_2.deliveryTime;
                 }
                 if (min2_2 == -1) {
                     min2_2 = 0;

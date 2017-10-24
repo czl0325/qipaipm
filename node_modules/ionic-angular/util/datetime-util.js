@@ -234,6 +234,16 @@ export function parseDate(val) {
     };
 }
 /**
+ * @param {?} d1
+ * @param {?} d2
+ * @return {?}
+ */
+export function compareDates(d1, d2) {
+    var /** @type {?} */ date1 = new Date(d1.year, d1.month, d1.day, d1.hour, d1.minute, d1.second);
+    var /** @type {?} */ date2 = new Date(d2.year, d2.month, d2.day, d2.hour, d2.minute, d2.second);
+    return date1.getTime() - date2.getTime();
+}
+/**
  * @param {?} existingData
  * @param {?} newData
  * @return {?}

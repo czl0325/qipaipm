@@ -433,8 +433,8 @@ export function resetZoomEvents(s, plt) {
         }
     }
     else if (s._touchEvents.start === 'touchstart') {
-        for (var /** @type {?} */ i_1 = 0; i_1 < slides.length; i_1++) {
-            slide = slides[i_1];
+        for (var /** @type {?} */ i = 0; i < slides.length; i++) {
+            slide = slides[i];
             // touchstart
             plt.registerListener(slide, s._touchEvents.start, function (ev) {
                 onGestureStart(s, plt, ev);
@@ -454,8 +454,8 @@ export function resetZoomEvents(s, plt) {
         onTouchStart(s, plt, ev);
     });
     unRegs.push(function () { touchStartSub.unsubscribe(); });
-    for (var /** @type {?} */ i_2 = 0; i_2 < slides.length; i_2++) {
-        slide = slides[i_2];
+    for (var /** @type {?} */ i = 0; i < slides.length; i++) {
+        slide = slides[i];
         if (slide.querySelector('.' + CLS.zoomContainer)) {
             plt.registerListener(slide, 's.touchEvents.move', function (ev) {
                 onTouchMove(s, plt, ev);
