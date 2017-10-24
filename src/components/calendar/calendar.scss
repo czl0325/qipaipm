@@ -3,7 +3,7 @@ calendar {
     //margin-top: 20% !important;
   }
   .titleCol {
-    background-color: #32db64;
+
   }
   .selectedDateLabel {
 
@@ -14,9 +14,7 @@ calendar {
     height: 22px;
     right: 10px;
     position: absolute;
-    top: 50%;
-    -webkit-transform: translateY(-50%);
-    transform: translateY(-50%);
+    top: 10px;
   }
   .calendar-row {
     max-height: 50px;

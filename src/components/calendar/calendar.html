@@ -1,75 +1,78 @@
 <!-- Generated template for the CalendarComponent component -->
 <div>
-  <ion-grid no-padding no-margin>
-    <ion-row class="calendar-controls" no-padding no-margin>
-      <ion-col no-padding no-margin text-right class="titleCol">
-        <button ion-button icon-only clear (click)="previousMonth()">
-          <ion-icon name="appname-calendar-left" style="background-color: #d6d6d6"></ion-icon>
-        </button>
-      </ion-col>
-      <ion-col no-margin no-padding text-center class="selectedDateLabel" (click)="openCalendar($event)">
-        <h5 no-padding no-margin class="selectedMonthLabel">{{ currentDate | date:'yyyy-MM' }}
-            <ion-datetime class="selectedDatetime"
-                          displayFormat="YYYY年MM月" pickerFormat="YYYY MMMM" max="2030" min="2015"
-                          cancelText="取消" doneText="确认"
-                          monthNames="1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12"
-                          monthShortNames="1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12"
-                          ngModel="{{currentMonth}}"
-                          (ngModelChange)=onSelectMonth($event)></ion-datetime>
-        </h5>
+    <ion-grid no-padding no-margin>
+        <ion-row class="calendar-controls" no-padding no-margin>
+            <ion-col no-padding no-margin text-right class="titleCol">
+                <button ion-button icon-only clear (click)="previousMonth()" >
+                    <ion-icon name="appname-calendar-left" style="background-color: #d6d6d6"></ion-icon>
+                </button>
+            </ion-col>
+            <ion-col no-margin no-padding text-center class="selectedDateLabel" (click)="openCalendar($event)">
+                <h5 no-padding no-margin class="selectedMonthLabel">{{ currentDate | date:'yyyy-MM' }}
+                    <ion-datetime class="selectedDatetime"
+                                  displayFormat="YYYY年MM月" pickerFormat="YYYY MMMM" max="2030" min="2015"
+                                  cancelText="取消" doneText="确认"
+                                  monthNames="1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12"
+                                  monthShortNames="1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12"
+                                  ngModel="{{currentMonth}}"
+                                  (ngModelChange)=onSelectMonth($event)></ion-datetime>
+                </h5>
 
-      </ion-col>
-      <ion-col no-padding no-margin text-left class="titleCol">
-        <button ion-button icon-only clear (click)="nextMonth()">
-          <ion-icon name="appname-calendar-right" style="background-color: #d6d6d6"></ion-icon>
-        </button>
-        <button ion-button icon-only (click)="setToday()" class="btn_today">
-          今
-        </button>
-      </ion-col>
-    </ion-row>
+            </ion-col>
+            <ion-col no-padding no-margin text-left class="titleCol">
+                <button ion-button icon-only clear (click)="nextMonth()">
+                    <ion-icon name="appname-calendar-right" style="background-color: #d6d6d6"></ion-icon>
+                </button>
+                <div float-end style="height: 100%; position: relative; width: 50px">
+                    <button ion-button icon-only (click)="setToday()" class="btn_today">
+                    今
+                    </button>
+                </div>
+            </ion-col>
+        </ion-row>
 
-    <ion-row class="calendar-weekDays">
-      <ion-col text-center class="calendar-week-day">
-        {{ weekDays[0] }}
-      </ion-col>
-      <ion-col text-center class="calendar-week-day">
-        {{ weekDays[1] }}
-      </ion-col>
-      <ion-col text-center class="calendar-week-day">
-        {{ weekDays[2] }}
-      </ion-col>
-      <ion-col text-center class="calendar-week-day">
-        {{ weekDays[3] }}
-      </ion-col>
-      <ion-col text-center class="calendar-week-day">
-        {{ weekDays[4] }}
-      </ion-col>
-      <ion-col text-center class="calendar-week-day">
-        {{ weekDays[5] }}
-      </ion-col>
-      <ion-col text-center class="calendar-week-day">
-        {{ weekDays[6] }}
-      </ion-col>
-    </ion-row>
-  </ion-grid>
+        <ion-row class="calendar-weekDays">
+            <ion-col text-center class="calendar-week-day">
+                {{ weekDays[0] }}
+            </ion-col>
+            <ion-col text-center class="calendar-week-day">
+                {{ weekDays[1] }}
+            </ion-col>
+            <ion-col text-center class="calendar-week-day">
+                {{ weekDays[2] }}
+            </ion-col>
+            <ion-col text-center class="calendar-week-day">
+                {{ weekDays[3] }}
+            </ion-col>
+            <ion-col text-center class="calendar-week-day">
+                {{ weekDays[4] }}
+            </ion-col>
+            <ion-col text-center class="calendar-week-day">
+                {{ weekDays[5] }}
+            </ion-col>
+            <ion-col text-center class="calendar-week-day">
+                {{ weekDays[6] }}
+            </ion-col>
+        </ion-row>
+    </ion-grid>
 
-  <ion-grid (swipeleft)="useSwipe && nextMonth()" (swiperight)="useSwipe && previousMonth()">
-    <ion-row *ngFor="let row of rows" class="calendar-row">
-      <ion-col no-padding *ngFor="let day of row; let i = index" text-center class="calendar-col">
-        <button no-padding block class="calendar-day" *ngIf="day" ion-button clear (click)="dateClicked(day)"
-                id="calendar-day-{{day}}" [disabled]="pastDates.indexOf(day) > -1 || weekDaysToDisable.indexOf(i) > -1 || daysToDisable.indexOf(day) > -1">
-          {{ day }}
-          <div class="dot" id="dot-{{day}}"></div>
-        </button>
-      </ion-col>
-    </ion-row>
-  </ion-grid>
+    <ion-grid (swipeleft)="useSwipe && nextMonth()" (swiperight)="useSwipe && previousMonth()">
+        <ion-row *ngFor="let row of rows" class="calendar-row">
+            <ion-col no-padding *ngFor="let day of row; let i = index" text-center class="calendar-col">
+                <button no-padding block class="calendar-day" *ngIf="day" ion-button clear (click)="dateClicked(day)"
+                        id="calendar-day-{{day}}"
+                        [disabled]="pastDates.indexOf(day) > -1 || weekDaysToDisable.indexOf(i) > -1 || daysToDisable.indexOf(day) > -1">
+                    {{ day }}
+                    <div class="dot" id="dot-{{day}}"></div>
+                </button>
+            </ion-col>
+        </ion-row>
+    </ion-grid>
 
-  <!--<ion-list *ngIf="showEventsList">-->
+    <!--<ion-list *ngIf="showEventsList">-->
     <!--<button text-wrap ion-item *ngFor="let event of todayEvents" (click)="eventClicked(event)">-->
-      <!--{{ event.title }}-->
-      <!--<ion-icon name="arrow-forward" hideWhen="ios" item-right></ion-icon>-->
+    <!--{{ event.title }}-->
+    <!--<ion-icon name="arrow-forward" hideWhen="ios" item-right></ion-icon>-->
     <!--</button>-->
-  <!--</ion-list>-->
+    <!--</ion-list>-->
 </div>
