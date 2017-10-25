@@ -1,5 +1,5 @@
 import {Component} from '@angular/core';
-import {Events, NavController, NavParams, ToastController} from 'ionic-angular';
+import {Events, NavController, NavParams, Platform, ToastController} from 'ionic-angular';
 import {AppConfig} from "../../app/app.config";
 import {AppService} from "../../app/app.service";
 import {ContactPage} from "../contact/contact";
@@ -44,17 +44,19 @@ export class SubtaskPage {
     type: number;
     milestone: any;
     subtask = {
-        id: '',              //子任务的id
-        subtaskName: '',     //子任务的名称
-        itemEndLeader: '',   //子任务的负责人
-        itemEndLeaderNum: '',  //子任务负责人工号
+        id: '',                 //子任务的id
+        subtaskName: '',        //子任务的名称
+        itemEndLeader: '',      //子任务的负责人
+        itemEndLeaderNum: '',   //子任务负责人工号
+        itemDept: '',           //子任务负责人部门
         deliveryTime: new DatePipe('en-US').transform(new Date(), 'yyyy-MM-dd'),    //子任务的交付时间
-        deliveryResult: '',  //子任务交付成果
+        deliveryResult: '',     //子任务交付成果
         planTime: new DatePipe('en-US').transform(new Date(), 'yyyy-MM-dd'),        //子任务实际完成时间
         realTime: new DatePipe('en-US').transform(new Date(), 'yyyy-MM-dd'),        //子任务实际完成时
-        remark: '',          //子任务备注
-        delayDays: 0,        //子任务延期天数
-        itemIsEnd: false, //子任务是否完成
+        remark: '',             //子任务备注
+        delayDays: 0,           //子任务延期天数
+        itemIsEnd: false,       //子任务是否完成
+        version: '',            //版本号(后台需要)
     };
     tempSubtask: any;
     canEdit: boolean = false;
@@ -65,7 +67,7 @@ export class SubtaskPage {
 
     constructor(public navCtrl: NavController, private navParams: NavParams,
                 private appService: AppService, public events: Events,
-                private toastCtrl: ToastController) {
+                private toastCtrl: ToastController, private platform: Platform) {
         var data = this.navParams.get('subtask');
         this.projectname = this.navParams.get('projectname');
         this.callback = this.navParams.get('callback');
@@ -96,6 +98,7 @@ export class SubtaskPage {
         this.events.subscribe('onConfirmSubtaskLeader', (leader) => {
             this.tempSubtask.itemEndLeader = leader.name;
             this.tempSubtask.itemEndLeaderNum = leader.username;
+            this.tempSubtask.itemDept = leader.department!=null?leader.department:leader.company;
         });
     }
 

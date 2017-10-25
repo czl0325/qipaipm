@@ -1,5 +1,5 @@
 import {Component, ChangeDetectorRef, ViewChild} from '@angular/core';
-import {NavController, NavParams, Events, Content, AlertController} from 'ionic-angular';
+import {NavController, NavParams, Events, Content, AlertController, Platform} from 'ionic-angular';
 import {SubtaskPage} from "../subtask/subtask";
 import {DatePipe} from "@angular/common";
 import {AppService} from "../../app/app.service";
@@ -45,21 +45,23 @@ export class MilestoneDetailPage {
     @ViewChild(Content) content: Content;
 
     milestone = {
-        id: '',                    //里程碑id
-        milestoneName: '',         //里程碑的名称
-        itemEndLeader: '',                 //里程碑的负责人
-        itemEndLeaderNum: '',          //里程碑负责人工号
-        deliveryResult: '',        //里程碑的交付成果
-        // milestoneSchedule : '',     //里程碑的进度
-        itemProgress: '',          //里程碑的进度
-        deliveryTime: new DatePipe('en-US').transform(new Date(), 'yyyy-MM-dd'),              //里程碑交付时间
-        planTime: new DatePipe('en-US').transform(new Date(), 'yyyy-MM-dd'),              //里程碑计划完成时间
-        realTime: new DatePipe('en-US').transform(new Date(), 'yyyy-MM-dd'),              //里程碑实际完成时间
-        remark: '',                //里程碑备注
-        delayDays: 0,              //里程碑延迟天数
-        children: [],              //里程碑子任务
-        itemIsEnd: false,          //里程碑是否完成
-        milestoneType: 1,          //1是普通里程碑，2是延期里程碑
+        id: '',                     //里程碑id
+        milestoneName: '',          //里程碑的名称
+        itemEndLeader: '',          //里程碑的负责人
+        itemEndLeaderNum: '',       //里程碑负责人工号
+        itemDept: '',               //里程碑负责人部门
+        deliveryResult: '',         //里程碑的交付成果
+        // milestoneSchedule : '',  //里程碑的进度
+        itemProgress: '',           //里程碑的进度
+        deliveryTime: new DatePipe('en-US').transform(new Date(), 'yyyy-MM-dd'),                //里程碑交付时间
+        planTime: new DatePipe('en-US').transform(new Date(), 'yyyy-MM-dd'),                    //里程碑计划完成时间
+        realTime: new DatePipe('en-US').transform(new Date(), 'yyyy-MM-dd'),                    //里程碑实际完成时间
+        remark: '',                 //里程碑备注
+        delayDays: 0,               //里程碑延迟天数
+        children: [],               //里程碑子任务
+        itemIsEnd: false,           //里程碑是否完成
+        milestoneType: 1,           //1是普通里程碑，2是延期里程碑
+        version: '',                //版本号(后台需要)
     };
     tempMilestone;
     canEdit: boolean = false;
@@ -71,7 +73,8 @@ export class MilestoneDetailPage {
 
     constructor(public navCtrl: NavController, public navParams: NavParams,
                 private appService: AppService, private cd: ChangeDetectorRef,
-                private events: Events, private alertCtrl: AlertController) {
+                private events: Events, private alertCtrl: AlertController,
+                private platform: Platform) {
         var data = this.navParams.get('milestone');
         this.project = this.navParams.get('project');
         this.callback = this.navParams.get('callback');
@@ -81,7 +84,7 @@ export class MilestoneDetailPage {
         for (let i=0; i<10; i++) {
             this.canChooses.push(false);
         }
-        if (this.project.endTime.length > 0) {
+        if (this.project.id.length > 0 && this.mileType == 1) {
             this.maxTime = this.project.endTime;
         }
         /*******判断前后里程碑的进度*******/
@@ -100,7 +103,7 @@ export class MilestoneDetailPage {
                 if (this.project.milestoneVo1.length == 0) {
                     for (let i=0; i<10; i++) {
                         this.canChooses[i] = true;
-                    }//itemProgress
+                    }
                 } else {
                     var mm1 = this.project.milestoneVo1[this.project.milestoneVo1.length-1];
                     var min1_1 = parseInt(mm1.itemProgress.replace(/%/, ""))/10-1;
@@ -122,7 +125,7 @@ export class MilestoneDetailPage {
                 if (index1 < this.project.milestoneVo1.length-1) {
                     mmm2 = this.project.milestoneVo1[index1+1];
                     min1_3 = parseInt(mmm2.itemProgress.replace(/%/, ""))/10-1;
-                    this.maxTime = mmm2.deliveryTime;
+                    //this.maxTime = mmm2.deliveryTime;
                 }
                 if (min1_2 == -1) {
                     min1_2 = 0;
@@ -150,6 +153,7 @@ export class MilestoneDetailPage {
                     for (let i=0; i<10; i++) {
                         this.canChooses[i] = true;
                     }//itemProgress
+                    this.minTime = this.project.endTime;
                 } else {
                     var mm2 = this.project.milestoneVo2[this.project.milestoneVo2.length-1];
                     var min2_1 = parseInt(mm2.itemProgress.replace(/%/, ""))/10-1;
@@ -167,11 +171,12 @@ export class MilestoneDetailPage {
                     mmm2_1 = this.project.milestoneVo2[index2-1];
                     min2_2 = parseInt(mmm2_1.itemProgress.replace(/%/, ""))/10-1;
                     this.minTime = mmm2_1.deliveryTime;
+
                 }
                 if (index2 < this.project.milestoneVo1.length-1) {
                     mmm2_2 = this.project.milestoneVo2[index2+1];
                     min2_3 = parseInt(mmm2_2.itemProgress.replace(/%/, ""))/10-1;
-                    this.maxTime = mmm2_2.deliveryTime;
+                    //this.maxTime = mmm2_2.deliveryTime;
                 }
                 if (min2_2 == -1) {
                     min2_2 = 0;
@@ -184,6 +189,7 @@ export class MilestoneDetailPage {
                 }
             }
         }
+        this.milestone.deliveryTime = this.minTime;
         /**************/
         if (this.milestone.id.length < 1) {
             if (this.mileType == 1) {
@@ -230,6 +236,7 @@ export class MilestoneDetailPage {
         this.events.subscribe('onConfirmMilestoneLeader', (leader) => {
             this.tempMilestone.itemEndLeader = leader.name;
             this.tempMilestone.itemEndLeaderNum = leader.username;
+            this.tempMilestone.itemDept = leader.department!=null?leader.department:leader.company;
         });
     }
 
@@ -257,6 +264,15 @@ export class MilestoneDetailPage {
             alert.present();
             return;
         }
+        if (this.tempMilestone.itemProgress.length < 1) {
+            let alert = this.alertCtrl.create({
+                title: '错误信息',
+                subTitle: '里程碑进度为必填项!',
+                buttons: ['确定']
+            });
+            alert.present();
+            return;
+        }
         if (this.tempMilestone.deliveryResult.length < 1) {
             let alert = this.alertCtrl.create({
                 title: '错误信息',
@@ -266,7 +282,6 @@ export class MilestoneDetailPage {
             alert.present();
             return;
         }
-
         var param = AppConfig.deepCopy(this.tempMilestone);
         if (this.mileType == 1) {
             if (this.type == 1) {
@@ -342,6 +357,7 @@ export class MilestoneDetailPage {
             itemIsEnd: false,
             remark: '',          //子任务备注
             delayDays: 0,        //子任务延期天数
+            version: '',         //版本号(后台需要)
         };
         this.navCtrl.push(SubtaskPage, {
             subtask: subtask,
@@ -402,9 +418,10 @@ export class MilestoneDetailPage {
                     var ss = this.tempMilestone.children[i];
                     ss.subtaskName = '子任务' + (i + 1);
                 }
+                this.tempMilestone.version = subtask.mv || this.tempMilestone.version;
+                this.project.version = subtask.pv || this.project.version;
                 this.milestone = this.tempMilestone;
                 this.events.publish('reloadMilestone', this.milestone);
-                //this.content.resize();
                 setTimeout(() => {
                     if (this.content.scrollToBottom) {
                         this.content.scrollToBottom(0);

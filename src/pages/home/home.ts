@@ -1,5 +1,5 @@
-import {Component} from '@angular/core';
-import {Events, NavController} from 'ionic-angular';
+import {Component, ViewChild} from '@angular/core';
+import {Content, Events, NavController} from 'ionic-angular';
 import {ProjectCreatePage} from "../project-create/project-create";
 import {ProjectDetailPage} from "../project-detail/project-detail";
 import {SearchPage} from "../search/search";
@@ -24,6 +24,8 @@ export class HomePage {
     currentDate: string;
     timer;
     hideMaskView: boolean = true;
+
+    @ViewChild(Content) content: Content;
 
     constructor(public navCtrl: NavController, public appService: AppService,
                 public events: Events, private storage: Storage) {
@@ -64,7 +66,7 @@ export class HomePage {
     reloadProjectList(dateString: string) {
         this.events.publish('onGetProjectDate');
         this.projects = [];
-        this.appService.httpGet("item/searchByCondition", {
+        this.appService.httpGet("item/searchAll", {
             "itemStartTime": dateString,
             "endTime": dateString,
             "empNum": AppSingleton.getInstance().currentUserInfo.username,
@@ -87,7 +89,11 @@ export class HomePage {
                         }
                     }
                 }
-                console.log(view.projects);
+                setTimeout(()=> {
+                   if (view.content.scrollToTop) {
+                       view.content.scrollToTop(0);
+                   }
+                });
             }
         }, true);
     }

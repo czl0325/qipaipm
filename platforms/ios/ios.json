@@ -9,19 +9,7 @@
         "parents": {
           "/*": [
             {
-              "xml": "<feature name=\"SocialSharing\"><param name=\"ios-package\" value=\"SocialSharing\" /><param name=\"onload\" value=\"true\" /></feature>",
-              "count": 1
-            },
-            {
-              "xml": "<feature name=\"Keyboard\"><param name=\"ios-package\" onload=\"true\" value=\"IonicKeyboard\" /></feature>",
-              "count": 1
-            },
-            {
               "xml": "<feature name=\"Device\"><param name=\"ios-package\" value=\"CDVDevice\" /></feature>",
-              "count": 1
-            },
-            {
-              "xml": "<feature name=\"SplashScreen\"><param name=\"ios-package\" value=\"CDVSplashScreen\" /><param name=\"onload\" value=\"true\" /></feature>",
               "count": 1
             },
             {
@@ -34,6 +22,18 @@
             },
             {
               "xml": "<preference name=\"CordovaWebViewEngine\" value=\"CDVWKWebViewEngine\" />",
+              "count": 1
+            },
+            {
+              "xml": "<feature name=\"SplashScreen\"><param name=\"ios-package\" value=\"CDVSplashScreen\" /><param name=\"onload\" value=\"true\" /></feature>",
+              "count": 1
+            },
+            {
+              "xml": "<feature name=\"SocialSharing\"><param name=\"ios-package\" value=\"SocialSharing\" /><param name=\"onload\" value=\"true\" /></feature>",
+              "count": 1
+            },
+            {
+              "xml": "<feature name=\"Keyboard\"><param name=\"ios-package\" onload=\"true\" value=\"IonicKeyboard\" /></feature>",
               "count": 1
             }
           ]
@@ -52,6 +52,18 @@
     }
   },
   "installed_plugins": {
+    "cordova-plugin-device": {
+      "PACKAGE_NAME": "com.qipai.qipaipm"
+    },
+    "cordova-plugin-ionic-webview": {
+      "PACKAGE_NAME": "com.qipai.qipaipm"
+    },
+    "cordova-plugin-splashscreen": {
+      "PACKAGE_NAME": "com.qipai.qipaipm"
+    },
+    "cordova-plugin-whitelist": {
+      "PACKAGE_NAME": "com.qipai.qipaipm"
+    },
     "es6-promise-plugin": {
       "PACKAGE_NAME": "com.qipai.qipaipm"
     },
@@ -60,22 +72,34 @@
     },
     "ionic-plugin-keyboard": {
       "PACKAGE_NAME": "com.qipai.qipaipm"
-    },
-    "cordova-plugin-whitelist": {
-      "PACKAGE_NAME": "com.qipai.qipaipm"
-    },
-    "cordova-plugin-device": {
-      "PACKAGE_NAME": "com.qipai.qipaipm"
-    },
-    "cordova-plugin-splashscreen": {
-      "PACKAGE_NAME": "com.qipai.qipaipm"
-    },
-    "cordova-plugin-ionic-webview": {
-      "PACKAGE_NAME": "com.qipai.qipaipm"
     }
   },
   "dependent_plugins": {},
   "modules": [
+    {
+      "id": "cordova-plugin-device.device",
+      "file": "plugins/cordova-plugin-device/www/device.js",
+      "pluginId": "cordova-plugin-device",
+      "clobbers": [
+        "device"
+      ]
+    },
+    {
+      "id": "cordova-plugin-ionic-webview.ios-wkwebview-exec",
+      "file": "plugins/cordova-plugin-ionic-webview/src/www/ios/ios-wkwebview-exec.js",
+      "pluginId": "cordova-plugin-ionic-webview",
+      "clobbers": [
+        "cordova.exec"
+      ]
+    },
+    {
+      "id": "cordova-plugin-splashscreen.SplashScreen",
+      "file": "plugins/cordova-plugin-splashscreen/www/splashscreen.js",
+      "pluginId": "cordova-plugin-splashscreen",
+      "clobbers": [
+        "navigator.splashscreen"
+      ]
+    },
     {
       "id": "es6-promise-plugin.Promise",
       "file": "plugins/es6-promise-plugin/www/promise.js",
@@ -98,39 +122,15 @@
         "cordova.plugins.Keyboard"
       ],
       "runs": true
-    },
-    {
-      "id": "cordova-plugin-device.device",
-      "file": "plugins/cordova-plugin-device/www/device.js",
-      "pluginId": "cordova-plugin-device",
-      "clobbers": [
-        "device"
-      ]
-    },
-    {
-      "id": "cordova-plugin-splashscreen.SplashScreen",
-      "file": "plugins/cordova-plugin-splashscreen/www/splashscreen.js",
-      "pluginId": "cordova-plugin-splashscreen",
-      "clobbers": [
-        "navigator.splashscreen"
-      ]
-    },
-    {
-      "id": "cordova-plugin-ionic-webview.ios-wkwebview-exec",
-      "file": "plugins/cordova-plugin-ionic-webview/src/www/ios/ios-wkwebview-exec.js",
-      "pluginId": "cordova-plugin-ionic-webview",
-      "clobbers": [
-        "cordova.exec"
-      ]
     }
   ],
   "plugin_metadata": {
+    "cordova-plugin-device": "1.1.4",
+    "cordova-plugin-ionic-webview": "1.1.16",
+    "cordova-plugin-splashscreen": "4.0.3",
+    "cordova-plugin-whitelist": "1.3.1",
     "es6-promise-plugin": "4.1.0",
     "cordova-plugin-x-socialsharing": "5.2.1",
-    "ionic-plugin-keyboard": "2.2.1",
-    "cordova-plugin-whitelist": "1.3.1",
-    "cordova-plugin-device": "1.1.4",
-    "cordova-plugin-splashscreen": "4.0.3",
-    "cordova-plugin-ionic-webview": "1.1.16"
+    "ionic-plugin-keyboard": "2.2.1"
   }
 }

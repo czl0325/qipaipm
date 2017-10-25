@@ -53,7 +53,7 @@ export class SearchPage {
             });
             toast.present();
         } else {
-            this.appService.httpGet("item/searchByCondition", {
+            this.appService.httpGet("item/searchAll", {
                 itemName: this.searchValue,
                 "empNum": AppSingleton.getInstance().currentUserInfo.username,
                 page: 1,

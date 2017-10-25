@@ -1,5 +1,5 @@
 import {Component, ElementRef, ViewChild} from '@angular/core';
-import {AlertController, Events, IonicPage, NavController, NavParams, ToastController} from 'ionic-angular';
+import {AlertController, Events, IonicPage, NavController, NavParams, ToastController, Content} from 'ionic-angular';
 import {AppService} from "../../app/app.service";
 
 /**
@@ -21,6 +21,7 @@ export class ProjectEndPage {
     otherReason: string;
 
     @ViewChild('input1') input1: ElementRef;
+    @ViewChild(Content) content: Content;
     @ViewChild('projectEndContent') projectEndContent:ElementRef;
 
     constructor(public navCtrl: NavController, public navParams: NavParams,
@@ -51,6 +52,10 @@ export class ProjectEndPage {
             input2.style.visibility="hidden";
             //input2.style.opacity="0";
         }
+        var maskView = document.getElementById('maskView');
+        if (maskView != null) {
+            maskView.style.height = "0px";
+        }
     }
 
     onClickCheck(value, index) {
@@ -63,6 +68,16 @@ export class ProjectEndPage {
                     input2_1.setAttribute("readOnly", "readOnly");
                     input2_1.style.visibility="hidden";
                 }
+
+                var maskView = document.getElementById('maskView');
+                if (maskView != null) {
+                    maskView.style.height = "0px";
+                }
+                setTimeout(() => {
+                    if (this.content.scrollToTop) {
+                        this.content.scrollToTop(0);
+                    }
+                }, 200);
             }
         } else {
             for (let i = 0; i < this.arrayCheckboxs.length; i++) {
@@ -90,18 +105,34 @@ export class ProjectEndPage {
                     break;
             }
             var input2_2 = document.getElementById('input2');
+            var maskView = document.getElementById('maskView');
             if (index < 3) {
                 if (input2_2 != null) {
                     input2_2.setAttribute("readOnly", "readOnly");
                     input2_2.style.visibility="hidden";
-
                 }
+                if (maskView != null) {
+                    maskView.style.height = "0px";
+                }
+                setTimeout(() => {
+                    if (this.content.scrollToTop) {
+                        this.content.scrollToTop(0);
+                    }
+                }, 200);
             } else {
                 input2_2.style.visibility="visible";
                 input2_2.removeAttribute("readOnly");
                 setTimeout(function () {
                     input2_2.focus();
                 }, 100);
+                if (maskView != null) {
+                    maskView.style.height = "250px";
+                }
+                setTimeout(() => {
+                    if (this.content.scrollToBottom) {
+                        this.content.scrollToBottom(0);
+                    }
+                }, 200);
             }
         }
     }

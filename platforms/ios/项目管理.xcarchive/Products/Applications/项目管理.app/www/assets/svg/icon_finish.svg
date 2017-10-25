@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="32" height="32" viewBox="0 0 32 32">
+  <defs>
+    <style>
+      .cls-1 {
+        fill: #f0f1f2;
+        fill-rule: evenodd;
+        filter: url(#filter);
+      }
+    </style>
+    <filter id="filter" x="1" y="1" width="30" height="30" filterUnits="userSpaceOnUse">
+      <feFlood result="flood" flood-color="#82848a"/>
+      <feComposite result="composite" operator="in" in2="SourceGraphic"/>
+      <feBlend result="blend" in2="SourceGraphic"/>
+    </filter>
+  </defs>
+  <path id="xiangqingpage_icon_jieshu" class="cls-1" d="M16,31A15,15,0,1,1,31,16,15,15,0,0,1,16,31ZM3,16a12.937,12.937,0,0,0,3.135,8.452L24.45,6.134A12.99,12.99,0,0,0,3,16ZM25.864,7.548L7.547,25.865A12.99,12.99,0,0,0,25.864,7.548Z"/>
+</svg>

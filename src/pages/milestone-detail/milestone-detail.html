@@ -35,7 +35,7 @@
   <ion-list no-lines style="border: solid 1px #ececec">
     <button ion-item style="border-bottom: solid 1px #ececec; height: 50px" (click)="onMilestoneLeader($event)" [disabled]="canEdit==false">
       <ion-icon item-start name="appname-admin"></ion-icon>
-      <ion-label item-start style="margin-left: 20px; color: #868686">负责人:</ion-label>
+      <ion-label item-start [ngStyle]="{'margin-left':this.platform.is('ios')?'0px':'20px'}" style="color: #868686">负责人:</ion-label>
       <ion-label item-end text-right>{{tempMilestone.itemEndLeader}}</ion-label>
     </button>
     <!--<ion-item style="border-bottom: solid 1px #ececec;">-->
@@ -55,7 +55,7 @@
       <ion-icon item-start name="appname-plan"></ion-icon>
       <ion-label style="color: #868686">项目进度</ion-label>
       <ion-select interface="action-sheet" [(ngModel)]="tempMilestone.itemProgress"
-                  cancelText="取消" okText="确认" [disabled]="canEdit==false">
+                  cancelText="取消" okText="确认" [disabled]="canEdit==false||mileType==2">
         <ion-option value="10%" [disabled]="canChooses[0]==false">10%</ion-option>
         <ion-option value="20%" [disabled]="canChooses[1]==false">20%</ion-option>
         <ion-option value="30%" [disabled]="canChooses[2]==false">30%</ion-option>

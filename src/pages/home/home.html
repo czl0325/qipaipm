@@ -99,8 +99,8 @@
                  style="position: relative; height: 50px; border-bottom: solid 1px #ececec"
                  (click)="onClickProject(project)">
                 <ion-label float-left no-margin no-padding class="list_day">{{project.itemStartTime | DayPipe}}</ion-label>
-                <ion-label float-left no-margin no-padding class="list_weekday">{{project.itemStartTime | WeekayPipe}}
-                </ion-label>
+                <ion-label float-left no-margin no-padding class="list_ri">日</ion-label>
+                <ion-label float-left no-margin no-padding class="list_weekday">{{project.itemStartTime | WeekayPipe}}</ion-label>
                 <ion-label float-left no-margin no-padding text-center
                            [ngClass]="{'list_circle':1===1,'nostart':project.itemState=='07010010','ing':project.itemState=='07010020'|| project.itemState=='07010030','end':project.itemState=='07010040'}">
                     {{project.itemLevel}}

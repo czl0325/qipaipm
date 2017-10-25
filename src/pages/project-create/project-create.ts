@@ -1,5 +1,5 @@
 import {Component} from '@angular/core';
-import {NavController, NavParams, ToastController, Events, AlertController, App} from 'ionic-angular';
+import {NavController, NavParams, ToastController, Events, AlertController, App, Platform} from 'ionic-angular';
 import {DatePipe} from "@angular/common";
 import {MilestoneDetailPage} from "../milestone-detail/milestone-detail";
 import {AppService} from "../../app/app.service";
@@ -74,41 +74,44 @@ export class ProjectCreatePage {
     public project = {
         id: '',                    //项目id
         itemName: '',              //项目的名称
-        itemFounder: AppSingleton.getInstance().currentUserInfo.name,      //项目的创建人
-        founderEmpNum: AppSingleton.getInstance().currentUserInfo.username,   //项目创建人工号
-        itemUrl: '',                //项目分享的网址
-        itemEndLeader: '',             //项目结束负责人
-        itemEndLeaderNum: '',        //项目结束负责人工号
+        itemFounder: AppSingleton.getInstance().currentUserInfo.name,           //项目的创建人
+        founderEmpNum: AppSingleton.getInstance().currentUserInfo.username,     //项目创建人工号
+        itemDept: AppSingleton.getInstance().currentUserInfo.department!=null?AppSingleton.getInstance().currentUserInfo.department:AppSingleton.getInstance().currentUserInfo.company,
+        itemUrl: '',                    //项目分享的网址
+        itemEndLeader: '',              //项目结束负责人
+        itemEndLeaderNum: '',           //项目结束负责人工号
+        itemEndDept: '',                //项目结束负责人部门
         // empNum: '',
-        itemCreateTime: '',        //项目的创建时间
+        itemCreateTime: '',             //项目的创建时间
         itemStartTime: new DatePipe('en-US').transform(new Date(), 'yyyy-MM-dd'),  //项目的启动时间
         delayTime: new DatePipe('en-US').transform(new Date(), 'yyyy-MM-dd'),      //项目的延期时间
-        delayDays: '',             //项目延期的天数
+        delayDays: '',                  //项目延期的天数
         itemUpdate: new DatePipe('en-US').transform(new Date(), 'yyyy-MM-dd'),     //项目更新时间
         endTime: new DatePipe('en-US').transform(new Date(), 'yyyy-MM-dd'),        //项目结束时间
-        itemVersion: '',           //项目版本
-        itemLevel: '',             //项目级别
-        itemStartResult: '',      //项目启动的交付成果
-        itemEndResult: '',        //项目结束的交付成果
-        multipleItemEndWhy: '',    //项目结束原因
-        children: [],              //总的数组
-        milestoneVo1: [],              //项目里程碑
-        milestoneVo2: [],         //项目延期里程碑
-        itemRaise: '',             //项目提出人
-        itemRevision: '',          //项目修订人
-        itemDept: '',              //项目部门
-        itemState: '',             //项目状态
-        itemCode: '',              //项目编码
-        itemWeight: '',            //项目权重
-        itemProgress: '',          //项目进度
-        itemIsEnd: false,          //是否结束项目
+        itemVersion: '',                //项目版本
+        itemLevel: '',                  //项目级别
+        itemStartResult: '',            //项目启动的交付成果
+        itemEndResult: '',              //项目结束的交付成果
+        multipleItemEndWhy: '',         //项目结束原因
+        children: [],                   //总的数组
+        milestoneVo1: [],               //项目里程碑
+        milestoneVo2: [],               //项目延期里程碑
+        itemRaise: '',                  //项目提出人
+        itemRevision: '',               //项目修订人
+        itemState: '',                  //项目状态
+        itemCode: '',                   //项目编码
+        itemWeight: '',                 //项目权重
+        itemProgress: '',               //项目进度
+        itemIsEnd: false,               //是否结束项目
+        version: '',                //版本号(后台需要)
     };
     minTime: string = new DatePipe('en-US').transform(new Date(), 'yyyy-MM-dd');
     changeIndex: number = -1;
 
     constructor(public navCtrl: NavController, public navParams: NavParams,
                 public appService: AppService, public toastCtrl: ToastController,
-                public events: Events, private alertCtrl: AlertController) {
+                public events: Events, private alertCtrl: AlertController,
+                private platform: Platform) {
         var data = this.navParams.get('project');
         this.type = this.navParams.get('type');
         this.isExpand = this.navParams.get('isExpand');
@@ -124,6 +127,7 @@ export class ProjectCreatePage {
         this.events.subscribe('onConfirmProjectLeader', (leader) => {
             this.project.itemEndLeader = leader.name;
             this.project.itemEndLeaderNum = leader.username;
+            this.project.itemEndDept = leader.department!=null?leader.department:leader.company;
         });
     }
 
@@ -177,6 +181,30 @@ export class ProjectCreatePage {
             alert.present();
             return;
         }
+        for (let i=0; i<this.project.milestoneVo1.length; i++) {
+            var mile = this.project.milestoneVo1[i];
+            if (AppConfig.stringToDate(mile.deliveryTime) > AppConfig.stringToDate(this.project.endTime)) {
+                let alert = this.alertCtrl.create({
+                    title: '错误信息',
+                    subTitle: mile.milestoneName+'的结束时间必须早于项目结束时间',
+                    buttons: ['确定']
+                });
+                alert.present();
+                return ;
+            }
+            if (i>0) {
+                var preMile = this.project.milestoneVo1[i-1];
+                if (AppConfig.stringToDate(preMile.deliveryTime) > AppConfig.stringToDate(mile.deliveryTime)) {
+                    let alert = this.alertCtrl.create({
+                        title: '错误信息',
+                        subTitle: mile.milestoneName+'的结束时间必须晚于'+preMile.milestoneName+'的结束时间',
+                        buttons: ['确定']
+                    });
+                    alert.present();
+                    return ;
+                }
+            }
+        }
         this.appService.httpPost("item/createItem", this.project, this, function (view, res) {
             var data = res.json().data;
             view.project.version = data.version;
@@ -207,6 +235,7 @@ export class ProjectCreatePage {
             delayDays: 0,              //里程碑延迟天数
             milestoneType: 1,          //1是普通里程碑，2是延期里程碑
             children: [],              //里程碑子任务
+            version: '',                //版本号(后台需要)
         };
         // this.project.children.push(milestone);
         this.navCtrl.push(MilestoneDetailPage, {
@@ -385,7 +414,7 @@ export class ProjectCreatePage {
                         this.addOneMilestone(milestone);
                         this.project.children.push(milestone);
                     }
-
+                    this.project.version = milestone.pv || this.project.version;
                 } else {
                     if (this.changeIndex > -1) {
                         this.project.milestoneVo1.splice(this.changeIndex, 1, milestone);

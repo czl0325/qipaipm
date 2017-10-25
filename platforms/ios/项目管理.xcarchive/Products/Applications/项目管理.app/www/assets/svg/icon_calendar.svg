@@ -1,0 +1,31 @@
+<svg id="icon_rilimoshi" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="36" height="36" viewBox="0 0 36 36">
+  <defs>
+    <style>
+      .cls-1, .cls-2 {
+        fill: #f0f1f2;
+      }
+
+      .cls-1 {
+        opacity: 0;
+        filter: url(#filter);
+      }
+
+      .cls-2 {
+        fill-rule: evenodd;
+        filter: url(#filter-2);
+      }
+    </style>
+    <filter id="filter" x="0" y="0" width="36" height="36" filterUnits="userSpaceOnUse">
+      <feFlood result="flood" flood-color="#fff"/>
+      <feComposite result="composite" operator="in" in2="SourceGraphic"/>
+      <feBlend result="blend" in2="SourceGraphic"/>
+    </filter>
+    <filter id="filter-2" x="0" y="1" width="36" height="34" filterUnits="userSpaceOnUse">
+      <feFlood result="flood" flood-color="#fc5c53"/>
+      <feComposite result="composite" operator="in" in2="SourceGraphic"/>
+      <feBlend result="blend" in2="SourceGraphic"/>
+    </filter>
+  </defs>
+  <rect id="矩形_1" data-name="矩形 1" class="cls-1" width="36" height="36"/>
+  <path id="椭圆_6_拷贝_5" data-name="椭圆 6 拷贝 5" class="cls-2" d="M32,35H4a4,4,0,0,1-4-4V9A4,4,0,0,1,4,5H8V2A1,1,0,0,1,9,1h1a1,1,0,0,1,1,1V5H25V2a1,1,0,0,1,1-1h1a1,1,0,0,1,1,1V5h4a4,4,0,0,1,4,4V31A4,4,0,0,1,32,35Zm1-25a2,2,0,0,0-2-2H5a2,2,0,0,0-2,2V30a2,2,0,0,0,2,2H31a2,2,0,0,0,2-2V10ZM28.5,21A1.5,1.5,0,1,1,30,19.5,1.5,1.5,0,0,1,28.5,21Zm0-6A1.5,1.5,0,1,1,30,13.5,1.5,1.5,0,0,1,28.5,15Zm-7,12A1.5,1.5,0,1,1,23,25.5,1.5,1.5,0,0,1,21.5,27Zm0-6A1.5,1.5,0,1,1,23,19.5,1.5,1.5,0,0,1,21.5,21Zm0-6A1.5,1.5,0,1,1,23,13.5,1.5,1.5,0,0,1,21.5,15Zm-7,12A1.5,1.5,0,1,1,16,25.5,1.5,1.5,0,0,1,14.5,27Zm0-6A1.5,1.5,0,1,1,16,19.5,1.5,1.5,0,0,1,14.5,21Zm0-6A1.5,1.5,0,1,1,16,13.5,1.5,1.5,0,0,1,14.5,15Zm-7,12A1.5,1.5,0,1,1,9,25.5,1.5,1.5,0,0,1,7.5,27Zm0-6A1.5,1.5,0,1,1,9,19.5,1.5,1.5,0,0,1,7.5,21Zm0-6A1.5,1.5,0,1,1,9,13.5,1.5,1.5,0,0,1,7.5,15Z"/>
+</svg>

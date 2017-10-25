@@ -227,35 +227,24 @@ export class ProjectDetailPage {
             this.navCtrl.push(ProjectEndPage, {
                 project: this.project,
             });
-            // this.project.itemIsEnd = true;
-            // this.project.itemState = '07010040';
-            //  this.appService.httpPost("item/createItem", this.project, this, function (view ,res){
-            //      //var data = res.json();
-            //      view.events.publish('homeProjectReload');
-            //      let toast = view.toastCtrl.create({
-            //          message: '项目已结束!',
-            //          duration: 3000
-            //      });
-            //      toast.present();
-            //  } ,true);
         });
         this.events.subscribe('onDelayProject', () => {
             var milestone = {
-                id: '',                    //里程碑id
+                id: '',                     //里程碑id
                 milestoneName: '延期' + (this.project.milestoneVo2.length + 1),         //里程碑的名称
-                leader: '',       //里程碑的负责人
-                leaderEmpNum: '',          //里程碑负责人工号
+                leader: '',                 //里程碑的负责人
+                leaderEmpNum: '',           //里程碑负责人工号
                 // milestoneDelivery : '',
                 deliveryResult: '',         //里程碑的交付成果
-                itemProgress: '',          //里程碑的进度
+                itemProgress: '100%',       //里程碑的进度
                 deliveryTime: new DatePipe('en-US').transform(new Date(), 'yyyy-MM-dd'),         //里程碑交付时间
                 planTime: new DatePipe('en-US').transform(new Date(), 'yyyy-MM-dd'),              //里程碑计划完成时间
                 realTime: new DatePipe('en-US').transform(new Date(), 'yyyy-MM-dd'),              //里程碑实际完成时间
-                remark: '',                //里程碑备注
-                isAccomplish: false,       //里程碑是否完成
-                delayDays: 0,              //里程碑延迟天数
-                milestoneType: 2,          //1是普通里程碑，2是延期里程碑
-                children: [],              //里程碑子任务
+                remark: '',                 //里程碑备注
+                isAccomplish: false,        //里程碑是否完成
+                delayDays: 0,               //里程碑延迟天数
+                milestoneType: 2,           //1是普通里程碑，2是延期里程碑
+                children: [],               //里程碑子任务
             };
             this.navCtrl.push(MilestoneDetailPage, {
                 milestone: milestone,

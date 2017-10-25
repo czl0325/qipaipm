@@ -75,7 +75,7 @@ var HomePage = (function () {
     HomePage.prototype.reloadProjectList = function (dateString) {
         this.events.publish('onGetProjectDate');
         this.projects = [];
-        this.appService.httpGet("item/searchByCondition", {
+        this.appService.httpGet("item/searchAll", {
             "itemStartTime": dateString,
             "endTime": dateString,
             "empNum": __WEBPACK_IMPORTED_MODULE_7__app_app_singleton__["a" /* AppSingleton */].getInstance().currentUserInfo.username,
@@ -99,7 +99,11 @@ var HomePage = (function () {
                         }
                     }
                 }
-                console.log(view.projects);
+                setTimeout(function () {
+                    if (view.content.scrollToTop) {
+                        view.content.scrollToTop(0);
+                    }
+                });
             }
         }, true);
     };
@@ -179,14 +183,18 @@ var HomePage = (function () {
     };
     return HomePage;
 }());
+__decorate([
+    Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["_14" /* ViewChild */])(__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["b" /* Content */]),
+    __metadata("design:type", typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["b" /* Content */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["b" /* Content */]) === "function" && _a || Object)
+], HomePage.prototype, "content", void 0);
 HomePage = __decorate([
     Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["n" /* Component */])({
-        selector: 'page-home',template:/*ion-inline-start:"/Users/zhaoliangchen/Desktop/qipaipm-company/src/pages/home/home.html"*/'<ion-header>\n    <ion-navbar hideBackButton="true">\n        <ion-buttons float-left>\n            <button ion-button clear (click)="onClickPerson($event)">\n                <ion-icon large style="color: #fc5c53; margin-left: 10px;font-size: 25px" name="appname-my">\n                </ion-icon>\n            </button>\n        </ion-buttons>\n        <ion-title float-left [hidden]="type==1" style="line-height: 35px">\n            {{currentDate | YearAndMonthPipe}}\n        </ion-title>\n        <ion-buttons end>\n            <button ion-button (click)="onChangeType($event)" id="btMode">\n                <ion-icon style="color: #fc5c53; margin-right: 10px;font-size: 25px" name={{namevalue}}>\n                </ion-icon>\n            </button>\n            <button ion-button (click)="onClickSearch()">\n                <ion-icon style="color: #fc5c53; margin-right: 10px;font-size: 25px" name="appname-search">\n                </ion-icon>\n            </button>\n            <button ion-button (click)="onCreateProject()">\n                <ion-icon style="color: #fc5c53; margin-right: 5px;font-size: 25px" name="appname-add">\n                </ion-icon>\n            </button>\n        </ion-buttons>\n    </ion-navbar>\n    <!--<ion-toolbar no-border-top>-->\n        <!--<ion-buttons start>-->\n            <!--<button  ion-button icon-only solid>-->\n                <!--<ion-icon name="contact"></ion-icon>-->\n            <!--</button>-->\n        <!--</ion-buttons>-->\n        <!--<ion-title>Solid</ion-title>-->\n        <!--<ion-buttons end>-->\n            <!--<button  ion-button icon-end solid color="secondary">-->\n                <!--Help-->\n                <!--<ion-icon name="help-circle"></ion-icon>-->\n            <!--</button>-->\n        <!--</ion-buttons>-->\n    <!--</ion-toolbar>-->\n</ion-header>\n\n<ion-content fullscreen>\n    <div>\n        <div [hidden]="type==2" no-padding no-margin>\n            <calendar id="calendar" (onChange)="onSelectDate($event)" (onChangeMonth)="onChangeMonthProject($event)">\n\n            </calendar>\n\n            <div style="height: 7px; background-color: #f5f6f7; width: 100%"></div>\n            <div (click)="onClickProject(project)" *ngFor="let project of projects" style="border-bottom: solid 0.5px #ececec; height: 50px; display: flex">\n                <div text-center style="height: 100%; width: 50px; min-width: 50px; position: relative">\n                    <div [ngClass]="{\'circle_home\':1===1,\'nostart\':project.itemState==\'07010010\',\'ing\':project.itemState==\'07010020\'|| project.itemState==\'07010030\',\'end\':project.itemState==\'07010040\'}">{{project.itemLevel}}</div>\n                </div>\n                <div style="height: 100%; flex-grow: 1">\n                    <div class="pj-name" [ngStyle]="{\'color\':project.itemState==\'07010030\'?\'#fc780e\':\'black\'}">\n                        {{project.itemName}}\n                    </div>\n                </div>\n            </div>\n        </div>\n        <div [hidden]="type==1" no-padding no-margin>\n            <div no-margin no-padding style="background-color: #ececec; height: 50px">\n                <ion-label no-margin no-padding float-left style="margin-left: 10px; line-height: 50px">开始日期</ion-label>\n                <ion-label no-margin no-padding float-left style="margin-left: 50px; line-height: 50px">项目名称</ion-label>\n                <div float-end style="position: relative; width: 120px; height: 100%">\n                    <div no-margin no-padding style="position:absolute; top: 8px; right: 10px; height: 40%; width: 100%">\n                        <div style="float: left">\n                            <div style="width: 10px; height: 10px; background-color: #fc780e; float: left"></div>\n                            <ion-label float-left no-margin no-padding\n                                       style="margin-left:2px;height:12px;line-height:12px;font-size:10px">进行中\n                            </ion-label>\n                        </div>\n                        <div style="float: right">\n                            <div style="width: 10px; height: 10px; background-color: #10c619; float: left"></div>\n                            <ion-label float-left no-margin no-padding\n                                       style="margin-left:2px;height:12px;line-height:12px;font-size:10px">未开始\n                            </ion-label>\n                        </div>\n                    </div>\n                    <div no-margin no-padding style="position:absolute; bottom: 0px; right: 10px; height: 40%; width: 100%">\n                        <div style="float: left">\n                            <div style="width: 10px; height: 10px; background-color: #fc780e; float: left"></div>\n                            <ion-label float-left no-margin no-padding\n                                       style="margin-left:2px;height:12px;line-height:12px;font-size:10px;color: #fc780e">\n                                延期中\n                            </ion-label>\n                        </div>\n                        <div style="float: right">\n                            <div style="width: 10px; height: 10px; background-color: #c1c8d2; float: left"></div>\n                            <ion-label float-left no-margin no-padding\n                                       style="margin-left:2px;height:12px;line-height:12px;font-size:10px">已完成\n                            </ion-label>\n                        </div>\n                    </div>\n                </div>\n            </div>\n            <div *ngFor="let project of projectsOnMonth"\n                 style="position: relative; height: 50px; border-bottom: solid 1px #ececec"\n                 (click)="onClickProject(project)">\n                <ion-label float-left no-margin no-padding class="list_day">{{project.itemStartTime | DayPipe}}</ion-label>\n                <ion-label float-left no-margin no-padding class="list_weekday">{{project.itemStartTime | WeekayPipe}}\n                </ion-label>\n                <ion-label float-left no-margin no-padding text-center\n                           [ngClass]="{\'list_circle\':1===1,\'nostart\':project.itemState==\'07010010\',\'ing\':project.itemState==\'07010020\'|| project.itemState==\'07010030\',\'end\':project.itemState==\'07010040\'}">\n                    {{project.itemLevel}}\n                </ion-label>\n                <ion-label float-left no-margin no-padding class="list_itemname"\n                           [ngStyle]="{\'color\':project.itemState==\'07010030\'?\'#fc780e\':\'black\'}">{{project.itemName}}\n                </ion-label>\n            </div>\n        </div>\n    </div>\n\n</ion-content>\n\n<div [hidden]="hideMaskView" style="position:fixed; z-index: 1000; width: 100%; height: 100%;left: 0px;top: 0px;\n            background-color: black; opacity: 0.3"></div>\n<person-info id="person-info"\n             style="position:fixed; z-index: 1001; width: 100%; height: 100%;left: -100%;top: 0px;"\n             (onLogOut)="onLogOut()" (onHideMask)="onHideMask()">\n\n</person-info>\n'/*ion-inline-end:"/Users/zhaoliangchen/Desktop/qipaipm-company/src/pages/home/home.html"*/
+        selector: 'page-home',template:/*ion-inline-start:"/Users/zhaoliangchen/Desktop/qipaipm-company/src/pages/home/home.html"*/'<ion-header>\n    <ion-navbar hideBackButton="true">\n        <ion-buttons float-left>\n            <button ion-button clear (click)="onClickPerson($event)">\n                <ion-icon large style="color: #fc5c53; margin-left: 10px;font-size: 25px" name="appname-my">\n                </ion-icon>\n            </button>\n        </ion-buttons>\n        <ion-title float-left [hidden]="type==1" style="line-height: 35px">\n            {{currentDate | YearAndMonthPipe}}\n        </ion-title>\n        <ion-buttons end>\n            <button ion-button (click)="onChangeType($event)" id="btMode">\n                <ion-icon style="color: #fc5c53; margin-right: 10px;font-size: 25px" name={{namevalue}}>\n                </ion-icon>\n            </button>\n            <button ion-button (click)="onClickSearch()">\n                <ion-icon style="color: #fc5c53; margin-right: 10px;font-size: 25px" name="appname-search">\n                </ion-icon>\n            </button>\n            <button ion-button (click)="onCreateProject()">\n                <ion-icon style="color: #fc5c53; margin-right: 5px;font-size: 25px" name="appname-add">\n                </ion-icon>\n            </button>\n        </ion-buttons>\n    </ion-navbar>\n    <!--<ion-toolbar no-border-top>-->\n        <!--<ion-buttons start>-->\n            <!--<button  ion-button icon-only solid>-->\n                <!--<ion-icon name="contact"></ion-icon>-->\n            <!--</button>-->\n        <!--</ion-buttons>-->\n        <!--<ion-title>Solid</ion-title>-->\n        <!--<ion-buttons end>-->\n            <!--<button  ion-button icon-end solid color="secondary">-->\n                <!--Help-->\n                <!--<ion-icon name="help-circle"></ion-icon>-->\n            <!--</button>-->\n        <!--</ion-buttons>-->\n    <!--</ion-toolbar>-->\n</ion-header>\n\n<ion-content fullscreen>\n    <div>\n        <div [hidden]="type==2" no-padding no-margin>\n            <calendar id="calendar" (onChange)="onSelectDate($event)" (onChangeMonth)="onChangeMonthProject($event)">\n\n            </calendar>\n\n            <div style="height: 7px; background-color: #f5f6f7; width: 100%"></div>\n            <div (click)="onClickProject(project)" *ngFor="let project of projects" style="border-bottom: solid 0.5px #ececec; height: 50px; display: flex">\n                <div text-center style="height: 100%; width: 50px; min-width: 50px; position: relative">\n                    <div [ngClass]="{\'circle_home\':1===1,\'nostart\':project.itemState==\'07010010\',\'ing\':project.itemState==\'07010020\'|| project.itemState==\'07010030\',\'end\':project.itemState==\'07010040\'}">{{project.itemLevel}}</div>\n                </div>\n                <div style="height: 100%; flex-grow: 1">\n                    <div class="pj-name" [ngStyle]="{\'color\':project.itemState==\'07010030\'?\'#fc780e\':\'black\'}">\n                        {{project.itemName}}\n                    </div>\n                </div>\n            </div>\n        </div>\n        <div [hidden]="type==1" no-padding no-margin>\n            <div no-margin no-padding style="background-color: #ececec; height: 50px">\n                <ion-label no-margin no-padding float-left style="margin-left: 10px; line-height: 50px">开始日期</ion-label>\n                <ion-label no-margin no-padding float-left style="margin-left: 50px; line-height: 50px">项目名称</ion-label>\n                <div float-end style="position: relative; width: 120px; height: 100%">\n                    <div no-margin no-padding style="position:absolute; top: 8px; right: 10px; height: 40%; width: 100%">\n                        <div style="float: left">\n                            <div style="width: 10px; height: 10px; background-color: #fc780e; float: left"></div>\n                            <ion-label float-left no-margin no-padding\n                                       style="margin-left:2px;height:12px;line-height:12px;font-size:10px">进行中\n                            </ion-label>\n                        </div>\n                        <div style="float: right">\n                            <div style="width: 10px; height: 10px; background-color: #10c619; float: left"></div>\n                            <ion-label float-left no-margin no-padding\n                                       style="margin-left:2px;height:12px;line-height:12px;font-size:10px">未开始\n                            </ion-label>\n                        </div>\n                    </div>\n                    <div no-margin no-padding style="position:absolute; bottom: 0px; right: 10px; height: 40%; width: 100%">\n                        <div style="float: left">\n                            <div style="width: 10px; height: 10px; background-color: #fc780e; float: left"></div>\n                            <ion-label float-left no-margin no-padding\n                                       style="margin-left:2px;height:12px;line-height:12px;font-size:10px;color: #fc780e">\n                                延期中\n                            </ion-label>\n                        </div>\n                        <div style="float: right">\n                            <div style="width: 10px; height: 10px; background-color: #c1c8d2; float: left"></div>\n                            <ion-label float-left no-margin no-padding\n                                       style="margin-left:2px;height:12px;line-height:12px;font-size:10px">已完成\n                            </ion-label>\n                        </div>\n                    </div>\n                </div>\n            </div>\n            <div *ngFor="let project of projectsOnMonth"\n                 style="position: relative; height: 50px; border-bottom: solid 1px #ececec"\n                 (click)="onClickProject(project)">\n                <ion-label float-left no-margin no-padding class="list_day">{{project.itemStartTime | DayPipe}}</ion-label>\n                <ion-label float-left no-margin no-padding class="list_ri">日</ion-label>\n                <ion-label float-left no-margin no-padding class="list_weekday">{{project.itemStartTime | WeekayPipe}}</ion-label>\n                <ion-label float-left no-margin no-padding text-center\n                           [ngClass]="{\'list_circle\':1===1,\'nostart\':project.itemState==\'07010010\',\'ing\':project.itemState==\'07010020\'|| project.itemState==\'07010030\',\'end\':project.itemState==\'07010040\'}">\n                    {{project.itemLevel}}\n                </ion-label>\n                <ion-label float-left no-margin no-padding class="list_itemname"\n                           [ngStyle]="{\'color\':project.itemState==\'07010030\'?\'#fc780e\':\'black\'}">{{project.itemName}}\n                </ion-label>\n            </div>\n        </div>\n    </div>\n\n</ion-content>\n\n<div [hidden]="hideMaskView" style="position:fixed; z-index: 1000; width: 100%; height: 100%;left: 0px;top: 0px;\n            background-color: black; opacity: 0.3"></div>\n<person-info id="person-info"\n             style="position:fixed; z-index: 1001; width: 100%; height: 100%;left: -100%;top: 0px;"\n             (onLogOut)="onLogOut()" (onHideMask)="onHideMask()">\n\n</person-info>\n'/*ion-inline-end:"/Users/zhaoliangchen/Desktop/qipaipm-company/src/pages/home/home.html"*/
     }),
-    __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["j" /* NavController */], __WEBPACK_IMPORTED_MODULE_5__app_app_service__["a" /* AppService */],
-        __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["c" /* Events */], __WEBPACK_IMPORTED_MODULE_8__ionic_storage__["b" /* Storage */]])
+    __metadata("design:paramtypes", [typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["j" /* NavController */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["j" /* NavController */]) === "function" && _b || Object, typeof (_c = typeof __WEBPACK_IMPORTED_MODULE_5__app_app_service__["a" /* AppService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_5__app_app_service__["a" /* AppService */]) === "function" && _c || Object, typeof (_d = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["c" /* Events */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["c" /* Events */]) === "function" && _d || Object, typeof (_e = typeof __WEBPACK_IMPORTED_MODULE_8__ionic_storage__["b" /* Storage */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_8__ionic_storage__["b" /* Storage */]) === "function" && _e || Object])
 ], HomePage);
 
+var _a, _b, _c, _d, _e;
 //# sourceMappingURL=home.js.map
 
 /***/ }),
@@ -228,7 +236,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
  * on Ionic pages and navigation.
  */
 var ProjectCreatePage = (function () {
-    function ProjectCreatePage(navCtrl, navParams, appService, toastCtrl, events, alertCtrl) {
+    function ProjectCreatePage(navCtrl, navParams, appService, toastCtrl, events, alertCtrl, platform) {
         var _this = this;
         this.navCtrl = navCtrl;
         this.navParams = navParams;
@@ -236,14 +244,17 @@ var ProjectCreatePage = (function () {
         this.toastCtrl = toastCtrl;
         this.events = events;
         this.alertCtrl = alertCtrl;
+        this.platform = platform;
         this.project = {
             id: '',
             itemName: '',
             itemFounder: __WEBPACK_IMPORTED_MODULE_7__app_app_singleton__["a" /* AppSingleton */].getInstance().currentUserInfo.name,
             founderEmpNum: __WEBPACK_IMPORTED_MODULE_7__app_app_singleton__["a" /* AppSingleton */].getInstance().currentUserInfo.username,
+            itemDept: __WEBPACK_IMPORTED_MODULE_7__app_app_singleton__["a" /* AppSingleton */].getInstance().currentUserInfo.department != null ? __WEBPACK_IMPORTED_MODULE_7__app_app_singleton__["a" /* AppSingleton */].getInstance().currentUserInfo.department : __WEBPACK_IMPORTED_MODULE_7__app_app_singleton__["a" /* AppSingleton */].getInstance().currentUserInfo.company,
             itemUrl: '',
             itemEndLeader: '',
             itemEndLeaderNum: '',
+            itemEndDept: '',
             // empNum: '',
             itemCreateTime: '',
             itemStartTime: new __WEBPACK_IMPORTED_MODULE_2__angular_common__["d" /* DatePipe */]('en-US').transform(new Date(), 'yyyy-MM-dd'),
@@ -261,12 +272,12 @@ var ProjectCreatePage = (function () {
             milestoneVo2: [],
             itemRaise: '',
             itemRevision: '',
-            itemDept: '',
             itemState: '',
             itemCode: '',
             itemWeight: '',
             itemProgress: '',
             itemIsEnd: false,
+            version: '',
         };
         this.minTime = new __WEBPACK_IMPORTED_MODULE_2__angular_common__["d" /* DatePipe */]('en-US').transform(new Date(), 'yyyy-MM-dd');
         this.changeIndex = -1;
@@ -287,6 +298,7 @@ var ProjectCreatePage = (function () {
                             _this.addOneMilestone(milestone);
                             _this.project.children.push(milestone);
                         }
+                        _this.project.version = milestone.pv || _this.project.version;
                     }
                     else {
                         if (_this.changeIndex > -1) {
@@ -321,6 +333,7 @@ var ProjectCreatePage = (function () {
         this.events.subscribe('onConfirmProjectLeader', function (leader) {
             _this.project.itemEndLeader = leader.name;
             _this.project.itemEndLeaderNum = leader.username;
+            _this.project.itemEndDept = leader.department != null ? leader.department : leader.company;
         });
     };
     ProjectCreatePage.prototype.ionViewWillUnload = function () {
@@ -328,49 +341,73 @@ var ProjectCreatePage = (function () {
     };
     ProjectCreatePage.prototype.onPublish = function () {
         if (this.project.itemName.length < 1) {
-            var alert_1 = this.alertCtrl.create({
+            var alert = this.alertCtrl.create({
                 title: '错误信息',
                 subTitle: '请先输入项目名称!',
                 buttons: ['确定']
             });
-            alert_1.present();
+            alert.present();
             return;
         }
         if (this.project.itemLevel.length < 1) {
-            var alert_2 = this.alertCtrl.create({
+            var alert = this.alertCtrl.create({
                 title: '错误信息',
                 subTitle: '请选择项目紧急程度!',
                 buttons: ['确定']
             });
-            alert_2.present();
+            alert.present();
             return;
         }
         if (this.project.itemEndLeader.length < 1) {
-            var alert_3 = this.alertCtrl.create({
+            var alert = this.alertCtrl.create({
                 title: '错误信息',
                 subTitle: '请选择项目结束负责人!',
                 buttons: ['确定']
             });
-            alert_3.present();
+            alert.present();
             return;
         }
         if (this.project.itemEndResult.length < 1) {
-            var alert_4 = this.alertCtrl.create({
+            var alert = this.alertCtrl.create({
                 title: '错误信息',
                 subTitle: '请填写项目结束交付成果!',
                 buttons: ['确定']
             });
-            alert_4.present();
+            alert.present();
             return;
         }
         if (__WEBPACK_IMPORTED_MODULE_6__app_app_config__["a" /* AppConfig */].stringToDate(this.project.endTime) < __WEBPACK_IMPORTED_MODULE_6__app_app_config__["a" /* AppConfig */].stringToDate(this.project.itemStartTime)) {
-            var alert_5 = this.alertCtrl.create({
+            var alert = this.alertCtrl.create({
                 title: '错误信息',
                 subTitle: '项目结束时间不得小于项目开始时间!',
                 buttons: ['确定']
             });
-            alert_5.present();
+            alert.present();
             return;
+        }
+        for (var i = 0; i < this.project.milestoneVo1.length; i++) {
+            var mile = this.project.milestoneVo1[i];
+            if (__WEBPACK_IMPORTED_MODULE_6__app_app_config__["a" /* AppConfig */].stringToDate(mile.deliveryTime) > __WEBPACK_IMPORTED_MODULE_6__app_app_config__["a" /* AppConfig */].stringToDate(this.project.endTime)) {
+                var alert = this.alertCtrl.create({
+                    title: '错误信息',
+                    subTitle: mile.milestoneName + '的结束时间必须早于项目结束时间',
+                    buttons: ['确定']
+                });
+                alert.present();
+                return;
+            }
+            if (i > 0) {
+                var preMile = this.project.milestoneVo1[i - 1];
+                if (__WEBPACK_IMPORTED_MODULE_6__app_app_config__["a" /* AppConfig */].stringToDate(preMile.deliveryTime) > __WEBPACK_IMPORTED_MODULE_6__app_app_config__["a" /* AppConfig */].stringToDate(mile.deliveryTime)) {
+                    var alert = this.alertCtrl.create({
+                        title: '错误信息',
+                        subTitle: mile.milestoneName + '的结束时间必须晚于' + preMile.milestoneName + '的结束时间',
+                        buttons: ['确定']
+                    });
+                    alert.present();
+                    return;
+                }
+            }
         }
         this.appService.httpPost("item/createItem", this.project, this, function (view, res) {
             var data = res.json().data;
@@ -401,6 +438,7 @@ var ProjectCreatePage = (function () {
             delayDays: 0,
             milestoneType: 1,
             children: [],
+            version: '',
         };
         // this.project.children.push(milestone);
         this.navCtrl.push(__WEBPACK_IMPORTED_MODULE_3__milestone_detail_milestone_detail__["a" /* MilestoneDetailPage */], {
@@ -560,7 +598,7 @@ var ProjectCreatePage = (function () {
 }());
 ProjectCreatePage = __decorate([
     Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["n" /* Component */])({
-        selector: 'page-project-create',template:/*ion-inline-start:"/Users/zhaoliangchen/Desktop/qipaipm-company/src/pages/project-create/project-create.html"*/'<!--\n  Generated template for the ProjectCreatePage page.\n\n  See http://ionicframework.com/docs/components/#navigation for more info on\n  Ionic pages and navigation.\n-->\n<ion-header >\n  <ion-navbar >\n    <ion-title>{{viewTitle}}</ion-title>\n    <ion-buttons end >\n      <button ion-button (click)="onPublish()" color="danger">\n        {{this.project.itemName.length>0?"完成":"发布"}}\n      </button>\n    </ion-buttons>\n  </ion-navbar>\n</ion-header>\n\n\n<ion-content fullscreen>\n    <ion-list no-margin no-lines no-padding style="border-top: solid 10px #f5f6f7; border-bottom: solid 10px #f5f6f7;">\n      <ion-item style="height: 50px">\n        <ion-icon item-start name="appname-pname"></ion-icon>\n        <ion-label style="color: #868686">项目名称</ion-label>\n        <ion-input item-end text-right placeholder="请输入项目名称" [(ngModel)]="project.itemName"></ion-input>\n      </ion-item>\n    </ion-list>\n\n    <div style="height: 30px; border-bottom: solid 1px #ececec">\n      <div style="width: 5px; height: 30px; background-color: orange; float: left;"></div>\n      <ion-label no-margin no-padding style="line-height: 30px; margin-left: 10px; float: left;">项目启动</ion-label>\n    </div>\n    <ion-list no-lines no-padding no-margin style="border-bottom: solid 10px #f5f6f7;">\n      <ion-item style="border-bottom: solid 1px #ececec; height: 50px">\n        <ion-icon item-start name="appname-time"></ion-icon>\n        <ion-label style="color: #868686">交付时间</ion-label>\n        <ion-datetime item-end displayFormat="YYYY年MM月DD日" max="2030" min={{minTime}}\n                      ngModel="{{project.itemStartTime | stampToDate}}"\n                      (ngModelChange)="project.itemStartTime = $event"\n                      cancelText="取消" doneText="确认"></ion-datetime>\n      </ion-item>\n      <ion-item style="border-bottom: solid 1px #ececec; height: 50px">\n        <ion-icon item-start name="appname-result"></ion-icon>\n        <ion-label style="color: #868686">交付成果</ion-label>\n        <ion-input item-end text-right placeholder="请输入交付成果" [(ngModel)]="project.itemStartResult" required></ion-input>\n      </ion-item>\n      <ion-item style="height: 50px">\n        <ion-icon item-start name="appname-plan"></ion-icon>\n        <ion-label style="color: #868686">项目级别</ion-label>\n        <ion-select interface="action-sheet" [(ngModel)]="project.itemLevel" cancelText="取消" doneText="确认">\n          <ion-option value="1">一级</ion-option>\n          <ion-option value="2">二级</ion-option>\n          <ion-option value="3">三级</ion-option>\n          <ion-option value="4">四级</ion-option>\n        </ion-select>\n      </ion-item>\n    </ion-list>\n\n    <div style="border-bottom: solid 10px #f5f6f7;" *ngFor="let mile of project.milestoneVo1; let i = index" >\n      <div style="height: 30px; border-bottom: solid 1px #ececec; ">\n        <div style="width: 5px; height: 30px; background-color: orange; float: left;"></div>\n        <ion-label no-margin no-padding style="line-height: 30px; margin-left: 10px; float: left;">{{mile.milestoneName}}</ion-label>\n        <div style="float: right; width: 30px; height: 30px;position: relative">\n          <ion-icon name="close" style="position: absolute; top: 50%; right: 0px; -webkit-transform: translateY(-50%); transform: translateY(-50%); margin-right: 10px; " (click)="onClickRemoveMilestone($event, mile)"></ion-icon>\n        </div>\n      </div>\n      <ion-list no-lines no-margin no-padding (click)="onClickMilestone($event, mile, i)">\n        <!--<ion-item style="border-bottom: solid 1px #ececec">-->\n          <!--<ion-icon item-start name="appname-admin"></ion-icon>-->\n          <!--<ion-label>负责人</ion-label>-->\n          <!--&lt;!&ndash;<ion-label no-margin no-padding float-end text-right [hidden]="type==1">{{mile.itemEndLeader}}</ion-label>&ndash;&gt;-->\n          <!--<ion-input item-end text-right [readonly]="type==2" unselectable="on" (ionFocus)="onFocusInput($event)" [(ngModel)]="mile.itemEndLeader"></ion-input>-->\n        <!--</ion-item>-->\n        <button ion-item style="border-bottom: solid 1px #ececec; height: 50px" disabled>\n          <ion-icon item-start name="appname-admin"></ion-icon>\n          <ion-label item-start style="margin-left: 20px; color: #868686">负责人:</ion-label>\n          <ion-label item-end text-right>{{mile.itemEndLeader}}</ion-label>\n        </button>\n        <ion-item style="border-bottom: solid 1px #ececec; height: 50px">\n          <ion-icon item-start name="appname-time"></ion-icon>\n          <ion-label style="color: #868686">交付时间</ion-label>\n          <ion-datetime item-end displayFormat="YYYY年MM月DD日" max="2030" min={{minTime}} cancelText="取消" doneText="确认"\n                        ngModel="{{mile.deliveryTime | stampToDate}}"\n                        (ngModelChange)="mile.deliveryTime = $event"\n                        disabled></ion-datetime>\n        </ion-item>\n        <ion-item style="border-bottom: solid 1px #ececec; height: 50px">\n          <ion-icon item-start name="appname-plan"></ion-icon>\n          <ion-label style="color: #868686">项目进度</ion-label>\n          <ion-select interface="action-sheet" [(ngModel)]="mile.itemProgress" cancelText="取消" doneText="确认" disabled>\n            <ion-option value="10%">10%</ion-option>\n            <ion-option value="20%">20%</ion-option>\n            <ion-option value="30%">30%</ion-option>\n            <ion-option value="40%">40%</ion-option>\n            <ion-option value="50%">50%</ion-option>\n            <ion-option value="60%">60%</ion-option>\n            <ion-option value="70%">70%</ion-option>\n            <ion-option value="80%">80%</ion-option>\n            <ion-option value="90%">90%</ion-option>\n            <ion-option value="100%">100%</ion-option>\n          </ion-select>\n        </ion-item>\n        <ion-item style="height: 50px">\n          <ion-icon item-start name="appname-result"></ion-icon>\n          <ion-label style="color: #868686">交付成果</ion-label>\n          <ion-input item-end text-right id="miletext" [(ngModel)]="mile.deliveryResult" readonly  (ionFocus)="onFocusInput($event, mile, i)"></ion-input>\n        </ion-item>\n      </ion-list>\n    </div>\n\n\n    <div style="padding: 10px; border-bottom: solid 10px #f5f6f7">\n      <button ion-button (click)="onAddMilestone()" style="background-color: #fc5c53" block>+ 添加里程碑</button>\n    </div>\n\n    <div style="height: 30px; border-bottom: solid 1px #ececec">\n      <div style="width: 5px; height: 30px; background-color: #a8bdff; float: left;"></div>\n      <ion-label no-margin no-padding style="line-height: 30px; margin-left: 10px; float: left;">项目结束</ion-label>\n    </div>\n    <ion-list no-lines no-margin no-padding>\n      <button ion-item style="border-bottom: solid 1px #ececec; height: 50px" (click)="onEndDirector($event)">\n        <ion-icon item-start name="appname-admin"></ion-icon>\n        <ion-label item-start style="margin-left: 20px; color: #868686">负责人</ion-label>\n        <!--<ion-input item-end text-right placeholder="请输入负责人" [(ngModel)]="project.itemLeader"></ion-input>-->\n        <ion-label item-end text-right>{{project.itemEndLeader}}</ion-label>\n      </button>\n      <ion-item  style="border-bottom: solid 1px #ececec; height: 50px">\n        <ion-icon item-start name="appname-time"></ion-icon>\n        <ion-label style="color: #868686">交付时间</ion-label>\n        <ion-datetime item-end displayFormat="YYYY年MM月DD日" max="2030" min={{minTime}}\n                      cancelText="取消" doneText="确认"\n                      ngModel="{{project.endTime | stampToDate}}"\n                      (ngModelChange)="project.endTime = $event"></ion-datetime>\n      </ion-item>\n      <ion-item style="border-bottom: solid 1px #ececec; height: 50px">\n        <ion-icon item-start name="appname-result"></ion-icon>\n        <ion-label style="color: #868686">交付成果</ion-label>\n        <ion-input item-end text-right placeholder="请输入交付成果" [(ngModel)]="project.itemEndResult"></ion-input>\n      </ion-item>\n    </ion-list>\n  </ion-content>\n\n\n'/*ion-inline-end:"/Users/zhaoliangchen/Desktop/qipaipm-company/src/pages/project-create/project-create.html"*/,
+        selector: 'page-project-create',template:/*ion-inline-start:"/Users/zhaoliangchen/Desktop/qipaipm-company/src/pages/project-create/project-create.html"*/'<!--\n  Generated template for the ProjectCreatePage page.\n\n  See http://ionicframework.com/docs/components/#navigation for more info on\n  Ionic pages and navigation.\n-->\n<ion-header >\n  <ion-navbar >\n    <ion-title>{{viewTitle}}</ion-title>\n    <ion-buttons end >\n      <button ion-button (click)="onPublish()" color="danger">\n        {{this.project.itemName.length>0?"完成":"发布"}}\n      </button>\n    </ion-buttons>\n  </ion-navbar>\n</ion-header>\n\n\n<ion-content fullscreen>\n    <ion-list no-margin no-lines no-padding style="border-top: solid 10px #f5f6f7; border-bottom: solid 10px #f5f6f7;">\n      <ion-item style="height: 50px">\n        <ion-icon item-start name="appname-pname"></ion-icon>\n        <ion-label style="color: #868686">项目名称</ion-label>\n        <ion-input item-end text-right placeholder="请输入项目名称" [(ngModel)]="project.itemName"></ion-input>\n      </ion-item>\n    </ion-list>\n\n    <div style="height: 30px; border-bottom: solid 1px #ececec">\n      <div style="width: 5px; height: 30px; background-color: orange; float: left;"></div>\n      <ion-label no-margin no-padding style="line-height: 30px; margin-left: 10px; float: left;">项目启动</ion-label>\n    </div>\n    <ion-list no-lines no-padding no-margin style="border-bottom: solid 10px #f5f6f7;">\n      <ion-item style="border-bottom: solid 1px #ececec; height: 50px">\n        <ion-icon item-start name="appname-time"></ion-icon>\n        <ion-label style="color: #868686">交付时间</ion-label>\n        <ion-datetime item-end displayFormat="YYYY年MM月DD日" max="2030" min={{minTime}}\n                      ngModel="{{project.itemStartTime | stampToDate}}"\n                      (ngModelChange)="project.itemStartTime = $event"\n                      cancelText="取消" doneText="确认"></ion-datetime>\n      </ion-item>\n      <ion-item style="border-bottom: solid 1px #ececec; height: 50px">\n        <ion-icon item-start name="appname-result"></ion-icon>\n        <ion-label style="color: #868686">交付成果</ion-label>\n        <ion-input item-end text-right placeholder="请输入交付成果" [(ngModel)]="project.itemStartResult" required></ion-input>\n      </ion-item>\n      <ion-item style="height: 50px">\n        <ion-icon item-start name="appname-plan"></ion-icon>\n        <ion-label style="color: #868686">项目级别</ion-label>\n        <ion-select interface="action-sheet" [(ngModel)]="project.itemLevel" cancelText="取消" doneText="确认">\n          <ion-option value="1">一级</ion-option>\n          <ion-option value="2">二级</ion-option>\n          <ion-option value="3">三级</ion-option>\n          <ion-option value="4">四级</ion-option>\n        </ion-select>\n      </ion-item>\n    </ion-list>\n\n    <div style="border-bottom: solid 10px #f5f6f7;" *ngFor="let mile of project.milestoneVo1; let i = index" >\n      <div style="height: 30px; border-bottom: solid 1px #ececec; ">\n        <div style="width: 5px; height: 30px; background-color: orange; float: left;"></div>\n        <ion-label no-margin no-padding style="line-height: 30px; margin-left: 10px; float: left;">{{mile.milestoneName}}</ion-label>\n        <div style="float: right; width: 30px; height: 30px;position: relative">\n          <ion-icon name="close" style="position: absolute; top: 50%; right: 0px; -webkit-transform: translateY(-50%); transform: translateY(-50%); margin-right: 10px; " (click)="onClickRemoveMilestone($event, mile)"></ion-icon>\n        </div>\n      </div>\n      <ion-list no-lines no-margin no-padding (click)="onClickMilestone($event, mile, i)">\n        <!--<ion-item style="border-bottom: solid 1px #ececec">-->\n          <!--<ion-icon item-start name="appname-admin"></ion-icon>-->\n          <!--<ion-label>负责人</ion-label>-->\n          <!--&lt;!&ndash;<ion-label no-margin no-padding float-end text-right [hidden]="type==1">{{mile.itemEndLeader}}</ion-label>&ndash;&gt;-->\n          <!--<ion-input item-end text-right [readonly]="type==2" unselectable="on" (ionFocus)="onFocusInput($event)" [(ngModel)]="mile.itemEndLeader"></ion-input>-->\n        <!--</ion-item>-->\n        <button ion-item style="border-bottom: solid 1px #ececec; height: 50px" disabled>\n          <ion-icon item-start name="appname-admin"></ion-icon>\n          <ion-label item-start [ngStyle]="{\'margin-left\':this.platform.is(\'ios\')?\'0px\':\'20px\'}" style="color: #868686">负责人:</ion-label>\n          <ion-label item-end text-right>{{mile.itemEndLeader}}</ion-label>\n        </button>\n        <ion-item style="border-bottom: solid 1px #ececec; height: 50px">\n          <ion-icon item-start name="appname-time"></ion-icon>\n          <ion-label style="color: #868686">交付时间</ion-label>\n          <ion-datetime item-end displayFormat="YYYY年MM月DD日" max="2030" min={{minTime}} cancelText="取消" doneText="确认"\n                        ngModel="{{mile.deliveryTime | stampToDate}}"\n                        (ngModelChange)="mile.deliveryTime = $event"\n                        disabled></ion-datetime>\n        </ion-item>\n        <ion-item style="border-bottom: solid 1px #ececec; height: 50px">\n          <ion-icon item-start name="appname-plan"></ion-icon>\n          <ion-label style="color: #868686">项目进度</ion-label>\n          <ion-select interface="action-sheet" [(ngModel)]="mile.itemProgress" cancelText="取消" doneText="确认" disabled>\n            <ion-option value="10%">10%</ion-option>\n            <ion-option value="20%">20%</ion-option>\n            <ion-option value="30%">30%</ion-option>\n            <ion-option value="40%">40%</ion-option>\n            <ion-option value="50%">50%</ion-option>\n            <ion-option value="60%">60%</ion-option>\n            <ion-option value="70%">70%</ion-option>\n            <ion-option value="80%">80%</ion-option>\n            <ion-option value="90%">90%</ion-option>\n            <ion-option value="100%">100%</ion-option>\n          </ion-select>\n        </ion-item>\n        <ion-item style="height: 50px">\n          <ion-icon item-start name="appname-result"></ion-icon>\n          <ion-label style="color: #868686">交付成果</ion-label>\n          <ion-input item-end text-right id="miletext" [(ngModel)]="mile.deliveryResult" readonly  (ionFocus)="onFocusInput($event, mile, i)"></ion-input>\n        </ion-item>\n      </ion-list>\n    </div>\n\n\n    <div style="padding: 10px; border-bottom: solid 10px #f5f6f7">\n      <button ion-button (click)="onAddMilestone()" style="background-color: #fc5c53" block>+ 添加里程碑</button>\n    </div>\n\n    <div style="height: 30px; border-bottom: solid 1px #ececec">\n      <div style="width: 5px; height: 30px; background-color: #a8bdff; float: left;"></div>\n      <ion-label no-margin no-padding style="line-height: 30px; margin-left: 10px; float: left;">项目结束</ion-label>\n    </div>\n    <ion-list no-lines no-margin no-padding>\n      <button ion-item style="border-bottom: solid 1px #ececec; height: 50px" (click)="onEndDirector($event)">\n        <ion-icon item-start name="appname-admin"></ion-icon>\n        <ion-label item-start [ngStyle]="{\'margin-left\':this.platform.is(\'ios\')?\'0px\':\'20px\'}" style="color: #868686">负责人</ion-label>\n        <!--<ion-input item-end text-right placeholder="请输入负责人" [(ngModel)]="project.itemLeader"></ion-input>-->\n        <ion-label item-end text-right>{{project.itemEndLeader}}</ion-label>\n      </button>\n      <ion-item  style="border-bottom: solid 1px #ececec; height: 50px">\n        <ion-icon item-start name="appname-time"></ion-icon>\n        <ion-label style="color: #868686">交付时间</ion-label>\n        <ion-datetime item-end displayFormat="YYYY年MM月DD日" max="2030" min={{minTime}}\n                      cancelText="取消" doneText="确认"\n                      ngModel="{{project.endTime | stampToDate}}"\n                      (ngModelChange)="project.endTime = $event"></ion-datetime>\n      </ion-item>\n      <ion-item style="border-bottom: solid 1px #ececec; height: 50px">\n        <ion-icon item-start name="appname-result"></ion-icon>\n        <ion-label style="color: #868686">交付成果</ion-label>\n        <ion-input item-end text-right placeholder="请输入交付成果" [(ngModel)]="project.itemEndResult"></ion-input>\n      </ion-item>\n    </ion-list>\n  </ion-content>\n\n\n'/*ion-inline-end:"/Users/zhaoliangchen/Desktop/qipaipm-company/src/pages/project-create/project-create.html"*/,
     })
     /*
     @ApiModelProperty(value = "项目id")
@@ -609,11 +647,10 @@ ProjectCreatePage = __decorate([
      */
     //未开始(07010010)    进行中(07010020)      延期(07010030)     已结束(07010040)
     ,
-    __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["j" /* NavController */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["k" /* NavParams */],
-        __WEBPACK_IMPORTED_MODULE_4__app_app_service__["a" /* AppService */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["n" /* ToastController */],
-        __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["c" /* Events */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["a" /* AlertController */]])
+    __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["j" /* NavController */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["j" /* NavController */]) === "function" && _a || Object, typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["k" /* NavParams */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["k" /* NavParams */]) === "function" && _b || Object, typeof (_c = typeof __WEBPACK_IMPORTED_MODULE_4__app_app_service__["a" /* AppService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_4__app_app_service__["a" /* AppService */]) === "function" && _c || Object, typeof (_d = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["n" /* ToastController */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["n" /* ToastController */]) === "function" && _d || Object, typeof (_e = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["c" /* Events */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["c" /* Events */]) === "function" && _e || Object, typeof (_f = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["a" /* AlertController */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["a" /* AlertController */]) === "function" && _f || Object, typeof (_g = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["l" /* Platform */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["l" /* Platform */]) === "function" && _g || Object])
 ], ProjectCreatePage);
 
+var _a, _b, _c, _d, _e, _f, _g;
 //# sourceMappingURL=project-create.js.map
 
 /***/ }),
@@ -655,7 +692,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
  * on Ionic pages and navigation.
  */
 var MilestoneDetailPage = (function () {
-    function MilestoneDetailPage(navCtrl, navParams, appService, cd, events, alertCtrl) {
+    function MilestoneDetailPage(navCtrl, navParams, appService, cd, events, alertCtrl, platform) {
         var _this = this;
         this.navCtrl = navCtrl;
         this.navParams = navParams;
@@ -663,6 +700,7 @@ var MilestoneDetailPage = (function () {
         this.cd = cd;
         this.events = events;
         this.alertCtrl = alertCtrl;
+        this.platform = platform;
         this.canChooses = [];
         this.test = ['10%', '20%'];
         this.milestone = {
@@ -670,8 +708,9 @@ var MilestoneDetailPage = (function () {
             milestoneName: '',
             itemEndLeader: '',
             itemEndLeaderNum: '',
+            itemDept: '',
             deliveryResult: '',
-            // milestoneSchedule : '',     //里程碑的进度
+            // milestoneSchedule : '',  //里程碑的进度
             itemProgress: '',
             deliveryTime: new __WEBPACK_IMPORTED_MODULE_3__angular_common__["d" /* DatePipe */]('en-US').transform(new Date(), 'yyyy-MM-dd'),
             planTime: new __WEBPACK_IMPORTED_MODULE_3__angular_common__["d" /* DatePipe */]('en-US').transform(new Date(), 'yyyy-MM-dd'),
@@ -681,6 +720,7 @@ var MilestoneDetailPage = (function () {
             children: [],
             itemIsEnd: false,
             milestoneType: 1,
+            version: '',
         };
         this.canEdit = false;
         this.canFinish = false;
@@ -708,9 +748,10 @@ var MilestoneDetailPage = (function () {
                         var ss = _this.tempMilestone.children[i];
                         ss.subtaskName = '子任务' + (i + 1);
                     }
+                    _this.tempMilestone.version = subtask.mv || _this.tempMilestone.version;
+                    _this.project.version = subtask.pv || _this.project.version;
                     _this.milestone = _this.tempMilestone;
                     _this.events.publish('reloadMilestone', _this.milestone);
-                    //this.content.resize();
                     setTimeout(function () {
                         if (_this.content.scrollToBottom) {
                             _this.content.scrollToBottom(0);
@@ -731,7 +772,7 @@ var MilestoneDetailPage = (function () {
         for (var i = 0; i < 10; i++) {
             this.canChooses.push(false);
         }
-        if (this.project.endTime.length > 0) {
+        if (this.project.id.length > 0 && this.mileType == 1) {
             this.maxTime = this.project.endTime;
         }
         /*******判断前后里程碑的进度*******/
@@ -750,7 +791,7 @@ var MilestoneDetailPage = (function () {
                 if (this.project.milestoneVo1.length == 0) {
                     for (var i = 0; i < 10; i++) {
                         this.canChooses[i] = true;
-                    } //itemProgress
+                    }
                 }
                 else {
                     var mm1 = this.project.milestoneVo1[this.project.milestoneVo1.length - 1];
@@ -774,7 +815,7 @@ var MilestoneDetailPage = (function () {
                 if (index1 < this.project.milestoneVo1.length - 1) {
                     mmm2 = this.project.milestoneVo1[index1 + 1];
                     min1_3 = parseInt(mmm2.itemProgress.replace(/%/, "")) / 10 - 1;
-                    this.maxTime = mmm2.deliveryTime;
+                    //this.maxTime = mmm2.deliveryTime;
                 }
                 if (min1_2 == -1) {
                     min1_2 = 0;
@@ -803,6 +844,7 @@ var MilestoneDetailPage = (function () {
                     for (var i = 0; i < 10; i++) {
                         this.canChooses[i] = true;
                     } //itemProgress
+                    this.minTime = this.project.endTime;
                 }
                 else {
                     var mm2 = this.project.milestoneVo2[this.project.milestoneVo2.length - 1];
@@ -826,7 +868,7 @@ var MilestoneDetailPage = (function () {
                 if (index2 < this.project.milestoneVo1.length - 1) {
                     mmm2_2 = this.project.milestoneVo2[index2 + 1];
                     min2_3 = parseInt(mmm2_2.itemProgress.replace(/%/, "")) / 10 - 1;
-                    this.maxTime = mmm2_2.deliveryTime;
+                    //this.maxTime = mmm2_2.deliveryTime;
                 }
                 if (min2_2 == -1) {
                     min2_2 = 0;
@@ -839,6 +881,7 @@ var MilestoneDetailPage = (function () {
                 }
             }
         }
+        this.milestone.deliveryTime = this.minTime;
         /**************/
         if (this.milestone.id.length < 1) {
             if (this.mileType == 1) {
@@ -888,6 +931,7 @@ var MilestoneDetailPage = (function () {
         this.events.subscribe('onConfirmMilestoneLeader', function (leader) {
             _this.tempMilestone.itemEndLeader = leader.name;
             _this.tempMilestone.itemEndLeaderNum = leader.username;
+            _this.tempMilestone.itemDept = leader.department != null ? leader.department : leader.company;
         });
     };
     MilestoneDetailPage.prototype.ionViewWillUnload = function () {
@@ -903,21 +947,30 @@ var MilestoneDetailPage = (function () {
     MilestoneDetailPage.prototype.onSaveMilestone = function ($event) {
         var _this = this;
         if (this.tempMilestone.itemEndLeader.length < 1) {
-            var alert_1 = this.alertCtrl.create({
+            var alert = this.alertCtrl.create({
                 title: '错误信息',
                 subTitle: '里程碑负责人为必填项!',
                 buttons: ['确定']
             });
-            alert_1.present();
+            alert.present();
+            return;
+        }
+        if (this.tempMilestone.itemProgress.length < 1) {
+            var alert = this.alertCtrl.create({
+                title: '错误信息',
+                subTitle: '里程碑进度为必填项!',
+                buttons: ['确定']
+            });
+            alert.present();
             return;
         }
         if (this.tempMilestone.deliveryResult.length < 1) {
-            var alert_2 = this.alertCtrl.create({
+            var alert = this.alertCtrl.create({
                 title: '错误信息',
                 subTitle: '里程碑交付成果为必填项!',
                 buttons: ['确定']
             });
-            alert_2.present();
+            alert.present();
             return;
         }
         var param = __WEBPACK_IMPORTED_MODULE_5__app_app_config__["a" /* AppConfig */].deepCopy(this.tempMilestone);
@@ -1001,6 +1054,7 @@ var MilestoneDetailPage = (function () {
             itemIsEnd: false,
             remark: '',
             delayDays: 0,
+            version: '',
         };
         this.navCtrl.push(__WEBPACK_IMPORTED_MODULE_2__subtask_subtask__["a" /* SubtaskPage */], {
             subtask: subtask,
@@ -1041,11 +1095,11 @@ var MilestoneDetailPage = (function () {
 }());
 __decorate([
     Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["_14" /* ViewChild */])(__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["b" /* Content */]),
-    __metadata("design:type", __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["b" /* Content */])
+    __metadata("design:type", typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["b" /* Content */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["b" /* Content */]) === "function" && _a || Object)
 ], MilestoneDetailPage.prototype, "content", void 0);
 MilestoneDetailPage = __decorate([
     Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["n" /* Component */])({
-        selector: 'page-milestone-detail',template:/*ion-inline-start:"/Users/zhaoliangchen/Desktop/qipaipm-company/src/pages/milestone-detail/milestone-detail.html"*/'<!--\n  Generated template for the MilestoneDetailPage page.\n\n  See http://ionicframework.com/docs/components/#navigation for more info on\n  Ionic pages and navigation.\n-->\n<ion-header>\n\n  <ion-navbar>\n    <ion-title>\n      {{this.type==1?"新建里程碑":"里程碑详情"}}\n    </ion-title>\n    <ion-buttons end >\n      <button ion-button (click)="onSaveMilestone($event)" style="color: #fc5c53"\n            [hidden]="canEdit==false&&canFinish==false&&type==2">\n        保存\n      </button>\n    </ion-buttons>\n  </ion-navbar>\n\n</ion-header>\n\n\n<ion-content fullscreen>\n  <ion-list no-padding no-lines style="margin-bottom: 0px; border-bottom: solid 1px #ececec">\n    <ion-item style="height: 50px">\n      <ion-icon item-start name="appname-pname"></ion-icon>\n      <ion-label style="color: #868686">项目名称:</ion-label>\n      <ion-label right text-right>{{this.project.itemName}}</ion-label>\n    </ion-item>\n  </ion-list>\n\n  <ion-label full style="text-align: center">{{tempMilestone.milestoneName}}</ion-label>\n\n  <ion-list no-lines style="border: solid 1px #ececec">\n    <button ion-item style="border-bottom: solid 1px #ececec; height: 50px" (click)="onMilestoneLeader($event)" [disabled]="canEdit==false">\n      <ion-icon item-start name="appname-admin"></ion-icon>\n      <ion-label item-start style="margin-left: 20px; color: #868686">负责人:</ion-label>\n      <ion-label item-end text-right>{{tempMilestone.itemEndLeader}}</ion-label>\n    </button>\n    <!--<ion-item style="border-bottom: solid 1px #ececec;">-->\n      <!--<ion-icon item-start name="appname-admin"></ion-icon>-->\n      <!--<ion-label>负责人:</ion-label>-->\n      <!--<ion-input text-right type="text" [(ngModel)]="tempMilestone.milestoneLeader" required [disabled]=""></ion-input>-->\n    <!--</ion-item>-->\n    <ion-item style="border-bottom: solid 1px #ececec; height: 50px">\n      <ion-icon item-start name="appname-time"></ion-icon>\n      <ion-label style="color: #868686">交付时间:</ion-label>\n      <ion-datetime text-right displayFormat="YYYY-MM-DD" max={{maxTime|stampToDate}} min={{minTime|stampToDate}} cancelText="取消" doneText="确认" required [disabled]="canEdit==false"\n                    ngModel="{{tempMilestone.deliveryTime | stampToDate}}"\n                    (ngModelChange)="tempMilestone.deliveryTime = $event">\n      </ion-datetime>\n    </ion-item>\n    <ion-item style="border-bottom: solid 1px #ececec; height: 50px">\n      <ion-icon item-start name="appname-plan"></ion-icon>\n      <ion-label style="color: #868686">项目进度</ion-label>\n      <ion-select interface="action-sheet" [(ngModel)]="tempMilestone.itemProgress"\n                  cancelText="取消" okText="确认" [disabled]="canEdit==false">\n        <ion-option value="10%" [disabled]="canChooses[0]==false">10%</ion-option>\n        <ion-option value="20%" [disabled]="canChooses[1]==false">20%</ion-option>\n        <ion-option value="30%" [disabled]="canChooses[2]==false">30%</ion-option>\n        <ion-option value="40%" [disabled]="canChooses[3]==false">40%</ion-option>\n        <ion-option value="50%" [disabled]="canChooses[4]==false">50%</ion-option>\n        <ion-option value="60%" [disabled]="canChooses[5]==false">60%</ion-option>\n        <ion-option value="70%" [disabled]="canChooses[6]==false">70%</ion-option>\n        <ion-option value="80%" [disabled]="canChooses[7]==false">80%</ion-option>\n        <ion-option value="90%" [disabled]="canChooses[8]==false">90%</ion-option>\n        <ion-option value="100%" [disabled]="canChooses[9]==false">100%</ion-option>\n      </ion-select>\n    </ion-item>\n    <ion-item style="border-bottom: solid 1px #ececec;height: 50px">\n      <ion-icon item-start name="appname-result"></ion-icon>\n      <ion-label no-padding no-margin style="color: #868686">交付成果:</ion-label>\n      <ion-input text-right type="text" [(ngModel)]="tempMilestone.deliveryResult" required [disabled]="canEdit==false"></ion-input>\n    </ion-item>\n    <ion-item *ngIf="tempMilestone.delay > 0" style="border-bottom: solid 1px #ececec; height: 50px" >\n      <ion-label style="color: #868686">延迟情况:</ion-label>\n      <ion-label text-right item-end></ion-label>\n    </ion-item>\n  </ion-list>\n\n  <ion-list no-lines no-padding no-margin *ngIf="this.tempMilestone.id.length>0">\n    <ion-item style="border-top: solid 1px #ececec;border-bottom: solid 1px #ececec; height: 50px">\n      <div item-start>是否完成</div>\n      <ion-label style="color: #868686">完成</ion-label>\n      <ion-checkbox [(ngModel)]="tempMilestone.itemIsEnd" [disabled]="canFinish==false"></ion-checkbox>\n    </ion-item>\n    <ion-item style="border-bottom: solid 10px #ececec; height: 50px;" >\n      <ion-label item-start style="color: #868686">备注:</ion-label>\n      <ion-input item-end no-padding no-margin [(ngModel)]="tempMilestone.remark" [disabled]="canFinish==false"></ion-input>\n    </ion-item>\n  </ion-list>\n\n  <div *ngFor="let subtask of tempMilestone.children; let i = index">\n    <div style="height: 30px; border-bottom: solid 1px #ececec; ">\n      <div style="width: 5px; height: 30px; background-color: #555555; float: left;"></div>\n      <ion-label no-margin no-padding style="line-height: 30px; margin-left: 10px; float: left;">{{subtask.subtaskName}}</ion-label>\n      <div style="float: right; width: 30px; height: 30px;position: relative" >\n        <ion-icon name="close" style="position: absolute; top: 50%; right: 0px; -webkit-transform: translateY(-50%); transform: translateY(-50%); margin-right: 10px; "\n                  (click)="onRemoveSubtask($event, subtask)" [isActive]="canEdit==true"></ion-icon>\n      </div>\n    </div>\n    <ion-list no-lines no-padding no-margin>\n      <ion-item style="border-bottom: solid 1px #ececec; height: 50px">\n        <ion-icon item-start name="appname-admin"></ion-icon>\n        <ion-label style="color: #868686">负责人:</ion-label>\n        <ion-input text-right type="text" [(ngModel)]="subtask.itemEndLeader"\n                   required [disabled]="type==2"></ion-input>\n      </ion-item>\n      <ion-item style="border-bottom: solid 1px #ececec; height: 50px">\n        <ion-icon item-start name="appname-time"></ion-icon>\n        <ion-label style="color: #868686">交付时间</ion-label>\n        <ion-datetime item-end displayFormat="YYYY年MM月DD日" max="2030" min="2015" cancelText="取消" doneText="确认"\n                      ngModel="{{subtask.deliveryTime | stampToDate}}"\n                      (ngModelChange)="subtask.deliveryTime = $event"\n                      [disabled]="type==2"></ion-datetime>\n      </ion-item>\n      <ion-item style="border-bottom: solid 10px #ececec; height: 50px">\n        <ion-icon item-start name="appname-result"></ion-icon>\n        <ion-label no-padding no-margin style="color: #868686">交付成果:</ion-label>\n        <ion-input text-right type="text" [(ngModel)]="subtask.deliveryResult"\n                   required [disabled]="type==2"></ion-input>\n      </ion-item>\n    </ion-list>\n  </div>\n\n  <div style="padding: 10px;" [hidden]="canAddSubtask==false">\n    <button ion-button (click)="onAddSubtask($event)" block style="background-color: #fc5c53">+ 添加子任务</button>\n  </div>\n</ion-content>\n'/*ion-inline-end:"/Users/zhaoliangchen/Desktop/qipaipm-company/src/pages/milestone-detail/milestone-detail.html"*/,
+        selector: 'page-milestone-detail',template:/*ion-inline-start:"/Users/zhaoliangchen/Desktop/qipaipm-company/src/pages/milestone-detail/milestone-detail.html"*/'<!--\n  Generated template for the MilestoneDetailPage page.\n\n  See http://ionicframework.com/docs/components/#navigation for more info on\n  Ionic pages and navigation.\n-->\n<ion-header>\n\n  <ion-navbar>\n    <ion-title>\n      {{this.type==1?"新建里程碑":"里程碑详情"}}\n    </ion-title>\n    <ion-buttons end >\n      <button ion-button (click)="onSaveMilestone($event)" style="color: #fc5c53"\n            [hidden]="canEdit==false&&canFinish==false&&type==2">\n        保存\n      </button>\n    </ion-buttons>\n  </ion-navbar>\n\n</ion-header>\n\n\n<ion-content fullscreen>\n  <ion-list no-padding no-lines style="margin-bottom: 0px; border-bottom: solid 1px #ececec">\n    <ion-item style="height: 50px">\n      <ion-icon item-start name="appname-pname"></ion-icon>\n      <ion-label style="color: #868686">项目名称:</ion-label>\n      <ion-label right text-right>{{this.project.itemName}}</ion-label>\n    </ion-item>\n  </ion-list>\n\n  <ion-label full style="text-align: center">{{tempMilestone.milestoneName}}</ion-label>\n\n  <ion-list no-lines style="border: solid 1px #ececec">\n    <button ion-item style="border-bottom: solid 1px #ececec; height: 50px" (click)="onMilestoneLeader($event)" [disabled]="canEdit==false">\n      <ion-icon item-start name="appname-admin"></ion-icon>\n      <ion-label item-start [ngStyle]="{\'margin-left\':this.platform.is(\'ios\')?\'0px\':\'20px\'}" style="color: #868686">负责人:</ion-label>\n      <ion-label item-end text-right>{{tempMilestone.itemEndLeader}}</ion-label>\n    </button>\n    <!--<ion-item style="border-bottom: solid 1px #ececec;">-->\n      <!--<ion-icon item-start name="appname-admin"></ion-icon>-->\n      <!--<ion-label>负责人:</ion-label>-->\n      <!--<ion-input text-right type="text" [(ngModel)]="tempMilestone.milestoneLeader" required [disabled]=""></ion-input>-->\n    <!--</ion-item>-->\n    <ion-item style="border-bottom: solid 1px #ececec; height: 50px">\n      <ion-icon item-start name="appname-time"></ion-icon>\n      <ion-label style="color: #868686">交付时间:</ion-label>\n      <ion-datetime text-right displayFormat="YYYY-MM-DD" max={{maxTime|stampToDate}} min={{minTime|stampToDate}} cancelText="取消" doneText="确认" required [disabled]="canEdit==false"\n                    ngModel="{{tempMilestone.deliveryTime | stampToDate}}"\n                    (ngModelChange)="tempMilestone.deliveryTime = $event">\n      </ion-datetime>\n    </ion-item>\n    <ion-item style="border-bottom: solid 1px #ececec; height: 50px">\n      <ion-icon item-start name="appname-plan"></ion-icon>\n      <ion-label style="color: #868686">项目进度</ion-label>\n      <ion-select interface="action-sheet" [(ngModel)]="tempMilestone.itemProgress"\n                  cancelText="取消" okText="确认" [disabled]="canEdit==false||mileType==2">\n        <ion-option value="10%" [disabled]="canChooses[0]==false">10%</ion-option>\n        <ion-option value="20%" [disabled]="canChooses[1]==false">20%</ion-option>\n        <ion-option value="30%" [disabled]="canChooses[2]==false">30%</ion-option>\n        <ion-option value="40%" [disabled]="canChooses[3]==false">40%</ion-option>\n        <ion-option value="50%" [disabled]="canChooses[4]==false">50%</ion-option>\n        <ion-option value="60%" [disabled]="canChooses[5]==false">60%</ion-option>\n        <ion-option value="70%" [disabled]="canChooses[6]==false">70%</ion-option>\n        <ion-option value="80%" [disabled]="canChooses[7]==false">80%</ion-option>\n        <ion-option value="90%" [disabled]="canChooses[8]==false">90%</ion-option>\n        <ion-option value="100%" [disabled]="canChooses[9]==false">100%</ion-option>\n      </ion-select>\n    </ion-item>\n    <ion-item style="border-bottom: solid 1px #ececec;height: 50px">\n      <ion-icon item-start name="appname-result"></ion-icon>\n      <ion-label no-padding no-margin style="color: #868686">交付成果:</ion-label>\n      <ion-input text-right type="text" [(ngModel)]="tempMilestone.deliveryResult" required [disabled]="canEdit==false"></ion-input>\n    </ion-item>\n    <ion-item *ngIf="tempMilestone.delay > 0" style="border-bottom: solid 1px #ececec; height: 50px" >\n      <ion-label style="color: #868686">延迟情况:</ion-label>\n      <ion-label text-right item-end></ion-label>\n    </ion-item>\n  </ion-list>\n\n  <ion-list no-lines no-padding no-margin *ngIf="this.tempMilestone.id.length>0">\n    <ion-item style="border-top: solid 1px #ececec;border-bottom: solid 1px #ececec; height: 50px">\n      <div item-start>是否完成</div>\n      <ion-label style="color: #868686">完成</ion-label>\n      <ion-checkbox [(ngModel)]="tempMilestone.itemIsEnd" [disabled]="canFinish==false"></ion-checkbox>\n    </ion-item>\n    <ion-item style="border-bottom: solid 10px #ececec; height: 50px;" >\n      <ion-label item-start style="color: #868686">备注:</ion-label>\n      <ion-input item-end no-padding no-margin [(ngModel)]="tempMilestone.remark" [disabled]="canFinish==false"></ion-input>\n    </ion-item>\n  </ion-list>\n\n  <div *ngFor="let subtask of tempMilestone.children; let i = index">\n    <div style="height: 30px; border-bottom: solid 1px #ececec; ">\n      <div style="width: 5px; height: 30px; background-color: #555555; float: left;"></div>\n      <ion-label no-margin no-padding style="line-height: 30px; margin-left: 10px; float: left;">{{subtask.subtaskName}}</ion-label>\n      <div style="float: right; width: 30px; height: 30px;position: relative" >\n        <ion-icon name="close" style="position: absolute; top: 50%; right: 0px; -webkit-transform: translateY(-50%); transform: translateY(-50%); margin-right: 10px; "\n                  (click)="onRemoveSubtask($event, subtask)" [isActive]="canEdit==true"></ion-icon>\n      </div>\n    </div>\n    <ion-list no-lines no-padding no-margin>\n      <ion-item style="border-bottom: solid 1px #ececec; height: 50px">\n        <ion-icon item-start name="appname-admin"></ion-icon>\n        <ion-label style="color: #868686">负责人:</ion-label>\n        <ion-input text-right type="text" [(ngModel)]="subtask.itemEndLeader"\n                   required [disabled]="type==2"></ion-input>\n      </ion-item>\n      <ion-item style="border-bottom: solid 1px #ececec; height: 50px">\n        <ion-icon item-start name="appname-time"></ion-icon>\n        <ion-label style="color: #868686">交付时间</ion-label>\n        <ion-datetime item-end displayFormat="YYYY年MM月DD日" max="2030" min="2015" cancelText="取消" doneText="确认"\n                      ngModel="{{subtask.deliveryTime | stampToDate}}"\n                      (ngModelChange)="subtask.deliveryTime = $event"\n                      [disabled]="type==2"></ion-datetime>\n      </ion-item>\n      <ion-item style="border-bottom: solid 10px #ececec; height: 50px">\n        <ion-icon item-start name="appname-result"></ion-icon>\n        <ion-label no-padding no-margin style="color: #868686">交付成果:</ion-label>\n        <ion-input text-right type="text" [(ngModel)]="subtask.deliveryResult"\n                   required [disabled]="type==2"></ion-input>\n      </ion-item>\n    </ion-list>\n  </div>\n\n  <div style="padding: 10px;" [hidden]="canAddSubtask==false">\n    <button ion-button (click)="onAddSubtask($event)" block style="background-color: #fc5c53">+ 添加子任务</button>\n  </div>\n</ion-content>\n'/*ion-inline-end:"/Users/zhaoliangchen/Desktop/qipaipm-company/src/pages/milestone-detail/milestone-detail.html"*/,
     })
     /*
         @ApiModelProperty(value = "里程碑id")
@@ -1064,11 +1118,10 @@ MilestoneDetailPage = __decorate([
         private Date realTime;
      */
     ,
-    __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["j" /* NavController */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["k" /* NavParams */],
-        __WEBPACK_IMPORTED_MODULE_4__app_app_service__["a" /* AppService */], __WEBPACK_IMPORTED_MODULE_0__angular_core__["k" /* ChangeDetectorRef */],
-        __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["c" /* Events */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["a" /* AlertController */]])
+    __metadata("design:paramtypes", [typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["j" /* NavController */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["j" /* NavController */]) === "function" && _b || Object, typeof (_c = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["k" /* NavParams */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["k" /* NavParams */]) === "function" && _c || Object, typeof (_d = typeof __WEBPACK_IMPORTED_MODULE_4__app_app_service__["a" /* AppService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_4__app_app_service__["a" /* AppService */]) === "function" && _d || Object, typeof (_e = typeof __WEBPACK_IMPORTED_MODULE_0__angular_core__["k" /* ChangeDetectorRef */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_0__angular_core__["k" /* ChangeDetectorRef */]) === "function" && _e || Object, typeof (_f = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["c" /* Events */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["c" /* Events */]) === "function" && _f || Object, typeof (_g = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["a" /* AlertController */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["a" /* AlertController */]) === "function" && _g || Object, typeof (_h = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["l" /* Platform */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["l" /* Platform */]) === "function" && _h || Object])
 ], MilestoneDetailPage);
 
+var _a, _b, _c, _d, _e, _f, _g, _h;
 //# sourceMappingURL=milestone-detail.js.map
 
 /***/ }),
@@ -1108,17 +1161,19 @@ var __metadata = (this && this.__metadata) || function (k, v) {
  * on Ionic pages and navigation.
  */
 var SubtaskPage = (function () {
-    function SubtaskPage(navCtrl, navParams, appService, events, toastCtrl) {
+    function SubtaskPage(navCtrl, navParams, appService, events, toastCtrl, platform) {
         this.navCtrl = navCtrl;
         this.navParams = navParams;
         this.appService = appService;
         this.events = events;
         this.toastCtrl = toastCtrl;
+        this.platform = platform;
         this.subtask = {
             id: '',
             subtaskName: '',
             itemEndLeader: '',
             itemEndLeaderNum: '',
+            itemDept: '',
             deliveryTime: new __WEBPACK_IMPORTED_MODULE_5__angular_common__["d" /* DatePipe */]('en-US').transform(new Date(), 'yyyy-MM-dd'),
             deliveryResult: '',
             planTime: new __WEBPACK_IMPORTED_MODULE_5__angular_common__["d" /* DatePipe */]('en-US').transform(new Date(), 'yyyy-MM-dd'),
@@ -1126,6 +1181,7 @@ var SubtaskPage = (function () {
             remark: '',
             delayDays: 0,
             itemIsEnd: false,
+            version: '',
         };
         this.canEdit = false;
         this.canFinish = false;
@@ -1163,6 +1219,7 @@ var SubtaskPage = (function () {
         this.events.subscribe('onConfirmSubtaskLeader', function (leader) {
             _this.tempSubtask.itemEndLeader = leader.name;
             _this.tempSubtask.itemEndLeaderNum = leader.username;
+            _this.tempSubtask.itemDept = leader.department != null ? leader.department : leader.company;
         });
     };
     SubtaskPage.prototype.ionViewWillUnload = function () {
@@ -1223,7 +1280,7 @@ var SubtaskPage = (function () {
 }());
 SubtaskPage = __decorate([
     Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["n" /* Component */])({
-        selector: 'page-subtask',template:/*ion-inline-start:"/Users/zhaoliangchen/Desktop/qipaipm-company/src/pages/subtask/subtask.html"*/'<ion-header>\n\n  <ion-navbar>\n    <ion-title>子任务</ion-title>\n    <ion-buttons end >\n      <button ion-button (click)="onSaveSubtask()" color="danger">\n        保存\n      </button>\n    </ion-buttons>\n  </ion-navbar>\n</ion-header>\n\n\n<ion-content fullscreen>\n  <ion-list no-padding no-lines style="margin-bottom: 0px; border-bottom: solid 1px #ececec">\n    <ion-item >\n      <ion-icon item-start name="appname-pname"></ion-icon>\n      <ion-label style="color: #868686">项目名称:</ion-label>\n      <ion-label right text-right>{{projectname}}</ion-label>\n    </ion-item>\n  </ion-list>\n  <ion-label full class="subtask-title-css">{{tempSubtask.subtaskName}}</ion-label>\n\n  <ion-list no-lines style="border: solid 1px #ececec">\n    <button ion-item style="border-bottom: solid 1px #ececec" (click)="onSubtaskLeader($event)" [disabled]="canEdit==false">\n      <ion-icon item-start name="appname-admin"></ion-icon>\n      <ion-label item-start style="margin-left: 20px; color: #868686">负责人:</ion-label>\n      <ion-label item-end text-right>{{tempSubtask.itemEndLeader}}</ion-label>\n    </button>\n    <!--<ion-item style="border-bottom: solid 1px #ececec;">-->\n      <!--<ion-icon item-start name="appname-admin"></ion-icon>-->\n      <!--<ion-label>负责人:</ion-label>-->\n      <!--<ion-input text-right type="text" [(ngModel)]="tempSubtask.subtaskLeader" required [disabled]=""></ion-input>-->\n    <!--</ion-item>-->\n    <ion-item style="border-bottom: solid 1px #ececec;">\n      <ion-icon item-start name="appname-time"></ion-icon>\n      <ion-label style="color: #868686">交付时间:</ion-label>\n      <ion-datetime text-right displayFormat="YYYY-MM-DD" max={{maxTime}} min={{minTime}} cancelText="取消" doneText="确认"\n                    ngModel="{{tempSubtask.deliveryTime | stampToDate}}"\n                    (ngModelChange)="tempSubtask.deliveryTime = $event" [disabled]="canEdit==false"></ion-datetime>\n    </ion-item>\n    <ion-item>\n      <ion-icon item-start name="appname-result"></ion-icon>\n      <ion-label style="color: #868686">交付成果:</ion-label>\n      <ion-input text-right type="text" [(ngModel)]=tempSubtask.deliveryResult [disabled]="canEdit==false"></ion-input>\n    </ion-item>\n    <ion-item *ngIf="tempSubtask.delayDays>0">\n      <ion-label style="color: #868686">延迟情况:</ion-label>\n      <ion-label text-right item-end>{{tempSubtask.delayDays | delayPipe}}</ion-label>\n    </ion-item>\n  </ion-list>\n\n  <ion-list no-lines="" [hidden]="this.type==1">\n    <ion-item style="border-top: solid 1px #ececec;border-bottom: solid 1px #ececec">\n      <div item-start>是否完成</div>\n      <ion-label style="color: #868686">完成</ion-label>\n      <ion-checkbox [(ngModel)]=tempSubtask.itemIsEnd [disabled]="canFinish==false"></ion-checkbox>\n    </ion-item>\n    <ion-item style="border-bottom: solid 1px #ececec; height: 100px;">\n      <ion-label item-start style="color: #868686">备注:</ion-label>\n      <ion-textarea item-end [(ngModel)]=tempSubtask.remark [disabled]="canFinish==false"></ion-textarea>\n    </ion-item>\n  </ion-list>\n</ion-content>\n'/*ion-inline-end:"/Users/zhaoliangchen/Desktop/qipaipm-company/src/pages/subtask/subtask.html"*/,
+        selector: 'page-subtask',template:/*ion-inline-start:"/Users/zhaoliangchen/Desktop/qipaipm-company/src/pages/subtask/subtask.html"*/'<ion-header>\n\n  <ion-navbar>\n    <ion-title>子任务</ion-title>\n    <ion-buttons end >\n      <button ion-button (click)="onSaveSubtask()" color="danger">\n        保存\n      </button>\n    </ion-buttons>\n  </ion-navbar>\n</ion-header>\n\n\n<ion-content fullscreen>\n  <ion-list no-padding no-lines style="margin-bottom: 0px; border-bottom: solid 1px #ececec">\n    <ion-item >\n      <ion-icon item-start name="appname-pname"></ion-icon>\n      <ion-label style="color: #868686">项目名称:</ion-label>\n      <ion-label right text-right>{{projectname}}</ion-label>\n    </ion-item>\n  </ion-list>\n  <ion-label full class="subtask-title-css">{{tempSubtask.subtaskName}}</ion-label>\n\n  <ion-list no-lines style="border: solid 1px #ececec">\n    <button ion-item style="border-bottom: solid 1px #ececec" (click)="onSubtaskLeader($event)" [disabled]="canEdit==false">\n      <ion-icon item-start name="appname-admin"></ion-icon>\n      <ion-label item-start [ngStyle]="{\'margin-left\':this.platform.is(\'ios\')?\'0px\':\'20px\'}" style="color: #868686">负责人:</ion-label>\n      <ion-label item-end text-right>{{tempSubtask.itemEndLeader}}</ion-label>\n    </button>\n    <!--<ion-item style="border-bottom: solid 1px #ececec;">-->\n      <!--<ion-icon item-start name="appname-admin"></ion-icon>-->\n      <!--<ion-label>负责人:</ion-label>-->\n      <!--<ion-input text-right type="text" [(ngModel)]="tempSubtask.subtaskLeader" required [disabled]=""></ion-input>-->\n    <!--</ion-item>-->\n    <ion-item style="border-bottom: solid 1px #ececec;">\n      <ion-icon item-start name="appname-time"></ion-icon>\n      <ion-label style="color: #868686">交付时间:</ion-label>\n      <ion-datetime text-right displayFormat="YYYY-MM-DD" max={{maxTime}} min={{minTime}} cancelText="取消" doneText="确认"\n                    ngModel="{{tempSubtask.deliveryTime | stampToDate}}"\n                    (ngModelChange)="tempSubtask.deliveryTime = $event" [disabled]="canEdit==false"></ion-datetime>\n    </ion-item>\n    <ion-item>\n      <ion-icon item-start name="appname-result"></ion-icon>\n      <ion-label style="color: #868686">交付成果:</ion-label>\n      <ion-input text-right type="text" [(ngModel)]=tempSubtask.deliveryResult [disabled]="canEdit==false"></ion-input>\n    </ion-item>\n    <ion-item *ngIf="tempSubtask.delayDays>0">\n      <ion-label style="color: #868686">延迟情况:</ion-label>\n      <ion-label text-right item-end>{{tempSubtask.delayDays | delayPipe}}</ion-label>\n    </ion-item>\n  </ion-list>\n\n  <ion-list no-lines="" [hidden]="this.type==1">\n    <ion-item style="border-top: solid 1px #ececec;border-bottom: solid 1px #ececec">\n      <div item-start>是否完成</div>\n      <ion-label style="color: #868686">完成</ion-label>\n      <ion-checkbox [(ngModel)]=tempSubtask.itemIsEnd [disabled]="canFinish==false"></ion-checkbox>\n    </ion-item>\n    <ion-item style="border-bottom: solid 1px #ececec; height: 100px;">\n      <ion-label item-start style="color: #868686">备注:</ion-label>\n      <ion-textarea item-end [(ngModel)]=tempSubtask.remark [disabled]="canFinish==false"></ion-textarea>\n    </ion-item>\n  </ion-list>\n</ion-content>\n'/*ion-inline-end:"/Users/zhaoliangchen/Desktop/qipaipm-company/src/pages/subtask/subtask.html"*/,
     })
     /*
         @ApiModelProperty(value = "子任务的id")
@@ -1246,11 +1303,10 @@ SubtaskPage = __decorate([
         private String remark;
      */
     ,
-    __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["j" /* NavController */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["k" /* NavParams */],
-        __WEBPACK_IMPORTED_MODULE_3__app_app_service__["a" /* AppService */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["c" /* Events */],
-        __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["n" /* ToastController */]])
+    __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["j" /* NavController */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["j" /* NavController */]) === "function" && _a || Object, typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["k" /* NavParams */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["k" /* NavParams */]) === "function" && _b || Object, typeof (_c = typeof __WEBPACK_IMPORTED_MODULE_3__app_app_service__["a" /* AppService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_3__app_app_service__["a" /* AppService */]) === "function" && _c || Object, typeof (_d = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["c" /* Events */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["c" /* Events */]) === "function" && _d || Object, typeof (_e = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["n" /* ToastController */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["n" /* ToastController */]) === "function" && _e || Object, typeof (_f = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["l" /* Platform */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["l" /* Platform */]) === "function" && _f || Object])
 ], SubtaskPage);
 
+var _a, _b, _c, _d, _e, _f;
 //# sourceMappingURL=subtask.js.map
 
 /***/ }),
@@ -1336,8 +1392,7 @@ PopoverPage = __decorate([
     Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["n" /* Component */])({
         template: "\n        <ion-list>\n            <ion-item (click)=\"onClickEdit($event)\" [hidden]=\"!canShow\">\n                <ion-icon name=\"appname-edit\" item-start></ion-icon>\n                \u7F16\u8F91\n            </ion-item>\n            <ion-item (click)=\"onClickShare($event)\">\n                <ion-icon name=\"appname-share\" item-start></ion-icon>\n                \u5206\u4EAB\n            </ion-item>\n            <ion-item (click)=\"onClickDelete($event)\" [hidden]=\"!canShow\">\n                <ion-icon name=\"appname-delete\" item-start></ion-icon>\n                \u5220\u9664\n            </ion-item>\n            <ion-item (click)=\"onClickFinish($event)\" [hidden]=\"!canShow\">\n                <ion-icon name=\"appname-finish\" item-start></ion-icon>\n                \u7ED3\u675F\n            </ion-item>\n            <ion-item (click)=\"onClickDelay($event)\" [hidden]=\"!canShow\">\n                <ion-icon name=\"appname-delay\" item-start></ion-icon>\n                \u5EF6\u671F\n            </ion-item>\n        </ion-list>\n    "
     }),
-    __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["o" /* ViewController */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["k" /* NavParams */],
-        __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["c" /* Events */]])
+    __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["o" /* ViewController */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["o" /* ViewController */]) === "function" && _a || Object, typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["k" /* NavParams */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["k" /* NavParams */]) === "function" && _b || Object, typeof (_c = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["c" /* Events */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["c" /* Events */]) === "function" && _c || Object])
 ], PopoverPage);
 
 var ProjectDetailPage = (function () {
@@ -1560,17 +1615,6 @@ var ProjectDetailPage = (function () {
             _this.navCtrl.push(__WEBPACK_IMPORTED_MODULE_10__project_end_project_end__["a" /* ProjectEndPage */], {
                 project: _this.project,
             });
-            // this.project.itemIsEnd = true;
-            // this.project.itemState = '07010040';
-            //  this.appService.httpPost("item/createItem", this.project, this, function (view ,res){
-            //      //var data = res.json();
-            //      view.events.publish('homeProjectReload');
-            //      let toast = view.toastCtrl.create({
-            //          message: '项目已结束!',
-            //          duration: 3000
-            //      });
-            //      toast.present();
-            //  } ,true);
         });
         this.events.subscribe('onDelayProject', function () {
             var milestone = {
@@ -1580,7 +1624,7 @@ var ProjectDetailPage = (function () {
                 leaderEmpNum: '',
                 // milestoneDelivery : '',
                 deliveryResult: '',
-                itemProgress: '',
+                itemProgress: '100%',
                 deliveryTime: new __WEBPACK_IMPORTED_MODULE_7__angular_common__["d" /* DatePipe */]('en-US').transform(new Date(), 'yyyy-MM-dd'),
                 planTime: new __WEBPACK_IMPORTED_MODULE_7__angular_common__["d" /* DatePipe */]('en-US').transform(new Date(), 'yyyy-MM-dd'),
                 realTime: new __WEBPACK_IMPORTED_MODULE_7__angular_common__["d" /* DatePipe */]('en-US').transform(new Date(), 'yyyy-MM-dd'),
@@ -1849,18 +1893,16 @@ var ProjectDetailPage = (function () {
 }());
 __decorate([
     Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["_14" /* ViewChild */])('popoverContent', { read: __WEBPACK_IMPORTED_MODULE_0__angular_core__["u" /* ElementRef */] }),
-    __metadata("design:type", __WEBPACK_IMPORTED_MODULE_0__angular_core__["u" /* ElementRef */])
+    __metadata("design:type", typeof (_d = typeof __WEBPACK_IMPORTED_MODULE_0__angular_core__["u" /* ElementRef */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_0__angular_core__["u" /* ElementRef */]) === "function" && _d || Object)
 ], ProjectDetailPage.prototype, "content", void 0);
 ProjectDetailPage = __decorate([
     Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["n" /* Component */])({
         selector: 'page-project-detail',template:/*ion-inline-start:"/Users/zhaoliangchen/Desktop/qipaipm-company/src/pages/project-detail/project-detail.html"*/'<!--\n  Generated template for the ProjectDetailPage page.\n\n  See http://ionicframework.com/docs/components/#navigation for more info on\n  Ionic pages and navigation.\n-->\n<ion-header>\n    <ion-navbar>\n        <ion-title>\n            {{project.itemName}}\n        </ion-title>\n        <ion-buttons end>\n            <button ion-button icon-only (click)="presentPopover($event)">\n                <ion-icon name="more" style="color: #fc5c53"></ion-icon>\n            </button>\n        </ion-buttons>\n    </ion-navbar>\n</ion-header>\n\n\n<ion-content #popoverContent fullscreen>\n    <div class="pj-item">\n        <div class="mile-bottom">\n            <div class="item1">\n                <ion-label style="margin-bottom: 3px;font-size: 10px">{{project.itemStartTime | MonthPipe}}</ion-label>\n                <section class="line"></section>\n                <ion-label style="margin-top: 3px;font-size: 10px">{{project.itemStartTime | YearPipe}}</ion-label>\n            </div>\n            <div class="item2">\n                <ion-icon name="ios-arrow-dropdown-circle" style="color: #fc5c53;padding-top: 15px"></ion-icon>\n                <ion-label no-padding no-margin style="margin-top: 3px;font-size: 10px;text-align: center">启动\n                </ion-label>\n            </div>\n            <div class="item3">\n                <ion-icon no-border no-margin no-padding name="md-arrow-dropleft" class="arrow-css1"></ion-icon>\n                <div class="item3-1">\n                    <div class="text-wrap">\n                        <div class="text-left">负责人：</div>\n                        <div class="text-right">{{project.itemFounder}}</div>\n                        <!--<div style="clear: both"></div>-->\n                    </div>\n                    <div class="text-wrap">\n                        <div class="text-left">交付成果：</div>\n                        <div class="text-right">{{project.itemStartResult}}</div>\n                        <!--<div style="clear: both"></div>-->\n                    </div>\n                    <div class="text-wrap">\n                        <div class="text-left">紧急程度：</div>\n                        <div class="text-right">{{project.itemLevel | itemlevelPipe}}</div>\n                        <!--<div style="clear: both"></div>-->\n                    </div>\n                </div>\n            </div>\n        </div>\n    </div>\n\n    <!-- 里程碑  -->\n    <div class="pj-item" *ngFor="let mile of project.milestoneVo1; let i = index">\n        <div class="mile-top" id="{{mile.id}}">\n            <div style="width: 1px; background-color: #ececec; height: 100%; position: absolute; left: 65px; top: 0px">\n\n            </div>\n            <div [hidden]="mile.children.length<=0">\n                <div class="subtask-title" *ngIf="isExpand1[i]==false ">\n                    <ion-label no-margin no-padding text-center class="horizontal-center"\n                               style="line-height: 25px; font-size: 15px">{{mile.children.length+"个子任务"}}\n                    </ion-label>\n                </div>\n                <div class="subtask-wrap" *ngIf="isExpand1[i]==true ">\n                    <div class="subtask-item" *ngFor="let subtask of mile.children"\n                         (click)="onClickSubtask($event, subtask, mile)">\n                        <div class="subtask-css">\n                            <ion-label class="subtask-left">子任务:</ion-label>\n                            <ion-label class="subtask-right">{{subtask.subtaskName}}</ion-label>\n                        </div>\n                        <div class="subtask-css">\n                            <ion-label class="subtask-left">交付时间:</ion-label>\n                            <ion-label class="subtask-right">{{subtask.deliveryTime | stampToDate}}</ion-label>\n                        </div>\n                        <div class="subtask-css">\n                            <ion-label class="subtask-left">负责人:</ion-label>\n                            <ion-label class="subtask-right">{{subtask.itemEndLeader}}</ion-label>\n                        </div>\n                    </div>\n                </div>\n                <ion-icon [name]="isExpand1[i]==false?\'appname-expand\':\'appname-fold\'" class="fold"\n                          (click)="onClickExpand($event, i, mile)"></ion-icon>\n            </div>\n        </div>\n        <div class="mile-bottom">\n            <div class="item1">\n                <ion-label style="margin-bottom: 3px;font-size: 10px">{{mile.deliveryTime | MonthPipe}}</ion-label>\n                <section class="line"></section>\n                <ion-label style="margin-top: 3px;font-size: 10px">{{mile.deliveryTime | YearPipe}}</ion-label>\n            </div>\n            <div class="item2">\n                <!--<div style="width: 1px; background-color: #ececec; height: 10px; position: absolute; left: 20px; top: 0px" ></div>-->\n                <ion-label no-padding no-margin class="label-radius">{{mile.itemProgress}}</ion-label>\n                <ion-label no-padding no-margin class="mile-number">{{"里程碑"+(i+1)}}</ion-label>\n                <ion-label no-padding no-margin class="delay-radius1" [hidden]="mile.delayDays==0">\n                    {{"延"+mile.delayDays}}\n                </ion-label>\n            </div>\n            <!--[ngClass]="{\'arrow-css1\':mile.type==0,\'arrow-css2\':mile.type==1,\'arrow-css3\':mile.type==2}"-->\n\n            <div class="item3">\n                <ion-icon no-border no-padding no-margin name="md-arrow-dropleft" class="arrow-css2"></ion-icon>\n                <div class="item3-2" (click)="onClickMilestone($event, mile)">\n                    <div class="text-wrap">\n                        <div class="text-left">负责人：</div>\n                        <div class="text-right">{{mile.itemEndLeader}}</div>\n                    </div>\n                    <div class="text-wrap">\n                        <div class="text-left">交付成果：</div>\n                        <div class="text-right">{{mile.deliveryResult}}</div>\n                    </div>\n                </div>\n            </div>\n        </div>\n    </div>\n\n    <!-- 项目结束 -->\n    <div class="mile-bottom">\n        <div class="item1">\n            <ion-label style="margin-bottom: 3px;font-size: 10px">{{project.endTime | MonthPipe}}</ion-label>\n            <section class="line"></section>\n            <ion-label style="margin-top: 3px;font-size: 10px">{{project.endTime | YearPipe}}</ion-label>\n        </div>\n        <div class="item2">\n            <!--<div style="width: 1px; background-color: #ececec; height: 10px; position: absolute; left: 20px; top: 0px" ></div>-->\n            <ion-icon name="ios-arrow-dropup-circle" style="color: #fc5c53;padding-top: 15px"></ion-icon>\n            <ion-label no-padding no-margin style="margin-top: 3px;font-size: 10px;text-align: center">结束</ion-label>\n        </div>\n        <div class="item3">\n            <ion-icon no-border no-padding no-margin name="md-arrow-dropleft" class="arrow-css1"></ion-icon>\n            <div class="item3-1">\n                <div class="text-wrap">\n                    <div no-padding no-margin class="text-left">负责人：</div>\n                    <div no-padding no-margin class="text-right">{{project.itemEndLeader}}</div>\n                </div>\n                <div class="text-wrap">\n                    <div no-padding no-margin class="text-left">交付成果：</div>\n                    <div no-padding no-margin class="text-right">{{project.itemEndResult}}</div>\n                </div>\n            </div>\n        </div>\n    </div>\n\n    <!-- 延期里程碑 -->\n    <!--<div class="mile-bottom" style="margin-top: 5px"-->\n         <!--*ngFor="let dalayMile of project.milestoneVo2; let i = index">-->\n        <!--<div class="item1">-->\n            <!--<ion-label style="margin-bottom: 3px;font-size: 10px">{{dalayMile.deliveryTime | MonthPipe}}</ion-label>-->\n            <!--<section class="line"></section>-->\n            <!--<ion-label style="margin-top: 3px;font-size: 10px">{{dalayMile.deliveryTime | YearPipe}}</ion-label>-->\n        <!--</div>-->\n        <!--<div class="item2">-->\n            <!--&lt;!&ndash;<div style="width: 1px; background-color: #ececec; height: 10px; position: absolute; left: 20px; top: 0px" ></div>&ndash;&gt;-->\n            <!--<ion-label no-padding no-margin class="label-radius">{{dalayMile.itemProgress}}</ion-label>-->\n            <!--<ion-label no-padding no-margin class="mile-number">{{"延期"+(i+1)}}</ion-label>-->\n            <!--<ion-label no-padding no-margin class="delay-radius1" [hidden]="dalayMile.delayDays==0">-->\n                <!--{{"延"+dalayMile.delayDays}}-->\n            <!--</ion-label>-->\n        <!--</div>-->\n\n        <!--<div class="item3">-->\n            <!--<ion-icon no-border no-padding no-margin name="md-arrow-dropleft" class="arrow-css3"></ion-icon>-->\n            <!--<div class="item3-3" (click)="onClickMilestone($event, dalayMile)">-->\n                <!--<div class="text-wrap">-->\n                    <!--<div class="text-left">负责人：</div>-->\n                    <!--<div class="text-right">{{dalayMile.itemEndLeader}}</div>-->\n                <!--</div>-->\n                <!--<div class="text-wrap">-->\n                    <!--<div class="text-left">交付成果：</div>-->\n                    <!--<div class="text-right">{{dalayMile.deliveryResult}}</div>-->\n                <!--</div>-->\n            <!--</div>-->\n        <!--</div>-->\n    <!--</div>-->\n\n    <div class="pj-item" *ngFor="let dalayMile of project.milestoneVo2; let i = index">\n        <div class="mile-top" id="{{dalayMile.id}}">\n            <div style="width: 1px; background-color: #ececec; height: 100%; position: absolute; left: 65px; top: 0px" >\n\n            </div >\n            <div [hidden]="dalayMile.children.length<=0">\n                <div class="subtask-title" *ngIf="isExpand2[i]==false ">\n                    <ion-label no-margin no-padding text-center class="horizontal-center" style="line-height: 25px; font-size: 15px">{{dalayMile.children.length+"个子任务"}}</ion-label>\n                </div>\n                <div class="subtask-wrap" *ngIf="isExpand2[i]==true ">\n                    <div class="subtask-item" *ngFor="let subtask of dalayMile.children" (click)="onClickSubtask($event, subtask, dalayMile)">\n                        <div class="subtask-css" >\n                            <ion-label class="subtask-left">子任务:</ion-label>\n                            <ion-label class="subtask-right" >{{subtask.subtaskName}}</ion-label>\n                        </div>\n                        <div class="subtask-css" >\n                            <ion-label class="subtask-left">交付时间:</ion-label>\n                            <ion-label class="subtask-right" >{{subtask.deliveryTime | stampToDate}}</ion-label>\n                        </div>\n                        <div class="subtask-css" >\n                            <ion-label class="subtask-left">负责人:</ion-label>\n                            <ion-label class="subtask-right" >{{subtask.itemEndLeader}}</ion-label>\n                        </div>\n                    </div>\n                </div>\n                <ion-icon [name]="isExpand2[i]==false?\'appname-expand\':\'appname-fold\'" class="fold" (click)="onClickExpand($event, i, dalayMile)"></ion-icon>\n            </div>\n        </div>\n        <div class="mile-bottom">\n            <div class="item1">\n                <ion-label style="margin-bottom: 3px;font-size: 10px">{{dalayMile.deliveryTime | MonthPipe}}</ion-label>\n                <section class="line"></section>\n                <ion-label style="margin-top: 3px;font-size: 10px">{{dalayMile.deliveryTime | YearPipe}}</ion-label>\n            </div>\n            <div class="item2">\n                <!--<div style="width: 1px; background-color: #ececec; height: 10px; position: absolute; left: 20px; top: 0px" ></div>-->\n                <ion-label no-padding no-margin class="label-radius">{{dalayMile.itemProgress}}</ion-label>\n                <ion-label no-padding no-margin class="mile-number" style="color: #fc780e">{{"延期"+(i+1)}}</ion-label>\n                <ion-label no-padding no-margin class="delay-radius1" [hidden]="dalayMile.delayDays==0">{{"延"+dalayMile.delayDays}}</ion-label>\n            </div>\n            <div class="item3">\n                <ion-icon no-border no-padding no-margin name="md-arrow-dropleft" class="arrow-css3" ></ion-icon>\n                <div class="item3-3" (click)="onClickMilestone($event, dalayMile)">\n                    <div class="text-wrap">\n                        <div class="text-left">负责人：</div>\n                        <div class="text-right">{{dalayMile.itemEndLeader}}</div>\n                    </div>\n                    <div  class="text-wrap">\n                        <div class="text-left">交付成果：</div>\n                        <div class="text-right">{{dalayMile.deliveryResult}}</div>\n                    </div>\n                </div>\n            </div>\n        </div>\n    </div>\n\n    <!--[ngStyle]="{\'bottom\':isShowShare==false?\'-200px\':\'0px\'}"-->\n    <div id="shareView" class="share-css">\n        <ion-label text-center>分享到</ion-label>\n        <ion-row style="height: 100px;@extend .vertical-middle;">\n            <ion-col text-center>\n                <ion-icon name="appname-dingding"></ion-icon>\n            </ion-col>\n            <ion-col text-center>\n                <ion-icon name="appname-qq"></ion-icon>\n            </ion-col>\n            <ion-col text-center>\n                <ion-icon name="appname-weixin"></ion-icon>\n            </ion-col>\n        </ion-row>\n        <button ion-button no-padding no-margin\n                style="width: 100%; height: 50px; border-top: solid 1px #ececec; background-color: white; color: black"\n                (click)="onCancelShare($event)">取消\n        </button>\n    </div>\n</ion-content>\n'/*ion-inline-end:"/Users/zhaoliangchen/Desktop/qipaipm-company/src/pages/project-detail/project-detail.html"*/,
     }),
-    __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["j" /* NavController */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["k" /* NavParams */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["m" /* PopoverController */],
-        __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["c" /* Events */], __WEBPACK_IMPORTED_MODULE_5__app_app_service__["a" /* AppService */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["n" /* ToastController */],
-        __WEBPACK_IMPORTED_MODULE_9__ionic_native_social_sharing__["a" /* SocialSharing */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["a" /* AlertController */],
-        __WEBPACK_IMPORTED_MODULE_0__angular_core__["k" /* ChangeDetectorRef */]])
+    __metadata("design:paramtypes", [typeof (_e = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["j" /* NavController */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["j" /* NavController */]) === "function" && _e || Object, typeof (_f = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["k" /* NavParams */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["k" /* NavParams */]) === "function" && _f || Object, typeof (_g = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["m" /* PopoverController */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["m" /* PopoverController */]) === "function" && _g || Object, typeof (_h = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["c" /* Events */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["c" /* Events */]) === "function" && _h || Object, typeof (_j = typeof __WEBPACK_IMPORTED_MODULE_5__app_app_service__["a" /* AppService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_5__app_app_service__["a" /* AppService */]) === "function" && _j || Object, typeof (_k = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["n" /* ToastController */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["n" /* ToastController */]) === "function" && _k || Object, typeof (_l = typeof __WEBPACK_IMPORTED_MODULE_9__ionic_native_social_sharing__["a" /* SocialSharing */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_9__ionic_native_social_sharing__["a" /* SocialSharing */]) === "function" && _l || Object, typeof (_m = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["a" /* AlertController */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["a" /* AlertController */]) === "function" && _m || Object, typeof (_o = typeof __WEBPACK_IMPORTED_MODULE_0__angular_core__["k" /* ChangeDetectorRef */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_0__angular_core__["k" /* ChangeDetectorRef */]) === "function" && _o || Object])
 ], ProjectDetailPage);
 
+var _a, _b, _c, _d, _e, _f, _g, _h, _j, _k, _l, _m, _o;
 //# sourceMappingURL=project-detail.js.map
 
 /***/ }),
@@ -1873,7 +1915,7 @@ ProjectDetailPage = __decorate([
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(1);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(16);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__angular_forms__ = __webpack_require__(23);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_rxjs_Rx__ = __webpack_require__(294);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_rxjs_Rx__ = __webpack_require__(295);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_rxjs_Rx___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3_rxjs_Rx__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__newpw_newpw__ = __webpack_require__(141);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__app_app_service__ = __webpack_require__(24);
@@ -2144,8 +2186,13 @@ var ProjectEndPage = (function () {
             input2.style.visibility = "hidden";
             //input2.style.opacity="0";
         }
+        var maskView = document.getElementById('maskView');
+        if (maskView != null) {
+            maskView.style.height = "0px";
+        }
     };
     ProjectEndPage.prototype.onClickCheck = function (value, index) {
+        var _this = this;
         if (value == false) {
             this.arrayCheckboxs[index] = false;
             this.project.multipleItemEndWhy = '';
@@ -2155,6 +2202,15 @@ var ProjectEndPage = (function () {
                     input2_1.setAttribute("readOnly", "readOnly");
                     input2_1.style.visibility = "hidden";
                 }
+                var maskView = document.getElementById('maskView');
+                if (maskView != null) {
+                    maskView.style.height = "0px";
+                }
+                setTimeout(function () {
+                    if (_this.content.scrollToTop) {
+                        _this.content.scrollToTop(0);
+                    }
+                }, 200);
             }
         }
         else {
@@ -2183,11 +2239,20 @@ var ProjectEndPage = (function () {
                     break;
             }
             var input2_2 = document.getElementById('input2');
+            var maskView = document.getElementById('maskView');
             if (index < 3) {
                 if (input2_2 != null) {
                     input2_2.setAttribute("readOnly", "readOnly");
                     input2_2.style.visibility = "hidden";
                 }
+                if (maskView != null) {
+                    maskView.style.height = "0px";
+                }
+                setTimeout(function () {
+                    if (_this.content.scrollToTop) {
+                        _this.content.scrollToTop(0);
+                    }
+                }, 200);
             }
             else {
                 input2_2.style.visibility = "visible";
@@ -2195,6 +2260,14 @@ var ProjectEndPage = (function () {
                 setTimeout(function () {
                     input2_2.focus();
                 }, 100);
+                if (maskView != null) {
+                    maskView.style.height = "250px";
+                }
+                setTimeout(function () {
+                    if (_this.content.scrollToBottom) {
+                        _this.content.scrollToBottom(0);
+                    }
+                }, 200);
             }
         }
     };
@@ -2203,12 +2276,12 @@ var ProjectEndPage = (function () {
             this.project.multipleItemEndWhy = this.otherReason;
         }
         if (this.project.multipleItemEndWhy == null || this.project.multipleItemEndWhy.length < 1) {
-            var alert_1 = this.alertCtrl.create({
+            var alert = this.alertCtrl.create({
                 title: '错误信息',
                 subTitle: '请填写项目结束原因!',
                 buttons: ['确定']
             });
-            alert_1.present();
+            alert.present();
             return;
         }
         this.project.itemIsEnd = true;
@@ -2228,21 +2301,24 @@ var ProjectEndPage = (function () {
 }());
 __decorate([
     Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["_14" /* ViewChild */])('input1'),
-    __metadata("design:type", __WEBPACK_IMPORTED_MODULE_0__angular_core__["u" /* ElementRef */])
+    __metadata("design:type", typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_0__angular_core__["u" /* ElementRef */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_0__angular_core__["u" /* ElementRef */]) === "function" && _a || Object)
 ], ProjectEndPage.prototype, "input1", void 0);
 __decorate([
+    Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["_14" /* ViewChild */])(__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["b" /* Content */]),
+    __metadata("design:type", typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["b" /* Content */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["b" /* Content */]) === "function" && _b || Object)
+], ProjectEndPage.prototype, "content", void 0);
+__decorate([
     Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["_14" /* ViewChild */])('projectEndContent'),
-    __metadata("design:type", __WEBPACK_IMPORTED_MODULE_0__angular_core__["u" /* ElementRef */])
+    __metadata("design:type", typeof (_c = typeof __WEBPACK_IMPORTED_MODULE_0__angular_core__["u" /* ElementRef */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_0__angular_core__["u" /* ElementRef */]) === "function" && _c || Object)
 ], ProjectEndPage.prototype, "projectEndContent", void 0);
 ProjectEndPage = __decorate([
     Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["n" /* Component */])({
-        selector: 'page-project-end',template:/*ion-inline-start:"/Users/zhaoliangchen/Desktop/qipaipm-company/src/pages/project-end/project-end.html"*/'<!--\n  Generated template for the ProjectEndPage page.\n\n  See http://ionicframework.com/docs/components/#navigation for more info on\n  Ionic pages and navigation.\n-->\n<ion-header>\n\n  <ion-navbar>\n    <ion-title>结束项目</ion-title>\n    <ion-buttons end >\n      <button ion-button (click)="onEndSave($event)" color="danger">\n        保存\n      </button>\n    </ion-buttons>\n  </ion-navbar>\n</ion-header>\n\n\n<ion-content fullscreen #projectEndContent id="projectEndContent">\n  <ion-list no-padding no-lines style="margin-bottom: 0px; border-bottom: solid 1px #ececec">\n    <ion-item >\n      <ion-icon item-start name="appname-pname"></ion-icon>\n      <ion-label>项目名称:</ion-label>\n      <ion-label right text-right>{{this.project.itemName}}</ion-label>\n    </ion-item>\n  </ion-list>\n\n  <div style="border-top: solid 10px #ececec;border-bottom: solid 1px #ececec; position: relative; height: 60px; display: flex">\n    <div class="first_title vertical_center">结束原因</div>\n    <ion-checkbox\n            ngModel="{{arrayCheckboxs[0]}}"\n            (ngModelChange)="onClickCheck($event, 0)"\n            class="check vertical_center">\n    </ion-checkbox>\n    <ion-label no-margin no-padding class="reason vertical_center">业务改变</ion-label>\n  </div>\n  <div style="border-bottom: solid 1px #ececec; position: relative; height: 50px; display: flex">\n    <div class="first_title vertical_center"></div>\n    <ion-checkbox\n            ngModel="{{arrayCheckboxs[1]}}"\n            (ngModelChange)="onClickCheck($event, 1)"\n            class="check vertical_center">\n    </ion-checkbox>\n    <ion-label no-margin no-padding class="reason vertical_center">资源不够</ion-label>\n  </div>\n  <div style="border-bottom: solid 1px #ececec; position: relative; height: 50px; display: flex">\n    <div class="first_title vertical_center"></div>\n    <ion-checkbox\n            ngModel="{{arrayCheckboxs[2]}}"\n            (ngModelChange)="onClickCheck($event, 2)"\n            class="check vertical_center">\n    </ion-checkbox>\n    <ion-label no-margin no-padding class="reason vertical_center">合作方退出</ion-label>\n  </div>\n  <div style="border-bottom: solid 1px #ececec; position: relative; height: 50px;padding-right: 10px">\n    <div class="first_title vertical_center"></div>\n    <ion-checkbox\n            ngModel="{{arrayCheckboxs[3]}}"\n            (ngModelChange)="onClickCheck($event, 3)"\n            class="check vertical_center">\n    </ion-checkbox>\n    <ion-label no-margin no-padding class="reason vertical_center">其他原因</ion-label>\n    <!--<ion-input #input1 id="input1" tappable no-margin no-padding placeholder="其他原因" class="reason vertical_center"-->\n               <!--[(ngModel)]="otherReason" focuser></ion-input>-->\n\n  </div>\n\n  <div style="height: 200px; margin: 20px 20px">\n    <textarea id="input2" maxlength="100" placeholder="请输入结束原因，100个字符以内。" [(ngModel)]="otherReason"\n              style="width: 100%; height: 100%"></textarea>\n  </div>\n</ion-content>\n'/*ion-inline-end:"/Users/zhaoliangchen/Desktop/qipaipm-company/src/pages/project-end/project-end.html"*/,
+        selector: 'page-project-end',template:/*ion-inline-start:"/Users/zhaoliangchen/Desktop/qipaipm-company/src/pages/project-end/project-end.html"*/'<!--\n  Generated template for the ProjectEndPage page.\n\n  See http://ionicframework.com/docs/components/#navigation for more info on\n  Ionic pages and navigation.\n-->\n<ion-header>\n\n  <ion-navbar>\n    <ion-title>结束项目</ion-title>\n    <ion-buttons end >\n      <button ion-button (click)="onEndSave($event)" color="danger">\n        保存\n      </button>\n    </ion-buttons>\n  </ion-navbar>\n</ion-header>\n\n\n<ion-content fullscreen #projectEndContent id="projectEndContent">\n  <ion-list no-padding no-lines style="margin-bottom: 0px; border-bottom: solid 1px #ececec">\n    <ion-item >\n      <ion-icon item-start name="appname-pname"></ion-icon>\n      <ion-label>项目名称:</ion-label>\n      <ion-label right text-right>{{this.project.itemName}}</ion-label>\n    </ion-item>\n  </ion-list>\n\n  <div style="border-top: solid 10px #ececec;border-bottom: solid 1px #ececec; position: relative; height: 60px; display: flex">\n    <div class="first_title vertical_center">结束原因</div>\n    <ion-checkbox\n            ngModel="{{arrayCheckboxs[0]}}"\n            (ngModelChange)="onClickCheck($event, 0)"\n            class="check vertical_center">\n    </ion-checkbox>\n    <ion-label no-margin no-padding class="reason vertical_center">业务改变</ion-label>\n  </div>\n  <div style="border-bottom: solid 1px #ececec; position: relative; height: 50px; display: flex">\n    <div class="first_title vertical_center"></div>\n    <ion-checkbox\n            ngModel="{{arrayCheckboxs[1]}}"\n            (ngModelChange)="onClickCheck($event, 1)"\n            class="check vertical_center">\n    </ion-checkbox>\n    <ion-label no-margin no-padding class="reason vertical_center">资源不够</ion-label>\n  </div>\n  <div style="border-bottom: solid 1px #ececec; position: relative; height: 50px; display: flex">\n    <div class="first_title vertical_center"></div>\n    <ion-checkbox\n            ngModel="{{arrayCheckboxs[2]}}"\n            (ngModelChange)="onClickCheck($event, 2)"\n            class="check vertical_center">\n    </ion-checkbox>\n    <ion-label no-margin no-padding class="reason vertical_center">合作方退出</ion-label>\n  </div>\n  <div style="border-bottom: solid 1px #ececec; position: relative; height: 50px;padding-right: 10px">\n    <div class="first_title vertical_center"></div>\n    <ion-checkbox\n            ngModel="{{arrayCheckboxs[3]}}"\n            (ngModelChange)="onClickCheck($event, 3)"\n            class="check vertical_center">\n    </ion-checkbox>\n    <ion-label no-margin no-padding class="reason vertical_center">其他原因</ion-label>\n    <!--<ion-input #input1 id="input1" tappable no-margin no-padding placeholder="其他原因" class="reason vertical_center"-->\n               <!--[(ngModel)]="otherReason" focuser></ion-input>-->\n\n  </div>\n\n  <div style="height: 200px; margin: 20px 20px">\n    <textarea id="input2" maxlength="100" placeholder="请输入结束原因，100个字符以内。" [(ngModel)]="otherReason"\n              style="width: 100%; height: 100%"></textarea>\n  </div>\n\n  <div style="background-color: transparent; width: 100%; height: 0" id="maskView"></div>\n</ion-content>\n'/*ion-inline-end:"/Users/zhaoliangchen/Desktop/qipaipm-company/src/pages/project-end/project-end.html"*/,
     }),
-    __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["j" /* NavController */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["k" /* NavParams */],
-        __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["a" /* AlertController */], __WEBPACK_IMPORTED_MODULE_2__app_app_service__["a" /* AppService */],
-        __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["c" /* Events */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["n" /* ToastController */]])
+    __metadata("design:paramtypes", [typeof (_d = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["j" /* NavController */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["j" /* NavController */]) === "function" && _d || Object, typeof (_e = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["k" /* NavParams */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["k" /* NavParams */]) === "function" && _e || Object, typeof (_f = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["a" /* AlertController */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["a" /* AlertController */]) === "function" && _f || Object, typeof (_g = typeof __WEBPACK_IMPORTED_MODULE_2__app_app_service__["a" /* AppService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_2__app_app_service__["a" /* AppService */]) === "function" && _g || Object, typeof (_h = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["c" /* Events */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["c" /* Events */]) === "function" && _h || Object, typeof (_j = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["n" /* ToastController */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["n" /* ToastController */]) === "function" && _j || Object])
 ], ProjectEndPage);
 
+var _a, _b, _c, _d, _e, _f, _g, _h, _j;
 //# sourceMappingURL=project-end.js.map
 
 /***/ }),
@@ -2269,11 +2345,11 @@ webpackEmptyAsyncContext.id = 153;
 
 var map = {
 	"../pages/contact/contact.module": [
-		602,
+		601,
 		4
 	],
 	"../pages/forget/forget.module": [
-		601,
+		602,
 		3
 	],
 	"../pages/login/login.module": [
@@ -2543,7 +2619,7 @@ var SearchPage = (function () {
             toast.present();
         }
         else {
-            this.appService.httpGet("item/searchByCondition", {
+            this.appService.httpGet("item/searchAll", {
                 itemName: this.searchValue,
                 "empNum": __WEBPACK_IMPORTED_MODULE_4__app_app_singleton__["a" /* AppSingleton */].getInstance().currentUserInfo.username,
                 page: 1,
@@ -2613,10 +2689,10 @@ SearchPage = __decorate([
     Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["n" /* Component */])({
         selector: 'page-search',template:/*ion-inline-start:"/Users/zhaoliangchen/Desktop/qipaipm-company/src/pages/search/search.html"*/'<!--\n  Generated template for the SearchPage page.\n\n  See http://ionicframework.com/docs/components/#navigation for more info on\n  Ionic pages and navigation.\n-->\n<ion-header>\n  <ion-navbar>\n    <form (submit)="onSearch($event)">\n      <ion-searchbar placeholder="搜索项目名称" [(ngModel)]=searchValue\n                     [showCancelButton]="false"\n                     (ionInput)="onSearchInput($event)"\n                     (ionCancel)="onSearchCancel($event)"\n                      name="itemName">\n      </ion-searchbar>\n    </form>\n  </ion-navbar>\n  <!--<div class="head" >-->\n    <!--<div class="icon-left" (click)="goBack()">-->\n      <!--<ion-icon name="arrow-back" ></ion-icon>-->\n    <!--</div>-->\n    <!--<div class="searchcotain">-->\n      <!--<div class="searchmain">-->\n        <!--<div class="searchicon"><ion-icon name="search"></ion-icon></div>-->\n        <!--<div class="searchinput"><input type="text" placeholder="搜索"></div>-->\n      <!--</div>-->\n    <!--</div>-->\n    <!--<div class="icon-rightnew">-->\n      <!--<a>搜索</a>-->\n    <!--</div>-->\n  <!--</div>-->\n</ion-header>\n\n<ion-content fullscreen>\n    <div *ngFor="let dic of array">\n      <div style="background-color: #f5f6f7; height: 30px;padding-left: 5px; position:relative;">\n          <ion-label no-padding no-margin class="vertical_center" style="left: 5px; width: 120px">{{dic.year+"年"}}</ion-label>\n      </div>\n      <div style="height: 50px; border-bottom: solid 1px #f5f6f7; position:relative;" *ngFor="let project of dic.projects" (click)="onClickProject($event,project)">\n        <ion-label no-padding no-margin class="vertical_center" style="left: 5px; width: 120px">{{project.itemStartTime | MonthPipe}}</ion-label>\n        <ion-label no-padding no-margin class="vertical_center" style="left: 140px;">{{project.itemName}}</ion-label>\n      </div>\n    </div>\n</ion-content>\n'/*ion-inline-end:"/Users/zhaoliangchen/Desktop/qipaipm-company/src/pages/search/search.html"*/,
     }),
-    __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["j" /* NavController */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["k" /* NavParams */],
-        __WEBPACK_IMPORTED_MODULE_2__app_app_service__["a" /* AppService */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["n" /* ToastController */]])
+    __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["j" /* NavController */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["j" /* NavController */]) === "function" && _a || Object, typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["k" /* NavParams */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["k" /* NavParams */]) === "function" && _b || Object, typeof (_c = typeof __WEBPACK_IMPORTED_MODULE_2__app_app_service__["a" /* AppService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_2__app_app_service__["a" /* AppService */]) === "function" && _c || Object, typeof (_d = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["n" /* ToastController */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["n" /* ToastController */]) === "function" && _d || Object])
 ], SearchPage);
 
+var _a, _b, _c, _d;
 //# sourceMappingURL=search.js.map
 
 /***/ }),
@@ -2629,8 +2705,8 @@ SearchPage = __decorate([
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return AppService; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_ionic_angular__ = __webpack_require__(16);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_core__ = __webpack_require__(1);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__angular_http__ = __webpack_require__(222);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_rxjs_add_operator_toPromise__ = __webpack_require__(217);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__angular_http__ = __webpack_require__(197);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_rxjs_add_operator_toPromise__ = __webpack_require__(198);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_rxjs_add_operator_toPromise___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3_rxjs_add_operator_toPromise__);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -2924,7 +3000,7 @@ Object(__WEBPACK_IMPORTED_MODULE_0__angular_platform_browser_dynamic__["a" /* pl
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__ionic_native_keyboard__ = __webpack_require__(268);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__ionic_native_social_sharing__ = __webpack_require__(224);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__ionic_storage__ = __webpack_require__(78);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__angular_http__ = __webpack_require__(222);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__angular_http__ = __webpack_require__(197);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__app_component__ = __webpack_require__(588);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__pages_home_home__ = __webpack_require__(113);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_11__pages_project_create_project_create__ = __webpack_require__(114);
@@ -3010,8 +3086,8 @@ AppModule = __decorate([
                 pageTransition: 'ios-transition' //使用ios页面动画
             }, {
                 links: [
-                    { loadChildren: '../pages/forget/forget.module#ForgetPageModule', name: 'ForgetPage', segment: 'forget', priority: 'low', defaultHistory: [] },
                     { loadChildren: '../pages/contact/contact.module#ContactPageModule', name: 'ContactPage', segment: 'contact', priority: 'low', defaultHistory: [] },
+                    { loadChildren: '../pages/forget/forget.module#ForgetPageModule', name: 'ForgetPage', segment: 'forget', priority: 'low', defaultHistory: [] },
                     { loadChildren: '../pages/login/login.module#LoginPageModule', name: 'LoginPage', segment: 'login', priority: 'low', defaultHistory: [] },
                     { loadChildren: '../pages/newpw/newpw.module#NewpwPageModule', name: 'NewpwPage', segment: 'newpw', priority: 'low', defaultHistory: [] },
                     { loadChildren: '../pages/project-end/project-end.module#ProjectEndPageModule', name: 'ProjectEndPage', segment: 'project-end', priority: 'low', defaultHistory: [] }
@@ -3686,7 +3762,7 @@ var CalendarComponent = (function () {
                 dot.style.display = "none";
             }
         }
-        this.appService.httpGet("item/searchByCondition", { "itemStartTime": firstDateString, "endTime": lastDateString, "empNum": __WEBPACK_IMPORTED_MODULE_5__app_app_singleton__["a" /* AppSingleton */].getInstance().currentUserInfo.username, "page": "1", "limit": "100" }, this, function (view, res) {
+        this.appService.httpGet("item/searchAll", { "itemStartTime": firstDateString, "endTime": lastDateString, "empNum": __WEBPACK_IMPORTED_MODULE_5__app_app_singleton__["a" /* AppSingleton */].getInstance().currentUserInfo.username, "page": "1", "limit": "100" }, this, function (view, res) {
             var data = res.json();
             if (data.success == true) {
                 view.dayHasProject = data.data;
@@ -3792,7 +3868,7 @@ var CalendarComponent = (function () {
 }());
 __decorate([
     Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["E" /* Input */])('inputDate'),
-    __metadata("design:type", Date)
+    __metadata("design:type", Object)
 ], CalendarComponent.prototype, "currentDate", void 0);
 __decorate([
     Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["E" /* Input */])(),
@@ -3828,24 +3904,25 @@ __decorate([
 ], CalendarComponent.prototype, "todayText", void 0);
 __decorate([
     Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["S" /* Output */])(),
-    __metadata("design:type", __WEBPACK_IMPORTED_MODULE_0__angular_core__["w" /* EventEmitter */])
+    __metadata("design:type", typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_0__angular_core__["w" /* EventEmitter */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_0__angular_core__["w" /* EventEmitter */]) === "function" && _a || Object)
 ], CalendarComponent.prototype, "onChange", void 0);
 __decorate([
     Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["S" /* Output */])(),
-    __metadata("design:type", __WEBPACK_IMPORTED_MODULE_0__angular_core__["w" /* EventEmitter */])
+    __metadata("design:type", typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_0__angular_core__["w" /* EventEmitter */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_0__angular_core__["w" /* EventEmitter */]) === "function" && _b || Object)
 ], CalendarComponent.prototype, "onChangeMonth", void 0);
 __decorate([
     Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["S" /* Output */])(),
-    __metadata("design:type", __WEBPACK_IMPORTED_MODULE_0__angular_core__["w" /* EventEmitter */])
+    __metadata("design:type", typeof (_c = typeof __WEBPACK_IMPORTED_MODULE_0__angular_core__["w" /* EventEmitter */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_0__angular_core__["w" /* EventEmitter */]) === "function" && _c || Object)
 ], CalendarComponent.prototype, "onEventClicked", void 0);
 CalendarComponent = __decorate([
     Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["n" /* Component */])({
         selector: 'calendar',template:/*ion-inline-start:"/Users/zhaoliangchen/Desktop/qipaipm-company/src/components/calendar/calendar.html"*/'<!-- Generated template for the CalendarComponent component -->\n<div>\n    <ion-grid no-padding no-margin>\n        <ion-row class="calendar-controls" no-padding no-margin>\n            <ion-col no-padding no-margin text-right class="titleCol">\n                <button ion-button icon-only clear (click)="previousMonth()" >\n                    <ion-icon name="appname-calendar-left" style="background-color: #d6d6d6"></ion-icon>\n                </button>\n            </ion-col>\n            <ion-col no-margin no-padding text-center class="selectedDateLabel" (click)="openCalendar($event)">\n                <h5 no-padding no-margin class="selectedMonthLabel">{{ currentDate | date:\'yyyy-MM\' }}\n                    <ion-datetime class="selectedDatetime"\n                                  displayFormat="YYYY年MM月" pickerFormat="YYYY MMMM" max="2030" min="2015"\n                                  cancelText="取消" doneText="确认"\n                                  monthNames="1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12"\n                                  monthShortNames="1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12"\n                                  ngModel="{{currentMonth}}"\n                                  (ngModelChange)=onSelectMonth($event)></ion-datetime>\n                </h5>\n\n            </ion-col>\n            <ion-col no-padding no-margin text-left class="titleCol">\n                <button ion-button icon-only clear (click)="nextMonth()">\n                    <ion-icon name="appname-calendar-right" style="background-color: #d6d6d6"></ion-icon>\n                </button>\n                <div float-end style="height: 100%; position: relative; width: 50px">\n                    <button ion-button icon-only (click)="setToday()" class="btn_today">\n                    今\n                    </button>\n                </div>\n            </ion-col>\n        </ion-row>\n\n        <ion-row class="calendar-weekDays">\n            <ion-col text-center class="calendar-week-day">\n                {{ weekDays[0] }}\n            </ion-col>\n            <ion-col text-center class="calendar-week-day">\n                {{ weekDays[1] }}\n            </ion-col>\n            <ion-col text-center class="calendar-week-day">\n                {{ weekDays[2] }}\n            </ion-col>\n            <ion-col text-center class="calendar-week-day">\n                {{ weekDays[3] }}\n            </ion-col>\n            <ion-col text-center class="calendar-week-day">\n                {{ weekDays[4] }}\n            </ion-col>\n            <ion-col text-center class="calendar-week-day">\n                {{ weekDays[5] }}\n            </ion-col>\n            <ion-col text-center class="calendar-week-day">\n                {{ weekDays[6] }}\n            </ion-col>\n        </ion-row>\n    </ion-grid>\n\n    <ion-grid (swipeleft)="useSwipe && nextMonth()" (swiperight)="useSwipe && previousMonth()">\n        <ion-row *ngFor="let row of rows" class="calendar-row">\n            <ion-col no-padding *ngFor="let day of row; let i = index" text-center class="calendar-col">\n                <button no-padding block class="calendar-day" *ngIf="day" ion-button clear (click)="dateClicked(day)"\n                        id="calendar-day-{{day}}"\n                        [disabled]="pastDates.indexOf(day) > -1 || weekDaysToDisable.indexOf(i) > -1 || daysToDisable.indexOf(day) > -1">\n                    {{ day }}\n                    <div class="dot" id="dot-{{day}}"></div>\n                </button>\n            </ion-col>\n        </ion-row>\n    </ion-grid>\n\n    <!--<ion-list *ngIf="showEventsList">-->\n    <!--<button text-wrap ion-item *ngFor="let event of todayEvents" (click)="eventClicked(event)">-->\n    <!--{{ event.title }}-->\n    <!--<ion-icon name="arrow-forward" hideWhen="ios" item-right></ion-icon>-->\n    <!--</button>-->\n    <!--</ion-list>-->\n</div>\n'/*ion-inline-end:"/Users/zhaoliangchen/Desktop/qipaipm-company/src/components/calendar/calendar.html"*/,
         providers: [__WEBPACK_IMPORTED_MODULE_1__angular_common__["d" /* DatePipe */]]
     }),
-    __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1__angular_common__["d" /* DatePipe */], __WEBPACK_IMPORTED_MODULE_2__app_app_service__["a" /* AppService */], __WEBPACK_IMPORTED_MODULE_4_ionic_angular__["i" /* ModalController */], __WEBPACK_IMPORTED_MODULE_4_ionic_angular__["c" /* Events */]])
+    __metadata("design:paramtypes", [typeof (_d = typeof __WEBPACK_IMPORTED_MODULE_1__angular_common__["d" /* DatePipe */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1__angular_common__["d" /* DatePipe */]) === "function" && _d || Object, typeof (_e = typeof __WEBPACK_IMPORTED_MODULE_2__app_app_service__["a" /* AppService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_2__app_app_service__["a" /* AppService */]) === "function" && _e || Object, typeof (_f = typeof __WEBPACK_IMPORTED_MODULE_4_ionic_angular__["i" /* ModalController */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_4_ionic_angular__["i" /* ModalController */]) === "function" && _f || Object, typeof (_g = typeof __WEBPACK_IMPORTED_MODULE_4_ionic_angular__["c" /* Events */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_4_ionic_angular__["c" /* Events */]) === "function" && _g || Object])
 ], CalendarComponent);
 
+var _a, _b, _c, _d, _e, _f, _g;
 //# sourceMappingURL=calendar.js.map
 
 /***/ }),
@@ -3915,7 +3992,7 @@ __decorate([
 ], PersonInfoComponent.prototype, "onHideMask", void 0);
 PersonInfoComponent = __decorate([
     Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["n" /* Component */])({
-        selector: 'person-info',template:/*ion-inline-start:"/Users/zhaoliangchen/Desktop/qipaipm-company/src/components/person-info/person-info.html"*/'<!-- Generated template for the PersonInfoComponent component -->\n<div style="width: 100%; height: 100%; ">\n    <div style="height: 100%; width: 80%; top: 0px; left: 0px; float: left;\n                background-color: white; border-right: solid 1px #ececec;\n                position: relative" (swipeleft)="onHidePerson($event)">\n        <div style="height: 100px; background-color: #fc5c53; position: relative;">\n            <div class="vertical_center" style="left: 15px; height: 30px; width: 80%">\n                <ion-icon name="ios-contact-outline" style="font-size: 30px; float: left"></ion-icon>\n                <div style="float: left; margin-left: 10px; line-height: 30px">{{currentUser.name}}</div>\n            </div>\n        </div>\n\n        <div class="info_css">\n            <div style="width: 30%; text-align: left">工号</div>\n            <div style="width: 70%; text-align: right">{{currentUser.username}}</div>\n        </div>\n\n        <div class="info_css">\n            <div style="width: 30%; text-align: left">电话</div>\n            <div style="width: 70%; text-align: right">{{currentUser.telPhone}}</div>\n        </div>\n\n\n        <div class="info_css">\n            <div style="width: 30%; text-align: left">职位</div>\n            <div style="width: 70%; text-align: right">{{currentUser.post}}</div>\n        </div>\n\n        <div class="info_css">\n            <div style="width: 30%; text-align: left">所属公司</div>\n            <div style="width: 70%; text-align: right">{{currentUser.company}}</div>\n        </div>\n\n        <div class="info_css">\n            <div style="width: 30%; text-align: left">部门</div>\n            <div style="width: 70%; text-align: right">{{currentUser.department}}</div>\n        </div>\n\n        <div class="button_warp">\n            <button ion-button block class="button_inline" (click)="onClickLogOut($event)">退出登录</button>\n        </div>\n\n    </div>\n    <div style="height: 100%; width: 20%;background-color: transparent; float: left"\n            (click)="onHidePerson($event)">\n\n    </div>\n</div>\n'/*ion-inline-end:"/Users/zhaoliangchen/Desktop/qipaipm-company/src/components/person-info/person-info.html"*/
+        selector: 'person-info',template:/*ion-inline-start:"/Users/zhaoliangchen/Desktop/qipaipm-company/src/components/person-info/person-info.html"*/'<!-- Generated template for the PersonInfoComponent component -->\n<div style="width: 100%; height: 100%; ">\n    <div style="height: 100%; width: 80%; top: 0px; left: 0px; float: left;\n                background-color: white; border-right: solid 1px #ececec;\n                position: relative" (swipeleft)="onHidePerson($event)">\n        <div style="height: 160px; background-color: #fc5c53; position: relative;">\n            <div class="vertical_center" style="left: 15px; height: 30px; width: 80%">\n                <ion-icon name="ios-contact-outline" style="font-size: 30px; float: left"></ion-icon>\n                <div style="float: left; margin-left: 10px; line-height: 30px">{{currentUser.name}}</div>\n            </div>\n        </div>\n\n        <div class="info_css">\n            <div style="width: 30%; text-align: left">工号</div>\n            <div style="width: 70%; text-align: right">{{currentUser.username}}</div>\n        </div>\n\n        <div class="info_css">\n            <div style="width: 30%; text-align: left">电话</div>\n            <div style="width: 70%; text-align: right">{{currentUser.telPhone}}</div>\n        </div>\n\n\n        <div class="info_css">\n            <div style="width: 30%; text-align: left">职位</div>\n            <div style="width: 70%; text-align: right">{{currentUser.post}}</div>\n        </div>\n\n        <div class="info_css">\n            <div style="width: 30%; text-align: left">所属公司</div>\n            <div style="width: 70%; text-align: right">{{currentUser.company}}</div>\n        </div>\n\n        <div class="info_css">\n            <div style="width: 30%; text-align: left">部门</div>\n            <div style="width: 70%; text-align: right">{{currentUser.department}}</div>\n        </div>\n\n        <div class="button_warp">\n            <button ion-button block class="button_inline" (click)="onClickLogOut($event)">退出登录</button>\n        </div>\n\n    </div>\n    <div style="height: 100%; width: 20%;background-color: transparent; float: left"\n            (click)="onHidePerson($event)">\n\n    </div>\n</div>\n'/*ion-inline-end:"/Users/zhaoliangchen/Desktop/qipaipm-company/src/components/person-info/person-info.html"*/
     }),
     __metadata("design:paramtypes", [])
 ], PersonInfoComponent);
