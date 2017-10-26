@@ -144,6 +144,9 @@ export class SubtaskPage {
         this.appService.httpPost("item/createSubtask", param, this, function (view, res) {
             if (res.status == 200) {
                 if (typeof (res.json()) != 'undefined') {
+                    view.events.publish('homeProjectReload');
+                    view.events.publish('reloadProject_create');
+                    view.events.publish('reloadProject');
                     view.subtask = res.json().data;
                     view.callback(view.subtask).then(() => {
                         view.navCtrl.pop()

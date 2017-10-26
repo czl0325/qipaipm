@@ -137,6 +137,25 @@ export class ProjectCreatePage {
             this.project.itemEndLeaderNum = leader.username;
             this.project.itemEndDept = leader.text||'';
         });
+        this.events.subscribe('reloadProject_create',()=> {
+            this.appService.httpGet('item/getProject',{"id":this.project.id},this,function (view, res) {
+                if (res.status == 200) {
+                    var temp = res.json().data;
+                    temp.milestoneVo1 = [];
+                    temp.milestoneVo2 = [];
+                    for (let j = 0; j < temp.children.length; j++) {
+                        var mile = temp.children[j];
+                        if (mile.milestoneType == 1) {
+                            temp.milestoneVo1.push(mile);
+                        } else if (mile.milestoneType == 2) {
+                            temp.milestoneVo2.push(mile);
+                        }
+                    }
+                    view.project = temp;
+                    view.reloadArray();
+                }
+            },false);
+        });
         this.keyboard.onKeyboardShow().subscribe(()=>{
             console.log("键盘出现");
         });
@@ -147,6 +166,7 @@ export class ProjectCreatePage {
 
     ionViewWillUnload() {
         this.events.unsubscribe('onConfirmProjectLeader');
+        this.events.unsubscribe('reloadProject_create');
     }
 
     onPublish() {
@@ -343,7 +363,32 @@ export class ProjectCreatePage {
         });
     }
 
-    //
+    reloadArray() {
+        if (typeof (this.project.milestoneVo1) != 'undefined') {
+            for (let i = 0; i < this.project.milestoneVo1.length; i++) {
+                var milestone = this.project.milestoneVo1[i];
+                milestone.milestoneName = '里程碑' + (i + 1);
+                if (typeof (milestone.children) != 'undefined') {
+                    for (let j = 0; j < milestone.children.length; j++) {
+                        var subtask1 = milestone.children[j];
+                        subtask1.subtaskName = '子任务' + (j + 1);
+                    }
+                }
+            }
+        }
+        if (typeof (this.project.milestoneVo2) != 'undefined') {
+            for (let i = 0; i < this.project.milestoneVo2.length; i++) {
+                var delayMile = this.project.milestoneVo2[i];
+                delayMile.milestoneName = '延期' + (i + 1);
+                if (typeof (delayMile.children) != 'undefined') {
+                    for (let j = 0; j < delayMile.children.length; j++) {
+                        var subtask2 = delayMile.children[j];
+                        subtask2.subtaskName = '子任务' + (j + 1);
+                    }
+                }
+            }
+        }
+    }
 
     addOneMilestone(milestone) {
         if (this.project.milestoneVo1.length == 0) {

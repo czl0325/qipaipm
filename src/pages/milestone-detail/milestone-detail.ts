@@ -131,9 +131,6 @@ export class MilestoneDetailPage {
                     min1_3 = parseInt(mmm2.itemProgress.replace(/%/, ""))/10-1;
                     //this.maxTime = mmm2.deliveryTime;
                 }
-                if (min1_2 == -1) {
-                    min1_2 = 0;
-                }
                 if (min1_3 == -1) {
                     min1_3 = 10;
                 }
@@ -181,9 +178,6 @@ export class MilestoneDetailPage {
                     mmm2_2 = this.project.milestoneVo2[index2+1];
                     min2_3 = parseInt(mmm2_2.itemProgress.replace(/%/, ""))/10-1;
                     //this.maxTime = mmm2_2.deliveryTime;
-                }
-                if (min2_2 == -1) {
-                    min2_2 = 0;
                 }
                 if (min2_3 == -1) {
                     min2_3 = 10;
@@ -302,21 +296,22 @@ export class MilestoneDetailPage {
                 this.appService.httpPost("item/createMilestone", param, this, function (view, res) {
                     if (res.status == 200) {
                         view.tempMilestone = res.json().data;
+                        view.events.publish('homeProjectReload');
+                        view.events.publish('reloadProject_create');
                         view.events.publish('reloadProject');
-                        if (view.milestone.milestoneName || '') {
-                            view.tempMilestone.milestoneName = view.milestone.milestoneName;
-                        } else {
-                            if (typeof (view.project.children != 'undefined')) {
-                                view.tempMilestone.milestoneName = '里程碑' + (view.project.children.length + 1);
-                            } else {
-                                view.tempMilestone.milestoneName = '里程碑1';
-                            }
-                        }
-                        view.milestone = view.tempMilestone;
-                        view.events.publish('reloadMileArray',view.milestone);
-                        view.callback(view.milestone).then(() => {
+                        // if (view.milestone.milestoneName || '') {
+                        //     view.tempMilestone.milestoneName = view.milestone.milestoneName;
+                        // } else {
+                        //     if (typeof (view.project.children != 'undefined')) {
+                        //         view.tempMilestone.milestoneName = '里程碑' + (view.project.children.length + 1);
+                        //     } else {
+                        //         view.tempMilestone.milestoneName = '里程碑1';
+                        //     }
+                        // }
+                        // view.milestone = view.tempMilestone;
+                        //view.callback(view.milestone).then(() => {
                             view.navCtrl.pop()
-                        });
+                        //});
                     } else {
                         let toast = view.toastCtrl.create({
                             message: view.type == 1 ? '新建里程碑失败!' : '编辑里程碑失败!',
@@ -331,16 +326,18 @@ export class MilestoneDetailPage {
             param.projectinfo = this.project;
             this.appService.httpPost("item/createMilestone", param, this, function (view, res) {
                 if (res.status == 200) {
-                    view.tempMilestone = res.json().data;
-                    if (typeof (view.project.children != 'undefined')) {
-                        view.tempMilestone.milestoneName = '延期' + (view.project.children.length + 1);
-                    } else {
-                        view.tempMilestone.milestoneName = '延期1';
-                    }
-                    view.milestone = view.tempMilestone;
-                    view.callback(view.milestone).then(() => {
+                    view.events.publish('homeProjectReload');
+                    view.events.publish('reloadProject');
+                    // view.tempMilestone = res.json().data;
+                    // if (typeof (view.project.children != 'undefined')) {
+                    //     view.tempMilestone.milestoneName = '延期' + (view.project.children.length + 1);
+                    // } else {
+                    //     view.tempMilestone.milestoneName = '延期1';
+                    // }
+                    // view.milestone = view.tempMilestone;
+                    // view.callback(view.milestone).then(() => {
                         view.navCtrl.pop()
-                    });
+                    //});
                 } else {
                     let toast = view.toastCtrl.create({
                         message: view.type == 1 ? '新建里程碑失败!' : '编辑里程碑失败!',

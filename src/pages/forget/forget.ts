@@ -62,7 +62,7 @@ export class ForgetPage {
       });
       toast.present();
     }
-    this.appService.httpGet("http://192.168.10.118:8888/uc/user/findPassword", {"telPhone": this.forgetForm.value.mobile},
+    this.appService.httpGet("http://192.168.10.120:8888/uc/user/findPassword", {"telPhone": this.forgetForm.value.mobile},
       this, function (view, res) {
         if (res.json().result == "success") {
           view.appService.httpGet("http://192.168.10.120:8888/sms/sendSmg/" + view.forgetForm.value.mobile, {},

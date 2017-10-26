@@ -270,7 +270,6 @@ export class ProjectDetailPage {
             });
         });
         this.events.subscribe('reloadProject',() => {
-            this.events.publish('homeProjectReload');
             this.appService.httpGet('item/getProject',{"id":this.project.id},this,function (view, res) {
                 if (res.status == 200) {
                     var temp = res.json().data;

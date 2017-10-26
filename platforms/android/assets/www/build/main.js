@@ -357,6 +357,26 @@ var ProjectCreatePage = (function () {
             _this.project.itemEndLeaderNum = leader.username;
             _this.project.itemEndDept = leader.text || '';
         });
+        this.events.subscribe('reloadProject_create', function () {
+            _this.appService.httpGet('item/getProject', { "id": _this.project.id }, _this, function (view, res) {
+                if (res.status == 200) {
+                    var temp = res.json().data;
+                    temp.milestoneVo1 = [];
+                    temp.milestoneVo2 = [];
+                    for (var j = 0; j < temp.children.length; j++) {
+                        var mile = temp.children[j];
+                        if (mile.milestoneType == 1) {
+                            temp.milestoneVo1.push(mile);
+                        }
+                        else if (mile.milestoneType == 2) {
+                            temp.milestoneVo2.push(mile);
+                        }
+                    }
+                    view.project = temp;
+                    view.reloadArray();
+                }
+            }, false);
+        });
         this.keyboard.onKeyboardShow().subscribe(function () {
             console.log("键盘出现");
         });
@@ -553,7 +573,32 @@ var ProjectCreatePage = (function () {
             type: 1,
         });
     };
-    //
+    ProjectCreatePage.prototype.reloadArray = function () {
+        if (typeof (this.project.milestoneVo1) != 'undefined') {
+            for (var i = 0; i < this.project.milestoneVo1.length; i++) {
+                var milestone = this.project.milestoneVo1[i];
+                milestone.milestoneName = '里程碑' + (i + 1);
+                if (typeof (milestone.children) != 'undefined') {
+                    for (var j = 0; j < milestone.children.length; j++) {
+                        var subtask1 = milestone.children[j];
+                        subtask1.subtaskName = '子任务' + (j + 1);
+                    }
+                }
+            }
+        }
+        if (typeof (this.project.milestoneVo2) != 'undefined') {
+            for (var i = 0; i < this.project.milestoneVo2.length; i++) {
+                var delayMile = this.project.milestoneVo2[i];
+                delayMile.milestoneName = '延期' + (i + 1);
+                if (typeof (delayMile.children) != 'undefined') {
+                    for (var j = 0; j < delayMile.children.length; j++) {
+                        var subtask2 = delayMile.children[j];
+                        subtask2.subtaskName = '子任务' + (j + 1);
+                    }
+                }
+            }
+        }
+    };
     ProjectCreatePage.prototype.addOneMilestone = function (milestone) {
         if (this.project.milestoneVo1.length == 0) {
             this.project.milestoneVo1.push(milestone);
@@ -856,9 +901,6 @@ var MilestoneDetailPage = (function () {
                     min1_3 = parseInt(mmm2.itemProgress.replace(/%/, "")) / 10 - 1;
                     //this.maxTime = mmm2.deliveryTime;
                 }
-                if (min1_2 == -1) {
-                    min1_2 = 0;
-                }
                 if (min1_3 == -1) {
                     min1_3 = 10;
                 }
@@ -908,9 +950,6 @@ var MilestoneDetailPage = (function () {
                     mmm2_2 = this.project.milestoneVo2[index2 + 1];
                     min2_3 = parseInt(mmm2_2.itemProgress.replace(/%/, "")) / 10 - 1;
                     //this.maxTime = mmm2_2.deliveryTime;
-                }
-                if (min2_2 == -1) {
-                    min2_2 = 0;
                 }
                 if (min2_3 == -1) {
                     min2_3 = 10;
@@ -1029,6 +1068,8 @@ var MilestoneDetailPage = (function () {
                 this.appService.httpPost("item/createMilestone", param, this, function (view, res) {
                     if (res.status == 200) {
                         view.tempMilestone = res.json().data;
+                        view.events.publish('homeProjectReload');
+                        view.events.publish('reloadProject_create');
                         view.events.publish('reloadProject');
                         if (view.milestone.milestoneName || '') {
                             view.tempMilestone.milestoneName = view.milestone.milestoneName;
@@ -1062,6 +1103,7 @@ var MilestoneDetailPage = (function () {
             param.projectinfo = this.project;
             this.appService.httpPost("item/createMilestone", param, this, function (view, res) {
                 if (res.status == 200) {
+                    view.events.publish('homeProjectReload');
                     view.tempMilestone = res.json().data;
                     if (typeof (view.project.children != 'undefined')) {
                         view.tempMilestone.milestoneName = '延期' + (view.project.children.length + 1);
@@ -1716,7 +1758,6 @@ var ProjectDetailPage = (function () {
             });
         });
         this.events.subscribe('reloadProject', function () {
-            _this.events.publish('homeProjectReload');
             _this.appService.httpGet('item/getProject', { "id": _this.project.id }, _this, function (view, res) {
                 if (res.status == 200) {
                     var temp = res.json().data;
@@ -2018,7 +2059,7 @@ ProjectDetailPage = __decorate([
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(1);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(16);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__angular_forms__ = __webpack_require__(23);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_rxjs_Rx__ = __webpack_require__(294);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_rxjs_Rx__ = __webpack_require__(295);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_rxjs_Rx___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3_rxjs_Rx__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__newpw_newpw__ = __webpack_require__(142);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__app_app_service__ = __webpack_require__(24);
@@ -2081,7 +2122,7 @@ var ForgetPage = (function () {
             });
             toast.present();
         }
-        this.appService.httpGet("http://192.168.10.118:8888/uc/user/findPassword", { "telPhone": this.forgetForm.value.mobile }, this, function (view, res) {
+        this.appService.httpGet("http://192.168.10.120:8888/uc/user/findPassword", { "telPhone": this.forgetForm.value.mobile }, this, function (view, res) {
             if (res.json().result == "success") {
                 view.appService.httpGet("http://192.168.10.120:8888/sms/sendSmg/" + view.forgetForm.value.mobile, {}, view, function (view1, res) {
                     if (res.status == 200) {
@@ -2200,7 +2241,7 @@ var NewpwPage = (function () {
             toast.present();
         }
         else {
-            this.appService.httpPost("http://192.168.10.118:8888/uc/user/resetByTelPhone", {
+            this.appService.httpPost("http://192.168.10.120:8888/uc/user/resetByTelPhone", {
                 "telPhone": this.telPhone,
                 "newPassword": value.newpw1
             }, this, function (view, res) {
@@ -2449,11 +2490,11 @@ webpackEmptyAsyncContext.id = 154;
 
 var map = {
 	"../pages/contact/contact.module": [
-		602,
+		601,
 		4
 	],
 	"../pages/forget/forget.module": [
-		601,
+		602,
 		3
 	],
 	"../pages/login/login.module": [
@@ -2810,8 +2851,8 @@ SearchPage = __decorate([
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return AppService; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_ionic_angular__ = __webpack_require__(16);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_core__ = __webpack_require__(1);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__angular_http__ = __webpack_require__(223);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_rxjs_add_operator_toPromise__ = __webpack_require__(218);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__angular_http__ = __webpack_require__(198);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_rxjs_add_operator_toPromise__ = __webpack_require__(199);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_rxjs_add_operator_toPromise___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3_rxjs_add_operator_toPromise__);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -3105,7 +3146,7 @@ Object(__WEBPACK_IMPORTED_MODULE_0__angular_platform_browser_dynamic__["a" /* pl
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__ionic_native_keyboard__ = __webpack_require__(117);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__ionic_native_social_sharing__ = __webpack_require__(226);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__ionic_storage__ = __webpack_require__(78);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__angular_http__ = __webpack_require__(223);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__angular_http__ = __webpack_require__(198);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__app_component__ = __webpack_require__(588);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__pages_home_home__ = __webpack_require__(113);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_11__pages_project_create_project_create__ = __webpack_require__(114);
@@ -3191,8 +3232,8 @@ AppModule = __decorate([
                 pageTransition: 'ios-transition' //使用ios页面动画
             }, {
                 links: [
-                    { loadChildren: '../pages/forget/forget.module#ForgetPageModule', name: 'ForgetPage', segment: 'forget', priority: 'low', defaultHistory: [] },
                     { loadChildren: '../pages/contact/contact.module#ContactPageModule', name: 'ContactPage', segment: 'contact', priority: 'low', defaultHistory: [] },
+                    { loadChildren: '../pages/forget/forget.module#ForgetPageModule', name: 'ForgetPage', segment: 'forget', priority: 'low', defaultHistory: [] },
                     { loadChildren: '../pages/login/login.module#LoginPageModule', name: 'LoginPage', segment: 'login', priority: 'low', defaultHistory: [] },
                     { loadChildren: '../pages/newpw/newpw.module#NewpwPageModule', name: 'NewpwPage', segment: 'newpw', priority: 'low', defaultHistory: [] },
                     { loadChildren: '../pages/project-end/project-end.module#ProjectEndPageModule', name: 'ProjectEndPage', segment: 'project-end', priority: 'low', defaultHistory: [] }
@@ -4730,7 +4771,7 @@ var LoginPage = (function () {
         }
     };
     LoginPage.prototype.login = function (value) {
-        this.appService.httpGet("http://192.168.10.118:8888/uc/user/login", { "telPhone": value.mobile, "password": value.password }, this, function (view, res) {
+        this.appService.httpGet("http://192.168.10.120:8888/uc/user/login", { "telPhone": value.mobile, "password": value.password }, this, function (view, res) {
             var data = res.json();
             if (data != null) {
                 view.storage.ready().then(function () {

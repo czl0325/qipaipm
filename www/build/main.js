@@ -357,6 +357,26 @@ var ProjectCreatePage = (function () {
             _this.project.itemEndLeaderNum = leader.username;
             _this.project.itemEndDept = leader.text || '';
         });
+        this.events.subscribe('reloadProject_create', function () {
+            _this.appService.httpGet('item/getProject', { "id": _this.project.id }, _this, function (view, res) {
+                if (res.status == 200) {
+                    var temp = res.json().data;
+                    temp.milestoneVo1 = [];
+                    temp.milestoneVo2 = [];
+                    for (var j = 0; j < temp.children.length; j++) {
+                        var mile = temp.children[j];
+                        if (mile.milestoneType == 1) {
+                            temp.milestoneVo1.push(mile);
+                        }
+                        else if (mile.milestoneType == 2) {
+                            temp.milestoneVo2.push(mile);
+                        }
+                    }
+                    view.project = temp;
+                    view.reloadArray();
+                }
+            }, false);
+        });
         this.keyboard.onKeyboardShow().subscribe(function () {
             console.log("键盘出现");
         });
@@ -366,74 +386,75 @@ var ProjectCreatePage = (function () {
     };
     ProjectCreatePage.prototype.ionViewWillUnload = function () {
         this.events.unsubscribe('onConfirmProjectLeader');
+        this.events.unsubscribe('reloadProject_create');
     };
     ProjectCreatePage.prototype.onPublish = function () {
         if (this.project.itemName.length < 1) {
-            var alert_1 = this.alertCtrl.create({
+            var alert = this.alertCtrl.create({
                 title: '错误信息',
                 subTitle: '请先输入项目名称!',
                 buttons: ['确定']
             });
-            alert_1.present();
+            alert.present();
             this.events.publish('testContent');
             return;
         }
         if (this.project.itemLevel.length < 1) {
-            var alert_2 = this.alertCtrl.create({
+            var alert = this.alertCtrl.create({
                 title: '错误信息',
                 subTitle: '请选择项目紧急程度!',
                 buttons: ['确定']
             });
-            alert_2.present();
+            alert.present();
             return;
         }
         if (this.project.itemEndLeader.length < 1) {
-            var alert_3 = this.alertCtrl.create({
+            var alert = this.alertCtrl.create({
                 title: '错误信息',
                 subTitle: '请选择项目结束负责人!',
                 buttons: ['确定']
             });
-            alert_3.present();
+            alert.present();
             return;
         }
         if (this.project.itemEndResult.length < 1) {
-            var alert_4 = this.alertCtrl.create({
+            var alert = this.alertCtrl.create({
                 title: '错误信息',
                 subTitle: '请填写项目结束交付成果!',
                 buttons: ['确定']
             });
-            alert_4.present();
+            alert.present();
             return;
         }
         if (__WEBPACK_IMPORTED_MODULE_6__app_app_config__["a" /* AppConfig */].stringToDate(this.project.endTime) < __WEBPACK_IMPORTED_MODULE_6__app_app_config__["a" /* AppConfig */].stringToDate(this.project.itemStartTime)) {
-            var alert_5 = this.alertCtrl.create({
+            var alert = this.alertCtrl.create({
                 title: '错误信息',
                 subTitle: '项目结束时间不得小于项目开始时间!',
                 buttons: ['确定']
             });
-            alert_5.present();
+            alert.present();
             return;
         }
         for (var i = 0; i < this.project.milestoneVo1.length; i++) {
             var mile = this.project.milestoneVo1[i];
             if (__WEBPACK_IMPORTED_MODULE_6__app_app_config__["a" /* AppConfig */].stringToDate(mile.deliveryTime) > __WEBPACK_IMPORTED_MODULE_6__app_app_config__["a" /* AppConfig */].stringToDate(this.project.endTime)) {
-                var alert_6 = this.alertCtrl.create({
+                var alert = this.alertCtrl.create({
                     title: '错误信息',
                     subTitle: mile.milestoneName + '的结束时间必须早于项目结束时间',
                     buttons: ['确定']
                 });
-                alert_6.present();
+                alert.present();
                 return;
             }
             if (i > 0) {
                 var preMile = this.project.milestoneVo1[i - 1];
                 if (__WEBPACK_IMPORTED_MODULE_6__app_app_config__["a" /* AppConfig */].stringToDate(preMile.deliveryTime) > __WEBPACK_IMPORTED_MODULE_6__app_app_config__["a" /* AppConfig */].stringToDate(mile.deliveryTime)) {
-                    var alert_7 = this.alertCtrl.create({
+                    var alert = this.alertCtrl.create({
                         title: '错误信息',
                         subTitle: mile.milestoneName + '的结束时间必须晚于' + preMile.milestoneName + '的结束时间',
                         buttons: ['确定']
                     });
-                    alert_7.present();
+                    alert.present();
                     return;
                 }
             }
@@ -553,7 +574,32 @@ var ProjectCreatePage = (function () {
             type: 1,
         });
     };
-    //
+    ProjectCreatePage.prototype.reloadArray = function () {
+        if (typeof (this.project.milestoneVo1) != 'undefined') {
+            for (var i = 0; i < this.project.milestoneVo1.length; i++) {
+                var milestone = this.project.milestoneVo1[i];
+                milestone.milestoneName = '里程碑' + (i + 1);
+                if (typeof (milestone.children) != 'undefined') {
+                    for (var j = 0; j < milestone.children.length; j++) {
+                        var subtask1 = milestone.children[j];
+                        subtask1.subtaskName = '子任务' + (j + 1);
+                    }
+                }
+            }
+        }
+        if (typeof (this.project.milestoneVo2) != 'undefined') {
+            for (var i = 0; i < this.project.milestoneVo2.length; i++) {
+                var delayMile = this.project.milestoneVo2[i];
+                delayMile.milestoneName = '延期' + (i + 1);
+                if (typeof (delayMile.children) != 'undefined') {
+                    for (var j = 0; j < delayMile.children.length; j++) {
+                        var subtask2 = delayMile.children[j];
+                        subtask2.subtaskName = '子任务' + (j + 1);
+                    }
+                }
+            }
+        }
+    };
     ProjectCreatePage.prototype.addOneMilestone = function (milestone) {
         if (this.project.milestoneVo1.length == 0) {
             this.project.milestoneVo1.push(milestone);
@@ -627,7 +673,7 @@ var ProjectCreatePage = (function () {
 }());
 __decorate([
     Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["_14" /* ViewChild */])(__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["b" /* Content */]),
-    __metadata("design:type", __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["b" /* Content */])
+    __metadata("design:type", typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["b" /* Content */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["b" /* Content */]) === "function" && _a || Object)
 ], ProjectCreatePage.prototype, "content", void 0);
 ProjectCreatePage = __decorate([
     Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["n" /* Component */])({
@@ -680,12 +726,10 @@ ProjectCreatePage = __decorate([
      */
     //未开始(07010010)    进行中(07010020)      延期(07010030)     已结束(07010040)
     ,
-    __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["j" /* NavController */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["k" /* NavParams */],
-        __WEBPACK_IMPORTED_MODULE_4__app_app_service__["a" /* AppService */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["n" /* ToastController */],
-        __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["c" /* Events */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["a" /* AlertController */],
-        __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["l" /* Platform */], __WEBPACK_IMPORTED_MODULE_8__ionic_native_keyboard__["a" /* Keyboard */]])
+    __metadata("design:paramtypes", [typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["j" /* NavController */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["j" /* NavController */]) === "function" && _b || Object, typeof (_c = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["k" /* NavParams */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["k" /* NavParams */]) === "function" && _c || Object, typeof (_d = typeof __WEBPACK_IMPORTED_MODULE_4__app_app_service__["a" /* AppService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_4__app_app_service__["a" /* AppService */]) === "function" && _d || Object, typeof (_e = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["n" /* ToastController */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["n" /* ToastController */]) === "function" && _e || Object, typeof (_f = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["c" /* Events */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["c" /* Events */]) === "function" && _f || Object, typeof (_g = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["a" /* AlertController */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["a" /* AlertController */]) === "function" && _g || Object, typeof (_h = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["l" /* Platform */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["l" /* Platform */]) === "function" && _h || Object, typeof (_j = typeof __WEBPACK_IMPORTED_MODULE_8__ionic_native_keyboard__["a" /* Keyboard */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_8__ionic_native_keyboard__["a" /* Keyboard */]) === "function" && _j || Object])
 ], ProjectCreatePage);
 
+var _a, _b, _c, _d, _e, _f, _g, _h, _j;
 //# sourceMappingURL=project-create.js.map
 
 /***/ }),
@@ -856,9 +900,6 @@ var MilestoneDetailPage = (function () {
                     min1_3 = parseInt(mmm2.itemProgress.replace(/%/, "")) / 10 - 1;
                     //this.maxTime = mmm2.deliveryTime;
                 }
-                if (min1_2 == -1) {
-                    min1_2 = 0;
-                }
                 if (min1_3 == -1) {
                     min1_3 = 10;
                 }
@@ -908,9 +949,6 @@ var MilestoneDetailPage = (function () {
                     mmm2_2 = this.project.milestoneVo2[index2 + 1];
                     min2_3 = parseInt(mmm2_2.itemProgress.replace(/%/, "")) / 10 - 1;
                     //this.maxTime = mmm2_2.deliveryTime;
-                }
-                if (min2_2 == -1) {
-                    min2_2 = 0;
                 }
                 if (min2_3 == -1) {
                     min2_3 = 10;
@@ -988,30 +1026,30 @@ var MilestoneDetailPage = (function () {
     MilestoneDetailPage.prototype.onSaveMilestone = function ($event) {
         var _this = this;
         if (this.tempMilestone.itemEndLeader.length < 1) {
-            var alert_1 = this.alertCtrl.create({
+            var alert = this.alertCtrl.create({
                 title: '错误信息',
                 subTitle: '里程碑负责人为必填项!',
                 buttons: ['确定']
             });
-            alert_1.present();
+            alert.present();
             return;
         }
         if (this.tempMilestone.itemProgress.length < 1) {
-            var alert_2 = this.alertCtrl.create({
+            var alert = this.alertCtrl.create({
                 title: '错误信息',
                 subTitle: '里程碑进度为必填项!',
                 buttons: ['确定']
             });
-            alert_2.present();
+            alert.present();
             return;
         }
         if (this.tempMilestone.deliveryResult.length < 1) {
-            var alert_3 = this.alertCtrl.create({
+            var alert = this.alertCtrl.create({
                 title: '错误信息',
                 subTitle: '里程碑交付成果为必填项!',
                 buttons: ['确定']
             });
-            alert_3.present();
+            alert.present();
             return;
         }
         var param = __WEBPACK_IMPORTED_MODULE_5__app_app_config__["a" /* AppConfig */].deepCopy(this.tempMilestone);
@@ -1029,23 +1067,22 @@ var MilestoneDetailPage = (function () {
                 this.appService.httpPost("item/createMilestone", param, this, function (view, res) {
                     if (res.status == 200) {
                         view.tempMilestone = res.json().data;
+                        view.events.publish('homeProjectReload');
+                        view.events.publish('reloadProject_create');
                         view.events.publish('reloadProject');
-                        if (view.milestone.milestoneName || '') {
-                            view.tempMilestone.milestoneName = view.milestone.milestoneName;
-                        }
-                        else {
-                            if (typeof (view.project.children != 'undefined')) {
-                                view.tempMilestone.milestoneName = '里程碑' + (view.project.children.length + 1);
-                            }
-                            else {
-                                view.tempMilestone.milestoneName = '里程碑1';
-                            }
-                        }
-                        view.milestone = view.tempMilestone;
-                        view.events.publish('reloadMileArray', view.milestone);
-                        view.callback(view.milestone).then(function () {
-                            view.navCtrl.pop();
-                        });
+                        // if (view.milestone.milestoneName || '') {
+                        //     view.tempMilestone.milestoneName = view.milestone.milestoneName;
+                        // } else {
+                        //     if (typeof (view.project.children != 'undefined')) {
+                        //         view.tempMilestone.milestoneName = '里程碑' + (view.project.children.length + 1);
+                        //     } else {
+                        //         view.tempMilestone.milestoneName = '里程碑1';
+                        //     }
+                        // }
+                        // view.milestone = view.tempMilestone;
+                        //view.callback(view.milestone).then(() => {
+                        view.navCtrl.pop();
+                        //});
                     }
                     else {
                         var toast = view.toastCtrl.create({
@@ -1062,17 +1099,18 @@ var MilestoneDetailPage = (function () {
             param.projectinfo = this.project;
             this.appService.httpPost("item/createMilestone", param, this, function (view, res) {
                 if (res.status == 200) {
-                    view.tempMilestone = res.json().data;
-                    if (typeof (view.project.children != 'undefined')) {
-                        view.tempMilestone.milestoneName = '延期' + (view.project.children.length + 1);
-                    }
-                    else {
-                        view.tempMilestone.milestoneName = '延期1';
-                    }
-                    view.milestone = view.tempMilestone;
-                    view.callback(view.milestone).then(function () {
-                        view.navCtrl.pop();
-                    });
+                    view.events.publish('homeProjectReload');
+                    view.events.publish('reloadProject');
+                    // view.tempMilestone = res.json().data;
+                    // if (typeof (view.project.children != 'undefined')) {
+                    //     view.tempMilestone.milestoneName = '延期' + (view.project.children.length + 1);
+                    // } else {
+                    //     view.tempMilestone.milestoneName = '延期1';
+                    // }
+                    // view.milestone = view.tempMilestone;
+                    // view.callback(view.milestone).then(() => {
+                    view.navCtrl.pop();
+                    //});
                 }
                 else {
                     var toast = view.toastCtrl.create({
@@ -1138,7 +1176,7 @@ var MilestoneDetailPage = (function () {
 }());
 __decorate([
     Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["_14" /* ViewChild */])(__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["b" /* Content */]),
-    __metadata("design:type", __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["b" /* Content */])
+    __metadata("design:type", typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["b" /* Content */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["b" /* Content */]) === "function" && _a || Object)
 ], MilestoneDetailPage.prototype, "content", void 0);
 MilestoneDetailPage = __decorate([
     Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["n" /* Component */])({
@@ -1161,12 +1199,10 @@ MilestoneDetailPage = __decorate([
         private Date realTime;
      */
     ,
-    __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["j" /* NavController */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["k" /* NavParams */],
-        __WEBPACK_IMPORTED_MODULE_4__app_app_service__["a" /* AppService */], __WEBPACK_IMPORTED_MODULE_0__angular_core__["k" /* ChangeDetectorRef */],
-        __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["c" /* Events */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["a" /* AlertController */],
-        __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["l" /* Platform */]])
+    __metadata("design:paramtypes", [typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["j" /* NavController */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["j" /* NavController */]) === "function" && _b || Object, typeof (_c = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["k" /* NavParams */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["k" /* NavParams */]) === "function" && _c || Object, typeof (_d = typeof __WEBPACK_IMPORTED_MODULE_4__app_app_service__["a" /* AppService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_4__app_app_service__["a" /* AppService */]) === "function" && _d || Object, typeof (_e = typeof __WEBPACK_IMPORTED_MODULE_0__angular_core__["k" /* ChangeDetectorRef */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_0__angular_core__["k" /* ChangeDetectorRef */]) === "function" && _e || Object, typeof (_f = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["c" /* Events */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["c" /* Events */]) === "function" && _f || Object, typeof (_g = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["a" /* AlertController */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["a" /* AlertController */]) === "function" && _g || Object, typeof (_h = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["l" /* Platform */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["l" /* Platform */]) === "function" && _h || Object])
 ], MilestoneDetailPage);
 
+var _a, _b, _c, _d, _e, _f, _g, _h;
 //# sourceMappingURL=milestone-detail.js.map
 
 /***/ }),
@@ -1305,6 +1341,9 @@ var SubtaskPage = (function () {
         this.appService.httpPost("item/createSubtask", param, this, function (view, res) {
             if (res.status == 200) {
                 if (typeof (res.json()) != 'undefined') {
+                    view.events.publish('homeProjectReload');
+                    view.events.publish('reloadProject_create');
+                    view.events.publish('reloadProject');
                     view.subtask = res.json().data;
                     view.callback(view.subtask).then(function () {
                         view.navCtrl.pop();
@@ -1348,11 +1387,10 @@ SubtaskPage = __decorate([
         private String remark;
      */
     ,
-    __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["j" /* NavController */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["k" /* NavParams */],
-        __WEBPACK_IMPORTED_MODULE_3__app_app_service__["a" /* AppService */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["c" /* Events */],
-        __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["n" /* ToastController */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["l" /* Platform */]])
+    __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["j" /* NavController */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["j" /* NavController */]) === "function" && _a || Object, typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["k" /* NavParams */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["k" /* NavParams */]) === "function" && _b || Object, typeof (_c = typeof __WEBPACK_IMPORTED_MODULE_3__app_app_service__["a" /* AppService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_3__app_app_service__["a" /* AppService */]) === "function" && _c || Object, typeof (_d = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["c" /* Events */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["c" /* Events */]) === "function" && _d || Object, typeof (_e = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["n" /* ToastController */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["n" /* ToastController */]) === "function" && _e || Object, typeof (_f = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["l" /* Platform */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["l" /* Platform */]) === "function" && _f || Object])
 ], SubtaskPage);
 
+var _a, _b, _c, _d, _e, _f;
 //# sourceMappingURL=subtask.js.map
 
 /***/ }),
@@ -1716,7 +1754,6 @@ var ProjectDetailPage = (function () {
             });
         });
         this.events.subscribe('reloadProject', function () {
-            _this.events.publish('homeProjectReload');
             _this.appService.httpGet('item/getProject', { "id": _this.project.id }, _this, function (view, res) {
                 if (res.status == 200) {
                     var temp = res.json().data;
@@ -2018,7 +2055,7 @@ ProjectDetailPage = __decorate([
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(1);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(16);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__angular_forms__ = __webpack_require__(23);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_rxjs_Rx__ = __webpack_require__(294);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_rxjs_Rx__ = __webpack_require__(295);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_rxjs_Rx___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3_rxjs_Rx__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__newpw_newpw__ = __webpack_require__(142);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__app_app_service__ = __webpack_require__(24);
@@ -2081,7 +2118,7 @@ var ForgetPage = (function () {
             });
             toast.present();
         }
-        this.appService.httpGet("http://192.168.10.118:8888/uc/user/findPassword", { "telPhone": this.forgetForm.value.mobile }, this, function (view, res) {
+        this.appService.httpGet("http://192.168.10.120:8888/uc/user/findPassword", { "telPhone": this.forgetForm.value.mobile }, this, function (view, res) {
             if (res.json().result == "success") {
                 view.appService.httpGet("http://192.168.10.120:8888/sms/sendSmg/" + view.forgetForm.value.mobile, {}, view, function (view1, res) {
                     if (res.status == 200) {
@@ -2200,7 +2237,7 @@ var NewpwPage = (function () {
             toast.present();
         }
         else {
-            this.appService.httpPost("http://192.168.10.118:8888/uc/user/resetByTelPhone", {
+            this.appService.httpPost("http://192.168.10.120:8888/uc/user/resetByTelPhone", {
                 "telPhone": this.telPhone,
                 "newPassword": value.newpw1
             }, this, function (view, res) {
@@ -2449,11 +2486,11 @@ webpackEmptyAsyncContext.id = 154;
 
 var map = {
 	"../pages/contact/contact.module": [
-		602,
+		601,
 		4
 	],
 	"../pages/forget/forget.module": [
-		601,
+		602,
 		3
 	],
 	"../pages/login/login.module": [
@@ -2810,8 +2847,8 @@ SearchPage = __decorate([
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return AppService; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_ionic_angular__ = __webpack_require__(16);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_core__ = __webpack_require__(1);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__angular_http__ = __webpack_require__(223);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_rxjs_add_operator_toPromise__ = __webpack_require__(218);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__angular_http__ = __webpack_require__(198);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_rxjs_add_operator_toPromise__ = __webpack_require__(199);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_rxjs_add_operator_toPromise___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3_rxjs_add_operator_toPromise__);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -3105,7 +3142,7 @@ Object(__WEBPACK_IMPORTED_MODULE_0__angular_platform_browser_dynamic__["a" /* pl
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__ionic_native_keyboard__ = __webpack_require__(117);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__ionic_native_social_sharing__ = __webpack_require__(226);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__ionic_storage__ = __webpack_require__(78);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__angular_http__ = __webpack_require__(223);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__angular_http__ = __webpack_require__(198);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__app_component__ = __webpack_require__(588);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__pages_home_home__ = __webpack_require__(113);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_11__pages_project_create_project_create__ = __webpack_require__(114);
@@ -3191,8 +3228,8 @@ AppModule = __decorate([
                 pageTransition: 'ios-transition' //使用ios页面动画
             }, {
                 links: [
-                    { loadChildren: '../pages/forget/forget.module#ForgetPageModule', name: 'ForgetPage', segment: 'forget', priority: 'low', defaultHistory: [] },
                     { loadChildren: '../pages/contact/contact.module#ContactPageModule', name: 'ContactPage', segment: 'contact', priority: 'low', defaultHistory: [] },
+                    { loadChildren: '../pages/forget/forget.module#ForgetPageModule', name: 'ForgetPage', segment: 'forget', priority: 'low', defaultHistory: [] },
                     { loadChildren: '../pages/login/login.module#LoginPageModule', name: 'LoginPage', segment: 'login', priority: 'low', defaultHistory: [] },
                     { loadChildren: '../pages/newpw/newpw.module#NewpwPageModule', name: 'NewpwPage', segment: 'newpw', priority: 'low', defaultHistory: [] },
                     { loadChildren: '../pages/project-end/project-end.module#ProjectEndPageModule', name: 'ProjectEndPage', segment: 'project-end', priority: 'low', defaultHistory: [] }
@@ -4730,7 +4767,7 @@ var LoginPage = (function () {
         }
     };
     LoginPage.prototype.login = function (value) {
-        this.appService.httpGet("http://192.168.10.118:8888/uc/user/login", { "telPhone": value.mobile, "password": value.password }, this, function (view, res) {
+        this.appService.httpGet("http://192.168.10.120:8888/uc/user/login", { "telPhone": value.mobile, "password": value.password }, this, function (view, res) {
             var data = res.json();
             if (data != null) {
                 view.storage.ready().then(function () {
