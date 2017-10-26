@@ -39,7 +39,7 @@ import {AppSingleton} from "../../app/app.singleton";
 	private String remark;
  */
 export class SubtaskPage {
-    projectname: string;
+    project;
     callback;
     type: number;
     milestone: any;
@@ -69,7 +69,7 @@ export class SubtaskPage {
                 private appService: AppService, public events: Events,
                 private toastCtrl: ToastController, private platform: Platform) {
         var data = this.navParams.get('subtask');
-        this.projectname = this.navParams.get('projectname');
+        this.project = this.navParams.get('project');
         this.callback = this.navParams.get('callback');
         this.type = this.navParams.get("type");
         this.milestone = this.navParams.get("milestone");
@@ -98,7 +98,7 @@ export class SubtaskPage {
         this.events.subscribe('onConfirmSubtaskLeader', (leader) => {
             this.tempSubtask.itemEndLeader = leader.name;
             this.tempSubtask.itemEndLeaderNum = leader.username;
-            this.tempSubtask.itemDept = leader.department!=null?leader.department:leader.company;
+            this.tempSubtask.itemDept = leader.text||'';
         });
     }
 

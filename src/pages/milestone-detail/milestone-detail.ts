@@ -87,6 +87,9 @@ export class MilestoneDetailPage {
         if (this.project.id.length > 0 && this.mileType == 1) {
             this.maxTime = this.project.endTime;
         }
+        if (this.mileType == 2) {
+            this.minTime = this.project.endTime;
+        }
         /*******判断前后里程碑的进度*******/
         if (this.mileType == 1) {
             var isIn1 = false;
@@ -104,6 +107,7 @@ export class MilestoneDetailPage {
                     for (let i=0; i<10; i++) {
                         this.canChooses[i] = true;
                     }
+                    this.minTime = this.project.itemStartTime;
                 } else {
                     var mm1 = this.project.milestoneVo1[this.project.milestoneVo1.length-1];
                     var min1_1 = parseInt(mm1.itemProgress.replace(/%/, ""))/10-1;
@@ -236,7 +240,7 @@ export class MilestoneDetailPage {
         this.events.subscribe('onConfirmMilestoneLeader', (leader) => {
             this.tempMilestone.itemEndLeader = leader.name;
             this.tempMilestone.itemEndLeaderNum = leader.username;
-            this.tempMilestone.itemDept = leader.department!=null?leader.department:leader.company;
+            this.tempMilestone.itemDept = leader.text||'';
         });
     }
 
@@ -362,7 +366,7 @@ export class MilestoneDetailPage {
         this.navCtrl.push(SubtaskPage, {
             subtask: subtask,
             type: 1,
-            projectname: this.project.itemName,
+            project: this.project,
             milestone: this.tempMilestone,
             callback: this.subtaskCallback,
         });

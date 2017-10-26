@@ -25975,20 +25975,20 @@ page-home .list_day {
 page-home .list_ri {
   position: absolute;
   left: 40px;
-  height: 10px;
+  height: 15px;
   width: 20px;
   top: 50%;
-  line-height: 10px;
+  line-height: 15px;
   font-size: 10px;
 }
 
 page-home .list_weekday {
   position: absolute;
   left: 60px;
-  height: 10px;
+  height: 15px;
   width: 60px;
   top: 50%;
-  line-height: 10px;
+  line-height: 15px;
   font-size: 10px;
 }
 

@@ -25967,18 +25967,28 @@ page-home .list_day {
   position: absolute;
   left: 10px;
   height: 100%;
-  width: 40px;
+  width: 30px;
   line-height: 50px;
   font-size: 25px;
 }
 
+page-home .list_ri {
+  position: absolute;
+  left: 40px;
+  height: 15px;
+  width: 20px;
+  top: 50%;
+  line-height: 15px;
+  font-size: 10px;
+}
+
 page-home .list_weekday {
   position: absolute;
-  left: 50px;
-  height: 10px;
+  left: 60px;
+  height: 15px;
   width: 60px;
   top: 50%;
-  line-height: 10px;
+  line-height: 15px;
   font-size: 10px;
 }
 

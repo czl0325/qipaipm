@@ -164,6 +164,18 @@ export class ProjectDetailPage {
                     this.project.milestoneVo1.push(milestone);
                     this.cd.detectChanges();
                 }
+                var isIn3 = false;
+                for (let i = 0; i < this.project.children.length; i++) {
+                    var tempMile3 = this.project.children[i];
+                    if (tempMile3.id == milestone.id) {
+                        isIn3 = true;
+                        this.project.milestoneVo1.splice(i, 1, milestone);
+                        break;
+                    }
+                }
+                if (!isIn3) {
+                    this.project.children.push(milestone);
+                }
             } else if (milestone.milestoneType == 2) {
                 var isIn2 = false;
                 for (let i = 0; i < this.project.milestoneVo2.length; i++) {
@@ -336,7 +348,7 @@ export class ProjectDetailPage {
         this.navCtrl.push(SubtaskPage, {
             subtask: subtask,
             type: 2,
-            projectname: this.project.itemName,
+            project: this.project,
             callback: this.subtaskCallback,
             milestone: mile,
         });
@@ -531,6 +543,18 @@ export class ProjectDetailPage {
                     }
                     if (!isIn1) {
                         this.addOneMilestone(milestone);
+                    }
+                    var isIn3 = false;
+                    for (let i = 0; i < this.project.children.length; i++) {
+                        var tempMile3 = this.project.children[i];
+                        if (tempMile3.id == milestone.id) {
+                            isIn3 = true;
+                            this.project.milestoneVo1.splice(i, 1, milestone);
+                            break;
+                        }
+                    }
+                    if (!isIn3) {
+                        this.project.children.push(milestone);
                     }
                 } else if (milestone.milestoneType == 2) {
                     var isIn2 = false;

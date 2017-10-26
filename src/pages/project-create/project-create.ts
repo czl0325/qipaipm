@@ -127,7 +127,7 @@ export class ProjectCreatePage {
         this.events.subscribe('onConfirmProjectLeader', (leader) => {
             this.project.itemEndLeader = leader.name;
             this.project.itemEndLeaderNum = leader.username;
-            this.project.itemEndDept = leader.department!=null?leader.department:leader.company;
+            this.project.itemEndDept = leader.text||'';
         });
     }
 
@@ -401,17 +401,28 @@ export class ProjectCreatePage {
         return new Promise((resolve, reject) => {
             if (typeof (milestone) != 'undefined') {
                 if (milestone.id.length > 0) {
-                    var isIn = false;
+                    var isIn1 = false;
                     for (let i = 0; i < this.project.milestoneVo1.length; i++) {
-                        var tempMile = this.project.milestoneVo1[i];
-                        if (tempMile.id == milestone.id && tempMile.id != '') {
-                            isIn = true;
+                        var tempMile1 = this.project.milestoneVo1[i];
+                        if (tempMile1.id == milestone.id && tempMile1.id != '') {
+                            isIn1 = true;
                             this.project.milestoneVo1.splice(i, 1, milestone);
                             break;
                         }
                     }
-                    if (!isIn) {
+                    if (!isIn1) {
                         this.addOneMilestone(milestone);
+                    }
+                    var isIn2 = false;
+                    for (let i = 0; i < this.project.children.length; i++) {
+                        var tempMile2 = this.project.children[i];
+                        if (tempMile2.id == milestone.id && tempMile2.id != '') {
+                            isIn2 = true;
+                            this.project.children.splice(i, 1, milestone);
+                            break;
+                        }
+                    }
+                    if (!isIn2) {
                         this.project.children.push(milestone);
                     }
                     this.project.version = milestone.pv || this.project.version;

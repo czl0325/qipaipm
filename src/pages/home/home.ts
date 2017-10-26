@@ -89,11 +89,11 @@ export class HomePage {
                         }
                     }
                 }
-                setTimeout(()=> {
-                   if (view.content.scrollToTop) {
-                       view.content.scrollToTop(0);
-                   }
-                });
+                // setTimeout(()=> {
+                //    if (view.content.scrollToTop) {
+                //        view.content.scrollToTop(0);
+                //    }
+                // },200);
             }
         }, true);
     }
