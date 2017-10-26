@@ -273,7 +273,13 @@ export class CalendarComponent {
       }
     }
 
-    this.appService.httpGet("item/searchAll", {"itemStartTime":firstDateString,"endTime":lastDateString,"empNum":AppSingleton.getInstance().currentUserInfo.username,"page":"1","limit":"100"}, this,function (view, res){
+    this.appService.httpGet("item/searchAll", {
+        "itemStartTime":firstDateString,
+        "endTime":lastDateString,
+        "founderEmpNum":AppSingleton.getInstance().currentUserInfo.username,
+        "itemEndLeaderNum":AppSingleton.getInstance().currentUserInfo.username,
+        "page":"1",
+        "limit":"100"}, this,function (view, res){
       var data = res.json();
       if (data.success == true) {
         view.dayHasProject = data.data;

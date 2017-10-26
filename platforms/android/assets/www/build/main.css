@@ -25924,9 +25924,10 @@ page-home .end {
 }
 
 page-home .pj-name {
-  color: black;
+  color: #444;
   line-height: 50px;
   overflow: hidden;
+  font-size: 16px;
   max-height: 50px;
 }
 
@@ -25999,7 +26000,7 @@ page-home .list_itemname {
   width: 100%;
   line-height: 50px;
   font-size: 16px;
-  color: black;
+  color: #444;
 }
 
 page-home .list_circle {

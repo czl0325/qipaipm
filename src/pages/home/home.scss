@@ -24,7 +24,7 @@ page-home {
   }
 
   .pj-name {
-    color: black;
+    color: #444;
     //font-size: 18px;
     //position: absolute;
     //left: 10px;
@@ -32,6 +32,7 @@ page-home {
     //height: 100%;
     line-height: 50px;
     overflow: hidden;
+    font-size: 16px;
     //text-overflow:ellipsis;
     //white-space: nowrap;
     //width: 100%;
@@ -105,7 +106,7 @@ page-home {
     width: 100%;
     line-height: 50px;
     font-size: 16px;
-    color: black;
+    color: #444;
   }
   .list_circle {
     left: 90px;

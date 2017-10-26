@@ -55,7 +55,8 @@ export class SearchPage {
         } else {
             this.appService.httpGet("item/searchAll", {
                 itemName: this.searchValue,
-                "empNum": AppSingleton.getInstance().currentUserInfo.username,
+                "founderEmpNum": AppSingleton.getInstance().currentUserInfo.username,
+                "itemEndLeaderNum": AppSingleton.getInstance().currentUserInfo.username,
                 page: 1,
                 limit: 100
             }, this, function (view, res) {

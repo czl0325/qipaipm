@@ -1,7 +1,7 @@
 import {Component, ViewChild, ElementRef, ChangeDetectorRef} from '@angular/core';
 import {
     NavController, NavParams, PopoverController, ViewController, Events, ToastController,
-    AlertController
+    AlertController, Content
 } from 'ionic-angular';
 import {SubtaskPage} from "../subtask/subtask";
 import {MilestoneDetailPage} from "../milestone-detail/milestone-detail";
@@ -97,6 +97,7 @@ export class PopoverPage {
 
 export class ProjectDetailPage {
     @ViewChild('popoverContent', {read: ElementRef}) content: ElementRef;
+    @ViewChild(Content) content_all:Content;
     public project: any;
     timer;
     isExpand1: boolean[];
@@ -145,6 +146,7 @@ export class ProjectDetailPage {
                 project: this.project,
                 isExpand: this.isExpand1,
                 type: 2,
+                fromDetail: true,
             });
         });
         this.events.subscribe('reloadMilestone', (milestone) => {
@@ -267,6 +269,26 @@ export class ProjectDetailPage {
                 type: 1,
             });
         });
+        this.events.subscribe('reloadProject',() => {
+            this.events.publish('homeProjectReload');
+            this.appService.httpGet('item/getProject',{"id":this.project.id},this,function (view, res) {
+                if (res.status == 200) {
+                    var temp = res.json().data;
+                    temp.milestoneVo1 = [];
+                    temp.milestoneVo2 = [];
+                    for (let j = 0; j < temp.children.length; j++) {
+                        var mile = temp.children[j];
+                        if (mile.milestoneType == 1) {
+                            temp.milestoneVo1.push(mile);
+                        } else if (mile.milestoneType == 2) {
+                            temp.milestoneVo2.push(mile);
+                        }
+                    }
+                    view.project = temp;
+                    view.reloadArray();
+                }
+            },false);
+        });
     }
 
     ionViewWillEnter() {
@@ -274,7 +296,9 @@ export class ProjectDetailPage {
     }
 
     ionViewDidEnter() {
-
+        this.content_all.fullscreen = true;
+        this.content_all.scrollToBottom(0);
+        this.content_all.resize();
     }
 
     ionViewWillLeave() {
@@ -292,6 +316,7 @@ export class ProjectDetailPage {
         this.events.unsubscribe('onDeleteProject');
         this.events.unsubscribe('onEndProject');
         this.events.unsubscribe('onDelayProject');
+        this.events.unsubscribe('reloadProject');
     }
 
     ionViewCanEnter() {
@@ -549,7 +574,7 @@ export class ProjectDetailPage {
                         var tempMile3 = this.project.children[i];
                         if (tempMile3.id == milestone.id) {
                             isIn3 = true;
-                            this.project.milestoneVo1.splice(i, 1, milestone);
+                            this.project.children.splice(i, 1, milestone);
                             break;
                         }
                     }

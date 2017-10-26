@@ -43,6 +43,12 @@ export class HomePage {
         //this.wechat.share(0, "check-installed");
     }
 
+    ionViewDidEnter() {
+        this.content.fullscreen = true;
+        this.content.scrollToBottom(0);
+        this.content.resize();
+    }
+
     ionViewWillUnload() {
         this.events.unsubscribe('homeProjectReload');
     }
@@ -69,7 +75,8 @@ export class HomePage {
         this.appService.httpGet("item/searchAll", {
             "itemStartTime": dateString,
             "endTime": dateString,
-            "empNum": AppSingleton.getInstance().currentUserInfo.username,
+            "founderEmpNum": AppSingleton.getInstance().currentUserInfo.username,
+            "itemEndLeaderNum": AppSingleton.getInstance().currentUserInfo.username,
             "page": 1,
             "limit": 100
         }, this, function (view, res) {

@@ -1,11 +1,15 @@
-import {Component} from '@angular/core';
-import {NavController, NavParams, ToastController, Events, AlertController, App, Platform} from 'ionic-angular';
+import {Component, ViewChild} from '@angular/core';
+import {
+    NavController, NavParams, ToastController, Events, AlertController, App, Platform,
+    Content
+} from 'ionic-angular';
 import {DatePipe} from "@angular/common";
 import {MilestoneDetailPage} from "../milestone-detail/milestone-detail";
 import {AppService} from "../../app/app.service";
 import {ContactPage} from "../contact/contact";
 import {AppConfig} from "../../app/app.config";
 import {AppSingleton} from "../../app/app.singleton";
+import {Keyboard} from "@ionic-native/keyboard";
 
 /**
  * Generated class for the ProjectCreatePage page.
@@ -107,14 +111,18 @@ export class ProjectCreatePage {
     };
     minTime: string = new DatePipe('en-US').transform(new Date(), 'yyyy-MM-dd');
     changeIndex: number = -1;
+    fromDetail: boolean = false;
+
+    @ViewChild(Content) content:Content;
 
     constructor(public navCtrl: NavController, public navParams: NavParams,
                 public appService: AppService, public toastCtrl: ToastController,
                 public events: Events, private alertCtrl: AlertController,
-                private platform: Platform) {
+                private platform: Platform, private keyboard: Keyboard) {
         var data = this.navParams.get('project');
         this.type = this.navParams.get('type');
         this.isExpand = this.navParams.get('isExpand');
+        this.fromDetail = this.navParams.get('fromDetail') || this.fromDetail;
         if (data) {
             this.project = data;
             this.viewTitle = this.project.itemName;
@@ -128,6 +136,12 @@ export class ProjectCreatePage {
             this.project.itemEndLeader = leader.name;
             this.project.itemEndLeaderNum = leader.username;
             this.project.itemEndDept = leader.text||'';
+        });
+        this.keyboard.onKeyboardShow().subscribe(()=>{
+            console.log("键盘出现");
+        });
+        this.keyboard.onKeyboardHide().subscribe(()=>{
+            console.log("键盘隐藏");
         });
     }
 
@@ -143,6 +157,7 @@ export class ProjectCreatePage {
                 buttons: ['确定']
             });
             alert.present();
+            this.events.publish('testContent');
             return;
         }
         if (this.project.itemLevel.length < 1) {
@@ -207,7 +222,7 @@ export class ProjectCreatePage {
         }
         this.appService.httpPost("item/createItem", this.project, this, function (view, res) {
             var data = res.json().data;
-            view.project.version = data.version;
+            view.events.publish('reloadProject');
             view.events.publish('homeProjectReload');
             let toast = view.toastCtrl.create({
                 message: view.project.id.length > 0 ? '保存项目成功!' : '创建项目成功!',

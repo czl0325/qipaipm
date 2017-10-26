@@ -193,7 +193,9 @@ export class MilestoneDetailPage {
                 }
             }
         }
-        this.milestone.deliveryTime = this.minTime;
+        if (this.milestone.id.length < 1) {
+            this.milestone.deliveryTime = this.minTime;
+        }
         /**************/
         if (this.milestone.id.length < 1) {
             if (this.mileType == 1) {
@@ -300,6 +302,7 @@ export class MilestoneDetailPage {
                 this.appService.httpPost("item/createMilestone", param, this, function (view, res) {
                     if (res.status == 200) {
                         view.tempMilestone = res.json().data;
+                        view.events.publish('reloadProject');
                         if (view.milestone.milestoneName || '') {
                             view.tempMilestone.milestoneName = view.milestone.milestoneName;
                         } else {
@@ -310,6 +313,7 @@ export class MilestoneDetailPage {
                             }
                         }
                         view.milestone = view.tempMilestone;
+                        view.events.publish('reloadMileArray',view.milestone);
                         view.callback(view.milestone).then(() => {
                             view.navCtrl.pop()
                         });
