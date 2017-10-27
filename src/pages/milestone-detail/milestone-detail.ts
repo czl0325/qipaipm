@@ -327,6 +327,7 @@ export class MilestoneDetailPage {
             this.appService.httpPost("item/createMilestone", param, this, function (view, res) {
                 if (res.status == 200) {
                     view.events.publish('homeProjectReload');
+                    view.events.publish('reloadProject_create');
                     view.events.publish('reloadProject');
                     // view.tempMilestone = res.json().data;
                     // if (typeof (view.project.children != 'undefined')) {
