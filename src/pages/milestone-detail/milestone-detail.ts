@@ -48,7 +48,7 @@ export class MilestoneDetailPage {
         id: '',                     //里程碑id
         milestoneName: '',          //里程碑的名称
         itemEndLeader: '',          //里程碑的负责人
-        itemEndLeaderNum: '',       //里程碑负责人工号
+        leaderEmpNum: '',           //里程碑负责人工号
         itemDept: '',               //里程碑负责人部门
         deliveryResult: '',         //里程碑的交付成果
         // milestoneSchedule : '',  //里程碑的进度
@@ -217,7 +217,7 @@ export class MilestoneDetailPage {
         if (this.type == 1) {
             this.canEdit = true;
         } else if (this.type == 2) {
-            if (AppSingleton.getInstance().currentUserInfo.username == this.milestone.itemEndLeaderNum) {
+            if (AppSingleton.getInstance().currentUserInfo.username == this.milestone.leaderEmpNum) {
                 this.canEdit = true;
                 if (this.milestone.id.length > 0) {
                     this.canAddSubtask = true;
@@ -226,7 +226,7 @@ export class MilestoneDetailPage {
             if (AppSingleton.getInstance().currentUserInfo.username == this.project.founderEmpNum) {
                 this.canEdit = true;
             }
-            if (AppSingleton.getInstance().currentUserInfo.username == this.milestone.itemEndLeaderNum) {
+            if (AppSingleton.getInstance().currentUserInfo.username == this.milestone.leaderEmpNum) {
                 this.canFinish = true;
             }
         }
@@ -235,7 +235,7 @@ export class MilestoneDetailPage {
     ionViewDidLoad() {
         this.events.subscribe('onConfirmMilestoneLeader', (leader) => {
             this.tempMilestone.itemEndLeader = leader.name;
-            this.tempMilestone.itemEndLeaderNum = leader.username;
+            this.tempMilestone.leaderEmpNum = leader.username;
             this.tempMilestone.itemDept = leader.text||'';
         });
     }
@@ -354,7 +354,7 @@ export class MilestoneDetailPage {
             id: '',              //子任务的id
             subtaskName: '子任务' + (this.tempMilestone.children.length + 1),     //子任务的名称
             itemEndLeader: '',            //子任务的负责人
-            itemEndLeaderNum: '',  //子任务负责人工号
+            leaderEmpNum: '',       //子任务负责人工号
             deliveryTime: new DatePipe('en-US').transform(new Date(), 'yyyy-MM-dd'),    //子任务的交付时间
             deliveryResult: '',  //子任务交付成果
             planTime: new DatePipe('en-US').transform(new Date(), 'yyyy-MM-dd'),        //子任务计划完成时间
@@ -377,6 +377,10 @@ export class MilestoneDetailPage {
         this.appService.httpDelete("item/delete", {"ids": subtask.id}, this, function (view, res) {
             if (res.status == 200) {
                 view.deleteOneSubtask(subtask);
+                //添加网络刷新
+                view.events.publish('reloadProject');
+                view.events.publish('homeProjectReload');
+                view.events.publish('reloadProject_create');
             }
         }, true);
     }

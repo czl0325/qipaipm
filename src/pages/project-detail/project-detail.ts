@@ -295,9 +295,11 @@ export class ProjectDetailPage {
     }
 
     ionViewDidEnter() {
-        this.content_all.fullscreen = true;
-        this.content_all.scrollToBottom(0);
-        this.content_all.resize();
+        if (this.content_all.contentHeight == 0) {
+            this.content_all.fullscreen = true;
+            this.content_all.scrollToBottom(0);
+            this.content_all.resize();
+        }
     }
 
     ionViewWillLeave() {
@@ -629,22 +631,22 @@ export class ProjectDetailPage {
     subtaskCallback = (subtask) => {
         return new Promise((resolve, reject) => {
             if (typeof (subtask) != 'undefined') {
-                for (let i = 0; i < this.project.milestoneVo1.length; i++) {
-                    var milestone = this.project.milestoneVo1[i];
-                    var isIn = false;
-                    for (let j = 0; j < milestone.children.length; j++) {
-                        var sub = milestone.children[j];
-                        if (sub.id == subtask.id) {
-                            milestone.children.splice(j, 1, subtask);
-                            isIn = true;
-                            break;
-                        }
-                    }
-                    if (isIn == false) {
-                        break;
-                    }
-                }
-                this.reloadArray();
+                // for (let i = 0; i < this.project.milestoneVo1.length; i++) {
+                //     var milestone = this.project.milestoneVo1[i];
+                //     var isIn = false;
+                //     for (let j = 0; j < milestone.children.length; j++) {
+                //         var sub = milestone.children[j];
+                //         if (sub.id == subtask.id) {
+                //             milestone.children.splice(j, 1, subtask);
+                //             isIn = true;
+                //             break;
+                //         }
+                //     }
+                //     if (isIn == false) {
+                //         break;
+                //     }
+                // }
+                // this.reloadArray();
             }
             resolve();
         });

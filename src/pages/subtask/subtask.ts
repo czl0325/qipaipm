@@ -47,7 +47,7 @@ export class SubtaskPage {
         id: '',                 //子任务的id
         subtaskName: '',        //子任务的名称
         itemEndLeader: '',      //子任务的负责人
-        itemEndLeaderNum: '',   //子任务负责人工号
+        leaderEmpNum: '',       //子任务负责人工号
         itemDept: '',           //子任务负责人部门
         deliveryTime: new DatePipe('en-US').transform(new Date(), 'yyyy-MM-dd'),    //子任务的交付时间
         deliveryResult: '',     //子任务交付成果
@@ -80,7 +80,7 @@ export class SubtaskPage {
         if (this.type == 1) {
             this.canEdit = true;
         } else {
-            if (this.subtask.itemEndLeaderNum == AppSingleton.getInstance().currentUserInfo.username) {
+            if (this.subtask.leaderEmpNum == AppSingleton.getInstance().currentUserInfo.username) {
                 this.canFinish = true;
             }
             if (this.milestone.itemEndLeaderNum == AppSingleton.getInstance().currentUserInfo.username) {
@@ -97,7 +97,7 @@ export class SubtaskPage {
     ionViewDidLoad() {
         this.events.subscribe('onConfirmSubtaskLeader', (leader) => {
             this.tempSubtask.itemEndLeader = leader.name;
-            this.tempSubtask.itemEndLeaderNum = leader.username;
+            this.tempSubtask.leaderEmpNum = leader.username;
             this.tempSubtask.itemDept = leader.text||'';
         });
     }

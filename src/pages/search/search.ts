@@ -57,6 +57,7 @@ export class SearchPage {
                 itemName: this.searchValue,
                 "founderEmpNum": AppSingleton.getInstance().currentUserInfo.username,
                 "itemEndLeaderNum": AppSingleton.getInstance().currentUserInfo.username,
+                "leaderEmpNum": AppSingleton.getInstance().currentUserInfo.username,
                 page: 1,
                 limit: 100
             }, this, function (view, res) {

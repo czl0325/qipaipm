@@ -44,9 +44,11 @@ export class HomePage {
     }
 
     ionViewDidEnter() {
-        this.content.fullscreen = true;
-        this.content.scrollToBottom(0);
-        this.content.resize();
+        if (this.content.contentHeight == 0) {
+            this.content.fullscreen = true;
+            this.content.scrollToBottom(0);
+            this.content.resize();
+        }
     }
 
     ionViewWillUnload() {
@@ -77,6 +79,7 @@ export class HomePage {
             "endTime": dateString,
             "founderEmpNum": AppSingleton.getInstance().currentUserInfo.username,
             "itemEndLeaderNum": AppSingleton.getInstance().currentUserInfo.username,
+            "leaderEmpNum": AppSingleton.getInstance().currentUserInfo.username,
             "page": 1,
             "limit": 100
         }, this, function (view, res) {

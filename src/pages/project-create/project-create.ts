@@ -258,7 +258,7 @@ export class ProjectCreatePage {
             id: '',                    //里程碑id
             milestoneName: '里程碑' + (this.project.milestoneVo1.length + 1),         //里程碑的名称
             itemEndLeader: '',       //里程碑的负责人
-            itemEndLeaderNum: '',          //里程碑负责人工号
+            leaderEmpNum: '',          //里程碑负责人工号
             // milestoneDelivery : '',
             deliveryResult: '',         //里程碑的交付成果
             itemProgress: '',          //里程碑的进度
@@ -306,7 +306,11 @@ export class ProjectCreatePage {
         });
     }
 
-    onClickMilestone($event, mile, i) {
+    onFocusInput2($event, mile, i) {
+        var textarea = document.getElementById('miletext2');
+        if (textarea != null) {
+            textarea.blur();
+        }
         if (this.type == 1) {
             this.changeIndex = i;
         }
@@ -320,13 +324,30 @@ export class ProjectCreatePage {
         });
     }
 
+    onClickMilestone($event, mile, i) {
+        if (this.type == 1) {
+            this.changeIndex = i;
+        }
+        this.navCtrl.push(MilestoneDetailPage, {
+            milestone: mile,
+            mileType: mile.milestoneType,
+            isExpand: this.isExpand,
+            project: this.project,
+            callback: this.milestoneCallback,
+            type: 2,
+        });
+    }
+
     onClickRemoveMilestone($event, mile) {
         if (this.type == 1) {
             this.deleteOneMile(mile)
         } else {
             this.appService.httpDelete("item/deleteMilestone", {"ids": [mile.id]}, this, function (view, res) {
                 if (res.status == 200) {
-                    view.deleteOneMile(mile);
+                    //view.deleteOneMile(mile);
+                    view.events.publish('reloadProject');
+                    view.events.publish('homeProjectReload');
+                    view.events.publish('reloadProject_create');
                 }
             }, true);
         }
