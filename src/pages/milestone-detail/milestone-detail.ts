@@ -129,7 +129,14 @@ export class MilestoneDetailPage {
                 if (index1 < this.project.milestoneVo1.length-1) {
                     mmm2 = this.project.milestoneVo1[index1+1];
                     min1_3 = parseInt(mmm2.itemProgress.replace(/%/, ""))/10-1;
-                    //this.maxTime = mmm2.deliveryTime;
+                    if (this.milestone.id.length > 0) {
+                        this.maxTime = mmm2.deliveryTime;
+                    }
+                }
+                if (index1 == this.project.milestoneVo1.length-1) {
+                    if (this.milestone.id.length > 0) {
+                        this.maxTime = this.project.endTime;
+                    }
                 }
                 if (min1_3 == -1) {
                     min1_3 = 10;
@@ -218,13 +225,19 @@ export class MilestoneDetailPage {
             this.canEdit = true;
         } else if (this.type == 2) {
             if (AppSingleton.getInstance().currentUserInfo.username == this.milestone.leaderEmpNum) {
-                this.canEdit = true;
+                if (AppConfig.timestampToDate(this.milestone.deliveryTime) > new Date()) {
+                    this.canEdit = true;
+                }
                 if (this.milestone.id.length > 0) {
-                    this.canAddSubtask = true;
+                    if (AppConfig.timestampToDate(this.milestone.deliveryTime) > new Date()) {
+                        this.canAddSubtask = true;
+                    }
                 }
             }
             if (AppSingleton.getInstance().currentUserInfo.username == this.project.founderEmpNum) {
-                this.canEdit = true;
+                if (AppConfig.timestampToDate(this.milestone.deliveryTime) > new Date()) {
+                    this.canEdit = true;
+                }
             }
             if (AppSingleton.getInstance().currentUserInfo.username == this.milestone.leaderEmpNum) {
                 this.canFinish = true;

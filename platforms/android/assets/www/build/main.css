@@ -26103,8 +26103,8 @@ page-newpw .wrap .row:last-child {
 }
 
 page-project-detail .pj-item {
-  margin-top: 5px;
-  margin-bottom: 5px;
+  margin-top: 20px;
+  margin-bottom: 10px;
 }
 
 page-project-detail .pj-item .mile-top {
@@ -26233,7 +26233,7 @@ page-project-detail .mile-bottom .item2 .delay-radius1 {
   font-size: 8px;
   background-color: #fc780e;
   color: white;
-  top: 54px;
+  top: 56px;
   left: 0px;
 }
 

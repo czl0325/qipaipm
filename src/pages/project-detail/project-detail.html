@@ -120,7 +120,7 @@
     </div>
 
     <!-- 项目结束 -->
-    <div class="mile-bottom">
+    <div class="mile-bottom" (click)="onProjectNormalEnd($event)">
         <div class="item1">
             <ion-label style="margin-bottom: 3px;font-size: 10px">{{project.endTime | MonthPipe}}</ion-label>
             <section class="line"></section>
@@ -148,62 +148,66 @@
 
     <!-- 延期里程碑 -->
     <!--<div class="mile-bottom" style="margin-top: 5px"-->
-         <!--*ngFor="let dalayMile of project.milestoneVo2; let i = index">-->
-        <!--<div class="item1">-->
-            <!--<ion-label style="margin-bottom: 3px;font-size: 10px">{{dalayMile.deliveryTime | MonthPipe}}</ion-label>-->
-            <!--<section class="line"></section>-->
-            <!--<ion-label style="margin-top: 3px;font-size: 10px">{{dalayMile.deliveryTime | YearPipe}}</ion-label>-->
-        <!--</div>-->
-        <!--<div class="item2">-->
-            <!--&lt;!&ndash;<div style="width: 1px; background-color: #ececec; height: 10px; position: absolute; left: 20px; top: 0px" ></div>&ndash;&gt;-->
-            <!--<ion-label no-padding no-margin class="label-radius">{{dalayMile.itemProgress}}</ion-label>-->
-            <!--<ion-label no-padding no-margin class="mile-number">{{"延期"+(i+1)}}</ion-label>-->
-            <!--<ion-label no-padding no-margin class="delay-radius1" [hidden]="dalayMile.delayDays==0">-->
-                <!--{{"延"+dalayMile.delayDays}}-->
-            <!--</ion-label>-->
-        <!--</div>-->
+    <!--*ngFor="let dalayMile of project.milestoneVo2; let i = index">-->
+    <!--<div class="item1">-->
+    <!--<ion-label style="margin-bottom: 3px;font-size: 10px">{{dalayMile.deliveryTime | MonthPipe}}</ion-label>-->
+    <!--<section class="line"></section>-->
+    <!--<ion-label style="margin-top: 3px;font-size: 10px">{{dalayMile.deliveryTime | YearPipe}}</ion-label>-->
+    <!--</div>-->
+    <!--<div class="item2">-->
+    <!--&lt;!&ndash;<div style="width: 1px; background-color: #ececec; height: 10px; position: absolute; left: 20px; top: 0px" ></div>&ndash;&gt;-->
+    <!--<ion-label no-padding no-margin class="label-radius">{{dalayMile.itemProgress}}</ion-label>-->
+    <!--<ion-label no-padding no-margin class="mile-number">{{"延期"+(i+1)}}</ion-label>-->
+    <!--<ion-label no-padding no-margin class="delay-radius1" [hidden]="dalayMile.delayDays==0">-->
+    <!--{{"延"+dalayMile.delayDays}}-->
+    <!--</ion-label>-->
+    <!--</div>-->
 
-        <!--<div class="item3">-->
-            <!--<ion-icon no-border no-padding no-margin name="md-arrow-dropleft" class="arrow-css3"></ion-icon>-->
-            <!--<div class="item3-3" (click)="onClickMilestone($event, dalayMile)">-->
-                <!--<div class="text-wrap">-->
-                    <!--<div class="text-left">负责人：</div>-->
-                    <!--<div class="text-right">{{dalayMile.itemEndLeader}}</div>-->
-                <!--</div>-->
-                <!--<div class="text-wrap">-->
-                    <!--<div class="text-left">交付成果：</div>-->
-                    <!--<div class="text-right">{{dalayMile.deliveryResult}}</div>-->
-                <!--</div>-->
-            <!--</div>-->
-        <!--</div>-->
+    <!--<div class="item3">-->
+    <!--<ion-icon no-border no-padding no-margin name="md-arrow-dropleft" class="arrow-css3"></ion-icon>-->
+    <!--<div class="item3-3" (click)="onClickMilestone($event, dalayMile)">-->
+    <!--<div class="text-wrap">-->
+    <!--<div class="text-left">负责人：</div>-->
+    <!--<div class="text-right">{{dalayMile.itemEndLeader}}</div>-->
+    <!--</div>-->
+    <!--<div class="text-wrap">-->
+    <!--<div class="text-left">交付成果：</div>-->
+    <!--<div class="text-right">{{dalayMile.deliveryResult}}</div>-->
+    <!--</div>-->
+    <!--</div>-->
+    <!--</div>-->
     <!--</div>-->
 
     <div class="pj-item" *ngFor="let dalayMile of project.milestoneVo2; let i = index">
         <div class="mile-top" id="{{dalayMile.id}}">
-            <div style="width: 1px; background-color: #ececec; height: 100%; position: absolute; left: 65px; top: 0px" >
+            <div style="width: 1px; background-color: #ececec; height: 100%; position: absolute; left: 65px; top: 0px">
 
-            </div >
+            </div>
             <div [hidden]="dalayMile.children.length<=0">
                 <div class="subtask-title" *ngIf="isExpand2[i]==false ">
-                    <ion-label no-margin no-padding text-center class="horizontal-center" style="line-height: 25px; font-size: 15px">{{dalayMile.children.length+"个子任务"}}</ion-label>
+                    <ion-label no-margin no-padding text-center class="horizontal-center"
+                               style="line-height: 25px; font-size: 15px">{{dalayMile.children.length+"个子任务"}}
+                    </ion-label>
                 </div>
                 <div class="subtask-wrap" *ngIf="isExpand2[i]==true ">
-                    <div class="subtask-item" *ngFor="let subtask of dalayMile.children" (click)="onClickSubtask($event, subtask, dalayMile)">
-                        <div class="subtask-css" >
+                    <div class="subtask-item" *ngFor="let subtask of dalayMile.children"
+                         (click)="onClickSubtask($event, subtask, dalayMile)">
+                        <div class="subtask-css">
                             <ion-label class="subtask-left">子任务:</ion-label>
-                            <ion-label class="subtask-right" >{{subtask.subtaskName}}</ion-label>
+                            <ion-label class="subtask-right">{{subtask.subtaskName}}</ion-label>
                         </div>
-                        <div class="subtask-css" >
+                        <div class="subtask-css">
                             <ion-label class="subtask-left">交付时间:</ion-label>
-                            <ion-label class="subtask-right" >{{subtask.deliveryTime | stampToDate}}</ion-label>
+                            <ion-label class="subtask-right">{{subtask.deliveryTime | stampToDate}}</ion-label>
                         </div>
-                        <div class="subtask-css" >
+                        <div class="subtask-css">
                             <ion-label class="subtask-left">负责人:</ion-label>
-                            <ion-label class="subtask-right" >{{subtask.itemEndLeader}}</ion-label>
+                            <ion-label class="subtask-right">{{subtask.itemEndLeader}}</ion-label>
                         </div>
                     </div>
                 </div>
-                <ion-icon [name]="isExpand2[i]==false?'appname-expand':'appname-fold'" class="fold" (click)="onClickExpand($event, i, dalayMile)"></ion-icon>
+                <ion-icon [name]="isExpand2[i]==false?'appname-expand':'appname-fold'" class="fold"
+                          (click)="onClickExpand($event, i, dalayMile)"></ion-icon>
             </div>
         </div>
         <div class="mile-bottom">
@@ -216,16 +220,18 @@
                 <!--<div style="width: 1px; background-color: #ececec; height: 10px; position: absolute; left: 20px; top: 0px" ></div>-->
                 <ion-label no-padding no-margin class="label-radius">{{dalayMile.itemProgress}}</ion-label>
                 <ion-label no-padding no-margin class="mile-number" style="color: #fc780e">{{"延期"+(i+1)}}</ion-label>
-                <ion-label no-padding no-margin class="delay-radius1" [hidden]="dalayMile.delayDays==0">{{"延"+dalayMile.delayDays}}</ion-label>
+                <ion-label no-padding no-margin class="delay-radius1" [hidden]="dalayMile.delayDays==0">
+                    {{"延"+dalayMile.delayDays}}
+                </ion-label>
             </div>
             <div class="item3">
-                <ion-icon no-border no-padding no-margin name="md-arrow-dropleft" class="arrow-css3" ></ion-icon>
+                <ion-icon no-border no-padding no-margin name="md-arrow-dropleft" class="arrow-css3"></ion-icon>
                 <div class="item3-3" (click)="onClickMilestone($event, dalayMile)">
                     <div class="text-wrap">
                         <div class="text-left">负责人：</div>
                         <div class="text-right">{{dalayMile.itemEndLeader}}</div>
                     </div>
-                    <div  class="text-wrap">
+                    <div class="text-wrap">
                         <div class="text-left">交付成果：</div>
                         <div class="text-right">{{dalayMile.deliveryResult}}</div>
                     </div>

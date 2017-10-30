@@ -1,14 +1,14 @@
 webpackJsonp([1],{
 
-/***/ 604:
+/***/ 606:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "NewpwPageModule", function() { return NewpwPageModule; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "ProjectEndDetailPageModule", function() { return ProjectEndDetailPageModule; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(1);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(16);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__newpw__ = __webpack_require__(142);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(15);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__project_end_detail__ = __webpack_require__(144);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -18,23 +18,23 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 
 
 
-var NewpwPageModule = (function () {
-    function NewpwPageModule() {
+var ProjectEndDetailPageModule = (function () {
+    function ProjectEndDetailPageModule() {
     }
-    return NewpwPageModule;
+    return ProjectEndDetailPageModule;
 }());
-NewpwPageModule = __decorate([
+ProjectEndDetailPageModule = __decorate([
     Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["L" /* NgModule */])({
         declarations: [
-            __WEBPACK_IMPORTED_MODULE_2__newpw__["a" /* NewpwPage */],
+            __WEBPACK_IMPORTED_MODULE_2__project_end_detail__["a" /* ProjectEndDetailPage */],
         ],
         imports: [
-            __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["g" /* IonicPageModule */].forChild(__WEBPACK_IMPORTED_MODULE_2__newpw__["a" /* NewpwPage */]),
+            __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["g" /* IonicPageModule */].forChild(__WEBPACK_IMPORTED_MODULE_2__project_end_detail__["a" /* ProjectEndDetailPage */]),
         ],
     })
-], NewpwPageModule);
+], ProjectEndDetailPageModule);
 
-//# sourceMappingURL=newpw.module.js.map
+//# sourceMappingURL=project-end-detail.module.js.map
 
 /***/ })
 
