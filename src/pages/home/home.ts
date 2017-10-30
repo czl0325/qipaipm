@@ -69,6 +69,19 @@ export class HomePage {
 
     onChangeMonthProject(dayHasProjects) {
         this.projectsOnMonth = dayHasProjects;
+        for (let i = 0; i < this.projectsOnMonth.length; i++) {
+            var project = this.projectsOnMonth[i];
+            project.milestoneVo1 = [];
+            project.milestoneVo2 = [];
+            for (let j = 0; j < project.children.length; j++) {
+                var mile = project.children[j];
+                if (mile.milestoneType == 1) {
+                    project.milestoneVo1.push(mile);
+                } else if (mile.milestoneType == 2) {
+                    project.milestoneVo2.push(mile);
+                }
+            }
+        }
     }
 
     reloadProjectList(dateString: string) {
