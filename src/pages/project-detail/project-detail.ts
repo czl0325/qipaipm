@@ -12,6 +12,7 @@ import {DatePipe} from "@angular/common";
 import {AppSingleton} from "../../app/app.singleton";
 import {SocialSharing} from '@ionic-native/social-sharing';
 import {ProjectEndPage} from "../project-end/project-end";
+import {ProjectEndDetailPage} from "../project-end-detail/project-end-detail";
 
 /**
  * Generated class for the ProjectDetailPage page.
@@ -243,6 +244,14 @@ export class ProjectDetailPage {
             });
         });
         this.events.subscribe('onDelayProject', () => {
+            if (this.project.itemIsEnd == true) {
+                let toast = this.toastCtrl.create({
+                    message: "已结束项目不能延期!",
+                    duration: 3000
+                });
+                toast.present();
+                return;
+            }
             var milestone = {
                 id: '',                     //里程碑id
                 milestoneName: '延期' + (this.project.milestoneVo2.length + 1),         //里程碑的名称
@@ -413,6 +422,12 @@ export class ProjectDetailPage {
                 shareView.style.bottom = '-200px';
             }
         }, 16);
+    }
+
+    onProjectNormalEnd($event) {
+        this.navCtrl.push(ProjectEndDetailPage, {
+           project: this.project
+        });
     }
 
     reloadArray() {

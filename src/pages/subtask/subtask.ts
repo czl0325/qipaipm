@@ -76,7 +76,6 @@ export class SubtaskPage {
         if (data != null) {
             this.subtask = data;
         }
-        this.tempSubtask = AppConfig.deepCopy(this.subtask);
         if (this.type == 1) {
             this.canEdit = true;
         } else {
@@ -92,6 +91,11 @@ export class SubtaskPage {
         } else if (typeof (this.milestone.deliveryTime) == 'string') {
             this.maxTime = this.milestone.deliveryTime;
         }
+        this.minTime = new DatePipe('en-US').transform(AppConfig.timestampToDate(this.project.itemStartTime), 'yyyy-MM-dd');
+        if (this.subtask.id.length < 1) {
+            this.subtask.deliveryTime = this.maxTime;
+        }
+        this.tempSubtask = AppConfig.deepCopy(this.subtask);
     }
 
     ionViewDidLoad() {
