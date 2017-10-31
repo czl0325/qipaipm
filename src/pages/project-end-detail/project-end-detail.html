@@ -9,7 +9,7 @@
     <ion-title>项目结束</ion-title>
     <ion-buttons end >
       <button ion-button (click)="onNormalEndProject($event)" color="danger">
-        保存
+        结束
       </button>
     </ion-buttons>
   </ion-navbar>
@@ -21,7 +21,7 @@
     <ion-item >
       <ion-icon item-start name="appname-pname"></ion-icon>
       <ion-label style="color: #868686">项目名称:</ion-label>
-      <ion-label right text-right>{{project.itemName}}</ion-label>
+      <ion-label right text-right>{{tempPorject.itemName}}</ion-label>
     </ion-item>
   </ion-list>
   <ion-label full class="subtask-title-css">项目结束</ion-label>
@@ -29,31 +29,31 @@
     <button ion-item style="border-bottom: solid 1px #ececec" disabled>
       <ion-icon item-start name="appname-admin"></ion-icon>
       <ion-label item-start [ngStyle]="{'margin-left':this.platform.is('ios')?'0px':'20px'}" style="color: #868686">负责人:</ion-label>
-      <ion-label item-end text-right>{{project.itemEndLeader}}</ion-label>
+      <ion-label item-end text-right>{{tempPorject.itemEndLeader}}</ion-label>
     </button>
     <ion-item style="border-bottom: solid 1px #ececec;">
       <ion-icon item-start name="appname-time"></ion-icon>
       <ion-label style="color: #868686">交付时间:</ion-label>
       <ion-datetime text-right displayFormat="YYYY-MM-DD" max="2030" min="2010" cancelText="取消" doneText="确认"
-                    ngModel="{{project.endTime | stampToDate}}"
-                    (ngModelChange)="project.endTime = $event" disabled></ion-datetime>
+                    ngModel="{{tempPorject.endTime | stampToDate}}"
+                    (ngModelChange)="tempPorject.endTime = $event" disabled></ion-datetime>
     </ion-item>
     <ion-item>
       <ion-icon item-start name="appname-result"></ion-icon>
       <ion-label style="color: #868686">交付成果:</ion-label>
-      <ion-input text-right type="text" [(ngModel)]=project.itemEndResult disabled></ion-input>
+      <ion-input text-right type="text" [(ngModel)]=tempPorject.itemEndResult disabled></ion-input>
     </ion-item>
   </ion-list>
 
-  <ion-list no-lines="" [hidden]="canFinish==false">
+  <ion-list no-lines>
     <ion-item style="border-top: solid 1px #ececec;border-bottom: solid 1px #ececec">
       <div item-start>是否完成</div>
       <ion-label style="color: #868686">完成</ion-label>
-      <ion-checkbox [(ngModel)]=project.itemIsEnd></ion-checkbox>
+      <ion-checkbox [(ngModel)]=tempPorject.itemIsEnd [disabled]="canFinish==false"></ion-checkbox>
     </ion-item>
     <ion-item style="border-bottom: solid 1px #ececec; height: 100px;">
       <ion-label item-start style="color: #868686">备注:</ion-label>
-      <ion-textarea item-end [(ngModel)]=project.multipleItemEndWhy></ion-textarea>
+      <ion-textarea item-end [(ngModel)]=tempPorject.multipleItemEndWhy [disabled]="canFinish==false"></ion-textarea>
     </ion-item>
   </ion-list>
 </ion-content>

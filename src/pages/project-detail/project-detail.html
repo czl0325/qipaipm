@@ -61,7 +61,7 @@
 
             </div>
             <div [hidden]="mile.children.length<=0">
-                <div class="subtask-title" *ngIf="isExpand1[i]==false ">
+                <div class="subtask-title" *ngIf="isExpand1[i]==false" (click)="onClickExpand($event, i, mile)">
                     <ion-label no-margin no-padding text-center class="horizontal-center"
                                style="line-height: 25px; font-size: 15px">{{mile.children.length+"个子任务"}}
                     </ion-label>

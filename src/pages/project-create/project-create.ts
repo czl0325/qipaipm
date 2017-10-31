@@ -23,52 +23,6 @@ import {Keyboard} from "@ionic-native/keyboard";
     templateUrl: 'project-create.html',
 })
 
-/*
-@ApiModelProperty(value = "项目id")
-	private String id;
-	@ApiModelProperty(value = "项目的名称")
-	private String itemName;
-	@ApiModelProperty(value = "项目的创建人")
-	private String itemFounder;
-	@ApiModelProperty(value = "项目的创建时间")
-	private String itemCreate;
-	@ApiModelProperty(value = "项目的启动时间 ")
-	private Date startTime;
-	@ApiModelProperty(value = "项目的延期时间")
-	private Date delayTime;
-	@ApiModelProperty(value = "项目延期的天数")
-	private String delayDays;
-	@ApiModelProperty(value = "项目更新时间")
-	private Date itemUpdate;
-	@ApiModelProperty(value = "项目结束时间")
-	private Date endTime;
-	@ApiModelProperty(value = "项目版本")
-	private String itemVersion;
-	@ApiModelProperty(value = "项目启动的交付成果")
-	private String startResult;
-	@ApiModelProperty(value = "项目结束的交付成果")
-	private String endResult;
-	@ApiModelProperty(value = "项目里程碑")
-	@OneToMany(mappedBy = "projectinfo",cascade=CascadeType.ALL,fetch=FetchType.LAZY)
-	private List<Milestone> milestone = new ArrayList<Milestone>();
-	@ApiModelProperty(value = "项目提出人")
-	private String itemRaise;
-	@ApiModelProperty(value = "项目修订人")
-	private String itemRevision;
-	@ApiModelProperty(value = "项目部门")
-	private String itemDept;
-	@ApiModelProperty(value = "项目状态")
-	private String itemState;
-	@ApiModelProperty(value = "项目编码")
-	private String itemCode;
-	@ApiModelProperty(value = "项目权重")
-	private String itemWeight;
-	@ApiModelProperty(value = "项目进度")
-	private String itemProgress;
-	@ApiModelProperty(value = "是否结束项目")
-	private String isEnd;
- */
-
 //未开始(07010010)    进行中(07010020)      延期(07010030)     已结束(07010040)
 
 export class ProjectCreatePage {
@@ -107,7 +61,8 @@ export class ProjectCreatePage {
         itemWeight: '',                 //项目权重
         itemProgress: '',               //项目进度
         itemIsEnd: false,               //是否结束项目
-        version: '',                //版本号(后台需要)
+        itemEndType: '',                //到期结束(07000010)  手动结束(07000020)
+        version: '',                    //版本号(后台需要)
     };
     minTime: string = new DatePipe('en-US').transform(new Date(), 'yyyy-MM-dd');
     changeIndex: number = -1;
@@ -270,7 +225,7 @@ export class ProjectCreatePage {
             delayDays: 0,              //里程碑延迟天数
             milestoneType: 1,          //1是普通里程碑，2是延期里程碑
             children: [],              //里程碑子任务
-            version: '',                //版本号(后台需要)
+            version: '',               //版本号(后台需要)
         };
         // this.project.children.push(milestone);
         this.navCtrl.push(MilestoneDetailPage, {

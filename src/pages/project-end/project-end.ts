@@ -153,6 +153,7 @@ export class ProjectEndPage {
         }
 
         this.project.itemIsEnd = true;
+        this.project.itemEndType = "07000020";
         this.appService.httpPost("item/createItem", this.project, this, function (view, res) {
             // var data = res.json().data;
             view.events.publish('homeProjectReload');

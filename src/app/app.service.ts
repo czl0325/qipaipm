@@ -12,7 +12,7 @@ export class AppGlobal {
     products: "_dress_products"
   }
   //接口基地址
-  static domain = "http://192.168.10.120:8888/pm/"
+  static domain = "http://tgw.qipai.com.cn:6121/pm/"
 
   //接口地址
   static API: any = {

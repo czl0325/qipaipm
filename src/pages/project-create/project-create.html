@@ -108,11 +108,11 @@
                     <ion-option value="100%">100%</ion-option>
                 </ion-select>
             </ion-item>
-            <ion-item style="height: 50px">
+            <ion-item style="height: 100px">
                 <ion-icon item-start name="appname-result"></ion-icon>
                 <ion-label style="color: #868686">交付成果</ion-label>
-                <ion-input item-end text-right id="miletext" [(ngModel)]="mile.deliveryResult" readonly
-                           (ionFocus)="onFocusInput($event, mile, i)"></ion-input>
+                <ion-textarea item-end text-right id="miletext" [(ngModel)]="mile.deliveryResult" readonly
+                           (ionFocus)="onFocusInput($event, mile, i)"></ion-textarea>
             </ion-item>
         </ion-list>
     </div>
@@ -143,10 +143,10 @@
                           ngModel="{{project.endTime | stampToDate}}"
                           (ngModelChange)="project.endTime = $event"></ion-datetime>
         </ion-item>
-        <ion-item style="border-bottom: solid 1px #ececec; height: 50px">
+        <ion-item style="border-bottom: solid 1px #ececec; height: 100px">
             <ion-icon item-start name="appname-result"></ion-icon>
             <ion-label style="color: #868686">交付成果</ion-label>
-            <ion-input item-end text-right placeholder="请输入交付成果" [(ngModel)]="project.itemEndResult"></ion-input>
+            <ion-textarea item-end text-right placeholder="请输入交付成果" [(ngModel)]="project.itemEndResult"></ion-textarea>
         </ion-item>
     </ion-list>
 
@@ -194,10 +194,10 @@
                     <ion-option value="100%">100%</ion-option>
                 </ion-select>
             </ion-item>
-            <ion-item style="height: 50px">
+            <ion-item style="height: 100px">
                 <ion-icon item-start name="appname-result"></ion-icon>
                 <ion-label style="color: #868686">交付成果</ion-label>
-                <ion-input item-end text-right id="miletext2" [(ngModel)]="delayMile.deliveryResult" readonly  (ionFocus)="onFocusInput2($event, mile, i)"></ion-input>
+                <ion-textarea item-end text-right id="miletext2" [(ngModel)]="delayMile.deliveryResult" readonly  (ionFocus)="onFocusInput2($event, mile, i)"></ion-textarea>
             </ion-item>
         </ion-list>
     </div>

@@ -35,7 +35,7 @@ export class ContactPage {
 
     ionViewDidLoad() {
         if (typeof (this.arrayDepartment) == 'undefined') {
-            this.appService.httpGet("http://192.168.10.120:8888/uc/group/searchAll", {}, this, function (view, res) {
+            this.appService.httpGet("http://tgw.qipai.com.cn:6121/uc/group/searchAll", {}, this, function (view, res) {
                 if (res.status == 200) {
                     var data = res.json();
                     if (data.id == null && data.children.length > 0) {
@@ -61,7 +61,7 @@ export class ContactPage {
                 this.tempStaff = [];
                 this.tempStaff = this.tempStaff.concat(this.arrayStaff);
             }
-            this.appService.httpGet("http://192.168.10.120:8888/uc/group/searchUsersByGroupAndKey", {"sKeyName": this.searchValue}, this, function (view, res) {
+            this.appService.httpGet("http://tgw.qipai.com.cn:6121/uc/group/searchUsersByGroupAndKey", {"sKeyName": this.searchValue}, this, function (view, res) {
                 if (res.status == 200) {
                     if (res.json() != null) {
                         var array = res.json();
@@ -163,7 +163,7 @@ export class ContactPage {
                     }
                 }
             } else {
-                this.appService.httpGet("http://192.168.10.120:8888/uc/group/searchUsersByGroupAndKey", {"id": value.id}, this, function (view, res) {
+                this.appService.httpGet("http://tgw.qipai.com.cn:6121/uc/group/searchUsersByGroupAndKey", {"id": value.id}, this, function (view, res) {
                     if (res.status == 200) {
                         var array = res.json();
                         if (array == null) {

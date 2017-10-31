@@ -62,10 +62,10 @@ export class ForgetPage {
       });
       toast.present();
     }
-    this.appService.httpGet("http://192.168.10.120:8888/uc/user/findPassword", {"telPhone": this.forgetForm.value.mobile},
+    this.appService.httpGet("http://tgw.qipai.com.cn:6121/uc/user/findPassword", {"telPhone": this.forgetForm.value.mobile},
       this, function (view, res) {
         if (res.json().result == "success") {
-          view.appService.httpGet("http://192.168.10.120:8888/sms/sendSmg/" + view.forgetForm.value.mobile, {},
+          view.appService.httpGet("http://tgw.qipai.com.cn:6121/sms/sendSmg/" + view.forgetForm.value.mobile, {},
             view, function (view1, res) {
               if (res.status == 200) {
                 let alert = view1.alertCtrl.create({
@@ -102,7 +102,7 @@ export class ForgetPage {
   }
 
   goNext(value) {
-    this.appService.httpGet("http://192.168.10.120:8888/sms/checkSmg/" + value.mobile + "/" + value.code, {},
+    this.appService.httpGet("http://tgw.qipai.com.cn:6121/sms/checkSmg/" + value.mobile + "/" + value.code, {},
       this, function (view, res) {
         if (res.status == 200) {
           view.navCtrl.push(NewpwPage, {

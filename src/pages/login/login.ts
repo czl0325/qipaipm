@@ -40,7 +40,7 @@ export class LoginPage {
     }
 
     login(value) {
-        this.appService.httpGet("http://192.168.10.120:8888/uc/user/login",
+        this.appService.httpGet("http://tgw.qipai.com.cn:6121/uc/user/login",
             {"telPhone": value.mobile, "password": value.password}, this, function (view, res) {
                 var data = res.json();
                 if (data != null) {

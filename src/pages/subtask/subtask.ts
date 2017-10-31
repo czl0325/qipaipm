@@ -82,7 +82,7 @@ export class SubtaskPage {
             if (this.subtask.leaderEmpNum == AppSingleton.getInstance().currentUserInfo.username) {
                 this.canFinish = true;
             }
-            if (this.milestone.itemEndLeaderNum == AppSingleton.getInstance().currentUserInfo.username) {
+            if (this.milestone.leaderEmpNum == AppSingleton.getInstance().currentUserInfo.username) {
                 this.canEdit = true;
             }
         }
@@ -102,7 +102,7 @@ export class SubtaskPage {
         this.events.subscribe('onConfirmSubtaskLeader', (leader) => {
             this.tempSubtask.itemEndLeader = leader.name;
             this.tempSubtask.leaderEmpNum = leader.username;
-            this.tempSubtask.itemDept = leader.text||'';
+            this.tempSubtask.itemDept = leader.text || '';
         });
     }
 
@@ -138,24 +138,17 @@ export class SubtaskPage {
             return;
         }
         var param = this.tempSubtask;
-        // if (this.type == 1) {
-        //     this.callback(this.tempSubtask).then(()=>{
-        //         this.navCtrl.pop()
-        //     });
-        // } else {
         param.projectinfo = this.milestone;
-        //param.sid = this.tempSubtask.id;
         this.appService.httpPost("item/createSubtask", param, this, function (view, res) {
             if (res.status == 200) {
-                if (typeof (res.json()) != 'undefined') {
-                    view.events.publish('homeProjectReload');
-                    view.events.publish('reloadProject_create');
-                    view.events.publish('reloadProject');
-                    view.subtask = res.json().data;
-                    view.callback(view.subtask).then(() => {
-                        view.navCtrl.pop()
-                    });
-                }
+                view.events.publish('homeProjectReload');
+                view.events.publish('reloadProject_create');
+                view.events.publish('reloadProject');
+                view.events.publish('reloadMilestoneOnDetail');
+                //view.subtask = res.json().data;
+                //view.callback(view.subtask).then(() => {
+                    view.navCtrl.pop()
+                //});
             } else {
                 let toast = view.toastCtrl.create({
                     message: view.type == 1 ? '新建里程碑失败!' : '编辑里程碑失败!',
@@ -164,6 +157,5 @@ export class SubtaskPage {
                 toast.present();
             }
         }, true);
-        //   }
     }
 }

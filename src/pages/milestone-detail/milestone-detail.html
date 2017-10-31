@@ -68,10 +68,10 @@
         <ion-option value="100%" [disabled]="canChooses[9]==false">100%</ion-option>
       </ion-select>
     </ion-item>
-    <ion-item style="border-bottom: solid 1px #ececec;height: 50px">
+    <ion-item style="border-bottom: solid 1px #ececec; line-height: 50px">
       <ion-icon item-start name="appname-result"></ion-icon>
       <ion-label no-padding no-margin style="color: #868686">交付成果:</ion-label>
-      <ion-input text-right type="text" [(ngModel)]="tempMilestone.deliveryResult" required [disabled]="canEdit==false"></ion-input>
+      <ion-textarea text-right type="text" [(ngModel)]="tempMilestone.deliveryResult" [disabled]="canEdit==false"></ion-textarea>
     </ion-item>
     <ion-item *ngIf="tempMilestone.delay > 0" style="border-bottom: solid 1px #ececec; height: 50px" >
       <ion-label style="color: #868686">延迟情况:</ion-label>
@@ -91,7 +91,7 @@
     </ion-item>
   </ion-list>
 
-  <div *ngFor="let subtask of tempMilestone.children; let i = index">
+  <div *ngFor="let subtask of tempMilestone.children; let i = index" (click)="onClickSubtask($event, subtask)">
     <div style="height: 30px; border-bottom: solid 1px #ececec; ">
       <div style="width: 5px; height: 30px; background-color: #555555; float: left;"></div>
       <ion-label no-margin no-padding style="line-height: 30px; margin-left: 10px; float: left;">{{subtask.subtaskName}}</ion-label>
@@ -115,11 +115,10 @@
                       (ngModelChange)="subtask.deliveryTime = $event"
                       [disabled]="type==2"></ion-datetime>
       </ion-item>
-      <ion-item style="border-bottom: solid 10px #ececec; height: 50px">
+      <ion-item style="border-bottom: solid 10px #ececec; line-height: 50px">
         <ion-icon item-start name="appname-result"></ion-icon>
         <ion-label no-padding no-margin style="color: #868686">交付成果:</ion-label>
-        <ion-input text-right type="text" [(ngModel)]="subtask.deliveryResult"
-                   required [disabled]="type==2"></ion-input>
+        <ion-textarea text-right type="text" [(ngModel)]="subtask.deliveryResult" [disabled]="type==2"></ion-textarea>
       </ion-item>
     </ion-list>
   </div>

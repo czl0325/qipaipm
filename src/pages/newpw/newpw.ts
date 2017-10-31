@@ -42,7 +42,7 @@ export class NewpwPage {
             });
             toast.present();
         } else {
-            this.appService.httpPost("http://192.168.10.120:8888/uc/user/resetByTelPhone", {
+            this.appService.httpPost("http://tgw.qipai.com.cn:6121/uc/user/resetByTelPhone", {
                     "telPhone": this.telPhone,
                     "newPassword": value.newpw1
                 },

@@ -251,10 +251,18 @@ export class MilestoneDetailPage {
             this.tempMilestone.leaderEmpNum = leader.username;
             this.tempMilestone.itemDept = leader.text||'';
         });
+        this.events.subscribe('reloadMilestoneOnDetail',() => {
+            this.appService.httpGet('item/getProject',{"id":this.tempMilestone.id},this,function (view, res) {
+                if (res.status == 200) {
+                    view.tempMilestone = res.json().data;
+                }
+            },false);
+        });
     }
 
     ionViewWillUnload() {
         this.events.unsubscribe('onConfirmMilestoneLeader');
+        this.events.unsubscribe('reloadMilestoneOnDetail');
     }
 
     ionViewWillLeave() {
@@ -418,6 +426,16 @@ export class MilestoneDetailPage {
             this.milestone = this.tempMilestone;
             this.events.publish('reloadMilestone', this.milestone);
         }
+    }
+
+    onClickSubtask($event, subtask) {
+        this.navCtrl.push(SubtaskPage, {
+            subtask: subtask,
+            type: 2,
+            project: this.project,
+            callback: this.subtaskCallback,
+            milestone: this.tempMilestone,
+        });
     }
 
     subtaskCallback = (subtask) => {
