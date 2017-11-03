@@ -3,7 +3,7 @@
 <plist version="1.0">
   <dict>
     <key>CFBundleDevelopmentRegion</key>
-    <string>zh_CN</string>
+    <string>English</string>
     <key>CFBundleDisplayName</key>
     <string>项目管理</string>
     <key>CFBundleExecutable</key>
@@ -52,8 +52,6 @@
     <key>UISupportedInterfaceOrientations</key>
     <array>
       <string>UIInterfaceOrientationPortrait</string>
-      <string>UIInterfaceOrientationLandscapeLeft</string>
-      <string>UIInterfaceOrientationLandscapeRight</string>
     </array>
     <key>UISupportedInterfaceOrientations~ipad</key>
     <array>

@@ -198,7 +198,7 @@ export class MilestoneDetailPage {
             this.milestone.deliveryTime = this.minTime;
         }
         /**************/
-        if (this.milestone.id.length < 1) {
+        if (this.milestone.id.length < 1 && this.milestone.itemEndLeader.length < 1) {
             if (this.mileType == 1) {
                 if (typeof (this.project.children) != 'undefined') {
                     this.milestone.milestoneName = '里程碑' + (this.project.milestoneVo1.length + 1);
@@ -224,23 +224,29 @@ export class MilestoneDetailPage {
         if (this.type == 1) {
             this.canEdit = true;
         } else if (this.type == 2) {
-            if (AppSingleton.getInstance().currentUserInfo.username == this.milestone.leaderEmpNum) {
-                if (AppConfig.timestampToDate(this.milestone.deliveryTime) > new Date()) {
-                    this.canEdit = true;
-                }
-                if (this.milestone.id.length > 0) {
+            if (this.milestone.itemIsEnd == true) {
+                this.canEdit = false;
+                this.canFinish = false;
+                this.canAddSubtask = false;
+            } else {
+                if (AppSingleton.getInstance().currentUserInfo.username == this.milestone.leaderEmpNum) {
                     if (AppConfig.timestampToDate(this.milestone.deliveryTime) > new Date()) {
-                        this.canAddSubtask = true;
+                        this.canEdit = true;
+                    }
+                    if (this.milestone.id.length > 0) {
+                        if (AppConfig.timestampToDate(this.milestone.deliveryTime) > new Date()) {
+                            this.canAddSubtask = true;
+                        }
                     }
                 }
-            }
-            if (AppSingleton.getInstance().currentUserInfo.username == this.project.founderEmpNum) {
-                if (AppConfig.timestampToDate(this.milestone.deliveryTime) > new Date()) {
-                    this.canEdit = true;
+                if (AppSingleton.getInstance().currentUserInfo.username == this.project.founderEmpNum) {
+                    if (AppConfig.timestampToDate(this.milestone.deliveryTime) > new Date()) {
+                        this.canEdit = true;
+                    }
                 }
-            }
-            if (AppSingleton.getInstance().currentUserInfo.username == this.milestone.leaderEmpNum) {
-                this.canFinish = true;
+                if (AppSingleton.getInstance().currentUserInfo.username == this.milestone.leaderEmpNum) {
+                    this.canFinish = true;
+                }
             }
         }
     }

@@ -224,6 +224,7 @@ export class ProjectCreatePage {
             isAccomplish: false,       //里程碑是否完成
             delayDays: 0,              //里程碑延迟天数
             milestoneType: 1,          //1是普通里程碑，2是延期里程碑
+            itemIsEnd: false,          //里程碑是否结束
             children: [],              //里程碑子任务
             version: '',               //版本号(后台需要)
         };
@@ -238,6 +239,7 @@ export class ProjectCreatePage {
     }
 
     onLookMilestone() {
+
         this.navCtrl.push(MilestoneDetailPage, {
             project: this.project
         });
@@ -289,13 +291,18 @@ export class ProjectCreatePage {
             isExpand: this.isExpand,
             project: this.project,
             callback: this.milestoneCallback,
-            type: 2,
+            type: this.type,
         });
     }
 
-    onClickRemoveMilestone($event, mile) {
+    onClickRemoveMilestone($event, mile, index) {
         if (this.type == 1) {
-            this.deleteOneMile(mile)
+            //this.deleteOneMile(mile);
+            this.project.milestoneVo1.splice(index, 1);
+            for (let i = 0; i < this.project.milestoneVo1.length; i++) {
+                var milestone2 = this.project.milestoneVo1[i];
+                milestone2.milestoneName = '里程碑' + (i + 1);
+            }
         } else {
             this.appService.httpDelete("item/deleteMilestone", {"ids": [mile.id]}, this, function (view, res) {
                 if (res.status == 200) {

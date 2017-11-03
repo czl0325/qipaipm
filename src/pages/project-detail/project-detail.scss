@@ -40,6 +40,19 @@ page-project-detail {
               margin-top: 2px;
               margin-bottom: 2px;
               flex-grow: 1;
+
+
+              .delay-radius {
+                text-align: center;
+                display: inline-block;
+                width: 30px;
+                height: 12px;
+                border-radius: 6px;
+                line-height: 12px;
+                font-size: 8px;
+                background-color: #fc780e;
+                color: white;
+              }
             }
           }
         }
@@ -205,6 +218,7 @@ page-project-detail {
         color: white;
         //width: 70%;
         //word-break:break-all;
+
       }
     }
   }

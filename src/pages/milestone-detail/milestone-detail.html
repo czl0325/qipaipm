@@ -12,7 +12,7 @@
     </ion-title>
     <ion-buttons end >
       <button ion-button (click)="onSaveMilestone($event)" style="color: #fc5c53"
-            [hidden]="canEdit==false&&canFinish==false&&type==2">
+            [hidden]="canEdit==false&&canFinish==false&&canAddSubtask==false&&type==2">
         保存
       </button>
     </ion-buttons>
@@ -68,7 +68,7 @@
         <ion-option value="100%" [disabled]="canChooses[9]==false">100%</ion-option>
       </ion-select>
     </ion-item>
-    <ion-item style="border-bottom: solid 1px #ececec; line-height: 50px">
+    <ion-item style="border-bottom: solid 1px #ececec; line-height: 22px; font-size: 16px">
       <ion-icon item-start name="appname-result"></ion-icon>
       <ion-label no-padding no-margin style="color: #868686">交付成果:</ion-label>
       <ion-textarea text-right type="text" [(ngModel)]="tempMilestone.deliveryResult" [disabled]="canEdit==false"></ion-textarea>
@@ -115,7 +115,7 @@
                       (ngModelChange)="subtask.deliveryTime = $event"
                       [disabled]="type==2"></ion-datetime>
       </ion-item>
-      <ion-item style="border-bottom: solid 10px #ececec; line-height: 50px">
+      <ion-item style="border-bottom: solid 10px #ececec; line-height: 22px; font-size: 16px">
         <ion-icon item-start name="appname-result"></ion-icon>
         <ion-label no-padding no-margin style="color: #868686">交付成果:</ion-label>
         <ion-textarea text-right type="text" [(ngModel)]="subtask.deliveryResult" [disabled]="type==2"></ion-textarea>

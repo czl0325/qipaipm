@@ -41,7 +41,7 @@ export class LoginPage {
 
     login(value) {
         this.appService.httpGet("http://tgw.qipai.com.cn:6121/uc/user/login",
-            {"telPhone": value.mobile, "password": value.password}, this, function (view, res) {
+            {"telPhone": value.mobile, "password": value.password, "appid":"project_management"}, this, function (view, res) {
                 var data = res.json();
                 if (data != null) {
                     view.storage.ready().then(() => {

@@ -75,7 +75,9 @@
                         </div>
                         <div class="subtask-css">
                             <ion-label class="subtask-left">交付时间:</ion-label>
-                            <ion-label class="subtask-right">{{subtask.deliveryTime | stampToDate}}</ion-label>
+                            <ion-label class="subtask-right"> {{subtask.deliveryTime | stampToDate}}
+                                <ion-label no-padding no-margin class="delay-radius" [hidden]="subtask.delayDays==0">延{{subtask.delayDays}}</ion-label>
+                            </ion-label>
                         </div>
                         <div class="subtask-css">
                             <ion-label class="subtask-left">负责人:</ion-label>

@@ -3,7 +3,8 @@
   <ion-navbar>
     <ion-title>子任务</ion-title>
     <ion-buttons end >
-      <button ion-button (click)="onSaveSubtask()" color="danger">
+      <button ion-button (click)="onSaveSubtask()" color="danger"
+              [hidden]="canEdit==false&&canFinish==false&&type==2">
         保存
       </button>
     </ion-buttons>

@@ -26158,6 +26158,18 @@ page-project-detail .pj-item .mile-top .subtask-wrap .subtask-item .subtask-css 
   flex-grow: 1;
 }
 
+page-project-detail .pj-item .mile-top .subtask-wrap .subtask-item .subtask-css .subtask-right .delay-radius {
+  text-align: center;
+  display: inline-block;
+  width: 30px;
+  height: 12px;
+  border-radius: 6px;
+  line-height: 12px;
+  font-size: 8px;
+  background-color: #fc780e;
+  color: white;
+}
+
 page-project-detail .pj-item .mile-top .subtask-wrap .subtask-item:last-child {
   border-bottom: none;
 }

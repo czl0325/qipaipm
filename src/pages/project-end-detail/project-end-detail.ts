@@ -25,7 +25,7 @@ export class ProjectEndDetailPage {
                 private appService: AppService, private events: Events, private toastCtrl: ToastController) {
         this.project = this.navParams.get('project');
         this.tempPorject = AppConfig.deepCopy(this.project);
-        if (AppSingleton.getInstance().currentUserInfo.username == this.project.itemEndLeaderNum) {
+        if (AppSingleton.getInstance().currentUserInfo.username == this.project.itemEndLeaderNum && this.tempPorject.itemIsEnd == false) {
             this.canFinish = true;
         }
     }

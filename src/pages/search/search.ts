@@ -71,6 +71,16 @@ export class SearchPage {
                             if (one.itemStartTime == null) {
                                 continue;
                             }
+                            one.milestoneVo1 = [];
+                            one.milestoneVo2 = [];
+                            for (let j = 0; j < one.children.length; j++) {
+                                var mile = one.children[j];
+                                if (mile.milestoneType == 1) {
+                                    one.milestoneVo1.push(mile);
+                                } else if (mile.milestoneType == 2) {
+                                    one.milestoneVo2.push(mile);
+                                }
+                            }
                             var startTime = one.itemStartTime;
                             if (typeof (one.itemStartTime) == 'number') {
                                 startTime = AppConfig.timestampToDatestring(one.itemStartTime);

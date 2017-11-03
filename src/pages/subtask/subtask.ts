@@ -79,11 +79,13 @@ export class SubtaskPage {
         if (this.type == 1) {
             this.canEdit = true;
         } else {
-            if (this.subtask.leaderEmpNum == AppSingleton.getInstance().currentUserInfo.username) {
-                this.canFinish = true;
-            }
-            if (this.milestone.leaderEmpNum == AppSingleton.getInstance().currentUserInfo.username) {
-                this.canEdit = true;
+            if (this.subtask.itemIsEnd == false) {
+                if (this.subtask.leaderEmpNum == AppSingleton.getInstance().currentUserInfo.username) {
+                    this.canFinish = true;
+                }
+                if (this.milestone.leaderEmpNum == AppSingleton.getInstance().currentUserInfo.username) {
+                    this.canEdit = true;
+                }
             }
         }
         if (typeof (this.milestone.deliveryTime) == 'number') {

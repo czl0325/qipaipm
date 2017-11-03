@@ -65,7 +65,7 @@
             <div style="float: right; width: 30px; height: 30px;position: relative">
                 <ion-icon name="close"
                           style="position: absolute; top: 50%; right: 0px; -webkit-transform: translateY(-50%); transform: translateY(-50%); margin-right: 10px; "
-                          (click)="onClickRemoveMilestone($event, mile)"></ion-icon>
+                          (click)="onClickRemoveMilestone($event, mile, i)"></ion-icon>
             </div>
         </div>
         <ion-list no-lines no-margin no-padding (click)="onClickMilestone($event, mile, i)">
@@ -154,8 +154,8 @@
         <div style="height: 30px; border-bottom: solid 1px #ececec; ">
             <div style="width: 5px; height: 30px; background-color: orange; float: left;"></div>
             <ion-label no-margin no-padding style="line-height: 30px; margin-left: 10px; float: left;">{{delayMile.milestoneName}}</ion-label>
-            <div style="float: right; width: 30px; height: 30px;position: relative">
-                <ion-icon name="close" style="position: absolute; top: 50%; right: 0px; -webkit-transform: translateY(-50%); transform: translateY(-50%); margin-right: 10px; " (click)="onClickRemoveMilestone($event, mile)"></ion-icon>
+            <div style="float: right; width: 30px; height: 30px;position: relative" hidden>
+                <ion-icon name="close" style="position: absolute; top: 50%; right: 0px; -webkit-transform: translateY(-50%); transform: translateY(-50%); margin-right: 10px; " (click)="onClickRemoveMilestone($event, mile, i)"></ion-icon>
             </div>
         </div>
         <ion-list no-lines no-margin no-padding (click)="onClickMilestone($event, delayMile, i)">
